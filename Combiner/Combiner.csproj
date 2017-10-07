@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8F70280D-DD6D-4C13-B4B9-2AC9E84381DA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Combiner</RootNamespace>
+    <AssemblyName>Combiner</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MoonSharp.Interpreter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=921e73ce94aa17f8, processorArchitecture=MSIL">
+      <HintPath>..\packages\MoonSharp.2.0.0.0\lib\net40-client\MoonSharp.Interpreter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.8.1\lib\net40\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Stock.cs" />
+    <Compile Include="Tests\CreatureCombinerTest.cs" />
+    <Compile Include="Tests\CreatureTest.cs" />
+    <Compile Include="Tests\StockTest.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Creature.cs" />
+    <Compile Include="CreatureCombiner.cs" />
+    <Compile Include="LuaHandler.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Scripts\attrcombiner.lua" />
+    <None Include="Scripts\littlecombiner.lua" />
+    <None Include="Stock\albatross.lua" />
+    <None Include="Stock\anaconda.lua" />
+    <None Include="Stock\anglerfish.lua" />
+    <None Include="Stock\ant.lua" />
+    <None Include="Stock\archerfish.lua" />
+    <None Include="Stock\armadillo.lua" />
+    <None Include="Stock\baboon.lua" />
+    <None Include="Stock\behemoth.lua" />
+    <None Include="Stock\beluga.lua" />
+    <None Include="Stock\black_widow.lua" />
+    <None Include="Stock\blue whale.lua" />
+    <None Include="Stock\bob.lua" />
+    <None Include="Stock\bombardier_beetle.lua" />
+    <None Include="Stock\bull.lua" />
+    <None Include="Stock\camel.lua" />
+    <None Include="Stock\chameleon.lua" />
+    <None Include="Stock\cheetah.lua" />
+    <None Include="Stock\chimpanzee.lua" />
+    <None Include="Stock\cockroach.lua" />
+    <None Include="Stock\condor.lua" />
+    <None Include="Stock\coyote.lua" />
+    <None Include="Stock\crocodile.lua" />
+    <None Include="Stock\cuttlefish.lua" />
+    <None Include="Stock\dolphin.lua" />
+    <None Include="Stock\dragonfly.lua" />
+    <None Include="Stock\eagle.lua" />
+    <None Include="Stock\electric_eel.lua" />
+    <None Include="Stock\elephant.lua" />
+    <None Include="Stock\finished naked mole rat.lua" />
+    <None Include="Stock\fire_fly.lua" />
+    <None Include="Stock\garden_spider.lua" />
+    <None Include="Stock\garfish.lua" />
+    <None Include="Stock\giant_anteater.lua" />
+    <None Include="Stock\giraffe.lua" />
+    <None Include="Stock\gorilla.lua" />
+    <None Include="Stock\great_white_shark.lua" />
+    <None Include="Stock\grizzly_bear.lua" />
+    <None Include="Stock\hammerhead_shark.lua" />
+    <None Include="Stock\hatchetfish.lua" />
+    <None Include="Stock\hercules_beetle.lua" />
+    <None Include="Stock\hippopotamus.lua" />
+    <None Include="Stock\hornbill.lua" />
+    <None Include="Stock\hornet.lua" />
+    <None Include="Stock\horse.lua" />
+    <None Include="Stock\humpback.lua" />
+    <None Include="Stock\hyena.lua" />
+    <None Include="Stock\kangaroo.lua" />
+    <None Include="Stock\killer_whale.lua" />
+    <None Include="Stock\komodo_dragon.lua" />
+    <None Include="Stock\lammergeier.lua" />
+    <None Include="Stock\lemming.lua" />
+    <None Include="Stock\lioness.lua" />
+    <None Include="Stock\lobster.lua" />
+    <None Include="Stock\mantis shrimp.lua" />
+    <None Include="Stock\moose.lua" />
+    <None Include="Stock\mountain_lion.lua" />
+    <None Include="Stock\musk_ox.lua" />
+    <None Include="Stock\narwhal.lua" />
+    <None Include="Stock\octopus.lua" />
+    <None Include="Stock\panther.lua" />
+    <None Include="Stock\piranha.lua" />
+    <None Include="Stock\poison_frog.lua" />
+    <None Include="Stock\polar_bear.lua" />
+    <None Include="Stock\porcupine.lua" />
+    <None Include="Stock\praying_mantis.lua" />
+    <None Include="Stock\ram.lua" />
+    <None Include="Stock\rat.lua" />
+    <None Include="Stock\rattlesnake.lua" />
+    <None Include="Stock\raven.lua" />
+    <None Include="Stock\rhinoceros.lua" />
+    <None Include="Stock\scorpion.lua" />
+    <None Include="Stock\shrimp.lua" />
+    <None Include="Stock\siphonophore.lua" />
+    <None Include="Stock\skunk.lua" />
+    <None Include="Stock\snail.lua" />
+    <None Include="Stock\snapping_turtle.lua" />
+    <None Include="Stock\snowy_owl.lua" />
+    <None Include="Stock\sperm_whale.lua" />
+    <None Include="Stock\spider.lua" />
+    <None Include="Stock\spider_wasp.lua" />
+    <None Include="Stock\spitting_cobra.lua" />
+    <None Include="Stock\squid.lua" />
+    <None Include="Stock\stick_bug.lua" />
+    <None Include="Stock\stink_bug.lua" />
+    <None Include="Stock\tapir.lua" />
+    <None Include="Stock\tarantula.lua" />
+    <None Include="Stock\termite.lua" />
+    <None Include="Stock\tiger.lua" />
+    <None Include="Stock\tuna.lua" />
+    <None Include="Stock\vampire_bat.lua" />
+    <None Include="Stock\velvet_worm.lua" />
+    <None Include="Stock\vulture.lua" />
+    <None Include="Stock\walrus.lua" />
+    <None Include="Stock\warthog.lua" />
+    <None Include="Stock\whale shark.lua" />
+    <None Include="Stock\wolf.lua" />
+    <None Include="Stock\wolverine.lua" />
+    <None Include="Stock\woolly_mammoth.lua" />
+    <None Include="Stock\zebra.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Stock\Notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Notes.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
