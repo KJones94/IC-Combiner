@@ -1,0 +1,52 @@
+﻿hard_shell
+stink_attack
+electric_burst
+charge_attack
+frenzy_attack
+plague_attack
+quill_burst
+web_throw
+assassinate
+flash
+infestation
+can_dig
+can_SRF
+pack_hunter
+herding
+loner
+leap_attack
+poison_touch
+poison_bite
+is_stealthy
+is_immune
+regeneration
+defelction_armour
+AutoDefense
+soiled_land
+keen_sense
+sonar_pulse
+end_bonus
+poplowtorso
+poplow
+poison_pincers
+poison_sting
+overpopulation
+fly
+headflashdisplay
+
+tiny?
+is_flyer?
+is_swimmer?
+
+melee/range#_damage_type:
+	0 = normal
+	1 = poison pincers or venom spray?
+	2 = horns
+	4 = barrier destroy
+	8 = electric
+	256 = poison bite or venom spray?
+
+range#_special:
+	1 = rock
+	2 = water
+	3 = chemical

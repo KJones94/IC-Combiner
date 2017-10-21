@@ -19,7 +19,7 @@ namespace Combiner
         {
             Name = name;
             LimbAttritbutes = limbAttributes;
-			Type = DoubleToStockType(GetLimbAttribute("stocktype");
+			Type = DoubleToStockType(GetLimbAttribute("stocktype"));
 			InitBodyParts();
         }
 

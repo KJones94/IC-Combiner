@@ -13,11 +13,11 @@ namespace Combiner
         Dictionary<Limb, bool> PossibleBodyParts { get; set; }
         Dictionary<Limb, Side> ChosenBodyParts { get; set; }
 
-		public Creature(Stock left, Stock right)
+		public Creature(Stock left, Stock right, Dictionary<Limb, Side> chosenBodyParts)
 		{
 			Left = left;
 			Right = right;
-
+			ChosenBodyParts = chosenBodyParts;
 		}
 
 		// Not sure what this is for yet...
@@ -77,9 +77,9 @@ namespace Combiner
 
         private CreatureFactory() { }
 
-        public Creature CreateStock(string animalName, LuaHandler lua)
+        public Creature CreateCreature(Stock left, Stock right, Dictionary<Limb, Side> chosenBodyParts)
         {
-            return null;
+            return new Creature(left, right, chosenBodyParts);
         }
     }
 }

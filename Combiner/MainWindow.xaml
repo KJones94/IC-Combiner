@@ -7,6 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-		<Button Content="Click Me" Click="Button_Click"></Button>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="2*"/>
+		</Grid.RowDefinitions>
+		<Button Grid.Row="0" Content="Click Me" Click="Button_Click"></Button>
+		<DataGrid Grid.Row="1">
+			
+		</DataGrid>
 	</Grid>
 </Window>

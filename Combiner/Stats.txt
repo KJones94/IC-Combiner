@@ -1,0 +1,10 @@
+﻿
+armour = armour * .8
+
+take largest size
+
+size_diff = larger size / smaller size
+health = size_diff ^ exp_hitpoint * hitpoints
+
+
+damage and speed_max same as health formula
