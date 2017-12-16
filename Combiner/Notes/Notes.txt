@@ -1,0 +1,36 @@
+﻿Next steps:
+
+
+
+determine health/defense formula for body parts
+
+combine limbattributes from both stock animals into one
+	- choose head, torso, damage, etc. based on which limb is used
+		- can just use in calculations, like for armour and health
+	- grab all abilities, but set active based on limb
+	- might need lua table to do this
+
+run creatures through attrcombiner to get final stats and costs
+	- getgameattribute
+	- setgameattribute
+	- min
+	- max
+
+create XAML display for creatures
+
+
+TODO:
+	Allow all body parts the ability to contribute to stats if added to stock luas at a later date
+	Exception catching for limb attributes accessing
+
+
+
+Built in functions:
+
+	max
+	min
+	getgameattribute
+	setgameattribute
+	setuiattribute
+	hasmeleedmgtype
+	hasrangedmgtype

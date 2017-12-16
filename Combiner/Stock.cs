@@ -23,9 +23,11 @@ namespace Combiner
 			InitBodyParts();
         }
 
-        private double GetLimbAttribute(string key)
+		// TODO: Exception handling maybe...
+		// or null handling
+        public double GetLimbAttribute(string key)
         {
-            return (double)(LimbAttritbutes[key] as Table)[2];
+			return (double)(LimbAttritbutes[key] as Table)[2];
         }
 
         private StockType DoubleToStockType(double d)
@@ -112,8 +114,107 @@ namespace Combiner
             }
         }
 
-        
-    }
+        public bool IsGreaterSize(Stock stock)
+		{
+			return GetLimbAttribute("size") >= stock.GetLimbAttribute("size");
+		}
+
+		/// <summary>
+		/// Gets the difference of the greater stock over the smaller if smaller, otherwise
+		/// return 1.0.
+		/// Used to increase the stat value of body parts that have grown from their original size.
+		/// For example, an ant torso's health value will increase when combined with a sperm whale.
+		/// </summary>
+		/// <param name="stock"></param>
+		/// <returns></returns>
+		private double SizeDifference(Stock stock)
+		{
+			if (IsGreaterSize(stock))
+			{
+				return 1.0;
+			}
+			else
+			{
+				return stock.GetLimbAttribute("size") / GetLimbAttribute("size");
+			}
+		}
+
+		#region Calculate Limb Stats
+
+		// TODO: GetLimbStats and CalcLimbStats
+		private double CalcLimbStats(Limb limb, string stat)
+		{
+			double limbStats = 0.0;
+			switch (limb)
+			{
+				case Limb.FrontLegs:
+					limbStats = GetLimbAttribute(stat + "-front");
+					break;
+				case Limb.BackLegs:
+					limbStats = GetLimbAttribute(stat + "-back");
+					break;
+				case Limb.Head:
+					limbStats = GetLimbAttribute(stat + "-head");
+					break;
+				case Limb.Torso:
+					limbStats = GetLimbAttribute(stat + "-torso");
+					break;
+				case Limb.Tail:
+					limbStats = GetLimbAttribute(stat + "-tail");
+					break;
+				case Limb.Wings:
+					limbStats = GetLimbAttribute(stat + "-wings");
+					break;
+				case Limb.Claws:
+					limbStats = GetLimbAttribute(stat + "-claws");
+					break;
+				default:
+					// throw exception
+					break;
+			}
+			return limbStats;
+		}
+
+		public double CalcLimbHitpoints(Stock stock, Limb limb)
+		{
+			double limbHitpoints = CalcLimbStats(limb, "hitpoints");
+			return Math.Pow(SizeDifference(stock), GetLimbAttribute("exp_hitpoints")) * limbHitpoints;
+		}
+
+		public double CalcLimbArmour(Stock stock, Limb limb)
+		{
+			double limbArmour = CalcLimbStats(limb, "armour");
+			return limbArmour * .8;
+		}
+
+		public double CalcLimbLandSpeed(Stock stock, Limb limb)
+		{
+			double limbLandSpeed = CalcLimbStats(limb, "speed_max");
+			return Math.Pow(SizeDifference(stock), GetLimbAttribute("exp_speed_max")) * limbLandSpeed;
+		}
+
+		public double CalcLimbWaterSpeed(Stock stock, Limb limb)
+		{
+			double limbWaterSpeed = CalcLimbStats(limb, "waterspeed_max");
+			return Math.Pow(SizeDifference(stock), GetLimbAttribute("exp_waterspeed_max")) * limbWaterSpeed;
+		}
+
+		public double CalcLimbAirSpeed(Stock stock, Limb limb)
+		{
+			double limbAirSpeed = CalcLimbStats(limb, "airspeed_max");
+			return Math.Pow(SizeDifference(stock), GetLimbAttribute("exp_airspeed_max")) * limbAirSpeed;
+		}
+
+		public double CalcLimbMeleeDamage(Stock stock, Limb limb)
+		{
+			string damageName = "melee" + (int)limb + "_damage";
+			string damageExp = "exp_" + damageName;
+			return Math.Pow(SizeDifference(stock), GetLimbAttribute(damageExp)) * GetLimbAttribute(damageName);
+		}
+
+		#endregion
+
+	}
 
     // Not thread safe
     class StockFactory

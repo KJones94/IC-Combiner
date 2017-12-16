@@ -72,5 +72,35 @@ namespace Combiner.Tests
 			CollectionAssert.AreEquivalent(testStock.BodyParts, CreateBodyParts(testBodyParts));
 
 		}
+
+		// How to test doubles?
+		[Test]
+		public void CalcLimbHitpoints()
+		{
+			LuaHandler lua = new LuaHandler();
+			Stock chimp = StockFactory.Instance.CreateStock("chimpanzee", lua);
+			Stock bull = StockFactory.Instance.CreateStock("bull", lua);
+
+			Assert.AreEqual(chimp.CalcLimbHitpoints(bull, Limb.FrontLegs), 47, 1.0);
+			Assert.AreEqual(chimp.CalcLimbHitpoints(bull, Limb.BackLegs), 47, 1.0);
+			Assert.AreEqual(chimp.CalcLimbHitpoints(bull, Limb.Head), 23, 1.0);
+			Assert.AreEqual(chimp.CalcLimbHitpoints(bull, Limb.Torso), 117, 1.0);
+			Assert.AreEqual(bull.CalcLimbHitpoints(chimp, Limb.FrontLegs), 44, 1.0);
+			Assert.AreEqual(bull.CalcLimbHitpoints(chimp, Limb.BackLegs), 44, 1.0);
+			Assert.AreEqual(bull.CalcLimbHitpoints(chimp, Limb.Head), 22, 1.0);
+			Assert.AreEqual(bull.CalcLimbHitpoints(chimp, Limb.Torso), 111, 1.0);
+		}
+
+		[Test]
+		public void CalcLimbDamage()
+		{
+			LuaHandler lua = new LuaHandler();
+			Stock chimp = StockFactory.Instance.CreateStock("chimpanzee", lua);
+			Stock bull = StockFactory.Instance.CreateStock("bull", lua);
+
+			Assert.AreEqual(chimp.CalcLimbMeleeDamage(bull, Limb.FrontLegs), 4, 1.0);
+			Assert.AreEqual(chimp.CalcLimbMeleeDamage(bull, Limb.Head), 3, 1.0);
+			Assert.AreEqual(bull.CalcLimbMeleeDamage(chimp, Limb.Head), 10, 1.0);
+		}
     }
 }

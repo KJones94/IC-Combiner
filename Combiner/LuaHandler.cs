@@ -11,18 +11,17 @@ namespace Combiner
     class LuaHandler
     {
         Script Attrcombiner { get; set; }
+		Creature Creature { get; set; }
 
         public LuaHandler()
         {
             Attrcombiner = new Script();
             Attrcombiner.Options.ScriptLoader = new FileSystemScriptLoader();
             SetupGlobals();
-            
         }
 
         public void LoadScript()
         {
-            //Attrcombiner.DoFile("../../Scripts/littlecombiner.lua");
             Attrcombiner.DoFile("../../Scripts/attrcombiner.lua");
         }
 
@@ -66,22 +65,39 @@ end";
         
         }
 
-        double MoonSharpFactorial()
-        {
-            string script = @"    
-		-- defines a factorial function
-		function fact (n)
-			if (n == 0) then
-				return 1
+        private DynValue GetGameAttribute(string s)
+		{
+
+			return new DynValue();
+		} 
+
+		private void SetGameAttribute(string s)
+		{
+
+		}
+
+		private DynValue Max(DynValue x, DynValue y)
+		{
+			if (x.Number >= y.Number)
+			{
+				return x;
+			}
 			else
-				return n*fact(n - 1)
-			end
-		end
+			{
+				return y;
+			}
+		}
 
-		return fact(5)";
-
-            DynValue res = Script.RunString(script);
-            return res.Number;
-        }
-    }
+		private DynValue Min(DynValue x, DynValue y)
+		{
+			if (x.Number <= y.Number)
+			{
+				return x;
+			}
+			else
+			{
+				return y;
+			}
+		}
+	}
 }

@@ -67,10 +67,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CreatureContainer.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="Tests\CreatureCombinerTest.cs" />
     <Compile Include="Tests\CreatureTest.cs" />
     <Compile Include="Tests\StockTest.cs" />
+    <Compile Include="Utility.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -112,6 +114,8 @@
     </None>
     <AppDesigner Include="Properties\" />
     <None Include="Scripts\attrcombiner.lua" />
+    <None Include="Scripts\CreatureAttributeTemplateNotes.lua" />
+    <None Include="Scripts\CreatureAttributeTemplate.lua" />
     <None Include="Scripts\littlecombiner.lua" />
     <None Include="Stock\albatross.lua" />
     <None Include="Stock\anaconda.lua" />
@@ -220,16 +224,16 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Notes.txt" />
+    <Resource Include="Notes\Notes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="GameAttributes.txt" />
+    <Resource Include="Notes\GameAttributes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Abilities.txt" />
+    <Resource Include="Notes\Abilities.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Stats.txt" />
+    <Resource Include="Notes\Stats.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

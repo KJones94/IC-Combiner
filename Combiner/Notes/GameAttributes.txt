@@ -3,10 +3,10 @@ speed_max
 airspeed_max
 waterspeed_max
 
-range4_max
 range2_max
-range5_max
+range4_max
 range3_max
+range5_max
 range2_damage
 range3_damage
 range4_damage
@@ -37,8 +37,26 @@ is_flyer
 is_swimmer
 is_land
 
-fml
-wtf
+*_rating
+*_val
+
+	health
+	armour
+	landspeed
+	waterspeed
+	airspeed
+	sightradius
+	size
+	damage
+	range2_max
+	range4_max
+	range5_max
+	range8_max
 
 *_damage_rating
 *_damage_val
+
+	range2
+	range4
+	range5
+	range8

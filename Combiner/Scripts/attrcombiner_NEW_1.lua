@@ -130,7 +130,6 @@ if 	getgameattribute("speed_max") == 0 and
 	getgameattribute("airspeed_max") == 0 then
 		setgameattribute("speed_max",8.0)
 end
-end
 
 --makes things easier innit
 function setattribute( attribute_string, value )
@@ -639,3 +638,4 @@ setattribute( "costrenew", CostRenew );
 setattribute( "cost", CostGather );
 setattribute( "popsize", Pop )
 
+end
