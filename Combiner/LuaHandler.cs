@@ -22,7 +22,7 @@ namespace Combiner
 
         public void LoadScript()
         {
-            Attrcombiner.DoFile("../../Scripts/attrcombiner.lua");
+            Attrcombiner.DoFile("../../Scripts/2.4/attrcombiner.lua");
         }
 
         public Table GetLimbAttributes(string stockFile)

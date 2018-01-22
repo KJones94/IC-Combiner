@@ -19,18 +19,34 @@ namespace Combiner
         {
             Name = name;
             LimbAttritbutes = limbAttributes;
-			Type = DoubleToStockType(GetLimbAttribute("stocktype"));
+			Type = DoubleToStockType(GetLimbAttributeValue("stocktype"));
 			InitBodyParts();
         }
 
 		// TODO: Exception handling maybe...
 		// or null handling
-        public double GetLimbAttribute(string key)
+        public double GetLimbAttributeValue(string key)
         {
-			return (double)(LimbAttritbutes[key] as Table)[2];
+			var value = LimbAttritbutes[key] as Table;
+			if (value != null)
+			{
+				return (double)value[2];
+			}
+			return -1;
         }
 
-        private StockType DoubleToStockType(double d)
+		// TODO: will casting to int mess this up?
+		public int GetLimbAttributeBodyPart(string key)
+		{
+			var bodyPart = LimbAttritbutes[key] as Table;
+			if (bodyPart != null)
+			{
+				return (int)(double)bodyPart[1];
+			}
+			return -1;
+		}
+
+		private StockType DoubleToStockType(double d)
         {
             foreach (StockType stockType in Enum.GetValues(typeof(StockType)))
             {
@@ -116,7 +132,7 @@ namespace Combiner
 
         public bool IsGreaterSize(Stock stock)
 		{
-			return GetLimbAttribute("size") >= stock.GetLimbAttribute("size");
+			return GetLimbAttributeValue("size") >= stock.GetLimbAttributeValue("size");
 		}
 
 		/// <summary>
@@ -135,12 +151,13 @@ namespace Combiner
 			}
 			else
 			{
-				return stock.GetLimbAttribute("size") / GetLimbAttribute("size");
+				return stock.GetLimbAttributeValue("size") / GetLimbAttributeValue("size");
 			}
 		}
 
 		#region Calculate Limb Stats
 
+		// TODO: Might want to move calculations to a separate class
 		// TODO: GetLimbStats and CalcLimbStats
 		private double CalcLimbStats(Limb limb, string stat)
 		{
@@ -148,25 +165,25 @@ namespace Combiner
 			switch (limb)
 			{
 				case Limb.FrontLegs:
-					limbStats = GetLimbAttribute(stat + "-front");
+					limbStats = GetLimbAttributeValue(stat + "-front");
 					break;
 				case Limb.BackLegs:
-					limbStats = GetLimbAttribute(stat + "-back");
+					limbStats = GetLimbAttributeValue(stat + "-back");
 					break;
 				case Limb.Head:
-					limbStats = GetLimbAttribute(stat + "-head");
+					limbStats = GetLimbAttributeValue(stat + "-head");
 					break;
 				case Limb.Torso:
-					limbStats = GetLimbAttribute(stat + "-torso");
+					limbStats = GetLimbAttributeValue(stat + "-torso");
 					break;
 				case Limb.Tail:
-					limbStats = GetLimbAttribute(stat + "-tail");
+					limbStats = GetLimbAttributeValue(stat + "-tail");
 					break;
 				case Limb.Wings:
-					limbStats = GetLimbAttribute(stat + "-wings");
+					limbStats = GetLimbAttributeValue(stat + "-wings");
 					break;
 				case Limb.Claws:
-					limbStats = GetLimbAttribute(stat + "-claws");
+					limbStats = GetLimbAttributeValue(stat + "-claws");
 					break;
 				default:
 					// throw exception
@@ -178,7 +195,7 @@ namespace Combiner
 		public double CalcLimbHitpoints(Stock stock, Limb limb)
 		{
 			double limbHitpoints = CalcLimbStats(limb, "hitpoints");
-			return Math.Pow(SizeDifference(stock), GetLimbAttribute("exp_hitpoints")) * limbHitpoints;
+			return Math.Pow(SizeDifference(stock), GetLimbAttributeValue("exp_hitpoints")) * limbHitpoints;
 		}
 
 		public double CalcLimbArmour(Stock stock, Limb limb)
@@ -190,26 +207,26 @@ namespace Combiner
 		public double CalcLimbLandSpeed(Stock stock, Limb limb)
 		{
 			double limbLandSpeed = CalcLimbStats(limb, "speed_max");
-			return Math.Pow(SizeDifference(stock), GetLimbAttribute("exp_speed_max")) * limbLandSpeed;
+			return Math.Pow(SizeDifference(stock), GetLimbAttributeValue("exp_speed_max")) * limbLandSpeed;
 		}
 
 		public double CalcLimbWaterSpeed(Stock stock, Limb limb)
 		{
 			double limbWaterSpeed = CalcLimbStats(limb, "waterspeed_max");
-			return Math.Pow(SizeDifference(stock), GetLimbAttribute("exp_waterspeed_max")) * limbWaterSpeed;
+			return Math.Pow(SizeDifference(stock), GetLimbAttributeValue("exp_waterspeed_max")) * limbWaterSpeed;
 		}
 
 		public double CalcLimbAirSpeed(Stock stock, Limb limb)
 		{
 			double limbAirSpeed = CalcLimbStats(limb, "airspeed_max");
-			return Math.Pow(SizeDifference(stock), GetLimbAttribute("exp_airspeed_max")) * limbAirSpeed;
+			return Math.Pow(SizeDifference(stock), GetLimbAttributeValue("exp_airspeed_max")) * limbAirSpeed;
 		}
 
 		public double CalcLimbMeleeDamage(Stock stock, Limb limb)
 		{
 			string damageName = "melee" + (int)limb + "_damage";
 			string damageExp = "exp_" + damageName;
-			return Math.Pow(SizeDifference(stock), GetLimbAttribute(damageExp)) * GetLimbAttribute(damageName);
+			return Math.Pow(SizeDifference(stock), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(damageName);
 		}
 
 		#endregion
@@ -241,7 +258,7 @@ namespace Combiner
         public Stock CreateStock(string animalName, LuaHandler lua)
         {
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-			string path = Path.Combine(Environment.CurrentDirectory, @"..\..\Stock\");
+			string path = Path.Combine(Environment.CurrentDirectory, Utility.Attrcombiner);
 			return new Stock(animalName, lua.GetLimbAttributes(path + animalName + ".lua"));
         }
     }

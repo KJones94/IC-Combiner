@@ -7,6 +7,9 @@ namespace Combiner
 {
 	public static class Utility
 	{
+		public static string Attrcombiner = @"..\..\Stock\2.4\";
+
+
 		public static string Size = "size";
 		public static string SightRadius = "sight_radius1";
 		public static string Armour = "armour";
@@ -54,5 +57,43 @@ namespace Combiner
 		public static string SonarPulse = "sonar_pulse";
 		public static string StinkCloud = "stink_attack";
 		public static string WebThrow = "web_throw";
+
+		public static string[] Abilities =
+		{
+			Assassinate,
+			Camouflage,
+			ChargeAttack,
+			DefileLand,
+			DeflectionArmour,
+			Digging,
+			DisorientingBarbs,
+			ElectricBurst,
+			EnduranceBonus,
+			Flash,
+			FlashHead,
+			Frenzy,
+			HardShell,
+			Herding,
+			Hovering,
+			Infestation,
+			Immunity,
+			KeenSense,
+			LeapAttack,
+			Loner,
+			Overpopulation,
+			PackHunter,
+			Plague,
+			PoisonBite,
+			PoisonPincers,
+			PoisonSting,
+			PoisonTouch,
+			Colony,
+			Conglomerate,
+			QuillBurst,
+			Regeneration,
+			SonarPulse,
+			StinkCloud,
+			WebThrow
+		};
 	}
 }

@@ -15,7 +15,8 @@ namespace Combiner
         Dictionary<Limb, Side> ChosenBodyParts { get; set; }
 
 		//Table GameAttributes { get; set; }  // Need to connect to script...
-		public Dictionary<string, double> GameAttributes { get; set; }
+		public Dictionary<string, double> GameAttributes { get; set; } = new Dictionary<string, double>();
+		public Dictionary<string, bool> Abilities { get; set; } = new Dictionary<string, bool>();
 
 		#region Stat Properties
 
@@ -71,9 +72,9 @@ namespace Combiner
 			Left = left;
 			Right = right;
 			ChosenBodyParts = chosenBodyParts;
-			GameAttributes = new Dictionary<string, double>();
 			InitGameAttributes();
 			InitStats();
+			InitAbilities();
 		}
 
 		// Not sure what this is for yet...
@@ -157,51 +158,85 @@ namespace Combiner
 			GameAttributes.Add(Utility.MeleeDamage, 0);
 			GameAttributes.Add(Utility.RangeDamage, 0);
 
-			GameAttributes.Add(Utility.Assassinate, 0);
-			GameAttributes.Add(Utility.Camouflage, 0);
-			GameAttributes.Add(Utility.ChargeAttack, 0);
-			GameAttributes.Add(Utility.DefileLand, 0);
-			GameAttributes.Add(Utility.DeflectionArmour, 0);
-			GameAttributes.Add(Utility.Digging, 0);
-			GameAttributes.Add(Utility.DisorientingBarbs, 0);
-			GameAttributes.Add(Utility.ElectricBurst, 0);
-			GameAttributes.Add(Utility.EnduranceBonus, 0);
-			GameAttributes.Add(Utility.Flash, 0);
-			GameAttributes.Add(Utility.FlashHead, 0);
-			GameAttributes.Add(Utility.Frenzy, 0);
-			GameAttributes.Add(Utility.HardShell, 0);
-			GameAttributes.Add(Utility.Herding, 0);
-			GameAttributes.Add(Utility.Hovering, 0);
-			GameAttributes.Add(Utility.Infestation, 0);
-			GameAttributes.Add(Utility.Immunity, 0);
-			GameAttributes.Add(Utility.KeenSense, 0);
-			GameAttributes.Add(Utility.LeapAttack, 0);
-			GameAttributes.Add(Utility.Loner, 0);
-			GameAttributes.Add(Utility.Overpopulation, 0);
-			GameAttributes.Add(Utility.PackHunter, 0);
-			GameAttributes.Add(Utility.Plague, 0);
-			GameAttributes.Add(Utility.PoisonBite, 0);
-			GameAttributes.Add(Utility.PoisonPincers, 0);
-			GameAttributes.Add(Utility.PoisonSting, 0);
-			GameAttributes.Add(Utility.PoisonTouch, 0);
-			GameAttributes.Add(Utility.Colony, 0);
-			GameAttributes.Add(Utility.Conglomerate, 0);
-			GameAttributes.Add(Utility.QuillBurst, 0);
-			GameAttributes.Add(Utility.Regeneration, 0);
-			GameAttributes.Add(Utility.SonarPulse, 0);
-			GameAttributes.Add(Utility.StinkCloud, 0);
-			GameAttributes.Add(Utility.WebThrow, 0);
+			//GameAttributes.Add(Utility.Assassinate, 0);
+			//GameAttributes.Add(Utility.Camouflage, 0);
+			//GameAttributes.Add(Utility.ChargeAttack, 0);
+			//GameAttributes.Add(Utility.DefileLand, 0);
+			//GameAttributes.Add(Utility.DeflectionArmour, 0);
+			//GameAttributes.Add(Utility.Digging, 0);
+			//GameAttributes.Add(Utility.DisorientingBarbs, 0);
+			//GameAttributes.Add(Utility.ElectricBurst, 0);
+			//GameAttributes.Add(Utility.EnduranceBonus, 0);
+			//GameAttributes.Add(Utility.Flash, 0);
+			//GameAttributes.Add(Utility.FlashHead, 0);
+			//GameAttributes.Add(Utility.Frenzy, 0);
+			//GameAttributes.Add(Utility.HardShell, 0);
+			//GameAttributes.Add(Utility.Herding, 0);
+			//GameAttributes.Add(Utility.Hovering, 0);
+			//GameAttributes.Add(Utility.Infestation, 0);
+			//GameAttributes.Add(Utility.Immunity, 0);
+			//GameAttributes.Add(Utility.KeenSense, 0);
+			//GameAttributes.Add(Utility.LeapAttack, 0);
+			//GameAttributes.Add(Utility.Loner, 0);
+			//GameAttributes.Add(Utility.Overpopulation, 0);
+			//GameAttributes.Add(Utility.PackHunter, 0);
+			//GameAttributes.Add(Utility.Plague, 0);
+			//GameAttributes.Add(Utility.PoisonBite, 0);
+			//GameAttributes.Add(Utility.PoisonPincers, 0);
+			//GameAttributes.Add(Utility.PoisonSting, 0);
+			//GameAttributes.Add(Utility.PoisonTouch, 0);
+			//GameAttributes.Add(Utility.Colony, 0);
+			//GameAttributes.Add(Utility.Conglomerate, 0);
+			//GameAttributes.Add(Utility.QuillBurst, 0);
+			//GameAttributes.Add(Utility.Regeneration, 0);
+			//GameAttributes.Add(Utility.SonarPulse, 0);
+			//GameAttributes.Add(Utility.StinkCloud, 0);
+			//GameAttributes.Add(Utility.WebThrow, 0);
+
+			foreach (string ability in Utility.Abilities)
+			{
+				Abilities.Add(ability, false);
+			}
 		}
 
 		private void InitStats()
 		{
-			CalcHitpoints();
+			CalcHitpoints(); // Stalling here, why?
 			CalcSize();
 			CalcArmour();
 			CalcLandSpeed();
 			CalcWaterSpeed();
 			CalcAirSpeed();
 			CalcMeleeDamage();
+		}
+
+		private void InitAbilities()
+		{
+			/**
+			 * Iterate through each ability
+			 * Check each body part of the creature with that ability's body part
+			 * If matches, check if ability is present
+			 * 
+			 * 
+			 **/
+
+			// TODO: Could hardcode or cache the limbs for abilities to reduce inner loop
+			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
+			{
+				Stock side = GetSide(limb);
+				if (side == null)
+					continue;
+				foreach (string ability in Utility.Abilities)
+				{
+					int bodyPart = side.GetLimbAttributeBodyPart(ability);
+					if (bodyPart > -1 
+						&& (Limb)bodyPart == limb
+						&& side.GetLimbAttributeValue(ability) > 0)
+					{
+						Abilities[ability] = true;
+					}
+				}
+			}
 		}
 
 		#region Calculate Stats
@@ -213,6 +248,8 @@ namespace Combiner
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetSide(limb);
+				if (side == null)
+					continue;
 				hitpoints += side.CalcLimbHitpoints(OtherSide(side), limb);
 			}
 			//GameAttributes.Set("hitpoints", DynValue.NewNumber(health));
@@ -223,11 +260,11 @@ namespace Combiner
 		{
 			if (Left.IsGreaterSize(Right))
 			{
-				Size = Left.GetLimbAttribute("size");
+				Size = Left.GetLimbAttributeValue("size");
 			}
 			else
 			{
-				Size = Right.GetLimbAttribute("size");
+				Size = Right.GetLimbAttributeValue("size");
 			}
 		}
 
@@ -238,6 +275,8 @@ namespace Combiner
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetSide(limb);
+				if (side == null)
+					continue;
 				armour += side.CalcLimbArmour(OtherSide(side), limb);
 			}
 			Armour = armour;
@@ -250,6 +289,8 @@ namespace Combiner
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetSide(limb);
+				if (side == null)
+					continue;
 				landSpeed += side.CalcLimbLandSpeed(OtherSide(side), limb);
 			}
 			LandSpeed = landSpeed;
@@ -262,6 +303,8 @@ namespace Combiner
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetSide(limb);
+				if (side == null)
+					continue;
 				airSpeed += side.CalcLimbAirSpeed(OtherSide(side), limb);
 			}
 			AirSpeed = airSpeed;
@@ -274,6 +317,8 @@ namespace Combiner
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetSide(limb);
+				if (side == null)
+					continue;
 				waterSpeed += side.CalcLimbWaterSpeed(OtherSide(side), limb);
 			}
 			WaterSpeed = waterSpeed;
@@ -286,6 +331,8 @@ namespace Combiner
 			foreach(Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetSide(limb);
+				if (side == null)
+					continue;
 				meleeDamage += side.CalcLimbMeleeDamage(OtherSide(side), limb);
 			}
 			MeleeDamage = meleeDamage;
