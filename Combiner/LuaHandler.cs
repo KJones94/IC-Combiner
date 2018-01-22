@@ -10,8 +10,8 @@ namespace Combiner
 {
     class LuaHandler
     {
-        Script Attrcombiner { get; set; }
-		Creature Creature { get; set; }
+        private Script Attrcombiner { get; set; }
+		private Creature Creature { get; set; }
 
         public LuaHandler()
         {
@@ -20,10 +20,12 @@ namespace Combiner
             SetupGlobals();
         }
 
-        public void LoadScript()
+        public void LoadScript(Creature creature)
         {
-            Attrcombiner.DoFile("../../Scripts/2.4/attrcombiner.lua");
-        }
+			Creature = creature;
+            //Attrcombiner.DoFile(Utility.Attrcombiner);
+			Attrcombiner.DoFile(Utility.Testcombiner);
+		}
 
         public Table GetLimbAttributes(string stockFile)
         {
@@ -39,46 +41,34 @@ namespace Combiner
 
         private void SetupGlobals()
         {
-            string getGameAttribute = @"
-            function getgameattribute(s)
-                return 0
-            end";
-
-            string setGameAttribute = @"
-function setgameattribute(s, d)
-    return 0
-end";
-
-            string max = @"
-function max(d1, d2)
-    return 1
-end";
-            string min = @"
-function min(d1, d2)
-    return 0
-end";
-            //Attrcombiner.RequireModule("math");
-            Attrcombiner.DoString(getGameAttribute);
-            Attrcombiner.DoString(setGameAttribute);
-            Attrcombiner.DoString(max);
-            Attrcombiner.DoString(min);
-        
+			// TODO: should I use DynValue or regular types
+			Attrcombiner.Globals["getgameattribute"] = (Func<string, double>)GetGameAttribute;
+			Attrcombiner.Globals["setgameattribute"] = (Action<string, double>)SetGameAttribute;
+			Attrcombiner.Globals["max"] = (Func<double, double, double>)Max;
+			Attrcombiner.Globals["min"] = (Func<double, double, double>)Min;
         }
 
-        private DynValue GetGameAttribute(string s)
+        private double GetGameAttribute(string key)
 		{
-
-			return new DynValue();
+			double value;
+			if (Creature.GameAttributes.TryGetValue(key, out value))
+			{
+				return value;
+			}
+			return 0;
 		} 
 
-		private void SetGameAttribute(string s)
+		private void SetGameAttribute(string key, double value)
 		{
-
+			if (Creature.GameAttributes.ContainsKey(key))
+			{
+				Creature.GameAttributes[key] = value;
+			}
 		}
 
-		private DynValue Max(DynValue x, DynValue y)
+		private double Max(double x, double y)
 		{
-			if (x.Number >= y.Number)
+			if (x >= y)
 			{
 				return x;
 			}
@@ -88,9 +78,9 @@ end";
 			}
 		}
 
-		private DynValue Min(DynValue x, DynValue y)
+		private double Min(double x, double y)
 		{
-			if (x.Number <= y.Number)
+			if (x <= y)
 			{
 				return x;
 			}

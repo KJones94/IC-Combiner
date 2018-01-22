@@ -1,0 +1,1 @@
+﻿setgameattribute("size", 1);

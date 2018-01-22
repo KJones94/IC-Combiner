@@ -258,7 +258,7 @@ namespace Combiner
         public Stock CreateStock(string animalName, LuaHandler lua)
         {
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-			string path = Path.Combine(Environment.CurrentDirectory, Utility.Attrcombiner);
+			string path = Path.Combine(Environment.CurrentDirectory, Utility.StockDirectory);
 			return new Stock(animalName, lua.GetLimbAttributes(path + animalName + ".lua"));
         }
     }

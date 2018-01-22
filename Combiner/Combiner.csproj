@@ -118,6 +118,7 @@
     <None Include="Scripts\CreatureAttributeTemplateNotes.lua" />
     <None Include="Scripts\CreatureAttributeTemplate.lua" />
     <None Include="Scripts\littlecombiner.lua" />
+    <None Include="Scripts\testcombiner.lua" />
     <None Include="Stock\2.3\albatross.lua" />
     <None Include="Stock\2.3\anaconda.lua" />
     <None Include="Stock\2.3\anglerfish.lua" />

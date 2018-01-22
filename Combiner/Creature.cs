@@ -16,7 +16,6 @@ namespace Combiner
 
 		//Table GameAttributes { get; set; }  // Need to connect to script...
 		public Dictionary<string, double> GameAttributes { get; set; } = new Dictionary<string, double>();
-		public Dictionary<string, bool> Abilities { get; set; } = new Dictionary<string, bool>();
 
 		#region Stat Properties
 
@@ -195,7 +194,7 @@ namespace Combiner
 
 			foreach (string ability in Utility.Abilities)
 			{
-				Abilities.Add(ability, false);
+				GameAttributes.Add(ability, 0);
 			}
 		}
 
@@ -212,14 +211,6 @@ namespace Combiner
 
 		private void InitAbilities()
 		{
-			/**
-			 * Iterate through each ability
-			 * Check each body part of the creature with that ability's body part
-			 * If matches, check if ability is present
-			 * 
-			 * 
-			 **/
-
 			// TODO: Could hardcode or cache the limbs for abilities to reduce inner loop
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
@@ -233,7 +224,7 @@ namespace Combiner
 						&& (Limb)bodyPart == limb
 						&& side.GetLimbAttributeValue(ability) > 0)
 					{
-						Abilities[ability] = true;
+						GameAttributes[ability] = 0;
 					}
 				}
 			}
