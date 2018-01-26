@@ -17,6 +17,7 @@ Built in functions:
 	max
 	min
 	getgameattribute
+	checkgameattribute
 	setgameattribute
 	setuiattribute
 	hasmeleedmgtype
@@ -48,3 +49,14 @@ Stock
 
 Utility
 	constants for lua strings
+
+
+Notes...
+	Stats round down
+		not pop size
+	for..in over a table needs to use pairs() funciton
+
+
+	
+
+	Power = (health / (1 - armour)) ^ (.63) * (.19 * damage + 2.56)

@@ -23,7 +23,7 @@ namespace Combiner
         public void LoadScript(Creature creature)
         {
 			Creature = creature;
-            //Attrcombiner.DoFile(Utility.Attrcombiner);
+			//Attrcombiner.DoFile(Utility.Attrcombiner);
 			Attrcombiner.DoFile(Utility.Testcombiner);
 		}
 
@@ -43,10 +43,24 @@ namespace Combiner
         {
 			// TODO: should I use DynValue or regular types
 			Attrcombiner.Globals["getgameattribute"] = (Func<string, double>)GetGameAttribute;
+			Attrcombiner.Globals["checkgameattribute"] = (Func<string, double>)CheckGameAttribute;
 			Attrcombiner.Globals["setgameattribute"] = (Action<string, double>)SetGameAttribute;
+			Attrcombiner.Globals["setuiattribute"] = (Action<string, double>)SetUIAttribute;
 			Attrcombiner.Globals["max"] = (Func<double, double, double>)Max;
 			Attrcombiner.Globals["min"] = (Func<double, double, double>)Min;
-        }
+			Attrcombiner.Globals["hasmeleedmgtype"] = (Func<double, double>)HasMeleeDmgType;
+			Attrcombiner.Globals["hasrangedmgtype"] = (Func<double, double>)HasRangeDmgType;
+
+			Attrcombiner.Globals["DT_BarrierDestroy"] = 4;
+			Attrcombiner.Globals["DT_HornNegateFull"] = 2;
+			Attrcombiner.Globals["DT_HornNegateArmour"] = 2;
+			Attrcombiner.Globals["DT_Poison"] = 256;
+
+			Attrcombiner.Globals["DT_Electric"] = 8;
+			Attrcombiner.Globals["DT_Poison"] = 256;
+			Attrcombiner.Globals["DT_Sonic"] = 16;
+			Attrcombiner.Globals["DT_VenomSpray"] = 256;
+		}
 
         private double GetGameAttribute(string key)
 		{
@@ -56,7 +70,20 @@ namespace Combiner
 				return value;
 			}
 			return 0;
-		} 
+		}
+
+		private double CheckGameAttribute(string key)
+		{
+			double value;
+			if (Creature.GameAttributes.TryGetValue(key, out value))
+			{
+				if (value > 0)
+				{
+					return 1;
+				}
+			}
+			return 0;
+		}
 
 		private void SetGameAttribute(string key, double value)
 		{
@@ -64,6 +91,61 @@ namespace Combiner
 			{
 				Creature.GameAttributes[key] = value;
 			}
+		}
+
+		private void SetUIAttribute(string key, double value)
+		{
+			// Do nothing
+		}
+
+		private double HasMeleeDmgType(double value)
+		{
+			if (Creature.GameAttributes[Utility.Melee2Type] == value)
+			{
+				return 1;
+			}
+			else if (Creature.GameAttributes[Utility.Melee3Type] == value)
+			{
+				return 1;
+			}
+			else if (Creature.GameAttributes[Utility.Melee4Type] == value)
+			{
+				return 1;
+			}
+			else if (Creature.GameAttributes[Utility.Melee5Type] == value)
+			{
+				return 1;
+			}
+			else if (Creature.GameAttributes[Utility.Melee8Type] == value)
+			{
+				return 1;
+			}
+			return 0;
+		}
+
+		private double HasRangeDmgType(double value)
+		{
+			if (Creature.GameAttributes[Utility.Range2Type] == value)
+			{
+				return 1;
+			}
+			else if (Creature.GameAttributes[Utility.Range3Type] == value)
+			{
+				return 1;
+			}
+			else if (Creature.GameAttributes[Utility.Range4Type] == value)
+			{
+				return 1;
+			}
+			else if (Creature.GameAttributes[Utility.Range5Type] == value)
+			{
+				return 1;
+			}
+			else if (Creature.GameAttributes[Utility.Range8Type] == value)
+			{
+				return 1;
+			}
+			return 0;
 		}
 
 		private double Max(double x, double y)

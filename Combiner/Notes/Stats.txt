@@ -6,5 +6,7 @@ take largest size
 size_diff = larger size / smaller size
 health = size_diff ^ exp_hitpoint * hitpoints
 
+water speed = (larger_size - smaller_size) * (-1) * exp_speed * speed + 1
+
 
 damage and speed_max same as health formula

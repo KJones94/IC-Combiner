@@ -9,7 +9,7 @@
 
 --Let's go!
 
-function combine_creature()
+-- function combine_creature()
 
 -----------------
 -----------------
@@ -651,4 +651,4 @@ setattribute( "costrenew", CostRenew );
 setattribute( "cost", CostGather );
 setattribute( "popsize", Pop )
 
-end
+-- end

@@ -143,7 +143,7 @@ namespace Combiner
 		/// </summary>
 		/// <param name="stock"></param>
 		/// <returns></returns>
-		private double SizeDifference(Stock stock)
+		private double SizeRatio(Stock stock)
 		{
 			if (IsGreaterSize(stock))
 			{
@@ -152,6 +152,18 @@ namespace Combiner
 			else
 			{
 				return stock.GetLimbAttributeValue("size") / GetLimbAttributeValue("size");
+			}
+		}
+
+		private double SizeDifference(Stock stock)
+		{
+			if (IsGreaterSize(stock))
+			{
+				return 1.0;
+			}
+			else
+			{
+				return stock.GetLimbAttributeValue("size") - GetLimbAttributeValue("size");
 			}
 		}
 
@@ -195,38 +207,123 @@ namespace Combiner
 		public double CalcLimbHitpoints(Stock stock, Limb limb)
 		{
 			double limbHitpoints = CalcLimbStats(limb, "hitpoints");
-			return Math.Pow(SizeDifference(stock), GetLimbAttributeValue("exp_hitpoints")) * limbHitpoints;
+			double health = Math.Pow(SizeRatio(stock), GetLimbAttributeValue("exp_hitpoints")) * limbHitpoints;
+			if (health < 0)
+			{
+				return 0;
+			}
+			return health;
 		}
 
 		public double CalcLimbArmour(Stock stock, Limb limb)
 		{
 			double limbArmour = CalcLimbStats(limb, "armour");
-			return limbArmour * .8;
+			if (limbArmour < 0)
+			{
+				return 0;
+			}
+			return limbArmour;
+		}
+
+		public double CalcLimbSightRadius()
+		{
+			double sightRadius = GetLimbAttributeValue(Utility.SightRadius);
+			if (sightRadius < 0)
+			{
+				return 0;
+			}
+			return sightRadius;
 		}
 
 		public double CalcLimbLandSpeed(Stock stock, Limb limb)
 		{
 			double limbLandSpeed = CalcLimbStats(limb, "speed_max");
-			return Math.Pow(SizeDifference(stock), GetLimbAttributeValue("exp_speed_max")) * limbLandSpeed;
+			double speed = Math.Pow(SizeRatio(stock), GetLimbAttributeValue("exp_speed_max")) * limbLandSpeed;
+			if (speed < 0)
+			{
+				return 0;
+			}
+			return speed;
 		}
 
 		public double CalcLimbWaterSpeed(Stock stock, Limb limb)
 		{
 			double limbWaterSpeed = CalcLimbStats(limb, "waterspeed_max");
-			return Math.Pow(SizeDifference(stock), GetLimbAttributeValue("exp_waterspeed_max")) * limbWaterSpeed;
+			// Not right
+			double speed = 1 + -1 * SizeRatio(stock) * GetLimbAttributeValue("exp_waterspeed_max") * limbWaterSpeed;
+			if (speed < 0)
+			{
+				return 0;
+			}
+			return speed;
 		}
 
 		public double CalcLimbAirSpeed(Stock stock, Limb limb)
 		{
 			double limbAirSpeed = CalcLimbStats(limb, "airspeed_max");
-			return Math.Pow(SizeDifference(stock), GetLimbAttributeValue("exp_airspeed_max")) * limbAirSpeed;
+			double speed = Math.Pow(SizeRatio(stock), GetLimbAttributeValue("exp_airspeed_max")) * limbAirSpeed;
+			if (speed < 0)
+			{
+				return 0;
+			}
+			return speed;
 		}
 
 		public double CalcLimbMeleeDamage(Stock stock, Limb limb)
 		{
 			string damageName = "melee" + (int)limb + "_damage";
 			string damageExp = "exp_" + damageName;
-			return Math.Pow(SizeDifference(stock), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(damageName);
+			double damage = Math.Pow(SizeRatio(stock), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(damageName);
+			if (damage < 0 )
+			{
+				return 0;
+			}
+			return damage;
+		}
+
+		public double CalcLimbRangeDamage(Stock stock, Limb limb)
+		{
+			string damageName = "range" + (int)limb + "_damage";
+			string damageExp = "exp_" + damageName;
+			double damage = Math.Pow(SizeRatio(stock), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(damageName);
+			if (damage < 0)
+			{
+				return 0;
+			}
+			return damage;
+		}
+
+		public double GetLimbRangeType(Limb limb)
+		{
+			string rangeType = "range" + (int)limb + "_dmgtype";
+			double value = GetLimbAttributeValue(rangeType);
+			if (value < 0)
+			{
+				return 0;
+			}
+			return value;
+		}
+
+		public double GetLimbRangeSpecial(Limb limb)
+		{
+			string rangeSpecial = "range" + (int)limb + "_special";
+			double value = GetLimbAttributeValue(rangeSpecial);
+			if (value < 0)
+			{
+				return 0;
+			}
+			return value;
+		}
+
+		public double GetLimbMeleeType(Limb limb)
+		{
+			string meleeType = "melee" + (int)limb + "_dmgtype";
+			double value = GetLimbAttributeValue(meleeType);
+			if (value < 0)
+			{
+				return 0;
+			}
+			return value;
 		}
 
 		#endregion

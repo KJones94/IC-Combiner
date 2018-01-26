@@ -40,6 +40,7 @@ melee/range#_damage_type:
 	2 = horns
 	4 = barrier destroy
 	8 = electric
+	16 = sonic
 	256 = poison bite or venom spray?
 
 range#_special:

@@ -41,10 +41,7 @@ limbattributes = {
 ["range8_damage"]={8,0},
 ["range8_special"]={8,0},
 
-
 ["melee_damage"]={1,0},
-["range_damage"]={1,0}, -- never used in attrcombiner
-["total_damage"]={1,0},
 
 
 -- Abilities
@@ -86,7 +83,7 @@ limbattributes = {
 -- end
 
 
-["buildtime"]={1,0},
+["buildtime"]={1,0},	-- Might be for UI
 ["constructionticks"]={1,0},
 
 ["creature_rank"]={1,0},
