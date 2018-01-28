@@ -25,58 +25,58 @@ namespace Combiner
 			InitializeComponent();
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			//SQLiteConnection.CreateFile("MyDatabase.sqlite");
-			//_dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
-			//_dbConnection.Open();
+		//private void Button_Click(object sender, RoutedEventArgs e)
+		//{
+		//	//SQLiteConnection.CreateFile("MyDatabase.sqlite");
+		//	//_dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
+		//	//_dbConnection.Open();
 
 
 
-			LuaHandler lua = new LuaHandler();
+		//	LuaHandler lua = new LuaHandler();
 
-			Stock s1 = StockFactory.Instance.CreateStock("coyote", lua);
-			Stock s2 = StockFactory.Instance.CreateStock("camel", lua);
-			List<Creature> creatures = CreatureCombiner.Combine(s1, s2);
-			//lua.LoadScript(creatures[0]);
+		//	Stock s1 = StockFactory.Instance.CreateStock("coyote", lua);
+		//	Stock s2 = StockFactory.Instance.CreateStock("camel", lua);
+		//	List<Creature> creatures = CreatureCombiner.Combine(s1, s2);
+		//	//lua.LoadScript(creatures[0]);
 
-			//s1 = StockFactory.Instance.CreateStock("chameleon", lua);
-			//s2 = StockFactory.Instance.CreateStock("blue whale", lua);
-			//creatures = CreatureCombiner.Combine(s1, s2);
-			//lua.LoadScript(creatures[0]);
-			//lua.LoadScript(creatures[5]);
-			//lua.LoadScript(creatures[0]);
-
-
-			//s1 = StockFactory.Instance.CreateStock("archerfish", lua);
-			//s2 = StockFactory.Instance.CreateStock("horse", lua);
-			//creatures = CreatureCombiner.Combine(s1, s2);
-			//lua.LoadScript(creatures[0]);
-			//lua.LoadScript(creatures[5]);
-			//lua.LoadScript(creatures[0]);
-
-			//s1 = StockFactory.Instance.CreateStock("cheetah", lua);
-			//s2 = StockFactory.Instance.CreateStock("behemoth", lua);
-			//creatures = CreatureCombiner.Combine(s1, s2);
-			//lua.LoadScript(creatures[0]);
-			//lua.LoadScript(creatures[5]);
-			//lua.LoadScript(creatures[0]);
-
-			//s1 = StockFactory.Instance.CreateStock("fire_fly", lua);
-			//s2 = StockFactory.Instance.CreateStock("dolphin", lua);
-			//creatures = CreatureCombiner.Combine(s1, s2);
-			//lua.LoadScript(creatures[0]);
-			//lua.LoadScript(creatures[5]);
-			//lua.LoadScript(creatures[0]);
-
-			s1 = StockFactory.Instance.CreateStock("dolphin", lua);
-			s2 = StockFactory.Instance.CreateStock("behemoth", lua);
-			creatures = CreatureCombiner.Combine(s1, s2);
-			lua.LoadScript(creatures[0]);
-			lua.LoadScript(creatures[5]);
-			lua.LoadScript(creatures[0]);
+		//	//s1 = StockFactory.Instance.CreateStock("chameleon", lua);
+		//	//s2 = StockFactory.Instance.CreateStock("blue whale", lua);
+		//	//creatures = CreatureCombiner.Combine(s1, s2);
+		//	//lua.LoadScript(creatures[0]);
+		//	//lua.LoadScript(creatures[5]);
+		//	//lua.LoadScript(creatures[0]);
 
 
-		}
+		//	//s1 = StockFactory.Instance.CreateStock("archerfish", lua);
+		//	//s2 = StockFactory.Instance.CreateStock("horse", lua);
+		//	//creatures = CreatureCombiner.Combine(s1, s2);
+		//	//lua.LoadScript(creatures[0]);
+		//	//lua.LoadScript(creatures[5]);
+		//	//lua.LoadScript(creatures[0]);
+
+		//	//s1 = StockFactory.Instance.CreateStock("cheetah", lua);
+		//	//s2 = StockFactory.Instance.CreateStock("behemoth", lua);
+		//	//creatures = CreatureCombiner.Combine(s1, s2);
+		//	//lua.LoadScript(creatures[0]);
+		//	//lua.LoadScript(creatures[5]);
+		//	//lua.LoadScript(creatures[0]);
+
+		//	//s1 = StockFactory.Instance.CreateStock("fire_fly", lua);
+		//	//s2 = StockFactory.Instance.CreateStock("dolphin", lua);
+		//	//creatures = CreatureCombiner.Combine(s1, s2);
+		//	//lua.LoadScript(creatures[0]);
+		//	//lua.LoadScript(creatures[5]);
+		//	//lua.LoadScript(creatures[0]);
+
+		//	s1 = StockFactory.Instance.CreateStock("dolphin", lua);
+		//	s2 = StockFactory.Instance.CreateStock("behemoth", lua);
+		//	creatures = CreatureCombiner.Combine(s1, s2);
+		//	lua.LoadScript(creatures[0]);
+		//	lua.LoadScript(creatures[5]);
+		//	lua.LoadScript(creatures[0]);
+
+
+		//}
 	}
 }

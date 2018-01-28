@@ -7,12 +7,39 @@ using System.Threading.Tasks;
 
 namespace Combiner
 {
-    class Creature
+    public class Creature
     {
         public Stock Left { get; set; }
         public Stock Right { get; set; }
         Dictionary<Limb, bool> PossibleBodyParts { get; set; }
         Dictionary<Limb, Side> ChosenBodyParts { get; set; }
+
+		public string BodyParts
+		{
+			get { return CreateBodyPartsText(); }
+		}
+
+		private string CreateBodyPartsText()
+		{
+			StringBuilder sb = new StringBuilder();
+			foreach (Limb limb in ChosenBodyParts.Keys)
+			{
+				Side side = ChosenBodyParts[limb];
+				if (side == Side.Left)
+				{
+					sb.Append('L');
+				}
+				else if (side == Side.Right)
+				{
+					sb.Append('R');
+				}
+				else if (side == Side.Empty)
+				{
+					sb.Append('x');
+				}
+			}
+			return sb.ToString();
+		}
 
 		//Table GameAttributes { get; set; }  // Need to connect to script...
 		public Dictionary<string, double> GameAttributes { get; set; } = new Dictionary<string, double>();
@@ -585,7 +612,7 @@ namespace Combiner
 
 	}
 
-    class CreatureFactory
+    public class CreatureFactory
     {
         private static readonly CreatureFactory _instance = new CreatureFactory();
 

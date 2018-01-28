@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Combiner
 {
 	// UNTESTED BE CAREFUL
-    static class CreatureCombiner
+    public static class CreatureCombiner
     {
 		private static Dictionary<Limb, bool> ConsolidateBodyParts(Stock left, Stock right)
 		{
@@ -261,7 +261,7 @@ namespace Combiner
 
 	
 
-	enum Side
+	public enum Side
 	{
 		Null,
 		Empty,

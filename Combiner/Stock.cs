@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Combiner
 {
-    class Stock
+    public class Stock
     {
         public string Name { get; set; }
         public Dictionary<Limb, bool> BodyParts { get; set; }
@@ -328,10 +328,14 @@ namespace Combiner
 
 		#endregion
 
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 
     // Not thread safe
-    class StockFactory
+    public class StockFactory
     {
         private static readonly StockFactory _instance = new StockFactory();
 
@@ -360,7 +364,7 @@ namespace Combiner
         }
     }
 
-    enum Limb
+    public enum Limb
     {
         Nothing,
         General,
@@ -373,7 +377,7 @@ namespace Combiner
         Claws
     }
 
-    enum StockType
+    public enum StockType
     {
         Bird,
         Quadruped,

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Combiner
 {
-    class LuaHandler
+    public class LuaHandler
     {
         private Script Attrcombiner { get; set; }
 		private Creature Creature { get; set; }

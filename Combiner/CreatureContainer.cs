@@ -8,11 +8,11 @@ namespace Combiner
 	public class CreatureContainer
 	{
 		private LuaHandler m_Lua;
-		private List<Creature> Creatures;
+		public List<Creature> Creatures { get; set; }
 
-		public CreatureContainer()
+		public CreatureContainer(LuaHandler lua)
 		{
-			m_Lua = new LuaHandler();
+			m_Lua = lua;
 			Creatures = new List<Creature>();
 		}
 

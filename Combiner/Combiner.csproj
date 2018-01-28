@@ -67,7 +67,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BaseViewModel.cs" />
     <Compile Include="CreatureContainer.cs" />
+    <Compile Include="CreatureVM.cs" />
+    <Compile Include="MainVM.cs" />
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="Tests\CreatureCombinerTest.cs" />
     <Compile Include="Tests\CreatureTest.cs" />

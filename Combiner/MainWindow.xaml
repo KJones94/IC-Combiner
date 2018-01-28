@@ -5,14 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Combiner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title="MainWindow" Height="500" Width="1000">
+	<Window.DataContext>
+		<local:MainVM/>
+	</Window.DataContext>
+    <Grid DataContext="{Binding CreatureVM}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*"/>
 			<RowDefinition Height="2*"/>
 		</Grid.RowDefinitions>
-		<Button Grid.Row="0" Content="Click Me" Click="Button_Click"></Button>
-		<DataGrid Grid.Row="1">
+		<Button Grid.Row="0" Content="Click Me" Command="{Binding CreateCreaturesCommand}"></Button>
+		<DataGrid ItemsSource="{Binding Creatures}" Grid.Row="1"
+				  AlternatingRowBackground="Gainsboro" AlternationCount="2"
+				  AutoGenerateColumns="False" VirtualizingStackPanel.VirtualizationMode="Standard">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Left" Binding="{Binding Left}"/>
+				<DataGridTextColumn Header="Right" Binding="{Binding Right}"/>
+				<DataGridTextColumn Header="Hitpoints" Binding="{Binding Hitpoints}"/>
+				<DataGridTextColumn Header="Armour" Binding="{Binding Armour}"/>
+				<DataGridTextColumn Header="Sight Radius" Binding="{Binding SightRadius}"/>
+				<DataGridTextColumn Header="Size" Binding="{Binding Size}"/>
+				<DataGridTextColumn Header="Land Speed" Binding="{Binding LandSpeed}"/>
+				<DataGridTextColumn Header="Water Speed" Binding="{Binding WaterSpeed}"/>
+				<DataGridTextColumn Header="Air Speed" Binding="{Binding AirSpeed}"/>
+				<DataGridTextColumn Header="Melee Damage" Binding="{Binding MeleeDamage}"/>
+				<DataGridTextColumn Header="Body Parts" Binding="{Binding BodyParts}"/>
+				<!--<DataGridTextColumn Header="Range Damage" Binding="{Binding RangeDamage}"/>-->
+			</DataGrid.Columns>
+			
 			
 		</DataGrid>
 	</Grid>
