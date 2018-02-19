@@ -250,7 +250,10 @@ namespace Combiner
 		{
 			double limbWaterSpeed = CalcLimbStats(limb, "waterspeed_max");
 			// Not right
-			double speed = 1 + -1 * SizeRatio(stock) * GetLimbAttributeValue("exp_waterspeed_max") * limbWaterSpeed;
+			double speed = Math.Pow(SizeRatio(stock), 
+				GetLimbAttributeValue("exp_waterspeed_max") 
+				+ GetLimbAttributeValue("exp_speed_max"))
+				* limbWaterSpeed;
 			if (speed < 0)
 			{
 				return 0;
@@ -362,6 +365,13 @@ namespace Combiner
 			string path = Path.Combine(Environment.CurrentDirectory, Utility.StockDirectory);
 			return new Stock(animalName, lua.GetLimbAttributes(path + animalName + ".lua"));
         }
+
+		public Stock CreateStockFromFile(string file, LuaHandler lua)
+		{
+			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+			string path = Path.Combine(Environment.CurrentDirectory, Utility.StockDirectory);
+			return new Stock(file.Remove(file.Count() - 4), lua.GetLimbAttributes(path + file));
+		}
     }
 
     public enum Limb

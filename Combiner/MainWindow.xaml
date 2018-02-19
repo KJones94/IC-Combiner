@@ -5,22 +5,112 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Combiner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="1000">
+        Title="MainWindow" Height="1000" Width="1500">
 	<Window.DataContext>
 		<local:MainVM/>
 	</Window.DataContext>
-    <Grid DataContext="{Binding CreatureVM}">
+	<Window.Resources>
+		<CollectionViewSource x:Key="creatures" Source="{Binding Creatures, Mode=TwoWay}"/>
+	</Window.Resources>
+	<Grid DataContext="{Binding CreatureVM}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*"/>
 			<RowDefinition Height="2*"/>
 		</Grid.RowDefinitions>
-		<Button Grid.Row="0" Content="Click Me" Command="{Binding CreateCreaturesCommand}"></Button>
-		<DataGrid ItemsSource="{Binding Creatures}" Grid.Row="1"
-				  AlternatingRowBackground="Gainsboro" AlternationCount="2"
-				  AutoGenerateColumns="False" VirtualizingStackPanel.VirtualizationMode="Standard">
+		<Grid Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0">
+				<Button Content="Set Default Filters" Command="{Binding SetDefaultFiltersCommand}"/>
+				<StackPanel Orientation="Horizontal">
+					<Label>Rank:</Label>
+					<TextBox Width="50" Text="{Binding MinRank, Mode=TwoWay}"/>
+					<TextBox Width="50" Text="{Binding MaxRank, Mode=TwoWay}"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Label>Hitpoints:</Label>
+					<TextBox Width="50" Text="{Binding MinHitpoints, Mode=TwoWay}"/>
+					<TextBox Width="50" Text="{Binding MaxHitpoints, Mode=TwoWay}"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Label>Armour:</Label>
+					<TextBox Width="50" Text="{Binding MinArmour, Mode=TwoWay}"/>
+					<TextBox Width="50" Text="{Binding MaxArmour, Mode=TwoWay}"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Label>Sight Radius:</Label>
+					<TextBox Width="50" Text="{Binding MinSightRadius, Mode=TwoWay}"/>
+					<TextBox Width="50" Text="{Binding MaxSightRadius, Mode=TwoWay}"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Label>Land Speed:</Label>
+					<TextBox Width="50" Text="{Binding MinLandSpeed, Mode=TwoWay}"/>
+					<TextBox Width="50" Text="{Binding MaxLandSpeed, Mode=TwoWay}"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Label>Water Speed:</Label>
+					<TextBox Width="50" Text="{Binding MinWaterSpeed, Mode=TwoWay}"/>
+					<TextBox Width="50" Text="{Binding MaxWaterSpeed, Mode=TwoWay}"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Label>Air Speed:</Label>
+					<TextBox Width="50" Text="{Binding MinAirSpeed, Mode=TwoWay}"/>
+					<TextBox Width="50" Text="{Binding MaxAirSpeed, Mode=TwoWay}"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Label>Melee Damage:</Label>
+					<TextBox Width="50" Text="{Binding MinMeleeDamage, Mode=TwoWay}"/>
+					<TextBox Width="50" Text="{Binding MaxMeleeDamage, Mode=TwoWay}"/>
+				</StackPanel>
+				<!--<StackPanel Orientation="Horizontal">
+					<Label>Range Damage:</Label>
+					<TextBox Width="50" Text="{Binding MinRangeDamage, Mode=TwoWay}"/>
+					<TextBox Width="50" Text="{Binding MaxRangeDamage, Mode=TwoWay}"/>
+				</StackPanel>-->
+				<Button Content="Filter" Command="{Binding FilterCreaturesCommand}"/>
+			</StackPanel>
+			<!--<StackPanel Grid.Column="1">
+				<StackPanel Orientation="Horizontal">
+					<Label>Abilities:</Label>
+					<ComboBox Width="50"/>
+					<Button Width="30" Content="Add"/>
+					<ComboBox Width="50"/>
+					<Button Width="30" Content="Drop"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Label>Terrain:</Label>
+					<ComboBox Width="50"/>
+				</StackPanel>
+			</StackPanel>-->
+			<StackPanel Grid.Column="2">
+				<TextBlock>Can crash if too many are added because currently stored in memory.</TextBlock>
+				<TextBlock>Stick to less than 30 creatures or so</TextBlock>
+				<StackPanel Orientation="Horizontal">
+					<Label>Stock:</Label>
+					<ComboBox Width="100"
+							  ItemsSource="{Binding StockChoices}"
+							  SelectedItem="{Binding SelectedAddStock}"/>
+					<Button Width="30" Content="Add" Command="{Binding AddStockChoiceCommand}"/>
+					<ComboBox Width="100"
+							  ItemsSource="{Binding ChosenStock}"
+							  SelectedItem="{Binding SelectedRemoveStock}"/>
+					<Button Width="30" Content="Drop" Command="{Binding RemoveStockChoiceCommand}"/>
+					<Button Width="50" Content="Drop All" Command="{Binding RemoveAllStockChoicesCommand}"/>
+				</StackPanel>
+				<Button Content="Combine" Command="{Binding CreateCreaturesCommand}"></Button>
+			</StackPanel>
+			
+		</Grid>
+		<DataGrid ItemsSource="{Binding CreaturesView, Mode=TwoWay}" Grid.Row="1"
+					  AlternatingRowBackground="Gainsboro" AlternationCount="2"
+					  AutoGenerateColumns="False" VirtualizingStackPanel.VirtualizationMode="Standard">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Left" Binding="{Binding Left}"/>
 				<DataGridTextColumn Header="Right" Binding="{Binding Right}"/>
+				<DataGridTextColumn Header="Rank" Binding="{Binding Rank}"/>
 				<DataGridTextColumn Header="Hitpoints" Binding="{Binding Hitpoints}"/>
 				<DataGridTextColumn Header="Armour" Binding="{Binding Armour}"/>
 				<DataGridTextColumn Header="Sight Radius" Binding="{Binding SightRadius}"/>
@@ -32,8 +122,6 @@
 				<DataGridTextColumn Header="Body Parts" Binding="{Binding BodyParts}"/>
 				<!--<DataGridTextColumn Header="Range Damage" Binding="{Binding RangeDamage}"/>-->
 			</DataGrid.Columns>
-			
-			
 		</DataGrid>
 	</Grid>
 </Window>

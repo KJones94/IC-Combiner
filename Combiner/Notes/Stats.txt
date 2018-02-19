@@ -8,5 +8,7 @@ health = size_diff ^ exp_hitpoint * hitpoints
 
 water speed = (larger_size - smaller_size) * (-1) * exp_speed * speed + 1
 
+or maybe this... water speed = (larger_size / smaller_size) ^ (exp_speed_max + waterspeed_exp) * speed
+
 
 damage and speed_max same as health formula
