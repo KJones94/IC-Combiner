@@ -570,6 +570,12 @@ if getgameattribute("regeneration") == 1 then
 end
 
 build_time = (30 * CreatureRank)*((power*1.3/max_power)^0.8)*popMult;
+setgameattribute("speedCost", speedCost);
+setgameattribute("power", power);
+setgameattribute("maxpower", max_power);
+setgameattribute("rangecostmult", RangeCostMult);
+setgameattribute("rank", CreatureRank);
+setgameattribute("cost", CostGather);
 CostGather = (CostGather + speedCost)*((power*1.3/max_power)^0.8)*RangeCostMult*1.1+(2/CreatureRank)*1.25;
 CostRenew = CostRenew*((power*1.3/max_power)^0.8);
 

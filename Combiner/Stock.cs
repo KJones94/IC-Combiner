@@ -296,6 +296,18 @@ namespace Combiner
 			return damage;
 		}
 
+		public double GetLimbRangeMax(Stock stock, Limb limb)
+		{
+			string rangeMax = "range" + (int)limb + "_max";
+			string rangeExp = "exp_range" + (int)limb + "_max";
+			double value = Math.Pow(SizeRatio(stock), GetLimbAttributeValue(rangeExp)) * GetLimbAttributeValue(rangeMax);
+			if (value < 0)
+			{
+				return 0;
+			}
+			return value;
+		}
+
 		public double GetLimbRangeType(Limb limb)
 		{
 			string rangeType = "range" + (int)limb + "_dmgtype";

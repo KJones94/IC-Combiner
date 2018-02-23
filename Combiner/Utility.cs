@@ -51,6 +51,27 @@ namespace Combiner
 			Range8Damage
 		};
 
+		public static string Range2Max = "range2_max";
+		public static string Range3Max = "range3_max";
+		public static string Range4Max = "range4_max";
+		public static string Range5Max = "range5_max";
+		public static string Range6Max = "range6_max";
+		public static string Range7Max = "range7_max";
+		public static string Range8Max = "range8_max";
+
+		public static string[] RangeMax = new string[]
+		{
+			"",
+			"",
+			Range2Max,
+			Range3Max,
+			Range4Max,
+			Range5Max,
+			Range6Max,
+			Range7Max,
+			Range8Max
+		};
+
 		public static string Range2Type = "range2_dmgtype";
 		public static string Range3Type = "range3_dmgtype";
 		public static string Range4Type = "range4_dmgtype";

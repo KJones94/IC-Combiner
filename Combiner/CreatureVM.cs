@@ -272,6 +272,12 @@ namespace Combiner
 			{
 				return !(creature.Rank < MinRank
 					|| creature.Rank > MaxRank
+					|| creature.Coal < MinCoal
+					|| creature.Coal > MaxCoal
+					|| creature.Electricity < MinElec
+					|| creature.Electricity > MaxElec
+					|| creature.Power < MinPower
+					|| creature.Power > MaxPower
 					|| creature.Hitpoints < MinHitpoints
 					|| creature.Hitpoints > MaxHitpoints
 					|| creature.Armour < MinArmour
@@ -285,7 +291,9 @@ namespace Combiner
 					|| creature.AirSpeed < MinAirSpeed
 					|| creature.AirSpeed > MaxAirSpeed
 					|| creature.MeleeDamage < MinMeleeDamage
-					|| creature.MeleeDamage > MaxMeleeDamage);
+					|| creature.MeleeDamage > MaxMeleeDamage
+					|| creature.RangeDamage < MinRangeDamage
+					|| creature.RangeDamage > MaxRangeDamage);
 			}
 			return false;
 		}
@@ -316,6 +324,12 @@ namespace Combiner
 		{
 			MinRank = 0;
 			MaxRank = 5;
+			MinCoal = 0;
+			MaxCoal = 2000;
+			MinElec = 0;
+			MaxElec = 2000;
+			MinPower = 0;
+			MaxPower = 10000;
 			MinHitpoints = 0;
 			MaxHitpoints = 2000;
 			MinArmour = 0;
@@ -358,6 +372,90 @@ namespace Combiner
 				{
 					m_MaxRank = value;
 					OnPropertyChanged(nameof(MaxRank));
+				}
+			}
+		}
+
+		private int m_MinCoal;
+		public int MinCoal
+		{
+			get { return m_MinCoal; }
+			set
+			{
+				if (m_MinCoal != value)
+				{
+					m_MinCoal = value;
+					OnPropertyChanged(nameof(MinCoal));
+				}
+			}
+		}
+
+		private int m_MaxCoal;
+		public int MaxCoal
+		{
+			get { return m_MaxCoal; }
+			set
+			{
+				if (m_MaxCoal != value)
+				{
+					m_MaxCoal = value;
+					OnPropertyChanged(nameof(MaxCoal));
+				}
+			}
+		}
+
+		private int m_MinElec;
+		public int MinElec
+		{
+			get { return m_MinElec; }
+			set
+			{
+				if (m_MinElec != value)
+				{
+					m_MinElec = value;
+					OnPropertyChanged(nameof(MinElec));
+				}
+			}
+		}
+
+		private int m_MaxElec;
+		public int MaxElec
+		{
+			get { return m_MaxElec; }
+			set
+			{
+				if (m_MaxElec != value)
+				{
+					m_MaxElec = value;
+					OnPropertyChanged(nameof(MaxElec));
+				}
+			}
+		}
+
+		private int m_MinPower;
+		public int MinPower
+		{
+			get { return m_MinPower; }
+			set
+			{
+				if (m_MinPower != value)
+				{
+					m_MinPower = value;
+					OnPropertyChanged(nameof(MinPower));
+				}
+			}
+		}
+
+		private int m_MaxPower;
+		public int MaxPower
+		{
+			get { return m_MaxPower; }
+			set
+			{
+				if (m_MaxPower != value)
+				{
+					m_MaxPower = value;
+					OnPropertyChanged(nameof(MaxPower));
 				}
 			}
 		}

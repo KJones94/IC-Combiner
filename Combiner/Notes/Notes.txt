@@ -3,16 +3,16 @@
 		not pop size
 	for..in over a table needs to use pairs() funciton
 	HornNegateFull vs. NegateArmour
-	
 
+	WHAT IS UP WITH ROUNDING IN LUA?
+	
+Bugs:
+	Power for ranged
+	Water speed (looks right at the moment)
 
 TODO:
-	Should range max be added?
 	Range damage cost not calculating correctly
-	Truncate decimals to 1 point
 	Water speed equation wrong..?
-	Costs still generally wrong
-	Land creatures showing with water speed
 
 
 
@@ -50,3 +50,10 @@ Utility
 	
 
 	Power = (health / (1 - armour)) ^ (.63) * (.19 * damage + 2.56)
+
+	speed cost = 20.8937
+	power = 233.0538
+	maxpower = 400
+	range cost mult = 1
+	rank = 4
+	cost = 250

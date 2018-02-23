@@ -47,6 +47,9 @@ RangeCostMult 	= 1.0;
 
 damager = max (damage2, max (damage4, max(damage5, max(damage3, damage8))));
 
+setgameattribute("hello", damager);
+setgameattribute("hello1", range_max);
+
 if (range_max > 0) then
 	damager = damager*(1+(range_max/35));
 end
@@ -655,5 +658,3 @@ setattribute( "popsize", Pop )
 -- end
 
 setgameattribute("Power", power);
-
-setgameattribute("damage", RangeCostMult);

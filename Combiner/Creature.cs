@@ -88,6 +88,19 @@ namespace Combiner
 			set { GameAttributes[Utility.MeleeDamage] = value; }
 		}
 
+		public double RangeDamage
+		{
+			get
+			{
+				double greatestRange = Range2Damage;
+				greatestRange = (Range3Damage > greatestRange) ? Range3Damage : greatestRange;
+				greatestRange = (Range4Damage > greatestRange) ? Range4Damage : greatestRange;
+				greatestRange = (Range5Damage > greatestRange) ? Range5Damage : greatestRange;
+				greatestRange = (Range8Damage > greatestRange) ? Range8Damage : greatestRange;
+				return greatestRange;
+			}
+		}
+
 		public double Range2Damage
 		{
 			get { return GameAttributes[Utility.Range2Damage]; }
@@ -341,26 +354,31 @@ namespace Combiner
 			GameAttributes.Add(Utility.MeleeDamage, 0);
 
 			GameAttributes.Add(Utility.Range2Damage, 0);
+			GameAttributes.Add(Utility.Range2Max, 0);
 			GameAttributes.Add(Utility.Range2Type, 0);
 			GameAttributes.Add(Utility.Range2Special, 0);
 			GameAttributes.Add(Utility.Melee2Type, 0);
 
 			GameAttributes.Add(Utility.Range3Damage, 0);
+			GameAttributes.Add(Utility.Range3Max, 0);
 			GameAttributes.Add(Utility.Range3Type, 0);
 			GameAttributes.Add(Utility.Range3Special, 0);
 			GameAttributes.Add(Utility.Melee3Type, 0);
 
 			GameAttributes.Add(Utility.Range4Damage, 0);
+			GameAttributes.Add(Utility.Range4Max, 0);
 			GameAttributes.Add(Utility.Range4Type, 0);
 			GameAttributes.Add(Utility.Range4Special, 0);
 			GameAttributes.Add(Utility.Melee4Type, 0);
 
 			GameAttributes.Add(Utility.Range5Damage, 0);
+			GameAttributes.Add(Utility.Range5Max, 0);
 			GameAttributes.Add(Utility.Range5Type, 0);
 			GameAttributes.Add(Utility.Range5Special, 0);
 			GameAttributes.Add(Utility.Melee5Type, 0);
 
 			GameAttributes.Add(Utility.Range8Damage, 0);
+			GameAttributes.Add(Utility.Range8Max, 0);
 			GameAttributes.Add(Utility.Range8Type, 0);
 			GameAttributes.Add(Utility.Range8Special, 0);
 			GameAttributes.Add(Utility.Melee8Type, 0);
@@ -387,6 +405,7 @@ namespace Combiner
 			CalcAirSpeed();
 			CalcMeleeDamage();
 			CalcRangeDamage();
+			SetRangeMax();
 			SetRangeType();
 			SetRangeSpecial();
 			SetMeleeType();
@@ -558,6 +577,25 @@ namespace Combiner
 				if (GameAttributes.ContainsKey(Utility.RangeDamage[(int)limb]))
 				{
 					GameAttributes[Utility.RangeDamage[(int)limb]] = side.CalcLimbRangeDamage(OtherSide(side), limb);
+				}
+			}
+		}
+
+		private void SetRangeMax()
+		{
+			Stock side;
+			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
+			{
+				side = GetSide(limb);
+				if (side == null)
+					continue;
+				if (GameAttributes.ContainsKey(Utility.RangeMax[(int)limb]))
+				{
+					GameAttributes[Utility.RangeMax[(int)limb]] = side.GetLimbRangeMax(OtherSide(side), limb);
+					if (GameAttributes[Utility.RangeMax[(int)limb]] > 0)
+					{
+						Console.WriteLine("hello");
+					}
 				}
 			}
 		}

@@ -67,7 +67,14 @@ namespace Combiner
 			double value;
 			if (Creature.GameAttributes.TryGetValue(key, out value))
 			{
-				return value;
+				if (value > 1)
+				{
+					return Math.Floor(value);
+				}
+				else
+				{
+					return value;
+				}
 			}
 			return 0;
 		}
@@ -87,6 +94,10 @@ namespace Combiner
 
 		private void SetGameAttribute(string key, double value)
 		{
+			if (key == "hello1")
+			{
+				Console.WriteLine("Hello");
+			}
 			if (Creature.GameAttributes.ContainsKey(key))
 			{
 				Creature.GameAttributes[key] = value;
@@ -95,7 +106,7 @@ namespace Combiner
 
 		private void SetUIAttribute(string key, double value)
 		{
-			// Do nothing
+			
 		}
 
 		private double HasMeleeDmgType(double value)

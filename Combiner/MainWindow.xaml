@@ -11,6 +11,7 @@
 	</Window.DataContext>
 	<Window.Resources>
 		<CollectionViewSource x:Key="creatures" Source="{Binding Creatures, Mode=TwoWay}"/>
+		<local:DoubleToStringConverter x:Key="attrConverter"/>
 	</Window.Resources>
 	<Grid DataContext="{Binding CreatureVM}">
 		<Grid.RowDefinitions>
@@ -24,11 +25,26 @@
 				<ColumnDefinition Width="1*"/>
 			</Grid.ColumnDefinitions>
 			<StackPanel Grid.Column="0">
-				<Button Content="Set Default Filters" Command="{Binding SetDefaultFiltersCommand}"/>
+				
 				<StackPanel Orientation="Horizontal">
 					<Label>Rank:</Label>
 					<TextBox Width="50" Text="{Binding MinRank, Mode=TwoWay}"/>
 					<TextBox Width="50" Text="{Binding MaxRank, Mode=TwoWay}"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Label>Coal:</Label>
+					<TextBox Width="50" Text="{Binding MinCoal, Mode=TwoWay}"/>
+					<TextBox Width="50" Text="{Binding MaxCoal, Mode=TwoWay}"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Label>Elec:</Label>
+					<TextBox Width="50" Text="{Binding MinElec, Mode=TwoWay}"/>
+					<TextBox Width="50" Text="{Binding MaxElec, Mode=TwoWay}"/>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Label>Power:</Label>
+					<TextBox Width="50" Text="{Binding MinPower, Mode=TwoWay}"/>
+					<TextBox Width="50" Text="{Binding MaxPower, Mode=TwoWay}"/>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal">
 					<Label>Hitpoints:</Label>
@@ -65,15 +81,17 @@
 					<TextBox Width="50" Text="{Binding MinMeleeDamage, Mode=TwoWay}"/>
 					<TextBox Width="50" Text="{Binding MaxMeleeDamage, Mode=TwoWay}"/>
 				</StackPanel>
-				<!--<StackPanel Orientation="Horizontal">
+				<StackPanel Orientation="Horizontal">
 					<Label>Range Damage:</Label>
 					<TextBox Width="50" Text="{Binding MinRangeDamage, Mode=TwoWay}"/>
 					<TextBox Width="50" Text="{Binding MaxRangeDamage, Mode=TwoWay}"/>
-				</StackPanel>-->
-				<Button Content="Filter" Command="{Binding FilterCreaturesCommand}"/>
+				</StackPanel>
+				
 			</StackPanel>
-			<!--<StackPanel Grid.Column="1">
-				<StackPanel Orientation="Horizontal">
+			<StackPanel Grid.Column="1">
+			<Button Content="Set Default Filters" Command="{Binding SetDefaultFiltersCommand}"/>
+				<Button Content="Filter" Command="{Binding FilterCreaturesCommand}"/>
+				<!--<StackPanel Orientation="Horizontal">
 					<Label>Abilities:</Label>
 					<ComboBox Width="50"/>
 					<Button Width="30" Content="Add"/>
@@ -83,9 +101,18 @@
 				<StackPanel Orientation="Horizontal">
 					<Label>Terrain:</Label>
 					<ComboBox Width="50"/>
-				</StackPanel>
-			</StackPanel>-->
+				</StackPanel>-->
+			</StackPanel>
 			<StackPanel Grid.Column="2">
+				<TextBlock>Body Part order:</TextBlock>
+				<TextBlock>Front Legs</TextBlock>
+				<TextBlock>Back Legs</TextBlock>
+				<TextBlock>Head</TextBlock>
+				<TextBlock>Tail</TextBlock>
+				<TextBlock>Torso</TextBlock>
+				<TextBlock>Wings</TextBlock>
+				<TextBlock>Claws</TextBlock>
+				
 				<TextBlock>Can crash if too many are added because currently stored in memory.</TextBlock>
 				<TextBlock>Stick to less than 30 creatures or so</TextBlock>
 				<StackPanel Orientation="Horizontal">
@@ -110,17 +137,20 @@
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Left" Binding="{Binding Left}"/>
 				<DataGridTextColumn Header="Right" Binding="{Binding Right}"/>
-				<DataGridTextColumn Header="Rank" Binding="{Binding Rank}"/>
-				<DataGridTextColumn Header="Hitpoints" Binding="{Binding Hitpoints}"/>
-				<DataGridTextColumn Header="Armour" Binding="{Binding Armour}"/>
-				<DataGridTextColumn Header="Sight Radius" Binding="{Binding SightRadius}"/>
-				<DataGridTextColumn Header="Size" Binding="{Binding Size}"/>
-				<DataGridTextColumn Header="Land Speed" Binding="{Binding LandSpeed}"/>
-				<DataGridTextColumn Header="Water Speed" Binding="{Binding WaterSpeed}"/>
-				<DataGridTextColumn Header="Air Speed" Binding="{Binding AirSpeed}"/>
-				<DataGridTextColumn Header="Melee Damage" Binding="{Binding MeleeDamage}"/>
 				<DataGridTextColumn Header="Body Parts" Binding="{Binding BodyParts}"/>
-				<!--<DataGridTextColumn Header="Range Damage" Binding="{Binding RangeDamage}"/>-->
+				<DataGridTextColumn Header="Rank" Binding="{Binding Rank, Converter={StaticResource attrConverter}}"/>
+				<DataGridTextColumn Header="Coal" Binding="{Binding Coal, Converter={StaticResource attrConverter}}"/>
+				<DataGridTextColumn Header="Elec" Binding="{Binding Electricity, Converter={StaticResource attrConverter}}"/>
+				<DataGridTextColumn Header="Power" Binding="{Binding Power, Converter={StaticResource attrConverter}}"/>
+				<DataGridTextColumn Header="Hitpoints" Binding="{Binding Hitpoints, Converter={StaticResource attrConverter}}"/>
+				<DataGridTextColumn Header="Armour" Binding="{Binding Armour, Converter={StaticResource attrConverter}}"/>
+				<DataGridTextColumn Header="Sight Radius" Binding="{Binding SightRadius, Converter={StaticResource attrConverter}}"/>
+				<DataGridTextColumn Header="Size" Binding="{Binding Size, Converter={StaticResource attrConverter}}"/>
+				<DataGridTextColumn Header="Land Speed" Binding="{Binding LandSpeed, Converter={StaticResource attrConverter}}"/>
+				<DataGridTextColumn Header="Water Speed" Binding="{Binding WaterSpeed, Converter={StaticResource attrConverter}}"/>
+				<DataGridTextColumn Header="Air Speed" Binding="{Binding AirSpeed, Converter={StaticResource attrConverter}}"/>
+				<DataGridTextColumn Header="Melee Damage" Binding="{Binding MeleeDamage, Converter={StaticResource attrConverter}}"/>
+				<DataGridTextColumn Header="Range Damage" Binding="{Binding RangeDamage, Converter={StaticResource attrConverter}}"/>
 			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>
