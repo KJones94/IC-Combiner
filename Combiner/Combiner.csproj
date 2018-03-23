@@ -67,7 +67,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ArtilleryConverter.cs" />
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="ContainsAbilitiesConverter.cs" />
     <Compile Include="CreatureContainer.cs" />
     <Compile Include="CreatureVM.cs" />
     <Compile Include="DoubleToStringConverter.cs" />
@@ -344,7 +346,9 @@
   <ItemGroup>
     <Resource Include="Notes\Stats.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Notes\Features.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

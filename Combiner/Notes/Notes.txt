@@ -9,6 +9,7 @@
 Bugs:
 	Power for ranged
 	Water speed (looks right at the moment)
+	Range special only gets greatest one
 
 TODO:
 	Range damage cost not calculating correctly

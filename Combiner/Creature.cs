@@ -67,6 +67,11 @@ namespace Combiner
 			set { GameAttributes[Utility.Hitpoints] = value; }
 		}
 
+		public double EffectiveHealth
+		{
+			get { return Hitpoints / (1 - Armour); }
+		}
+
 		public double LandSpeed
 		{
 			get { return GameAttributes[Utility.LandSpeed]; }
@@ -98,6 +103,19 @@ namespace Combiner
 				greatestRange = (Range5Damage > greatestRange) ? Range5Damage : greatestRange;
 				greatestRange = (Range8Damage > greatestRange) ? Range8Damage : greatestRange;
 				return greatestRange;
+			}
+		}
+
+		public double RangeSpecial
+		{
+			get
+			{
+				double rangeSpecial = Range2Special;
+				rangeSpecial = (Range3Special > rangeSpecial) ? Range3Special : rangeSpecial;
+				rangeSpecial = (Range4Special > rangeSpecial) ? Range4Special : rangeSpecial;
+				rangeSpecial = (Range5Special > rangeSpecial) ? Range5Special : rangeSpecial;
+				rangeSpecial = (Range8Special > rangeSpecial) ? Range8Special : rangeSpecial;
+				return rangeSpecial;
 			}
 		}
 
@@ -217,8 +235,6 @@ namespace Combiner
 			set { GameAttributes[Utility.IsFlyer] = value; }
 		}
 
-		#endregion
-
 		public double Ticks
 		{
 			get { return GameAttributes[Utility.Ticks]; }
@@ -255,6 +271,8 @@ namespace Combiner
 			set { GameAttributes[Utility.Power] = value; }
 		}
 
+		#endregion
+
 		public Creature(Stock left, Stock right, Dictionary<Limb, Side> chosenBodyParts)
 		{
 			Left = left;
@@ -264,47 +282,6 @@ namespace Combiner
 			InitStats();
 			InitAbilities();
 		}
-
-		// Not sure what this is for yet...
-		private void ConsolidatePossibleBodyParts()
-        {
-            PossibleBodyParts = new Dictionary<Limb, bool>(Left.BodyParts);
-            foreach (Limb limb in Right.BodyParts.Keys)
-            {
-                if (Right.BodyParts[limb])
-                {
-                    PossibleBodyParts[limb] = true;
-                }
-            }
-        }
-
-		// Not sure what this is for yet...
-        private void InitChosenBodyParts()
-        {
-            ChosenBodyParts = new Dictionary<Limb, Side>();
-            foreach (Limb limb in PossibleBodyParts.Keys)
-            {
-                if (PossibleBodyParts[limb])
-                {
-                    if (Left.BodyParts[limb])
-                    {
-                        ChosenBodyParts.Add(limb, Side.Left);
-                    }
-                    else if (Right.BodyParts[limb])
-                    {
-                        ChosenBodyParts.Add(limb, Side.Right);
-                    }
-                    else
-                    {
-                        ChosenBodyParts.Add(limb, Side.Empty);
-                    }
-                }
-                else
-                {
-                    ChosenBodyParts.Add(limb, Side.Null);
-                }
-            }
-        }
 
 		private Stock GetSide(Limb limb)
 		{
@@ -451,6 +428,24 @@ namespace Combiner
 					continue;
 				}
 			}
+		}
+
+		public bool HasAbilities(IEnumerable<string> abilities)
+		{
+			bool hasAbilities = true;
+			foreach (string ability in abilities)
+			{
+				if (GameAttributes.ContainsKey(ability))
+				{
+					hasAbilities = (GameAttributes[ability] > 0);
+					if (!hasAbilities)
+					{
+						break;
+					}
+				}
+			}
+
+			return hasAbilities;
 		}
 
 		#region Calculate Stats

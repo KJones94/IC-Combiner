@@ -59,8 +59,11 @@ namespace Combiner
 		private ICommand m_CreateCreaturesCommand;
 		public ICommand CreateCreaturesCommand
 		{
-			get { return m_CreateCreaturesCommand ??
-					(m_CreateCreaturesCommand = new RelayCommand(CreateCreatures)); }
+			get
+			{
+				return m_CreateCreaturesCommand ??
+				  (m_CreateCreaturesCommand = new RelayCommand(CreateCreatures));
+			}
 			set
 			{
 				if (value != m_CreateCreaturesCommand)
@@ -242,6 +245,130 @@ namespace Combiner
 			StockChoices = new ObservableCollection<string>(StockChoices.OrderBy(s => s));
 		}
 
+		private ObservableCollection<string> m_AbilityChoices;
+		public ObservableCollection<string> AbilityChoices
+		{
+			get
+			{
+				if (m_AbilityChoices == null)
+				{
+					m_AbilityChoices = new ObservableCollection<string>();
+					foreach (string ability in Utility.Abilities)
+					{
+						m_AbilityChoices.Add(ability);
+					}
+				}
+				return m_AbilityChoices;
+			}
+			set
+			{
+				if (value != m_AbilityChoices)
+				{
+					m_AbilityChoices = value;
+					OnPropertyChanged(nameof(AbilityChoices));
+				}
+			}
+		}
+		public string SelectedAddAbility { get; set; }
+
+		private ICommand m_AddAbilityChoiceCommand;
+		public ICommand AddAbilityChoiceCommand
+		{
+			get
+			{
+				return m_AddAbilityChoiceCommand ??
+				  (m_AddAbilityChoiceCommand = new RelayCommand(AddAbilityChoice));
+			}
+			set
+			{
+				if (value != m_AddAbilityChoiceCommand)
+				{
+					m_AddAbilityChoiceCommand = value;
+					OnPropertyChanged(nameof(AddAbilityChoiceCommand));
+				}
+			}
+		}
+		private void AddAbilityChoice(object obj)
+		{
+			if (!ChosenAbilities.Contains(SelectedAddAbility))
+			{
+				ChosenAbilities.Add(SelectedAddAbility);
+				ChosenAbilities = new ObservableCollection<string>(ChosenAbilities.OrderBy(s => s));
+				// sort chosen stock
+				AbilityChoices.Remove(SelectedAddAbility);
+			}
+		}
+
+		private ObservableCollection<string> m_ChosenAbilities = new ObservableCollection<string>();
+		public ObservableCollection<string> ChosenAbilities
+		{
+			get
+			{
+				return m_ChosenAbilities;
+			}
+			set
+			{
+				if (value != m_ChosenAbilities)
+				{
+					m_ChosenAbilities = value;
+					OnPropertyChanged(nameof(ChosenAbilities));
+				}
+			}
+		}
+		public string SelectedRemoveAbility { get; set; }
+
+		private ICommand m_RemoveAbilityChoiceCommand;
+		public ICommand RemoveAbilityChoiceCommand
+		{
+			get
+			{
+				return m_RemoveAbilityChoiceCommand ??
+				  (m_RemoveAbilityChoiceCommand = new RelayCommand(RemoveAbilityChoice));
+			}
+			set
+			{
+				if (value != m_RemoveAbilityChoiceCommand)
+				{
+					m_RemoveAbilityChoiceCommand = value;
+					OnPropertyChanged(nameof(RemoveAbilityChoiceCommand));
+				}
+			}
+		}
+		private void RemoveAbilityChoice(object obj)
+		{
+			AbilityChoices.Add(SelectedRemoveAbility);
+			AbilityChoices = new ObservableCollection<string>(AbilityChoices.OrderBy(s => s));
+			// sort stock choices
+			ChosenAbilities.Remove(SelectedRemoveAbility);
+		}
+
+		private ICommand m_RemoveAllAbilityChoicesCommand;
+		public ICommand RemoveAllAbilityChoicesCommand
+		{
+			get
+			{
+				return m_RemoveAllAbilityChoicesCommand ??
+				  (m_RemoveAllAbilityChoicesCommand = new RelayCommand(RemoveAllAbilityChoices));
+			}
+			set
+			{
+				if (value != m_RemoveAllAbilityChoicesCommand)
+				{
+					m_RemoveAllAbilityChoicesCommand = value;
+					OnPropertyChanged(nameof(RemoveAllAbilityChoicesCommand));
+				}
+			}
+		}
+		private void RemoveAllAbilityChoices(object obj)
+		{
+			foreach (string ability in ChosenAbilities)
+			{
+				AbilityChoices.Add(ability);
+			}
+			ChosenAbilities = new ObservableCollection<string>();
+			AbilityChoices = new ObservableCollection<string>(AbilityChoices.OrderBy(s => s));
+		}
+
 		private ICommand m_FilterCreaturesCommand;
 		public ICommand FilterCreaturesCommand
 		{
@@ -270,32 +397,55 @@ namespace Combiner
 			Creature creature = obj as Creature;
 			if (creature != null)
 			{
-				return !(creature.Rank < MinRank
-					|| creature.Rank > MaxRank
-					|| creature.Coal < MinCoal
-					|| creature.Coal > MaxCoal
-					|| creature.Electricity < MinElec
-					|| creature.Electricity > MaxElec
-					|| creature.Power < MinPower
-					|| creature.Power > MaxPower
-					|| creature.Hitpoints < MinHitpoints
-					|| creature.Hitpoints > MaxHitpoints
-					|| creature.Armour < MinArmour
-					|| creature.Armour > MaxArmour
-					|| creature.SightRadius < MinSightRadius
-					|| creature.SightRadius > MaxSightRadius
-					|| creature.LandSpeed < MinLandSpeed
-					|| creature.LandSpeed > MaxLandSpeed
-					|| creature.WaterSpeed < MinWaterSpeed
-					|| creature.WaterSpeed > MaxWaterSpeed
-					|| creature.AirSpeed < MinAirSpeed
-					|| creature.AirSpeed > MaxAirSpeed
-					|| creature.MeleeDamage < MinMeleeDamage
-					|| creature.MeleeDamage > MaxMeleeDamage
-					|| creature.RangeDamage < MinRangeDamage
-					|| creature.RangeDamage > MaxRangeDamage);
+				return FilterStats(creature)
+					&& FilterAbilities(creature)
+					&& FilterArtillery(creature);
 			}
 			return false;
+		}
+
+		private bool FilterStats(Creature creature)
+		{
+			return creature.Rank >= MinRank
+					&& creature.Rank <= MaxRank
+					&& creature.Coal >= MinCoal
+					&& creature.Coal <= MaxCoal
+					&& creature.Electricity >= MinElec
+					&& creature.Electricity <= MaxElec
+					&& creature.Power >= MinPower
+					&& creature.Power <= MaxPower
+					&& creature.EffectiveHealth >= MinEHP
+					&& creature.EffectiveHealth <= MaxEHP
+					&& creature.Hitpoints >= MinHitpoints
+					&& creature.Hitpoints <= MaxHitpoints
+					&& creature.Armour >= MinArmour
+					&& creature.Armour <= MaxArmour
+					&& creature.SightRadius >= MinSightRadius
+					&& creature.SightRadius <= MaxSightRadius
+					&& creature.LandSpeed >= MinLandSpeed
+					&& creature.LandSpeed <= MaxLandSpeed
+					&& creature.WaterSpeed >= MinWaterSpeed
+					&& creature.WaterSpeed <= MaxWaterSpeed
+					&& creature.AirSpeed >= MinAirSpeed
+					&& creature.AirSpeed <= MaxAirSpeed
+					&& creature.MeleeDamage >= MinMeleeDamage
+					&& creature.MeleeDamage <= MaxMeleeDamage
+					&& creature.RangeDamage >= MinRangeDamage
+					&& creature.RangeDamage <= MaxRangeDamage;
+		}
+
+		private bool FilterAbilities(Creature creature)
+		{
+			return creature.HasAbilities(ChosenAbilities);
+		}
+
+		private bool FilterArtillery(Creature creature)
+		{
+			if (DoArtilleryFilter)
+			{
+				return creature.RangeSpecial > 0;
+			}
+			return true;
 		}
 
 		private ICommand m_SetDefaultFiltersCommand;
@@ -330,6 +480,8 @@ namespace Combiner
 			MaxElec = 2000;
 			MinPower = 0;
 			MaxPower = 10000;
+			MinEHP = 0;
+			MaxEHP = 5000;
 			MinHitpoints = 0;
 			MaxHitpoints = 2000;
 			MinArmour = 0;
@@ -346,6 +498,8 @@ namespace Combiner
 			MaxMeleeDamage = 100;
 			MinRangeDamage = 0;
 			MaxRangeDamage = 100;
+
+			RemoveAllAbilityChoices(null);
 		}
 
 		private int m_MinRank;
@@ -456,6 +610,34 @@ namespace Combiner
 				{
 					m_MaxPower = value;
 					OnPropertyChanged(nameof(MaxPower));
+				}
+			}
+		}
+
+		private int m_MinEHP;
+		public int MinEHP
+		{
+			get { return m_MinEHP; }
+			set
+			{
+				if (m_MinEHP != value)
+				{
+					m_MinEHP = value;
+					OnPropertyChanged(nameof(MinEHP));
+				}
+			}
+		}
+
+		private int m_MaxEHP;
+		public int MaxEHP
+		{
+			get { return m_MaxEHP; }
+			set
+			{
+				if (m_MaxEHP != value)
+				{
+					m_MaxEHP = value;
+					OnPropertyChanged(nameof(MaxEHP));
 				}
 			}
 		}
@@ -680,6 +862,23 @@ namespace Combiner
 				{
 					m_MaxRangeDamage = value;
 					OnPropertyChanged(nameof(MaxRangeDamage));
+				}
+			}
+		}
+
+		private bool m_DoArtilleryFilter;
+		public bool DoArtilleryFilter
+		{
+			get
+			{
+				return m_DoArtilleryFilter;
+			}
+			set
+			{
+				if (m_DoArtilleryFilter != value)
+				{
+					m_DoArtilleryFilter = value;
+					OnPropertyChanged(nameof(DoArtilleryFilter));
 				}
 			}
 		}

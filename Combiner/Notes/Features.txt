@@ -1,0 +1,36 @@
+﻿Added:
+	Combine creatures with chosen stock
+	Add and remove stock to combine
+	Filter on stats
+		Rank
+		Coal
+		Elec
+		Power
+		Effective HP
+		Hitpoints
+		Armour
+		Sight radius
+		Land speed
+		Water speed
+		Air speed
+		Melee damage
+		Range damage
+	Filter on abilities
+	Add and remove abilties to filter
+	Set to default filters
+	Apply filters to combined creatures
+	View creatures' game attributes
+
+Not yet added:
+	View and filter
+		Damage type
+		Attack range
+		Attack type
+		Stock type?
+		Range_Special
+	Create all creatures from start
+	Hide/Show columns
+	Save filters
+	Save creatures
+
+
