@@ -101,7 +101,7 @@
 			</StackPanel>
 			<StackPanel Grid.Column="2
 						">
-				<Button Content="Set Default Filters" Command="{Binding SetDefaultFiltersCommand}"/>
+				<Button Content="Reset Filters" Command="{Binding SetDefaultFiltersCommand}"/>
 				<Button Content="Filter" Command="{Binding FilterCreaturesCommand}"/>
 				<StackPanel Orientation="Horizontal">
 					<Label>Abilities:</Label>

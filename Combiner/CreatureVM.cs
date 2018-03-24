@@ -14,8 +14,6 @@ namespace Combiner
 {
 	public class CreatureVM : BaseViewModel
 	{
-		//private CreatureContainer CreatureContainer = new CreatureContainer();
-
 		private ObservableCollection<Creature> m_Creatures;
 		public ObservableCollection<Creature> Creatures
 		{
@@ -39,7 +37,7 @@ namespace Combiner
 		{
 			get
 			{
-				return m_CreaturesView ?? (m_CreaturesView = CollectionViewSource.GetDefaultView(m_Creatures));
+				return m_CreaturesView ?? (m_CreaturesView = CollectionViewSource.GetDefaultView(Creatures));
 			}
 			set
 			{

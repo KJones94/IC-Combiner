@@ -4,7 +4,7 @@
 	Filter on stats
 		Rank
 		Coal
-		Elec
+		Electricity
 		Power
 		Effective HP
 		Hitpoints
@@ -16,7 +16,7 @@
 		Melee damage
 		Range damage
 	Filter on abilities
-	Add and remove abilties to filter
+	Add and remove abilities to filter
 	Set to default filters
 	Apply filters to combined creatures
 	View creatures' game attributes
@@ -28,9 +28,11 @@ Not yet added:
 		Attack type
 		Stock type?
 		Range_Special
+	Better body part column
 	Create all creatures from start
 	Hide/Show columns
 	Save filters
 	Save creatures
+	Error logging
 
 
