@@ -1,17 +1,15 @@
-﻿using MoonSharp.Interpreter;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Combiner
 {
-    public class Creature
-    {
-        public Stock Left { get; set; }
-        public Stock Right { get; set; }
-        Dictionary<Limb, Side> ChosenBodyParts { get; set; }
+	public class CreatureBuilder
+	{
+		public Stock Left { get; set; }
+		public Stock Right { get; set; }
+		Dictionary<Limb, Side> ChosenBodyParts { get; set; }
 
 		public string BodyParts
 		{
@@ -272,7 +270,7 @@ namespace Combiner
 
 		#endregion
 
-		public Creature(Stock left, Stock right, Dictionary<Limb, Side> chosenBodyParts)
+		public CreatureBuilder(Stock left, Stock right, Dictionary<Limb, Side> chosenBodyParts)
 		{
 			Left = left;
 			Right = right;
@@ -399,7 +397,7 @@ namespace Combiner
 				foreach (string ability in Utility.Abilities)
 				{
 					int bodyPart = side.GetLimbAttributeBodyPart(ability);
-					if (bodyPart > -1 
+					if (bodyPart > -1
 						&& (Limb)bodyPart == limb
 						&& side.GetLimbAttributeValue(ability) > 0)
 					{
@@ -550,7 +548,7 @@ namespace Combiner
 		{
 			double meleeDamage = 0.0;
 			Stock side;
-			foreach(Limb limb in Enum.GetValues(typeof(Limb)))
+			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetSide(limb);
 				if (side == null)
@@ -640,9 +638,5 @@ namespace Combiner
 		}
 
 		#endregion
-
-
 	}
-
-    
 }

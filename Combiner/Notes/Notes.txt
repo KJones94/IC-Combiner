@@ -1,4 +1,10 @@
-﻿Notes...
+﻿TODO:
+	Creature model for easy access and storage
+	Creature factory for building
+
+
+
+Notes...
 	Stats round down
 		not pop size
 	for..in over a table needs to use pairs() funciton
@@ -10,10 +16,6 @@ Bugs:
 	Power for ranged
 	Water speed (looks right at the moment)
 	Range special only gets greatest one
-
-TODO:
-	Range damage cost not calculating correctly
-	Water speed equation wrong..?
 
 
 
