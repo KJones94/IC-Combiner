@@ -14,12 +14,12 @@ namespace Combiner
 {
 	public class CreatureVM : BaseViewModel
 	{
-		private ObservableCollection<Creature> m_Creatures;
-		public ObservableCollection<Creature> Creatures
+		private ObservableCollection<CreatureBuilder> m_Creatures;
+		public ObservableCollection<CreatureBuilder> Creatures
 		{
 			get
 			{
-				return m_Creatures ?? (m_Creatures = new ObservableCollection<Creature>());
+				return m_Creatures ?? (m_Creatures = new ObservableCollection<CreatureBuilder>());
 			}
 			set
 			{
@@ -75,7 +75,7 @@ namespace Combiner
 		private void CreateCreatures(object obj)
 		{
 			LuaHandler lua = new LuaHandler();
-			List<Creature> creatures = new List<Creature>();
+			List<CreatureBuilder> creatures = new List<CreatureBuilder>();
 
 			for (int i = 0; i < ChosenStock.Count; i++)
 			{
@@ -87,8 +87,8 @@ namespace Combiner
 				}
 			}
 
-			Creatures = new ObservableCollection<Creature>(creatures);
-			foreach (Creature creature in creatures)
+			Creatures = new ObservableCollection<CreatureBuilder>(creatures);
+			foreach (CreatureBuilder creature in creatures)
 			{
 				lua.LoadScript(creature);
 			}
@@ -99,7 +99,7 @@ namespace Combiner
 		{
 			LuaHandler lua = new LuaHandler();
 
-			List<Creature> creatures = new List<Creature>();
+			List<CreatureBuilder> creatures = new List<CreatureBuilder>();
 			string[] allFiles = Directory.GetFiles(Utility.StockDirectory);
 			for (int i = 0; i < allFiles.Count(); i++)
 			{
@@ -110,7 +110,7 @@ namespace Combiner
 					creatures.AddRange(CreatureCombiner.Combine(left, right));
 				}
 			}
-			foreach (Creature creature in creatures)
+			foreach (CreatureBuilder creature in creatures)
 			{
 				lua.LoadScript(creature);
 				Creatures.Add(creature);
@@ -392,7 +392,7 @@ namespace Combiner
 
 		private bool CreatureFilter(object obj)
 		{
-			Creature creature = obj as Creature;
+			CreatureBuilder creature = obj as CreatureBuilder;
 			if (creature != null)
 			{
 				return FilterStats(creature)
@@ -402,7 +402,7 @@ namespace Combiner
 			return false;
 		}
 
-		private bool FilterStats(Creature creature)
+		private bool FilterStats(CreatureBuilder creature)
 		{
 			return creature.Rank >= MinRank
 					&& creature.Rank <= MaxRank
@@ -432,12 +432,12 @@ namespace Combiner
 					&& creature.RangeDamage <= MaxRangeDamage;
 		}
 
-		private bool FilterAbilities(Creature creature)
+		private bool FilterAbilities(CreatureBuilder creature)
 		{
 			return creature.HasAbilities(ChosenAbilities);
 		}
 
-		private bool FilterArtillery(Creature creature)
+		private bool FilterArtillery(CreatureBuilder creature)
 		{
 			if (DoArtilleryFilter)
 			{

@@ -11,7 +11,7 @@ namespace Combiner
     public class LuaHandler
     {
         private Script Attrcombiner { get; set; }
-		private Creature Creature { get; set; }
+		private CreatureBuilder Creature { get; set; }
 
         public LuaHandler()
         {
@@ -20,7 +20,7 @@ namespace Combiner
             SetupGlobals();
         }
 
-        public void LoadScript(Creature creature)
+        public void LoadScript(CreatureBuilder creature)
         {
 			Creature = creature;
 			//Attrcombiner.DoFile(Utility.Attrcombiner);

@@ -46,6 +46,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="LiteDB, Version=4.1.2.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.4.1.2\lib\net40\LiteDB.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MoonSharp.Interpreter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=921e73ce94aa17f8, processorArchitecture=MSIL">
       <HintPath>..\packages\MoonSharp.2.0.0.0\lib\net40-client\MoonSharp.Interpreter.dll</HintPath>
       <Private>True</Private>
@@ -86,8 +90,12 @@
     <Compile Include="ArtilleryConverter.cs" />
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="ContainsAbilitiesConverter.cs" />
+    <Compile Include="CreatureBuilder.cs" />
     <Compile Include="CreatureContainer.cs" />
+    <Compile Include="CreatureFactory.cs" />
+    <Compile Include="Creature.cs" />
     <Compile Include="CreatureVM.cs" />
+    <Compile Include="DatabasePrototype.cs" />
     <Compile Include="DoubleToStringConverter.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="RelayCommand.cs" />
@@ -104,7 +112,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Creature.cs" />
     <Compile Include="CreatureCombiner.cs" />
     <Compile Include="LuaHandler.cs" />
     <Compile Include="MainWindow.xaml.cs">

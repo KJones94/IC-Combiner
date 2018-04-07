@@ -19,9 +19,9 @@ namespace Combiner
 
 		private CreatureFactory() { }
 
-		public Creature CreateCreature(Stock left, Stock right, Dictionary<Limb, Side> chosenBodyParts)
+		public CreatureBuilder CreateCreature(Stock left, Stock right, Dictionary<Limb, Side> chosenBodyParts)
 		{
-			return new Creature(left, right, chosenBodyParts);
+			return new CreatureBuilder(left, right, chosenBodyParts);
 		}
 	}
 }

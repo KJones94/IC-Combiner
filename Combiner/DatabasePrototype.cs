@@ -5,8 +5,7 @@ using System.Text;
 
 namespace Combiner
 {
-	public class CreatureModel
+	public class DatabasePrototype
 	{
-
 	}
 }

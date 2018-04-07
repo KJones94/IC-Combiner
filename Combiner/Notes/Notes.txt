@@ -60,3 +60,20 @@ Utility
 	range cost mult = 1
 	rank = 4
 	cost = 250
+
+
+	H - Head
+	B - Body/Torso
+	T - Tail
+	FL - Front Legs
+	BL - Back Legs
+	W - Wings
+	C - Claws
+
+	Direct_Normal
+	Direct_Electric
+	Direct_Poison
+	Sonic
+	Water
+	Rock
+	Chem

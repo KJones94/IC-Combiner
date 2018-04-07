@@ -230,4 +230,12 @@ namespace Combiner
 		Sonic = 16,
 		Poison = 256,
 	}
+
+	public enum ArtilleryType
+	{
+		Normal = 0,
+		Rock = 1,
+		Water = 2,
+		Chemical = 3,
+	}
 }

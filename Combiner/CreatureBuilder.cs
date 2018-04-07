@@ -638,5 +638,154 @@ namespace Combiner
 		}
 
 		#endregion
+
+		public Creature BuildCreature()
+		{
+			Creature creature = new Creature()
+			{
+				Left = this.Left.ToString(),
+				Right = this.Right.ToString(),
+				BodyParts = BuildBodyParts(),
+				Rank = (int)this.Rank,
+				Coal = this.Coal,
+				Electricity = this.Electricity,
+				Power = this.Power,
+				EffectiveHitpoints = this.EffectiveHealth,
+				Hitpoints = this.Hitpoints,
+				Armour = this.Armour,
+				SightRadius = this.SightRadius,
+				Size = (int)this.Size,
+				LandSpeed = this.LandSpeed,
+				WaterSpeed = this.WaterSpeed,
+				AirSpeed = this.AirSpeed,
+				MeleeDamage = this.MeleeDamage,
+			};
+			AddRangeDamageToCreature(creature);
+			AddMeleeDamageTypes(creature);
+			AddAbiltiies(creature);
+
+			return creature;
+		}
+
+		private Dictionary<string, string> BuildBodyParts()
+		{
+			Dictionary<string, string> bodyParts = new Dictionary<string, string>();
+			foreach (Limb limb in ChosenBodyParts.Keys)
+			{
+				Side side = ChosenBodyParts[limb];
+				if (side == Side.Left)
+				{
+					bodyParts.Add(limb.ToString(), "L");
+				}
+				else if (side == Side.Right)
+				{
+					bodyParts.Add(limb.ToString(), "R");
+				}
+				else if (side == Side.Empty)
+				{
+					bodyParts.Add(limb.ToString(), "x");
+				}
+			}
+			return bodyParts;
+		}
+
+		private void AddRangeDamageToCreature(Creature creature)
+		{
+			Tuple<double, double, double> range2 = new Tuple<double, double, double>(Range2Damage, Range2Type, Range2Special);
+			Tuple<double, double, double> range3 = new Tuple<double, double, double>(Range3Damage, Range3Type, Range3Special);
+			Tuple<double, double, double> range4 = new Tuple<double, double, double>(Range4Damage, Range4Type, Range4Special);
+			Tuple<double, double, double> range5 = new Tuple<double, double, double>(Range5Damage, Range5Type, Range5Special);
+			Tuple<double, double, double> range8 = new Tuple<double, double, double>(Range8Damage, Range8Type, Range8Special);
+
+			Tuple<double, double, double> first = range2;
+			Tuple<double, double, double> second = range3;
+
+			Tuple<double, double, double> temp;
+			if (second.Item1 > first.Item1)
+			{
+				temp = first;
+				first = second;
+				second = first;
+			}
+
+			if (range4.Item1 > second.Item1)
+			{
+				temp = second;
+				second = range4;
+				if (second.Item1 > first.Item1)
+				{
+					temp = first;
+					first = second;
+					second = first;
+				}
+			}
+
+			if (range5.Item1 > second.Item1)
+			{
+				temp = second;
+				second = range5;
+				if (second.Item1 > first.Item1)
+				{
+					temp = first;
+					first = second;
+					second = first;
+				}
+			}
+
+			if (range8.Item1 > second.Item1)
+			{
+				temp = second;
+				second = range8;
+				if (second.Item1 > first.Item1)
+				{
+					temp = first;
+					first = second;
+					second = first;
+				}
+			}
+
+			//creature.RangeDamage1 = first.Item1;
+			//creature.RangeType1 = (first.Item2 > 0) ? ((ArtilleryType)first.Item2).ToString() : ((DamageType)first.Item3).ToString();
+
+			//creature.RangeDamage1 = second.Item1;
+			//creature.RangeType1 = (second.Item2 > 0) ? ((ArtilleryType)second.Item2).ToString() : ((DamageType)second.Item3).ToString();
+		}
+
+		private void AddMeleeDamageTypes(Creature creature)
+		{
+			AddMeleeDamageType(creature, (DamageType)Melee2Type);
+			AddMeleeDamageType(creature, (DamageType)Melee3Type);
+			AddMeleeDamageType(creature, (DamageType)Melee4Type);
+			AddMeleeDamageType(creature, (DamageType)Melee5Type);
+			AddMeleeDamageType(creature, (DamageType)Melee8Type);
+
+		}
+
+		private void AddMeleeDamageType(Creature creature, DamageType type)
+		{
+			switch (type)
+			{
+				case DamageType.Horns:
+					creature.HasHorns = true;
+					break;
+				case DamageType.BarrierDestroy:
+					creature.HasBarrierDestroy = true;
+					break;
+				case DamageType.Poison:
+				case DamageType.VenomSpray:
+					creature.HasPoison = true;
+					break;
+			}
+		}
+
+		private void AddAbiltiies(Creature creature)
+		{
+			Dictionary<string, bool> abilities = new Dictionary<string, bool>();
+			foreach (string ability in Utility.Abilities)
+			{
+				abilities.Add(ability, (GameAttributes[ability] > 0));
+			}
+			creature.Abilities = abilities;
+		}
 	}
 }

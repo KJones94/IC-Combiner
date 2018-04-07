@@ -17,12 +17,12 @@ namespace Combiner
 			return null;
 		}
 
-		public static List<Creature> Combine(Stock left, Stock right)
+		public static List<CreatureBuilder> Combine(Stock left, Stock right)
 		{
 			List<Dictionary<Limb, Side>> unprunedBodyParts = CreateUnprunedBodyParts(left, right);
 			List<Dictionary<Limb, Side>> prunedBodyParts = PruneBodyParts(left, right, unprunedBodyParts);
 
-			List<Creature> creatures = new List<Creature>();
+			List<CreatureBuilder> creatures = new List<CreatureBuilder>();
 			foreach (Dictionary<Limb, Side> dict in prunedBodyParts)
 			{
 				creatures.Add(CreatureFactory.Instance.CreateCreature(left, right, dict));
