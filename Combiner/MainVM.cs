@@ -14,6 +14,7 @@ namespace Combiner
 		public MainVM()
 		{
 			CreatureVM = new CreatureVM();
+			DatabasePrototype.TestDB();
 		}
 
 		
