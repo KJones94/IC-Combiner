@@ -124,6 +124,10 @@
 						<CheckBox IsChecked="{Binding DoArtilleryFilter}"/>
 						<Label>Filter for artillery</Label>
 					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<CheckBox IsChecked="{Binding DoSingleRangeFilter}"/>
+						<Label>Filter for single range attack</Label>
+					</StackPanel>
 					<!--<StackPanel Orientation="Horizontal">
 					<Label>Abilities:</Label>
 					<ComboBox Width="50"/>

@@ -255,8 +255,10 @@ namespace Combiner
 			if (creature != null)
 			{
 				return FilterStats(creature)
-					&& FilterAbilities(creature)
-					&& FilterArtillery(creature);
+					&& FilterSingleRangeDamage(creature)
+					&& FilterArtillery(creature)
+					&& FilterRangeDamage(creature)
+					&& FilterAbilities(creature);
 			}
 			return false;
 		}
@@ -286,10 +288,15 @@ namespace Combiner
 					&& creature.AirSpeed >= MinAirSpeed
 					&& creature.AirSpeed <= MaxAirSpeed
 					&& creature.MeleeDamage >= MinMeleeDamage
-					&& creature.MeleeDamage <= MaxMeleeDamage
-					//&& creature.RangeDamage >= MinRangeDamage
-					//&& creature.RangeDamage <= MaxRangeDamage
-					;
+					&& creature.MeleeDamage <= MaxMeleeDamage;
+		}
+
+		private bool FilterRangeDamage(Creature creature)
+		{
+			return (creature.RangeDamage1 >= MinRangeDamage
+				&& creature.RangeDamage1 <= MaxRangeDamage)
+				|| (creature.RangeDamage2 >= MinRangeDamage
+				&& creature.RangeDamage2 <= MaxRangeDamage);
 		}
 
 		private bool FilterAbilities(Creature creature)
@@ -314,6 +321,15 @@ namespace Combiner
 			if (DoArtilleryFilter)
 			{
 				return creature.RangeSpecial1 > 0 || creature.RangeSpecial2 > 0;
+			}
+			return true;
+		}
+
+		private bool FilterSingleRangeDamage(Creature creature)
+		{
+			if (DoSingleRangeFilter)
+			{
+				return !(creature.RangeDamage2 > 0);
 			}
 			return true;
 		}
@@ -369,6 +385,7 @@ namespace Combiner
 			MinRangeDamage = 0;
 			MaxRangeDamage = 100;
 			DoArtilleryFilter = false;
+			DoSingleRangeFilter = false;
 
 			RemoveAllAbilityChoices(null);
 		}
@@ -752,6 +769,23 @@ namespace Combiner
 				{
 					m_DoArtilleryFilter = value;
 					OnPropertyChanged(nameof(DoArtilleryFilter));
+				}
+			}
+		}
+
+		private bool m_DoSingleRangeFilter;
+		public bool DoSingleRangeFilter
+		{
+			get
+			{
+				return m_DoSingleRangeFilter;
+			}
+			set
+			{
+				if (m_DoSingleRangeFilter != value)
+				{
+					m_DoSingleRangeFilter = value;
+					OnPropertyChanged(nameof(DoSingleRangeFilter));
 				}
 			}
 		}
