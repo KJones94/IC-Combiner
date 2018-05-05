@@ -1,0 +1,14 @@
+﻿<Window x:Class="Combiner.ReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Combiner"
+        mc:Ignorable="d"
+        Title="ReportWindow" Height="300" Width="800">
+	<StackPanel>
+		<TextBlock>Send reports and suggestions to Kevin/Blother on Discord.</TextBlock>
+		<TextBlock>Please report any problems that occur (i.e. database not created, creatures not loading, filters not working, incorrect stats, etc.).</TextBlock>
+		<TextBlock>Feel free to send any suggestions as I am looking for input from the community.</TextBlock>
+	</StackPanel>
+</Window>

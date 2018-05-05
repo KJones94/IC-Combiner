@@ -8,14 +8,14 @@ using System.Threading;
 
 namespace Combiner
 {
-	public static class DatabasePrototype
+	public static class Database
 	{
 		public static List<Creature> GetAllCreatures()
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
 			{
 				if (!db.CollectionExists("creatures"))
-					return null;
+					return new List<Creature>();
 
 				var collection = db.GetCollection<Creature>("creatures");
 

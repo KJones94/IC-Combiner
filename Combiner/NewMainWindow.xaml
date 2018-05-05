@@ -16,108 +16,115 @@
 		<local:ArtilleryConverter x:Key="artilleryConverter"/>
 		<local:BodyPartsConverter x:Key="bodyPartsConverter"/>
 	</Window.Resources>
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="1*"/>
-			<RowDefinition Height="2*"/>
-		</Grid.RowDefinitions>
-		<Grid Grid.Row="0">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="1*"/>
-				<ColumnDefinition Width="1*"/>
-				<ColumnDefinition Width="2*"/>
-				<ColumnDefinition Width="2*"/>
-			</Grid.ColumnDefinitions>
-			<StackPanel Grid.Column="0">
+	<DockPanel>
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="Help">
+				<MenuItem Header="Guide" Click="MenuItem_Click"/>
+				<MenuItem Header="Report Bugs/Suggestions" Click="MenuItem_Click_1"/>
+			</MenuItem>
+		</Menu>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="1*"/>
+				<RowDefinition Height="2*"/>
+			</Grid.RowDefinitions>
+			<Grid Grid.Row="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="2*"/>
+				</Grid.ColumnDefinitions>
+				<StackPanel Grid.Column="0">
 
-				<StackPanel Orientation="Horizontal">
-					<Label>Rank:</Label>
-					<TextBox Width="50" Text="{Binding MinRank, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxRank, Mode=TwoWay}"/>
+					<StackPanel Orientation="Horizontal">
+						<Label>Rank:</Label>
+						<TextBox Width="50" Text="{Binding MinRank, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxRank, Mode=TwoWay}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Label>Coal:</Label>
+						<TextBox Width="50" Text="{Binding MinCoal, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxCoal, Mode=TwoWay}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Label>Elec:</Label>
+						<TextBox Width="50" Text="{Binding MinElec, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxElec, Mode=TwoWay}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Label>Power:</Label>
+						<TextBox Width="50" Text="{Binding MinPower, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxPower, Mode=TwoWay}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Label>E.HP:</Label>
+						<TextBox Width="50" Text="{Binding MinEHP, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxEHP, Mode=TwoWay}"/>
+					</StackPanel>
 				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label>Coal:</Label>
-					<TextBox Width="50" Text="{Binding MinCoal, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxCoal, Mode=TwoWay}"/>
+				<StackPanel Grid.Column="1">
+					<StackPanel Orientation="Horizontal">
+						<Label>Hitpoints:</Label>
+						<TextBox Width="50" Text="{Binding MinHitpoints, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxHitpoints, Mode=TwoWay}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Label>Armour:</Label>
+						<TextBox Width="50" Text="{Binding MinArmour, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxArmour, Mode=TwoWay}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Label>Sight Radius:</Label>
+						<TextBox Width="50" Text="{Binding MinSightRadius, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxSightRadius, Mode=TwoWay}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Label>Land Speed:</Label>
+						<TextBox Width="50" Text="{Binding MinLandSpeed, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxLandSpeed, Mode=TwoWay}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Label>Water Speed:</Label>
+						<TextBox Width="50" Text="{Binding MinWaterSpeed, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxWaterSpeed, Mode=TwoWay}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Label>Air Speed:</Label>
+						<TextBox Width="50" Text="{Binding MinAirSpeed, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxAirSpeed, Mode=TwoWay}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Label>Melee Damage:</Label>
+						<TextBox Width="50" Text="{Binding MinMeleeDamage, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxMeleeDamage, Mode=TwoWay}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<Label>Range Damage:</Label>
+						<TextBox Width="50" Text="{Binding MinRangeDamage, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxRangeDamage, Mode=TwoWay}"/>
+					</StackPanel>
 				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label>Elec:</Label>
-					<TextBox Width="50" Text="{Binding MinElec, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxElec, Mode=TwoWay}"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label>Power:</Label>
-					<TextBox Width="50" Text="{Binding MinPower, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxPower, Mode=TwoWay}"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label>E.HP:</Label>
-					<TextBox Width="50" Text="{Binding MinEHP, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxEHP, Mode=TwoWay}"/>
-				</StackPanel>
-			</StackPanel>
-			<StackPanel Grid.Column="1">
-				<StackPanel Orientation="Horizontal">
-					<Label>Hitpoints:</Label>
-					<TextBox Width="50" Text="{Binding MinHitpoints, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxHitpoints, Mode=TwoWay}"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label>Armour:</Label>
-					<TextBox Width="50" Text="{Binding MinArmour, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxArmour, Mode=TwoWay}"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label>Sight Radius:</Label>
-					<TextBox Width="50" Text="{Binding MinSightRadius, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxSightRadius, Mode=TwoWay}"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label>Land Speed:</Label>
-					<TextBox Width="50" Text="{Binding MinLandSpeed, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxLandSpeed, Mode=TwoWay}"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label>Water Speed:</Label>
-					<TextBox Width="50" Text="{Binding MinWaterSpeed, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxWaterSpeed, Mode=TwoWay}"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label>Air Speed:</Label>
-					<TextBox Width="50" Text="{Binding MinAirSpeed, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxAirSpeed, Mode=TwoWay}"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label>Melee Damage:</Label>
-					<TextBox Width="50" Text="{Binding MinMeleeDamage, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxMeleeDamage, Mode=TwoWay}"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label>Range Damage:</Label>
-					<TextBox Width="50" Text="{Binding MinRangeDamage, Mode=TwoWay}"/>
-					<TextBox Width="50" Text="{Binding MaxRangeDamage, Mode=TwoWay}"/>
-				</StackPanel>
-			</StackPanel>
-			<StackPanel Grid.Column="2">
-				<Button Content="Reset Filters" Command="{Binding SetDefaultFiltersCommand}"/>
-				<Button Content="Filter" Command="{Binding FilterCreaturesCommand}"/>
-				<StackPanel Orientation="Horizontal">
-					<Label>Abilities:</Label>
-					<ComboBox Width="100"
+				<StackPanel Grid.Column="2">
+					<Button Content="Reset Filters" Command="{Binding SetDefaultFiltersCommand}"/>
+					<Button Content="Filter" Command="{Binding FilterCreaturesCommand}"/>
+					<StackPanel Orientation="Horizontal">
+						<Label>Abilities:</Label>
+						<ComboBox Width="100"
 							  ItemsSource="{Binding AbilityChoices}"
 							  SelectedItem="{Binding SelectedAddAbility}"/>
-					<Button Width="30" Content="Add" Command="{Binding AddAbilityChoiceCommand}"/>
-					<ComboBox Width="100"
+						<Button Width="30" Content="Add" Command="{Binding AddAbilityChoiceCommand}"/>
+						<ComboBox Width="100"
 							  ItemsSource="{Binding ChosenAbilities}"
 							  SelectedItem="{Binding SelectedRemoveAbility}"/>
-					<Button Width="30" Content="Drop" Command="{Binding RemoveAbilityChoiceCommand}"/>
-					<Button Width="50" Content="Drop All" Command="{Binding RemoveAllAbilityChoicesCommand}"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<CheckBox IsChecked="{Binding DoArtilleryFilter}"/>
-					<Label>Filter for artillery</Label>
-				</StackPanel>
-				<!--<StackPanel Orientation="Horizontal">
+						<Button Width="30" Content="Drop" Command="{Binding RemoveAbilityChoiceCommand}"/>
+						<Button Width="50" Content="Drop All" Command="{Binding RemoveAllAbilityChoicesCommand}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<CheckBox IsChecked="{Binding DoArtilleryFilter}"/>
+						<Label>Filter for artillery</Label>
+					</StackPanel>
+					<!--<StackPanel Orientation="Horizontal">
 					<Label>Abilities:</Label>
 					<ComboBox Width="50"/>
 					<Button Width="30" Content="Add"/>
@@ -128,49 +135,50 @@
 					<Label>Terrain:</Label>
 					<ComboBox Width="50"/>
 				</StackPanel>-->
-			</StackPanel>
-			<StackPanel Grid.Column="3">
-				<Button Content="Create Database" Command="{Binding CreateDatabaseCommand}"/>
-				<Button Content="Load Creatures" Command="{Binding LoadCreaturesCommand}"/>
-				<TextBlock>Body parts order (left to right):</TextBlock>
-				<TextBlock>Front Legs</TextBlock>
-				<TextBlock>Back Legs</TextBlock>
-				<TextBlock>Head</TextBlock>
-				<TextBlock>Tail</TextBlock>
-				<TextBlock>Torso</TextBlock>
-				<TextBlock>Wings</TextBlock>
-				<TextBlock>Claws</TextBlock>
-			</StackPanel>
-		</Grid>
-		<DataGrid ItemsSource="{Binding CreaturesView, Mode=TwoWay}" Grid.Row="1"
+				</StackPanel>
+				<StackPanel Grid.Column="3">
+					<Button Content="Create Database" Command="{Binding CreateDatabaseCommand}"/>
+					<Button Content="Load Creatures" Command="{Binding LoadCreaturesCommand}"/>
+					<TextBlock>Body parts order (left to right):</TextBlock>
+					<TextBlock>Front Legs</TextBlock>
+					<TextBlock>Back Legs</TextBlock>
+					<TextBlock>Head</TextBlock>
+					<TextBlock>Tail</TextBlock>
+					<TextBlock>Torso</TextBlock>
+					<TextBlock>Wings</TextBlock>
+					<TextBlock>Claws</TextBlock>
+				</StackPanel>
+			</Grid>
+			<DataGrid ItemsSource="{Binding CreaturesView, Mode=TwoWay}" Grid.Row="1"
 					  AlternatingRowBackground="Gainsboro" AlternationCount="2"
 					  AutoGenerateColumns="False" VirtualizingStackPanel.VirtualizationMode="Standard">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Left" Binding="{Binding Left}"/>
-				<DataGridTextColumn Header="Right" Binding="{Binding Right}"/>
-				<DataGridTextColumn Header="Body Parts" Binding="{Binding BodyParts, Converter={StaticResource bodyPartsConverter}}"/>
-				<DataGridTextColumn Header="Rank" Binding="{Binding Rank}"/>
-				<DataGridTextColumn Header="Coal" Binding="{Binding Coal, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Elec" Binding="{Binding Electricity, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Power" Binding="{Binding Power, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="E.HP" Binding="{Binding EffectiveHitpoints, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Hitpoints" Binding="{Binding Hitpoints, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Armour" Binding="{Binding Armour, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Sight Radius" Binding="{Binding SightRadius, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Size" Binding="{Binding Size, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Land Speed" Binding="{Binding LandSpeed, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Water Speed" Binding="{Binding WaterSpeed, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Air Speed" Binding="{Binding AirSpeed, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Melee Damage" Binding="{Binding MeleeDamage, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Range Damage 1" Binding="{Binding RangeDamage1, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Range Special 1" Binding="{Binding RangeSpecial1, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Range Type 1" Binding="{Binding RangeType1, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Range Damage 2" Binding="{Binding RangeDamage2, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Range Special 2" Binding="{Binding RangeSpecial2, Converter={StaticResource doubleConverter}}"/>
-				<DataGridTextColumn Header="Range Type 2" Binding="{Binding RangeType2, Converter={StaticResource doubleConverter}}"/>
-				<!--<DataGridTextColumn Header="Artillery" Binding="{Binding RangeSpecial, Converter={StaticResource artilleryConverter}}"/>-->
-				<DataGridTextColumn Header="Abilties" Binding="{Binding Abilities, Converter={StaticResource abilityConverter}}"/>
-			</DataGrid.Columns>
-		</DataGrid>
-	</Grid>
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Left" Binding="{Binding Left}"/>
+					<DataGridTextColumn Header="Right" Binding="{Binding Right}"/>
+					<DataGridTextColumn Header="Body Parts" Binding="{Binding BodyParts, Converter={StaticResource bodyPartsConverter}}"/>
+					<DataGridTextColumn Header="Rank" Binding="{Binding Rank}"/>
+					<DataGridTextColumn Header="Coal" Binding="{Binding Coal, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Elec" Binding="{Binding Electricity, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Power" Binding="{Binding Power, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="E.HP" Binding="{Binding EffectiveHitpoints, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Hitpoints" Binding="{Binding Hitpoints, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Armour" Binding="{Binding Armour, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Sight Radius" Binding="{Binding SightRadius, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Size" Binding="{Binding Size, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Land Speed" Binding="{Binding LandSpeed, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Water Speed" Binding="{Binding WaterSpeed, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Air Speed" Binding="{Binding AirSpeed, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Melee Damage" Binding="{Binding MeleeDamage, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Range Damage 1" Binding="{Binding RangeDamage1, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Range Special 1" Binding="{Binding RangeSpecial1, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Range Type 1" Binding="{Binding RangeType1, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Range Damage 2" Binding="{Binding RangeDamage2, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Range Special 2" Binding="{Binding RangeSpecial2, Converter={StaticResource doubleConverter}}"/>
+					<DataGridTextColumn Header="Range Type 2" Binding="{Binding RangeType2, Converter={StaticResource doubleConverter}}"/>
+					<!--<DataGridTextColumn Header="Artillery" Binding="{Binding RangeSpecial, Converter={StaticResource artilleryConverter}}"/>-->
+					<DataGridTextColumn Header="Abilties" Binding="{Binding Abilities, Converter={StaticResource abilityConverter}}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</DockPanel>
 </Window>

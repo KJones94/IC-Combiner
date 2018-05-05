@@ -71,11 +71,12 @@ namespace Combiner
 		}
 		private void CreateDatabase(object obj)
 		{
-			string text = "Creating a new database will delete and replace your current database. This could take a while. Would you like to continue?";
+			string text = "Creating a new database will delete and replace your current database. This could take a while, but a dialog box will appear when it is finished. Would you like to continue?";
 			MessageBoxResult result = MessageBox.Show(text, "Database Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 			if (result == MessageBoxResult.Yes)
 			{
-				DatabasePrototype.CreateDB();
+				Database.CreateDB();
+				MessageBox.Show("Finished creating the database.");
 			}
 		}
 
@@ -98,7 +99,7 @@ namespace Combiner
 		}
 		private void LoadCreatures(object obj)
 		{
-			Creatures = new ObservableCollection<Creature>(DatabasePrototype.GetAllCreatures());
+			Creatures = new ObservableCollection<Creature>(Database.GetAllCreatures());
 			CreaturesView.Filter = CreatureFilter;
 		}
 

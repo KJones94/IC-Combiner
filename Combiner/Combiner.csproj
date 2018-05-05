@@ -98,17 +98,27 @@
     <Compile Include="CreatureVM.cs" />
     <Compile Include="DatabasePrototype.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />
+    <Compile Include="GuideWindow.xaml.cs">
+      <DependentUpon>GuideWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainVM.cs" />
     <Compile Include="NewCreatureVM.cs" />
     <Compile Include="NewMainWindow.xaml.cs">
       <DependentUpon>NewMainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="ReportWindow.xaml.cs">
+      <DependentUpon>ReportWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Stock.cs" />
     <Compile Include="Tests\CreatureCombinerTest.cs" />
     <Compile Include="Tests\CreatureTest.cs" />
     <Compile Include="Tests\StockTest.cs" />
     <Compile Include="Utility.cs" />
+    <Page Include="GuideWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -124,6 +134,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NewMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -146,7 +160,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Database\Creatures.db" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

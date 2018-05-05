@@ -1,0 +1,17 @@
+﻿<Window x:Class="Combiner.GuideWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Combiner"
+        mc:Ignorable="d"
+        Title="GuideWindow" Height="300" Width="800">
+	<StackPanel>
+		<TextBlock>How to operate:</TextBlock>
+		<TextBlock>Create a database if you have not done so yet. This only needs to be done once.</TextBlock>
+		<TextBlock>Load the creatures to have them appear in the bottom section. This can take a minute to load all creatures into the view.</TextBlock>
+		<TextBlock>Set the filters to the desired values. Press the Filter button to view only creatures that fit the values.</TextBlock>
+		<TextBlock>All values are applied to all creatures.</TextBlock>
+		<TextBlock>The filter values can be reset to the original values the program started with.</TextBlock>
+	</StackPanel>
+</Window>

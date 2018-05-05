@@ -14,25 +14,13 @@ using System.Windows.Shapes;
 namespace Combiner
 {
 	/// <summary>
-	/// Interaction logic for NewMainWindow.xaml
+	/// Interaction logic for GuideWindow.xaml
 	/// </summary>
-	public partial class NewMainWindow : Window
+	public partial class GuideWindow : Window
 	{
-		public NewMainWindow()
+		public GuideWindow()
 		{
 			InitializeComponent();
-		}
-
-		private void MenuItem_Click(object sender, RoutedEventArgs e)
-		{
-			GuideWindow window = new GuideWindow();
-			window.Show();
-		}
-
-		private void MenuItem_Click_1(object sender, RoutedEventArgs e)
-		{
-			ReportWindow window = new ReportWindow();
-			window.Show();
 		}
 	}
 }
