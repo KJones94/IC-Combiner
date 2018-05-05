@@ -99,8 +99,7 @@
 					<TextBox Width="50" Text="{Binding MaxRangeDamage, Mode=TwoWay}"/>
 				</StackPanel>
 			</StackPanel>
-			<StackPanel Grid.Column="2
-						">
+			<StackPanel Grid.Column="2">
 				<Button Content="Reset Filters" Command="{Binding SetDefaultFiltersCommand}"/>
 				<Button Content="Filter" Command="{Binding FilterCreaturesCommand}"/>
 				<StackPanel Orientation="Horizontal">

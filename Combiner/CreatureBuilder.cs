@@ -705,50 +705,49 @@ namespace Combiner
 			{
 				temp = first;
 				first = second;
-				second = first;
+				second = temp;
 			}
 
 			if (range4.Item1 > second.Item1)
 			{
-				temp = second;
 				second = range4;
 				if (second.Item1 > first.Item1)
 				{
 					temp = first;
 					first = second;
-					second = first;
+					second = temp;
 				}
 			}
 
 			if (range5.Item1 > second.Item1)
 			{
-				temp = second;
 				second = range5;
 				if (second.Item1 > first.Item1)
 				{
 					temp = first;
 					first = second;
-					second = first;
+					second = temp;
 				}
 			}
 
 			if (range8.Item1 > second.Item1)
 			{
-				temp = second;
 				second = range8;
 				if (second.Item1 > first.Item1)
 				{
 					temp = first;
 					first = second;
-					second = first;
+					second = temp;
 				}
 			}
 
-			//creature.RangeDamage1 = first.Item1;
-			//creature.RangeType1 = (first.Item2 > 0) ? ((ArtilleryType)first.Item2).ToString() : ((DamageType)first.Item3).ToString();
+			creature.RangeDamage1 = first.Item1;
+			creature.RangeType1 = first.Item2;
+			creature.RangeSpecial1 = first.Item3;
 
-			//creature.RangeDamage1 = second.Item1;
-			//creature.RangeType1 = (second.Item2 > 0) ? ((ArtilleryType)second.Item2).ToString() : ((DamageType)second.Item3).ToString();
+			creature.RangeDamage2 = second.Item1;
+			creature.RangeType2 = second.Item2;
+			creature.RangeSpecial2 = second.Item3;
 		}
 
 		private void AddMeleeDamageTypes(Creature creature)
@@ -758,7 +757,6 @@ namespace Combiner
 			AddMeleeDamageType(creature, (DamageType)Melee4Type);
 			AddMeleeDamageType(creature, (DamageType)Melee5Type);
 			AddMeleeDamageType(creature, (DamageType)Melee8Type);
-
 		}
 
 		private void AddMeleeDamageType(Creature creature, DamageType type)

@@ -269,6 +269,24 @@ namespace Combiner
 		}
 		public string SelectedAddAbility { get; set; }
 
+		private ObservableCollection<string> m_ChosenAbilities = new ObservableCollection<string>();
+		public ObservableCollection<string> ChosenAbilities
+		{
+			get
+			{
+				return m_ChosenAbilities;
+			}
+			set
+			{
+				if (value != m_ChosenAbilities)
+				{
+					m_ChosenAbilities = value;
+					OnPropertyChanged(nameof(ChosenAbilities));
+				}
+			}
+		}
+		public string SelectedRemoveAbility { get; set; }
+
 		private ICommand m_AddAbilityChoiceCommand;
 		public ICommand AddAbilityChoiceCommand
 		{
@@ -296,24 +314,6 @@ namespace Combiner
 				AbilityChoices.Remove(SelectedAddAbility);
 			}
 		}
-
-		private ObservableCollection<string> m_ChosenAbilities = new ObservableCollection<string>();
-		public ObservableCollection<string> ChosenAbilities
-		{
-			get
-			{
-				return m_ChosenAbilities;
-			}
-			set
-			{
-				if (value != m_ChosenAbilities)
-				{
-					m_ChosenAbilities = value;
-					OnPropertyChanged(nameof(ChosenAbilities));
-				}
-			}
-		}
-		public string SelectedRemoveAbility { get; set; }
 
 		private ICommand m_RemoveAbilityChoiceCommand;
 		public ICommand RemoveAbilityChoiceCommand

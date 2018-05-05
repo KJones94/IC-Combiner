@@ -11,8 +11,9 @@ namespace Combiner
 		public static string Attrcombiner = "../../Scripts/2.4/attrcombiner.lua";
 		public static string Testcombiner = "../../Scripts/testcombiner.lua";
 		public static string DatabaseString = "../../Database/Creatures.db";
+		//public static string DatabaseMasterString = "../../Database/Creatures - Master.db";
 
-		
+
 
 		public static string Ticks = "constructionticks";
 		public static string Rank = "creature_rank";

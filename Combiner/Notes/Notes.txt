@@ -9,6 +9,7 @@ Notes...
 		not pop size
 	for..in over a table needs to use pairs() funciton
 	HornNegateFull vs. NegateArmour
+	LuaHandler causes the giant memory issues
 
 	WHAT IS UP WITH ROUNDING IN LUA?
 	
