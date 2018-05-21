@@ -95,7 +95,6 @@
     <Compile Include="CreatureContainer.cs" />
     <Compile Include="CreatureFactory.cs" />
     <Compile Include="Creature.cs" />
-    <Compile Include="CreatureVM.cs" />
     <Compile Include="DatabasePrototype.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />
     <Compile Include="GuideWindow.xaml.cs">
@@ -119,20 +118,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CreatureCombiner.cs" />
     <Compile Include="LuaHandler.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Page Include="NewMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

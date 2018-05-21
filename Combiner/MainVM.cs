@@ -9,11 +9,11 @@ namespace Combiner
 	public class MainVM : BaseViewModel
 	{
 
-		public CreatureVM CreatureVM { get; set; }
+		//public CreatureVM CreatureVM { get; set; }
 
 		public MainVM()
 		{
-			CreatureVM = new CreatureVM();
+			//CreatureVM = new CreatureVM();
 			//DatabasePrototype.TestDB();
 		}
 

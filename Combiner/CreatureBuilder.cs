@@ -383,6 +383,20 @@ namespace Combiner
 			SetRangeType();
 			SetRangeSpecial();
 			SetMeleeType();
+
+			// Ensure speed values set properly
+			if (!HasLandSpeed())
+			{
+				LandSpeed = 0;
+			}
+			if (!HasWaterSpeed())
+			{
+				WaterSpeed = 0;
+			}
+			if (!HasAirSpeed())
+			{
+				AirSpeed = 0;
+			}
 		}
 
 		private void InitAbilities()
@@ -445,6 +459,52 @@ namespace Combiner
 			return hasAbilities;
 		}
 
+		private bool HasLandSpeed()
+		{
+			// If wings then no land
+			if (ChosenBodyParts[Limb.Wings] == Side.Left
+				|| ChosenBodyParts[Limb.Wings] == Side.Right)
+			{
+				return false;
+			}
+			// If both legs then land
+			else if ((ChosenBodyParts[Limb.FrontLegs] == Side.Left
+				|| ChosenBodyParts[Limb.FrontLegs] == Side.Right)
+				&& (ChosenBodyParts[Limb.BackLegs] == Side.Left
+				|| ChosenBodyParts[Limb.BackLegs] == Side.Right))
+			{
+				return true;
+			}
+			// If snake torso then land
+			else if (GetSide(Limb.Torso).Type == StockType.Snake)
+			{
+				return true;
+			}
+			return false;
+		}
+
+		private bool HasWaterSpeed()
+		{
+			// If wings then no water
+			if (ChosenBodyParts[Limb.Wings] == Side.Left
+				|| ChosenBodyParts[Limb.Wings] == Side.Right)
+			{
+				return false;
+			}
+			return true;
+		}
+
+		private bool HasAirSpeed()
+		{
+			// If wings then flying
+			if (ChosenBodyParts[Limb.Wings] == Side.Left
+				|| ChosenBodyParts[Limb.Wings] == Side.Right)
+			{
+				return true;
+			}
+			return false;
+		}
+
 		#region Calculate Stats
 
 		private void CalcHitpoints()
@@ -503,6 +563,7 @@ namespace Combiner
 				side = GetSide(limb);
 				if (side == null)
 					continue;
+
 				landSpeed += side.CalcLimbLandSpeed(OtherSide(side), limb);
 			}
 			LandSpeed = landSpeed;
