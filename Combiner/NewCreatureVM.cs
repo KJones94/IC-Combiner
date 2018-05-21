@@ -256,8 +256,14 @@ namespace Combiner
 			{
 				return FilterStats(creature)
 					&& FilterSingleRangeDamage(creature)
+					&& FilterRange(creature)
+					&& FilterDirectRange(creature)
+					&& FilterSonicRange(creature)
 					&& FilterArtillery(creature)
 					&& FilterRangeDamage(creature)
+					&& FilterHorns(creature)
+					&& FilterBarrierDestroy(creature)
+					&& FilterPoison(creature)
 					&& FilterAbilities(creature);
 			}
 			return false;
@@ -293,9 +299,9 @@ namespace Combiner
 
 		private bool FilterRangeDamage(Creature creature)
 		{
-			return (creature.RangeDamage1 > MinRangeDamage
+			return (creature.RangeDamage1 >= MinRangeDamage
 				&& creature.RangeDamage1 < MaxRangeDamage)
-				|| (creature.RangeDamage2 > MinRangeDamage
+				|| (creature.RangeDamage2 >= MinRangeDamage
 				&& creature.RangeDamage2 < MaxRangeDamage);
 		}
 
@@ -325,6 +331,47 @@ namespace Combiner
 			return true;
 		}
 
+		private bool FilterRange(Creature creature)
+		{
+			if (DoRangeFilter)
+			{
+				return creature.RangeDamage1 > 0
+					&& creature.RangeSpecial1 == 0
+					&& creature.RangeSpecial2 == 0;
+			}
+			return true;
+		}
+
+		private bool FilterDirectRange(Creature creature)
+		{
+			if (DoDirectRangeFilter)
+			{
+				bool range1HasDirect = creature.RangeDamage1 > 0
+					&& creature.RangeSpecial1 == 0
+					&& (int)creature.RangeType1 != (int)DamageType.Sonic;
+				bool range2HasDirect = creature.RangeDamage2 > 0
+					&& creature.RangeSpecial2 == 0
+					&& (int)creature.RangeType2 != (int)DamageType.Sonic;
+
+				return range1HasDirect || range2HasDirect;
+			}
+			return true;
+		}
+
+		private bool FilterSonicRange(Creature creature)
+		{
+			if (DoSonicRangeFilter)
+			{
+				bool range1HasSonic = creature.RangeSpecial1 == 0
+					&& (int)creature.RangeType1 == (int)DamageType.Sonic;
+				bool range2HasSonic = creature.RangeSpecial2 == 0
+					&& (int)creature.RangeType2 == (int)DamageType.Sonic;
+
+				return range1HasSonic || range2HasSonic;
+			}
+			return true;
+		}
+
 		private bool FilterSingleRangeDamage(Creature creature)
 		{
 			if (DoSingleRangeFilter)
@@ -333,6 +380,35 @@ namespace Combiner
 			}
 			return true;
 		}
+
+		private bool FilterHorns(Creature creature)
+		{
+			if (DoHornsFilter)
+			{
+				return creature.HasHorns;
+			}
+			return true;
+		}
+
+		private bool FilterBarrierDestroy(Creature creature)
+		{
+			if (DoBarrierDestroyFilter)
+			{
+				return creature.HasBarrierDestroy;
+			}
+			return true;
+		}
+
+		private bool FilterPoison(Creature creature)
+		{
+			if (DoPoisonFilter)
+			{
+				return creature.HasPoison;
+			}
+			return true;
+		}
+
+
 
 		private ICommand m_SetDefaultFiltersCommand;
 		public ICommand SetDefaultFiltersCommand
@@ -386,11 +462,34 @@ namespace Combiner
 			MaxRangeDamage = 100;
 			DoArtilleryFilter = false;
 			DoSingleRangeFilter = false;
+			DoDirectRangeFilter = false;
+			DoSonicRangeFilter = false;
+			DoHornsFilter = false;
+			DoBarrierDestroyFilter = false;
+			DoPoisonFilter = false;
 
 			RemoveAllAbilityChoices(null);
 		}
 
-
+		private void RemoveOtherRangeFilters(string filter)
+		{
+			if (filter != nameof(DoArtilleryFilter))
+			{
+				DoArtilleryFilter = false;
+			}
+			if (filter != nameof(DoRangeFilter))
+			{
+				DoRangeFilter = false;
+			}
+			if (filter != nameof(DoDirectRangeFilter))
+			{
+				DoDirectRangeFilter = false;
+			}
+			if (filter != nameof(DoSonicRangeFilter))
+			{
+				DoSonicRangeFilter = false;
+			}
+		}
 
 		private int m_MinRank;
 		public int MinRank
@@ -767,8 +866,79 @@ namespace Combiner
 			{
 				if (m_DoArtilleryFilter != value)
 				{
+					// turned on
+					if (value)
+					{
+						RemoveOtherRangeFilters(nameof(DoArtilleryFilter));
+					}
 					m_DoArtilleryFilter = value;
 					OnPropertyChanged(nameof(DoArtilleryFilter));
+				}
+			}
+		}
+
+		private bool m_DoRangeFilter;
+		public bool DoRangeFilter
+		{
+			get
+			{
+				return m_DoRangeFilter;
+			}
+			set
+			{
+				if (m_DoRangeFilter != value)
+				{
+					// turned on
+					if (value)
+					{
+						RemoveOtherRangeFilters(nameof(DoRangeFilter));
+					}
+					m_DoRangeFilter = value;
+					OnPropertyChanged(nameof(DoRangeFilter));
+				}
+			}
+		}
+
+		private bool m_DoDirectRangeFilter;
+		public bool DoDirectRangeFilter
+		{
+			get
+			{
+				return m_DoDirectRangeFilter;
+			}
+			set
+			{
+				if (m_DoDirectRangeFilter != value)
+				{
+					// turned on
+					if (value)
+					{
+						RemoveOtherRangeFilters(nameof(DoDirectRangeFilter));
+					}
+					m_DoDirectRangeFilter = value;
+					OnPropertyChanged(nameof(DoDirectRangeFilter));
+				}
+			}
+		}
+
+		private bool m_DoSonicRangeFilter;
+		public bool DoSonicRangeFilter
+		{
+			get
+			{
+				return m_DoSonicRangeFilter;
+			}
+			set
+			{
+				if (m_DoSonicRangeFilter != value)
+				{
+					// turned on
+					if (value)
+					{
+						RemoveOtherRangeFilters(nameof(DoSonicRangeFilter));
+					}
+					m_DoSonicRangeFilter = value;
+					OnPropertyChanged(nameof(DoSonicRangeFilter));
 				}
 			}
 		}
@@ -789,5 +959,57 @@ namespace Combiner
 				}
 			}
 		}
+
+		private bool m_DoHornsFilter;
+		public bool DoHornsFilter
+		{
+			get
+			{
+				return m_DoHornsFilter;
+			}
+			set
+			{
+				if (m_DoHornsFilter != value)
+				{
+					m_DoHornsFilter = value;
+					OnPropertyChanged(nameof(DoHornsFilter));
+				}
+			}
+		}
+
+		private bool m_DoBarrierDestroyFilter;
+		public bool DoBarrierDestroyFilter
+		{
+			get
+			{
+				return m_DoBarrierDestroyFilter;
+			}
+			set
+			{
+				if (m_DoBarrierDestroyFilter != value)
+				{
+					m_DoBarrierDestroyFilter = value;
+					OnPropertyChanged(nameof(DoBarrierDestroyFilter));
+				}
+			}
+		}
+
+		private bool m_DoPoisonFilter;
+		public bool DoPoisonFilter
+		{
+			get
+			{
+				return m_DoPoisonFilter;
+			}
+			set
+			{
+				if (m_DoPoisonFilter != value)
+				{
+					m_DoPoisonFilter = value;
+					OnPropertyChanged(nameof(DoPoisonFilter));
+				}
+			}
+		}
+
 	}
 }

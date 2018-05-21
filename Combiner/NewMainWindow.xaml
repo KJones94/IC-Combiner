@@ -11,6 +11,7 @@
 	</Window.DataContext>
 	<Window.Resources>
 		<CollectionViewSource x:Key="creatures" Source="{Binding Creatures, Mode=TwoWay}"/>
+		<local:BoolToStringConverter x:Key="boolConverter"/>
 		<local:DoubleToStringConverter x:Key="doubleConverter"/>
 		<local:ContainsAbilitiesConverter x:Key="abilityConverter"/>
 		<local:ArtilleryConverter x:Key="artilleryConverter"/>
@@ -122,11 +123,25 @@
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
 						<CheckBox IsChecked="{Binding DoArtilleryFilter}"/>
-						<Label>Filter for artillery</Label>
+						<Label>Only artillery</Label>
+						<CheckBox IsChecked="{Binding DoRangeFilter}"/>
+						<Label>Only range</Label>
+						<CheckBox IsChecked="{Binding DoDirectRangeFilter}"/>
+						<Label>Only direct range</Label>
+						<CheckBox IsChecked="{Binding DoSonicRangeFilter}"/>
+						<Label>Only sonic</Label>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
 						<CheckBox IsChecked="{Binding DoSingleRangeFilter}"/>
-						<Label>Filter for single range attack</Label>
+						<Label>Single range attack</Label>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<CheckBox IsChecked="{Binding DoHornsFilter}"/>
+						<Label>Horns</Label>
+						<CheckBox IsChecked="{Binding DoBarrierDestroyFilter}"/>
+						<Label>Barrier Destroy</Label>
+						<CheckBox IsChecked="{Binding DoPoisonFilter}"/>
+						<Label>Poison</Label>
 					</StackPanel>
 					<!--<StackPanel Orientation="Horizontal">
 					<Label>Abilities:</Label>
@@ -180,6 +195,9 @@
 					<DataGridTextColumn Header="Range Special 2" Binding="{Binding RangeSpecial2, Converter={StaticResource doubleConverter}}"/>
 					<DataGridTextColumn Header="Range Type 2" Binding="{Binding RangeType2, Converter={StaticResource doubleConverter}}"/>
 					<!--<DataGridTextColumn Header="Artillery" Binding="{Binding RangeSpecial, Converter={StaticResource artilleryConverter}}"/>-->
+					<DataGridTextColumn Header="Horns" Binding="{Binding HasHorns, Converter={StaticResource boolConverter}}"/>
+					<DataGridTextColumn Header="Barrier Destroy" Binding="{Binding HasBarrierDestroy, Converter={StaticResource boolConverter}}"/>
+					<DataGridTextColumn Header="Poison" Binding="{Binding HasBarrierDestroy, Converter={StaticResource boolConverter}}"/>
 					<DataGridTextColumn Header="Abilties" Binding="{Binding Abilities, Converter={StaticResource abilityConverter}}"/>
 				</DataGrid.Columns>
 			</DataGrid>
