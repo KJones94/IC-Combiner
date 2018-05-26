@@ -122,6 +122,18 @@
 						<Button Width="50" Content="Drop All" Command="{Binding RemoveAllAbilityChoicesCommand}"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
+						<Label>Stock:</Label>
+						<ComboBox Width="100"
+							  ItemsSource="{Binding StockChoices}"
+							  SelectedItem="{Binding SelectedAddStock}"/>
+						<Button Width="30" Content="Add" Command="{Binding AddStockChoiceCommand}"/>
+						<ComboBox Width="100"
+							  ItemsSource="{Binding ChosenStock}"
+							  SelectedItem="{Binding SelectedRemoveStock}"/>
+						<Button Width="30" Content="Drop" Command="{Binding RemoveStockChoiceCommand}"/>
+						<Button Width="50" Content="Drop All" Command="{Binding RemoveAllStockChoicesCommand}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
 						<CheckBox IsChecked="{Binding DoArtilleryFilter}"/>
 						<Label>Only artillery</Label>
 						<CheckBox IsChecked="{Binding DoRangeFilter}"/>
@@ -143,17 +155,7 @@
 						<CheckBox IsChecked="{Binding DoPoisonFilter}"/>
 						<Label>Poison</Label>
 					</StackPanel>
-					<!--<StackPanel Orientation="Horizontal">
-					<Label>Abilities:</Label>
-					<ComboBox Width="50"/>
-					<Button Width="30" Content="Add"/>
-					<ComboBox Width="50"/>
-					<Button Width="30" Content="Drop"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label>Terrain:</Label>
-					<ComboBox Width="50"/>
-				</StackPanel>-->
+					
 				</StackPanel>
 				<StackPanel Grid.Column="3">
 					<Button Content="Create Database" Command="{Binding CreateDatabaseCommand}"/>

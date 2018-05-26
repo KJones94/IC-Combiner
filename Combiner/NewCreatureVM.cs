@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -227,6 +228,132 @@ namespace Combiner
 			AbilityChoices = new ObservableCollection<string>(AbilityChoices.OrderBy(s => s));
 		}
 
+		private ObservableCollection<string> m_StockChoices;
+		public ObservableCollection<string> StockChoices
+		{
+			get
+			{
+				if (m_StockChoices == null)
+				{
+					m_StockChoices = new ObservableCollection<string>();
+					var stockNames = Directory.GetFiles(Utility.StockDirectory).
+						Select(s => s.Replace(".lua", "").Replace(Utility.StockDirectory, ""));
+					foreach (string stock in stockNames)
+					{
+						m_StockChoices.Add(stock);
+					}
+				}
+				return m_StockChoices;
+			}
+			set
+			{
+				if (value != m_StockChoices)
+				{
+					m_StockChoices = value;
+					OnPropertyChanged(nameof(StockChoices));
+				}
+			}
+		}
+		public string SelectedAddStock { get; set; }
+
+		private ICommand m_AddStockChoiceCommand;
+		public ICommand AddStockChoiceCommand
+		{
+			get
+			{
+				return m_AddStockChoiceCommand ??
+				  (m_AddStockChoiceCommand = new RelayCommand(AddStockChoice));
+			}
+			set
+			{
+				if (value != m_AddStockChoiceCommand)
+				{
+					m_AddStockChoiceCommand = value;
+					OnPropertyChanged(nameof(AddStockChoiceCommand));
+				}
+			}
+		}
+		private void AddStockChoice(object obj)
+		{
+			if (!ChosenStock.Contains(SelectedAddStock))
+			{
+				ChosenStock.Add(SelectedAddStock);
+				ChosenStock = new ObservableCollection<string>(ChosenStock.OrderBy(s => s));
+				// sort chosen stock
+				StockChoices.Remove(SelectedAddStock);
+			}
+		}
+
+		private ObservableCollection<string> m_ChosenStock = new ObservableCollection<string>();
+		public ObservableCollection<string> ChosenStock
+		{
+			get
+			{
+				return m_ChosenStock;
+			}
+			set
+			{
+				if (value != m_ChosenStock)
+				{
+					m_ChosenStock = value;
+					OnPropertyChanged(nameof(ChosenStock));
+				}
+			}
+		}
+		public string SelectedRemoveStock { get; set; }
+
+		private ICommand m_RemoveStockChoiceCommand;
+		public ICommand RemoveStockChoiceCommand
+		{
+			get
+			{
+				return m_RemoveStockChoiceCommand ??
+				  (m_RemoveStockChoiceCommand = new RelayCommand(RemoveStockChoice));
+			}
+			set
+			{
+				if (value != m_RemoveStockChoiceCommand)
+				{
+					m_RemoveStockChoiceCommand = value;
+					OnPropertyChanged(nameof(RemoveStockChoiceCommand));
+				}
+			}
+		}
+		private void RemoveStockChoice(object obj)
+		{
+			StockChoices.Add(SelectedRemoveStock);
+			StockChoices = new ObservableCollection<string>(StockChoices.OrderBy(s => s));
+			// sort stock choices
+			ChosenStock.Remove(SelectedRemoveStock);
+		}
+
+		private ICommand m_RemoveAllStockChoicesCommand;
+		public ICommand RemoveAllStockChoicesCommand
+		{
+			get
+			{
+				return m_RemoveAllStockChoicesCommand ??
+				  (m_RemoveAllStockChoicesCommand = new RelayCommand(RemoveAllStockChoices));
+			}
+			set
+			{
+				if (value != m_RemoveStockChoiceCommand)
+				{
+					m_RemoveAllStockChoicesCommand = value;
+					OnPropertyChanged(nameof(RemoveAllStockChoicesCommand));
+				}
+			}
+		}
+		private void RemoveAllStockChoices(object obj)
+		{
+			foreach (string stock in ChosenStock)
+			{
+				StockChoices.Add(stock);
+			}
+			ChosenStock = new ObservableCollection<string>();
+			StockChoices = new ObservableCollection<string>(StockChoices.OrderBy(s => s));
+		}
+
 		private ICommand m_FilterCreaturesCommand;
 		public ICommand FilterCreaturesCommand
 		{
@@ -264,7 +391,8 @@ namespace Combiner
 					&& FilterHorns(creature)
 					&& FilterBarrierDestroy(creature)
 					&& FilterPoison(creature)
-					&& FilterAbilities(creature);
+					&& FilterAbilities(creature)
+					&& FilterStockName(creature);
 			}
 			return false;
 		}
@@ -411,6 +539,23 @@ namespace Combiner
 			return true;
 		}
 
+		private bool FilterStockName(Creature creature)
+		{
+			if (ChosenStock.Count > 0)
+			{
+				foreach(string name in ChosenStock)
+				{
+					if (creature.Left == name
+						|| creature.Right == name)
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+			return true;
+		}
+
 
 
 		private ICommand m_SetDefaultFiltersCommand;
@@ -472,6 +617,7 @@ namespace Combiner
 			DoPoisonFilter = false;
 
 			RemoveAllAbilityChoices(null);
+			RemoveAllStockChoices(null);
 		}
 
 		private void RemoveOtherRangeFilters(string filter)
