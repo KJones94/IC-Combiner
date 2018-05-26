@@ -71,7 +71,7 @@ namespace Combiner
 		}
 		private void CreateDatabase(object obj)
 		{
-			string text = "Creating a new database will delete and replace your current database. This could take a while, but a dialog box will appear when it is finished. Would you like to continue?";
+			string text = "Creating a new database will delete and replace your current database. This could take a while (around 20-30 minutes), but a dialog box will appear when it is finished. Would you like to continue?";
 			MessageBoxResult result = MessageBox.Show(text, "Database Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 			if (result == MessageBoxResult.Yes)
 			{
