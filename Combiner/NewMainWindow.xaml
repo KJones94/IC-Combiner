@@ -81,6 +81,11 @@
 						<TextBox Width="50" Text="{Binding MaxSightRadius, Mode=TwoWay}"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
+						<Label>Size:</Label>
+						<TextBox Width="50" Text="{Binding MinSize, Mode=TwoWay}"/>
+						<TextBox Width="50" Text="{Binding MaxSize, Mode=TwoWay}"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
 						<Label>Land Speed:</Label>
 						<TextBox Width="50" Text="{Binding MinLandSpeed, Mode=TwoWay}"/>
 						<TextBox Width="50" Text="{Binding MaxLandSpeed, Mode=TwoWay}"/>

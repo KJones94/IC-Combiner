@@ -415,6 +415,8 @@ namespace Combiner
 					&& creature.Armour <= MaxArmour
 					&& creature.SightRadius >= MinSightRadius
 					&& creature.SightRadius <= MaxSightRadius
+					&& creature.Size >= MinSize
+					&& creature.Size <= MaxSize
 					&& creature.LandSpeed >= MinLandSpeed
 					&& creature.LandSpeed <= MaxLandSpeed
 					&& creature.WaterSpeed >= MinWaterSpeed
@@ -598,6 +600,8 @@ namespace Combiner
 			MaxArmour = 100;
 			MinSightRadius = 0;
 			MaxSightRadius = 50;
+			MinSize = 0;
+			MaxSize = 10;
 			MinLandSpeed = 0;
 			MaxLandSpeed = 50;
 			MinWaterSpeed = 0;
@@ -860,6 +864,34 @@ namespace Combiner
 				{
 					m_MaxSightRadius = value;
 					OnPropertyChanged(nameof(MaxSightRadius));
+				}
+			}
+		}
+
+		private int m_MinSize;
+		public int MinSize
+		{
+			get { return m_MinSize; }
+			set
+			{
+				if (m_MinSize != value)
+				{
+					m_MinSize = value;
+					OnPropertyChanged(nameof(MinSize));
+				}
+			}
+		}
+
+		private int m_MaxSize;
+		public int MaxSize
+		{
+			get { return m_MaxSize; }
+			set
+			{
+				if (m_MaxSize != value)
+				{
+					m_MaxSize = value;
+					OnPropertyChanged(nameof(MaxSize));
 				}
 			}
 		}
