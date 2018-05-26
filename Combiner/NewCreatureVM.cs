@@ -299,10 +299,13 @@ namespace Combiner
 
 		private bool FilterRangeDamage(Creature creature)
 		{
-			return (creature.RangeDamage1 >= MinRangeDamage
-				&& creature.RangeDamage1 < MaxRangeDamage)
-				|| (creature.RangeDamage2 >= MinRangeDamage
-				&& creature.RangeDamage2 < MaxRangeDamage);
+			bool isBothUnderMax = creature.RangeDamage1 <= MaxRangeDamage
+				&& creature.RangeDamage2 <= MaxRangeDamage;
+
+			bool isOneOverMin = creature.RangeDamage1 >= MinRangeDamage
+				|| creature.RangeDamage2 >= MinRangeDamage;
+
+			return isBothUnderMax && isOneOverMin;
 		}
 
 		private bool FilterAbilities(Creature creature)
