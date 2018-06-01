@@ -93,6 +93,8 @@
     <Compile Include="Converters\BodyPartsConverter.cs" />
     <Compile Include="Converters\BoolToStringConverter.cs" />
     <Compile Include="Converters\ContainsAbilitiesConverter.cs" />
+    <Compile Include="Converters\RangeSpecialConverter.cs" />
+    <Compile Include="Converters\RangeTypeConverter.cs" />
     <Compile Include="Converters\StockNameConverter.cs" />
     <Compile Include="CreatureBuilder.cs" />
     <Compile Include="CreatureContainer.cs" />
