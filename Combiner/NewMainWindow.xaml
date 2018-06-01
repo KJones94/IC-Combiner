@@ -165,8 +165,10 @@
 						<Button Width="50" Content="Drop All" Command="{Binding RemoveAllStockChoicesCommand}"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
-						<CheckBox IsChecked="{Binding DoArtilleryFilter}"/>
-						<Label>Only artillery</Label>
+						<CheckBox IsChecked="{Binding DoSingleRangeFilter}"/>
+						<Label>Single range attack</Label>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
 						<CheckBox IsChecked="{Binding DoRangeFilter}"/>
 						<Label>Only range</Label>
 						<CheckBox IsChecked="{Binding DoDirectRangeFilter}"/>
@@ -175,8 +177,14 @@
 						<Label>Only sonic</Label>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
-						<CheckBox IsChecked="{Binding DoSingleRangeFilter}"/>
-						<Label>Single range attack</Label>
+						<CheckBox IsChecked="{Binding DoArtilleryOnlyFilter}"/>
+						<Label>Only artillery</Label>
+						<CheckBox IsChecked="{Binding DoWaterArtilleryFilter}"/>
+						<Label>Only water</Label>
+						<CheckBox IsChecked="{Binding DoRockArtilleryFilter}"/>
+						<Label>Only rock</Label>
+						<CheckBox IsChecked="{Binding DoChemicalArtilleryFilter}"/>
+						<Label>Only chemical</Label>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal">
 						<CheckBox IsChecked="{Binding DoHornsFilter}"/>

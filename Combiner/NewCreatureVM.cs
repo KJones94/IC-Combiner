@@ -386,7 +386,10 @@ namespace Combiner
 					&& FilterRange(creature)
 					&& FilterDirectRange(creature)
 					&& FilterSonicRange(creature)
-					&& FilterArtillery(creature)
+					&& FilterArtilleryOnly(creature)
+					&& FilterWaterArtillery(creature)
+					&& FilterRockArtillery(creature)
+					&& FilterChemicalArtillery(creature)
 					&& FilterRangeDamage(creature)
 					&& FilterHorns(creature)
 					&& FilterBarrierDestroy(creature)
@@ -455,11 +458,38 @@ namespace Combiner
 			return hasAbilities;
 		}
 
-		private bool FilterArtillery(Creature creature)
+		private bool FilterArtilleryOnly(Creature creature)
 		{
-			if (DoArtilleryFilter)
+			if (DoArtilleryOnlyFilter)
 			{
 				return creature.RangeSpecial1 > 0 || creature.RangeSpecial2 > 0;
+			}
+			return true;
+		}
+
+		private bool FilterWaterArtillery(Creature creature)
+		{
+			if (DoWaterArtilleryFilter)
+			{
+				return creature.RangeSpecial1 == 2 || creature.RangeSpecial2 == 2;
+			}
+			return true;
+		}
+
+		private bool FilterRockArtillery(Creature creature)
+		{
+			if (DoRockArtilleryFilter)
+			{
+				return creature.RangeSpecial1 == 1 || creature.RangeSpecial2 == 1;
+			}
+			return true;
+		}
+
+		private bool FilterChemicalArtillery(Creature creature)
+		{
+			if (DoChemicalArtilleryFilter)
+			{
+				return creature.RangeSpecial1 == 3 || creature.RangeSpecial2 == 3;
 			}
 			return true;
 		}
@@ -612,7 +642,7 @@ namespace Combiner
 			MaxMeleeDamage = 100;
 			MinRangeDamage = 0;
 			MaxRangeDamage = 100;
-			DoArtilleryFilter = false;
+			DoArtilleryOnlyFilter = false;
 			DoSingleRangeFilter = false;
 			DoDirectRangeFilter = false;
 			DoSonicRangeFilter = false;
@@ -626,10 +656,6 @@ namespace Combiner
 
 		private void RemoveOtherRangeFilters(string filter)
 		{
-			if (filter != nameof(DoArtilleryFilter))
-			{
-				DoArtilleryFilter = false;
-			}
 			if (filter != nameof(DoRangeFilter))
 			{
 				DoRangeFilter = false;
@@ -641,6 +667,22 @@ namespace Combiner
 			if (filter != nameof(DoSonicRangeFilter))
 			{
 				DoSonicRangeFilter = false;
+			}
+			if (filter != nameof(DoArtilleryOnlyFilter))
+			{
+				DoArtilleryOnlyFilter = false;
+			}
+			if (filter != nameof(DoWaterArtilleryFilter))
+			{
+				DoWaterArtilleryFilter = false;
+			}
+			if (filter != nameof(DoRockArtilleryFilter))
+			{
+				DoRockArtilleryFilter = false;
+			}
+			if (filter != nameof(DoChemicalArtilleryFilter))
+			{
+				DoChemicalArtilleryFilter = false;
 			}
 		}
 
@@ -1036,24 +1078,90 @@ namespace Combiner
 			}
 		}
 
-		private bool m_DoArtilleryFilter;
-		public bool DoArtilleryFilter
+		private bool m_DoArtilleryOnlyFilter;
+		public bool DoArtilleryOnlyFilter
 		{
 			get
 			{
-				return m_DoArtilleryFilter;
+				return m_DoArtilleryOnlyFilter;
 			}
 			set
 			{
-				if (m_DoArtilleryFilter != value)
+				if (m_DoArtilleryOnlyFilter != value)
 				{
 					// turned on
 					if (value)
 					{
-						RemoveOtherRangeFilters(nameof(DoArtilleryFilter));
+						RemoveOtherRangeFilters(nameof(DoArtilleryOnlyFilter));
 					}
-					m_DoArtilleryFilter = value;
-					OnPropertyChanged(nameof(DoArtilleryFilter));
+					m_DoArtilleryOnlyFilter = value;
+					OnPropertyChanged(nameof(DoArtilleryOnlyFilter));
+				}
+			}
+		}
+
+		private bool m_DoWaterArtilleryFilter;
+		public bool DoWaterArtilleryFilter
+		{
+			get
+			{
+				return m_DoWaterArtilleryFilter;
+			}
+			set
+			{
+				if (m_DoWaterArtilleryFilter != value)
+				{
+					// turned on
+					if (value)
+					{
+						RemoveOtherRangeFilters(nameof(DoWaterArtilleryFilter));
+					}
+					m_DoWaterArtilleryFilter = value;
+					OnPropertyChanged(nameof(DoWaterArtilleryFilter));
+				}
+			}
+		}
+
+		private bool m_DoRockArtilleryFilter;
+		public bool DoRockArtilleryFilter
+		{
+			get
+			{
+				return m_DoRockArtilleryFilter;
+			}
+			set
+			{
+				if (m_DoRockArtilleryFilter != value)
+				{
+					// turned on
+					if (value)
+					{
+						RemoveOtherRangeFilters(nameof(DoRockArtilleryFilter));
+					}
+					m_DoRockArtilleryFilter = value;
+					OnPropertyChanged(nameof(DoRockArtilleryFilter));
+				}
+			}
+		}
+
+		private bool m_DoChemicalArtilleryFilter;
+		public bool DoChemicalArtilleryFilter
+		{
+			get
+			{
+				return m_DoChemicalArtilleryFilter;
+			}
+			set
+			{
+				if (m_DoChemicalArtilleryFilter != value)
+				{
+					// turned on
+					if (value)
+					{
+						RemoveOtherRangeFilters(nameof(DoChemicalArtilleryFilter));
+					}
+					m_DoChemicalArtilleryFilter = value;
+					OnPropertyChanged(nameof(DoChemicalArtilleryFilter));
 				}
 			}
 		}
