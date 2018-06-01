@@ -220,6 +220,160 @@ namespace Combiner
 			StinkCloud,
 			WebThrow
 		};
+
+		public static Dictionary<string, string> ProperAbilityNames = ConstructProperAbilityNames();
+
+		private static Dictionary<string, string> ConstructProperAbilityNames()
+		{
+			Dictionary<string, string> abilities = new Dictionary<string, string>();
+			abilities.Add(Assassinate, nameof(Assassinate));
+			abilities.Add(Camouflage, nameof(Camouflage));
+			abilities.Add(ChargeAttack, nameof(ChargeAttack));
+			abilities.Add(Colony, nameof(Colony));
+			abilities.Add(Conglomerate, nameof(Conglomerate));
+			abilities.Add(DefileLand, nameof(DefileLand));
+			abilities.Add(DeflectionArmour, nameof(DeflectionArmour));
+			abilities.Add(Digging, nameof(Digging));
+			abilities.Add(DisorientingBarbs, nameof(DisorientingBarbs));
+			abilities.Add(ElectricBurst, nameof(ElectricBurst));
+			abilities.Add(EnduranceBonus, nameof(EnduranceBonus));
+			abilities.Add(Flash, nameof(Flash));
+			abilities.Add(FlashHead, nameof(FlashHead));
+			abilities.Add(Frenzy, nameof(Frenzy));
+			abilities.Add(HardShell, nameof(HardShell));
+			abilities.Add(Herding, nameof(Herding));
+			abilities.Add(Hovering, nameof(Hovering));
+			abilities.Add(Infestation, nameof(Infestation));
+			abilities.Add(Immunity, nameof(Immunity));
+			abilities.Add(KeenSense, nameof(KeenSense));
+			abilities.Add(LeapAttack, nameof(LeapAttack));
+			abilities.Add(Loner, nameof(Loner));
+			abilities.Add(Overpopulation, nameof(Overpopulation));
+			abilities.Add(PackHunter, nameof(PackHunter));
+			abilities.Add(Plague, nameof(Plague));
+			abilities.Add(PoisonBite, nameof(PoisonBite));
+			abilities.Add(PoisonPincers, nameof(PoisonPincers));
+			abilities.Add(PoisonSting, nameof(PoisonSting));
+			abilities.Add(PoisonTouch, nameof(PoisonTouch));
+			abilities.Add(QuillBurst, nameof(QuillBurst));
+			abilities.Add(Regeneration, nameof(Regeneration));
+			abilities.Add(SonarPulse, nameof(SonarPulse));
+			abilities.Add(StinkCloud, nameof(StinkCloud));
+			abilities.Add(WebThrow, nameof(WebThrow));
+
+			return abilities;
+		}
+
+		public static Dictionary<string, string> ProperStockNames = ConstructProperStockNames();
+
+		public static Dictionary<string, string> ConstructProperStockNames()
+		{
+			Dictionary<string, string> names = new Dictionary<string, string>();
+			names.Add("albatross", "Albatross");
+			names.Add("anaconda", "Anaconda");
+			names.Add("anglerfish", "Anglerfish");
+			names.Add("ant", "Ant");
+			names.Add("archerfish", "Archerfish");
+			names.Add("armadillo", "Armadillo");
+			names.Add("baboon", "Baboon");
+			names.Add("behemoth", "Behemoth");
+			names.Add("beluga", "Beluga");
+			names.Add("black_widow", "Black Widow");
+			names.Add("blue whale", "Blue Whale");
+			names.Add("bob", "Skipping Caterpillar");
+			names.Add("bolas_spider", "Bolas Spider");
+			names.Add("bombardier_beetle", "Bombardier Beetle");
+			names.Add("bull", "Bull");
+			names.Add("camel", "Camel");
+			names.Add("chameleon", "Chameleon");
+			names.Add("cheetah", "Cheetah");
+			names.Add("chimpanzee", "Chimpanzee");
+			names.Add("cockroach", "Cockroach");
+			names.Add("condor", "Condor");
+			names.Add("coyote", "Coyote");
+			names.Add("crocodile", "Crocodile");
+			names.Add("cuttlefish", "Cuttlefish");
+			names.Add("diamond_python", "Diamond Python");
+			names.Add("dolphin", "Dolphin");
+			names.Add("dragonfly", "Dragonfly");
+			names.Add("eagle", "Eagle");
+			names.Add("electric_eel", "Electric Eel");
+			names.Add("elephant", "Elephant");
+			names.Add("finished naked mole rat", "Naked Mole Rat");
+			names.Add("fire_fly", "Firefly");
+			names.Add("garden_spider", "Garden Spider");
+			names.Add("garfish", "Garfish");
+			names.Add("giant_anteater", "Giant Anteater");
+			names.Add("giraffe", "Giraffe");
+			names.Add("gorilla", "Gorilla");
+			names.Add("great_white_shark", "Great White Shark");
+			names.Add("grizzly_bear", "Grizzly Bear");
+			names.Add("hammerhead_shark", "Hammerhead Shark");
+			names.Add("hatchetfish", "Hatchetfish");
+			names.Add("hercules_beetle", "Hercules Beetle");
+			names.Add("hippopotamus", "Hippopotamus");
+			names.Add("hornbill", "Hornbill");
+			names.Add("hornet", "Hornet");
+			names.Add("horse", "Horse");
+			names.Add("humpback", "Humpback");
+			names.Add("hyena", "Hyena");
+			names.Add("kangaroo", "Kangaroo");
+			names.Add("killer_whale", "Killer Whale");
+			names.Add("komodo_dragon", "Komodo Dragon");
+			names.Add("lammergeier", "Lammergeier");
+			names.Add("lemming", "Lemming");
+			names.Add("lioness", "Lioness");
+			names.Add("lobster", "Lobster");
+			names.Add("mantis shrimp", "Mantis Shrimp");
+			names.Add("moose", "Moose");
+			names.Add("mountain_lion", "Mountain Lion");
+			names.Add("musk_ox", "Musk Ox");
+			names.Add("narwhal", "Narwhal");
+			names.Add("octopus", "Octopus");
+			names.Add("panther", "Panther");
+			names.Add("piranha", "Piranha");
+			names.Add("poison_frog", "Poison Frog");
+			names.Add("polar_bear", "Polar Bear");
+			names.Add("porcupine", "Porcupine");
+			names.Add("praying_mantis", "Praying Mantis");
+			names.Add("ram", "Ram");
+			names.Add("rat", "Rat");
+			names.Add("rattlesnake", "Rattlesnake");
+			names.Add("raven", "Raven");
+			names.Add("rhinoceros", "Rhinoceros");
+			names.Add("shrimp", "Shrimp");
+			names.Add("siphonophore", "Man O' War");
+			names.Add("skunk", "Skunk");
+			names.Add("snail", "Snail");
+			names.Add("snapping_turtle", "Snapping Turtle");
+			names.Add("snowy_owl", "Snowy Owl");
+			names.Add("sperm_whale", "Sperm Whale");
+			names.Add("spider", "Spider");
+			names.Add("spider_wasp", "Wasp");
+			names.Add("spitting_cobra", "Spitting Cobra");
+			names.Add("spitting_spider", "Spitting Spider");
+			names.Add("squid", "Squid");
+			names.Add("stick_bug", "Stick Bug");
+			names.Add("stink_bug", "Stink Bug");
+			names.Add("tapir", "Tapir");
+			names.Add("tarantula", "Tarantula");
+			names.Add("termite", "Termite");
+			names.Add("tiger", "Tiger");
+			names.Add("tuna", "Tuna");
+			names.Add("vampire_bat", "Bat");
+			names.Add("velvet_worm", "Velvet Worm");
+			names.Add("vulture", "Vulture");
+			names.Add("walrus", "Walrus");
+			names.Add("warthog", "Warthog");
+			names.Add("whale shark", "Whale Shark");
+			names.Add("wolf", "Wolf");
+			names.Add("wolverine", "Wolverine");
+			names.Add("woolly_mammoth", "Woolly Mammoth");
+			names.Add("zebra", "Zebra");
+
+			return names;
+		}
+
 	}
 
 	public enum DamageType

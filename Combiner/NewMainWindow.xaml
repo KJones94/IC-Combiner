@@ -14,8 +14,10 @@
 		<local:BoolToStringConverter x:Key="boolConverter"/>
 		<local:DoubleToStringConverter x:Key="doubleConverter"/>
 		<local:ContainsAbilitiesConverter x:Key="abilityConverter"/>
+		<local:AbilityNameConverter x:Key="abilityNameConverter"/>
 		<local:ArtilleryConverter x:Key="artilleryConverter"/>
 		<local:BodyPartsConverter x:Key="bodyPartsConverter"/>
+		<local:StockNameConverter x:Key="stockNameConverter"/>
 	</Window.Resources>
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
@@ -118,11 +120,23 @@
 						<Label>Abilities:</Label>
 						<ComboBox Width="100"
 							  ItemsSource="{Binding AbilityChoices}"
-							  SelectedItem="{Binding SelectedAddAbility}"/>
+							  SelectedItem="{Binding SelectedAddAbility}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<ContentPresenter Content="{Binding Converter={StaticResource abilityNameConverter}}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
 						<Button Width="30" Content="Add" Command="{Binding AddAbilityChoiceCommand}"/>
 						<ComboBox Width="100"
 							  ItemsSource="{Binding ChosenAbilities}"
-							  SelectedItem="{Binding SelectedRemoveAbility}"/>
+							  SelectedItem="{Binding SelectedRemoveAbility}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<ContentPresenter Content="{Binding Converter={StaticResource abilityNameConverter}}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
 						<Button Width="30" Content="Drop" Command="{Binding RemoveAbilityChoiceCommand}"/>
 						<Button Width="50" Content="Drop All" Command="{Binding RemoveAllAbilityChoicesCommand}"/>
 					</StackPanel>
@@ -130,11 +144,23 @@
 						<Label>Stock:</Label>
 						<ComboBox Width="100"
 							  ItemsSource="{Binding StockChoices}"
-							  SelectedItem="{Binding SelectedAddStock}"/>
+							  SelectedItem="{Binding SelectedAddStock}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<ContentPresenter Content="{Binding Converter={StaticResource stockNameConverter}}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
 						<Button Width="30" Content="Add" Command="{Binding AddStockChoiceCommand}"/>
 						<ComboBox Width="100"
 							  ItemsSource="{Binding ChosenStock}"
-							  SelectedItem="{Binding SelectedRemoveStock}"/>
+							  SelectedItem="{Binding SelectedRemoveStock}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<ContentPresenter Content="{Binding Converter={StaticResource stockNameConverter}}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
 						<Button Width="30" Content="Drop" Command="{Binding RemoveStockChoiceCommand}"/>
 						<Button Width="50" Content="Drop All" Command="{Binding RemoveAllStockChoicesCommand}"/>
 					</StackPanel>
@@ -179,8 +205,8 @@
 					  AlternatingRowBackground="Gainsboro" AlternationCount="2"
 					  AutoGenerateColumns="False" VirtualizingStackPanel.VirtualizationMode="Standard">
 				<DataGrid.Columns>
-					<DataGridTextColumn Header="Left" Binding="{Binding Left}"/>
-					<DataGridTextColumn Header="Right" Binding="{Binding Right}"/>
+					<DataGridTextColumn Header="Left" Binding="{Binding Left, Converter={StaticResource stockNameConverter}}"/>
+					<DataGridTextColumn Header="Right" Binding="{Binding Right, Converter={StaticResource stockNameConverter}}"/>
 					<DataGridTextColumn Header="Body Parts" Binding="{Binding BodyParts, Converter={StaticResource bodyPartsConverter}}"/>
 					<DataGridTextColumn Header="Rank" Binding="{Binding Rank}"/>
 					<DataGridTextColumn Header="Coal" Binding="{Binding Coal, Converter={StaticResource doubleConverter}}"/>

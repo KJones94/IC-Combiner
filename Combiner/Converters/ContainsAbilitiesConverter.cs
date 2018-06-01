@@ -21,7 +21,7 @@ namespace Combiner
 					{
 						if (abilities[ability])
 						{
-							sb.Append(ability);
+							sb.Append(Utility.ProperAbilityNames[ability]);
 							sb.Append(", ");
 						}
 					}
