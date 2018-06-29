@@ -48,6 +48,23 @@ namespace Combiner
 			}
 		}
 
+		private Creature m_SelectedCreature;
+		public Creature SelectedCreature
+		{
+			get
+			{
+				return m_SelectedCreature;
+			}
+			set
+			{
+				if (value != m_SelectedCreature)
+				{
+					m_SelectedCreature = value;
+					OnPropertyChanged(nameof(SelectedCreature));
+				}
+			}
+		}
+
 		public NewCreatureVM()
 		{
 			SetDefaultFilters();
@@ -102,6 +119,54 @@ namespace Combiner
 		{
 			Creatures = new ObservableCollection<Creature>(Database.GetAllCreatures());
 			CreaturesView.Filter = CreatureFilter;
+		}
+
+		private ICommand m_LoadSavedCreaturesCommand;
+		public ICommand LoadSavedCreaturesCommand
+		{
+			get
+			{
+				return m_LoadSavedCreaturesCommand ??
+				  (m_LoadSavedCreaturesCommand = new RelayCommand(LoadSavedCreatures));
+			}
+			set
+			{
+				if (value != m_LoadSavedCreaturesCommand)
+				{
+					m_LoadSavedCreaturesCommand = value;
+					OnPropertyChanged(nameof(LoadSavedCreaturesCommand));
+				}
+			}
+		}
+		private void LoadSavedCreatures(object obj)
+		{
+			Creatures = new ObservableCollection<Creature>(Database.GetSavedCreatures());
+			CreaturesView.Filter = CreatureFilter;
+		}
+
+		private ICommand m_SaveCreatureCommand;
+		public ICommand SaveCreatureCommand
+		{
+			get
+			{
+				return m_SaveCreatureCommand ??
+					(m_SaveCreatureCommand = new RelayCommand(SaveCreature));
+			}
+			set
+			{
+				if (value != m_SaveCreatureCommand)
+				{
+					m_SaveCreatureCommand = value;
+					OnPropertyChanged(nameof(SaveCreatureCommand));
+				}
+			}
+		}
+		public void SaveCreature(object obj)
+		{
+			if (SelectedCreature != null)
+			{
+				Database.SaveCreature(SelectedCreature);
+			}
 		}
 
 		private ObservableCollection<string> m_AbilityChoices;

@@ -23,15 +23,21 @@ namespace Combiner
 			InitializeComponent();
 		}
 
-		private void MenuItem_Click(object sender, RoutedEventArgs e)
+		private void MenuItem_GuideClick(object sender, RoutedEventArgs e)
 		{
 			GuideWindow window = new GuideWindow();
 			window.Show();
 		}
 
-		private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+		private void MenuItem_ReportClick(object sender, RoutedEventArgs e)
 		{
 			ReportWindow window = new ReportWindow();
+			window.Show();
+		}
+
+		private void MenuItem_AboutClick(object sender, RoutedEventArgs e)
+		{
+			AboutWindow window = new AboutWindow();
 			window.Show();
 		}
 	}

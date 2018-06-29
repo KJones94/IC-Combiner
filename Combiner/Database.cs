@@ -15,15 +15,43 @@ namespace Combiner
 			using (var db = new LiteDatabase(Utility.DatabaseString))
 			{
 				if (!db.CollectionExists("creatures"))
+				{
 					return new List<Creature>();
+				}
 
 				var collection = db.GetCollection<Creature>("creatures");
-
-
-				//var result = collection.Find(x => x.Rank == 1);
-				var result = collection.FindAll();
-				List<Creature> creatures = result.ToList();
+				List<Creature> creatures = collection.FindAll().ToList();
 				return creatures;
+			}
+		}
+
+		public static List<Creature> GetSavedCreatures()
+		{
+			using (var db = new LiteDatabase(Utility.DatabaseString))
+			{
+				if (!db.CollectionExists("saved_creatures"))
+				{
+					return new List<Creature>();
+				}
+
+				var collection = db.GetCollection<Creature>("saved_creatures");
+				List<Creature> savedCreatures = collection.FindAll().ToList();
+				return savedCreatures;
+			}
+		}
+
+		public static void SaveCreature(Creature creature)
+		{
+			using (var db = new LiteDatabase(Utility.DatabaseString))
+			{
+				if (!db.CollectionExists("saved_creatures"))
+				{
+					CreateSavedCreatures();
+					//return;
+				}
+
+				var collection = db.GetCollection<Creature>("saved_creatures");
+				collection.Insert(creature);
 			}
 		}
 
@@ -35,6 +63,11 @@ namespace Combiner
 				{
 					db.DropCollection("creatures");
 				}
+				if (db.CollectionExists("saved_creatures"))
+				{
+					db.DropCollection("saved_creatures");
+				}
+
 				var collection = db.GetCollection<Creature>("creatures");
 				CreateCreatures(collection);
 
@@ -71,6 +104,19 @@ namespace Combiner
 				creatures.Add(creature.BuildCreature());
 			}
 			collection.InsertBulk(creatures);
+		}
+
+		private static void CreateSavedCreatures()
+		{
+			using (var db = new LiteDatabase(Utility.DatabaseString))
+			{
+				if (db.CollectionExists("saved_creatures"))
+				{
+					return;
+				}
+
+				db.GetCollection<Creature>("saved_creatures");
+			}
 		}
 	}
 }

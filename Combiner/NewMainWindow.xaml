@@ -23,9 +23,13 @@
 	</Window.Resources>
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="File">
+				<MenuItem Header="Export Creatures"/>
+			</MenuItem>
 			<MenuItem Header="Help">
-				<MenuItem Header="Guide" Click="MenuItem_Click"/>
-				<MenuItem Header="Report Bugs/Suggestions" Click="MenuItem_Click_1"/>
+				<MenuItem Header="Guide" Click="MenuItem_GuideClick"/>
+				<MenuItem Header="Report Bugs/Suggestions" Click="MenuItem_ReportClick"/>
+				<MenuItem Header="About" Click="MenuItem_AboutClick"/>
 			</MenuItem>
 		</Menu>
 		<Grid>
@@ -201,6 +205,7 @@
 				<StackPanel Grid.Column="3">
 					<Button Content="Create Database" Command="{Binding CreateDatabaseCommand}"/>
 					<Button Content="Load Creatures" Command="{Binding LoadCreaturesCommand}"/>
+					<Button Content="Load Saved Creature" Command="{Binding LoadSavedCreaturesCommand}"/>
 					<TextBlock>Body parts order (left to right):</TextBlock>
 					<TextBlock>Front Legs</TextBlock>
 					<TextBlock>Back Legs</TextBlock>
@@ -211,9 +216,18 @@
 					<TextBlock>Claws</TextBlock>
 				</StackPanel>
 			</Grid>
-			<DataGrid ItemsSource="{Binding CreaturesView, Mode=TwoWay}" Grid.Row="1"
-					  AlternatingRowBackground="Gainsboro" AlternationCount="2"
-					  AutoGenerateColumns="False" VirtualizingStackPanel.VirtualizationMode="Standard">
+			<DataGrid ItemsSource="{Binding CreaturesView}" 
+					  SelectedItem="{Binding SelectedCreature, Mode=TwoWay}"
+					  Grid.Row="1"
+					  AlternatingRowBackground="Gainsboro" 
+					  AlternationCount="2"
+					  AutoGenerateColumns="False" 
+					  VirtualizingStackPanel.VirtualizationMode="Standard">
+				<DataGrid.ContextMenu>
+					<ContextMenu>
+						<MenuItem Header="Save Creature" Command="{Binding SaveCreatureCommand}"/>
+					</ContextMenu>
+				</DataGrid.ContextMenu>
 				<DataGrid.Columns>
 					<DataGridTextColumn Header="Left" Binding="{Binding Left, Converter={StaticResource stockNameConverter}}"/>
 					<DataGridTextColumn Header="Right" Binding="{Binding Right, Converter={StaticResource stockNameConverter}}"/>

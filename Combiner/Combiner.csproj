@@ -87,6 +87,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\AbilityNameConverter.cs" />
     <Compile Include="Converters\ArtilleryConverter.cs" />
     <Compile Include="BaseViewModel.cs" />
@@ -100,7 +103,7 @@
     <Compile Include="CreatureContainer.cs" />
     <Compile Include="CreatureFactory.cs" />
     <Compile Include="Creature.cs" />
-    <Compile Include="DatabasePrototype.cs" />
+    <Compile Include="Database.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />
     <Compile Include="GuideWindow.xaml.cs">
       <DependentUpon>GuideWindow.xaml</DependentUpon>
@@ -119,6 +122,10 @@
     <Compile Include="Tests\CreatureTest.cs" />
     <Compile Include="Tests\StockTest.cs" />
     <Compile Include="Utility.cs" />
+    <Page Include="AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GuideWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
