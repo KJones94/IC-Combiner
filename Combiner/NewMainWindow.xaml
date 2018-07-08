@@ -24,7 +24,7 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="File">
-				<MenuItem Header="Export Creatures"/>
+				<MenuItem Header="Export Saved Creatures" Command="{Binding ExportSavedCreaturesCommand}"/>
 			</MenuItem>
 			<MenuItem Header="Help">
 				<MenuItem Header="Guide" Click="MenuItem_GuideClick"/>

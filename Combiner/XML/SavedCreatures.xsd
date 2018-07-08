@@ -1,22 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema id="SavedCreatures"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified"
+	targetNamespace="IC"
+	xmlns="IC">
 
 	<xs:element name="SavedCreatures">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Creature" maxOccurs="unbounded">
+				<xs:element name="Creature" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="left" type="xs:string"/>
-							<xs:element name="right" type="xs:string"/>
-							<xs:element name="bodyParts">
+							<xs:element name="left" type="xs:string" minOccurs="1" maxOccurs="1"/>
+							<xs:element name="right" type="xs:string" minOccurs="1" maxOccurs="1"/>
+							<xs:element name="bodyParts" minOccurs="1" maxOccurs="1">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element maxOccurs="unbounded" name="item">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="key" type="xs:string"/>
-													<xs:element name="value" type="xs:string"/>
+													<xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="1"/>
+													<xs:element name="value" type="xs:string" minOccurs="1" maxOccurs="1"/>
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>

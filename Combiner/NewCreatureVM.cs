@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Combiner.XML;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -167,6 +168,28 @@ namespace Combiner
 			{
 				Database.SaveCreature(SelectedCreature);
 			}
+		}
+
+		private ICommand m_ExportSavedCreaturesCommand;
+		public ICommand ExportSavedCreaturesCommand
+		{
+			get
+			{
+				return m_ExportSavedCreaturesCommand ??
+					(m_ExportSavedCreaturesCommand = new RelayCommand(ExportSavedCreature));
+			}
+			set
+			{
+				if (value != m_ExportSavedCreaturesCommand)
+				{
+					m_ExportSavedCreaturesCommand = value;
+					OnPropertyChanged(nameof(ExportSavedCreaturesCommand));
+				}
+			}
+		}
+		public void ExportSavedCreature(object obj)
+		{
+			CreatureXMLHandler.AddCreatures(Database.GetSavedCreatures());
 		}
 
 		private ObservableCollection<string> m_AbilityChoices;
