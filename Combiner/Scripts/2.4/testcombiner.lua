@@ -655,6 +655,8 @@ setattribute( "costrenew", CostRenew );
 setattribute( "cost", CostGather );
 setattribute( "popsize", Pop )
 
--- end
 
 setgameattribute("Power", power);
+
+-- commented out:
+-- end

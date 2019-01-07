@@ -7,13 +7,13 @@ namespace Combiner
 {
 	public static class Utility
 	{
-		public static string StockDirectory = "../../Stock/2.4/";
+		public static string StockDirectory = "../../Stock/2.5/";
+		//public static string StockDirectory = "../../Stock/Test/";
 		public static string Attrcombiner = "../../Scripts/2.4/attrcombiner.lua";
-		public static string Testcombiner = "../../Scripts/2.4/testcombiner.lua";
+		public static string Testcombiner = "../../Scripts/2.5/testcombiner.lua";
 		public static string DatabaseString = "../../Database/Creatures.db";
+		//public static string DatabaseString = "../../Database/Test.db";
 		//public static string DatabaseMasterString = "../../Database/Creatures - Master.db";
-
-
 
 		public static string Ticks = "constructionticks";
 		public static string Rank = "creature_rank";
@@ -330,6 +330,7 @@ namespace Combiner
 			names.Add("musk_ox", "Musk Ox");
 			names.Add("narwhal", "Narwhal");
 			names.Add("octopus", "Octopus");
+			names.Add("oogpister", "Oogpister");
 			names.Add("panther", "Panther");
 			names.Add("piranha", "Piranha");
 			names.Add("poison_frog", "Poison Frog");

@@ -786,7 +786,7 @@ namespace Combiner
 			MinHitpoints = 0;
 			MaxHitpoints = 2000;
 			MinArmour = 0;
-			MaxArmour = 100;
+			MaxArmour = 1.0;
 			MinSightRadius = 0;
 			MaxSightRadius = 50;
 			MinSize = 0;
@@ -1013,8 +1013,8 @@ namespace Combiner
 			}
 		}
 
-		private int m_MinArmour;
-		public int MinArmour
+		private double m_MinArmour;
+		public double MinArmour
 		{
 			get { return m_MinArmour; }
 			set
@@ -1027,8 +1027,8 @@ namespace Combiner
 			}
 		}
 
-		private int m_MaxArmour;
-		public int MaxArmour
+		private double m_MaxArmour;
+		public double MaxArmour
 		{
 			get { return m_MaxArmour; }
 			set

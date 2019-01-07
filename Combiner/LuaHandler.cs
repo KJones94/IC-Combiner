@@ -67,14 +67,7 @@ namespace Combiner
 			double value;
 			if (Creature.GameAttributes.TryGetValue(key, out value))
 			{
-				if (value > 1)
-				{
-					return Math.Floor(value);
-				}
-				else
-				{
-					return value;
-				}
+				return value;
 			}
 			return 0;
 		}

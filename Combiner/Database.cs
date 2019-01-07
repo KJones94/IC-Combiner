@@ -136,10 +136,10 @@ namespace Combiner
 				var collection = db.GetCollection<Creature>("saved_creatures");
 				bool exists = collection.Exists(Query.And(
 					Query.Or(
-					Query.Or(
+					Query.And(
 						Query.EQ("Left", creature.Left),
 						Query.EQ("Right", creature.Right)),
-					Query.Or(
+					Query.And(
 						Query.EQ("Left", creature.Right),
 						Query.EQ("Right", creature.Left))),
 					Query.Where("BodyParts", (x => HasSameBodyParts(x, creature.BodyParts)))

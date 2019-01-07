@@ -482,6 +482,9 @@
     <None Include="Stock\2.5\wolverine.lua" />
     <None Include="Stock\2.5\woolly_mammoth.lua" />
     <None Include="Stock\2.5\zebra.lua" />
+    <None Include="Stock\Test\beluga.lua" />
+    <None Include="Stock\Test\electric_eel.lua" />
+    <None Include="Stock\Test\oogpister.lua" />
     <None Include="XML\SavedCreatures.xsd">
       <SubType>Designer</SubType>
     </None>

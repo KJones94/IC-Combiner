@@ -14,9 +14,6 @@ Notes...
 	WHAT IS UP WITH ROUNDING IN LUA?
 	
 Bugs:
-	Power for ranged
-	Water speed (looks right at the moment)
-	Range special only gets greatest one
 
 
 
