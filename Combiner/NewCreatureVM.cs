@@ -145,6 +145,30 @@ namespace Combiner
 			CreaturesView.Filter = CreatureFilter;
 		}
 
+		
+		private ICommand m_DeleteSavedCreaturesCommand;
+		public ICommand DeleteSavedCreaturesCommand
+		{
+			get
+			{
+				return m_DeleteSavedCreaturesCommand ??
+				  (m_DeleteSavedCreaturesCommand = new RelayCommand(DeleteSavedCreatures));
+			}
+			set
+			{
+				if (value != m_DeleteSavedCreaturesCommand)
+				{
+					m_DeleteSavedCreaturesCommand = value;
+					OnPropertyChanged(nameof(DeleteSavedCreaturesCommand));
+				}
+			}
+		}
+		private void DeleteSavedCreatures(object obj)
+		{
+			Database.DeleteSavedCreatures();
+		}
+
+
 		private ICommand m_SaveCreatureCommand;
 		public ICommand SaveCreatureCommand
 		{
@@ -170,6 +194,31 @@ namespace Combiner
 			}
 		}
 
+		private ICommand m_UnsaveCreatureCommand;
+		public ICommand UnsaveCreatureCommand
+		{
+			get
+			{
+				return m_UnsaveCreatureCommand ??
+					(m_UnsaveCreatureCommand = new RelayCommand(UnSaveCreature));
+			}
+			set
+			{
+				if (value != m_UnsaveCreatureCommand)
+				{
+					m_UnsaveCreatureCommand = value;
+					OnPropertyChanged(nameof(UnsaveCreatureCommand));
+				}
+			}
+		}
+		public void UnSaveCreature(object obj)
+		{
+			if (SelectedCreature != null)
+			{
+				Database.UnsaveCreature(SelectedCreature);
+			}
+		}
+
 		private ICommand m_ExportSavedCreaturesCommand;
 		public ICommand ExportSavedCreaturesCommand
 		{
@@ -189,7 +238,7 @@ namespace Combiner
 		}
 		public void ExportSavedCreature(object obj)
 		{
-			CreatureXMLHandler.AddCreatures(Database.GetSavedCreatures());
+			CreatureXMLHandler.AddCreaturesToXML(Database.GetSavedCreatures());
 		}
 
 		private ICommand m_ImportSavedCreaturesCommand;

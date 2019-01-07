@@ -12,6 +12,9 @@ namespace Combiner.XML
 	{
 		private static readonly XNamespace ns = "IC";
 
+		/// <summary>
+		/// Adds the creatures from the XML to the database
+		/// </summary>
 		public static void LoadSavedCreaturesFromXML()
 		{
 			XElement xml = GetXML();
@@ -42,6 +45,11 @@ namespace Combiner.XML
 			Database.SaveCreatures(creatures);
 		}
 
+		/// <summary>
+		/// Builds a dictionary of the body parts from the XML
+		/// </summary>
+		/// <param name="xmlBodyParts"></param>
+		/// <returns></returns>
 		private static Dictionary<string, string> BuildBodyParts(XElement xmlBodyParts)
 		{
 			Dictionary<string, string> bodyParts = new Dictionary<string, string>();
@@ -52,15 +60,23 @@ namespace Combiner.XML
 			return bodyParts;
 		}
 
-		public static void AddCreatures(IEnumerable<Creature> creatures)
+		/// <summary>
+		/// Adds creatures to saved creatures XML
+		/// </summary>
+		/// <param name="creatures"></param>
+		public static void AddCreaturesToXML(IEnumerable<Creature> creatures)
 		{
 			foreach (var creature in creatures)
 			{
-				AddCreature(creature);
+				AddCreatureToXML(creature);
 			}
 		}
 
-		public static void AddCreature(Creature creature)
+		/// <summary>
+		/// Adds the creature to the saved creatures XML
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void AddCreatureToXML(Creature creature)
 		{
 			XElement xmlSavedCreatures = CreateXML();
 
@@ -81,6 +97,10 @@ namespace Combiner.XML
 			SaveXml(xmlSavedCreatures);
 		}
 
+		/// <summary>
+		/// Saves the given XML
+		/// </summary>
+		/// <param name="xml"></param>
 		public static void SaveXml(XElement xml)
 		{
 			if (xml == null)
@@ -95,8 +115,14 @@ namespace Combiner.XML
 				return;
 			}
 
+			string filePath = Path.Combine(directoryPath, "SavedCreatures.xsd");
+			//if (File.Exists(filePath) 
+			//{
+
+			//}
+
 			XmlSchemaSet schemas = new XmlSchemaSet();
-			schemas.Add("IC", Path.Combine(directoryPath, "SavedCreatures.xsd"));
+			schemas.Add("IC", filePath);
 
 			if (ValidateWithSchema(xml, schemas))
 			{
@@ -106,6 +132,12 @@ namespace Combiner.XML
 			}
 		}
 
+		/// <summary>
+		/// Validates the XML using the given schema
+		/// </summary>
+		/// <param name="xElement"></param>
+		/// <param name="schemas"></param>
+		/// <returns></returns>
 		public static bool ValidateWithSchema(XElement xElement, XmlSchemaSet schemas)
 		{
 			string errorMessage = string.Empty;
@@ -138,6 +170,10 @@ namespace Combiner.XML
 			return result;
 		}
 
+		/// <summary>
+		/// Creates the saved creatures XML file
+		/// </summary>
+		/// <returns></returns>
 		public static XElement CreateXML()
 		{
 			string file = "../../XML/SavedCreatures.xml";
@@ -155,6 +191,10 @@ namespace Combiner.XML
 			return xml;
 		}
 
+		/// <summary>
+		/// Gets the XML from the saved creatures XML file
+		/// </summary>
+		/// <returns></returns>
 		public static XElement GetXML()
 		{
 			string file = "../../XML/SavedCreatures.xml";
@@ -172,6 +212,10 @@ namespace Combiner.XML
 			return xml;
 		}
 
+		/// <summary>
+		/// Gets the saved creatures XML schema
+		/// </summary>
+		/// <returns></returns>
 		public static XmlSchemaSet GetSchema()
 		{
 			string directoryPath = "../../XML";

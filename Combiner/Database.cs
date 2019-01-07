@@ -10,6 +10,11 @@ namespace Combiner
 {
 	public static class Database
 	{
+
+		/// <summary>
+		/// Gets all creatures from the creatures collection
+		/// </summary>
+		/// <returns></returns>
 		public static List<Creature> GetAllCreatures()
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
@@ -25,6 +30,14 @@ namespace Combiner
 			}
 		}
 
+		/// <summary>
+		/// Gets a specific creature from the creatures colleciton
+		/// using the given stock and body parts
+		/// </summary>
+		/// <param name="left"></param>
+		/// <param name="right"></param>
+		/// <param name="bodyParts"></param>
+		/// <returns></returns>
 		public static Creature GetCreature(string left, string right, Dictionary<string, string> bodyParts)
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
@@ -34,20 +47,43 @@ namespace Combiner
 					return null;
 				}
 
+				// TODO: Currently finding duplicates
 				var collection = db.GetCollection<Creature>("creatures");
 				var result = collection
 					.Find(Query.And(
+					Query.Or(
 					Query.Or(
 						Query.EQ("Left", left),
 						Query.EQ("Right", right)),
 					Query.Or(
 						Query.EQ("Left", right),
-						Query.EQ("Right", left))))
-					.Where(x => x.BodyParts.Values.SequenceEqual(bodyParts.Values));
+						Query.EQ("Right", left))),
+					Query.Where("BodyParts", (x => HasSameBodyParts(x, bodyParts)))
+					));
 				return result.First();
 			}
 		}
 
+		/// <summary>
+		/// Function used for testing import/export.
+		/// Could continue to use in the application
+		/// </summary>
+		public static void DeleteSavedCreatures()
+		{
+			using (var db = new LiteDatabase(Utility.DatabaseString))
+			{
+				if (db.CollectionExists("saved_creatures"))
+				{
+					var collection = db.GetCollection<Creature>("saved_creatures");
+					collection.Delete(Query.All());
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets the creatures from the saved creatures collection
+		/// </summary>
+		/// <returns></returns>
 		public static List<Creature> GetSavedCreatures()
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
@@ -63,6 +99,10 @@ namespace Combiner
 			}
 		}
 
+		/// <summary>
+		/// Adds the creatures to the saved creatures collection
+		/// </summary>
+		/// <param name="creatures"></param>
 		public static void SaveCreatures(IEnumerable<Creature> creatures)
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
@@ -78,6 +118,10 @@ namespace Combiner
 			}
 		}
 
+		/// <summary>
+		/// Adds the creature to the saved creatures collection
+		/// </summary>
+		/// <param name="creature"></param>
 		public static void SaveCreature(Creature creature)
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
@@ -88,8 +132,71 @@ namespace Combiner
 					//return;
 				}
 
+				// TODO: Don't allow duplicate creature to be saved
 				var collection = db.GetCollection<Creature>("saved_creatures");
-				collection.Insert(creature);
+				bool exists = collection.Exists(Query.And(
+					Query.Or(
+					Query.Or(
+						Query.EQ("Left", creature.Left),
+						Query.EQ("Right", creature.Right)),
+					Query.Or(
+						Query.EQ("Left", creature.Right),
+						Query.EQ("Right", creature.Left))),
+					Query.Where("BodyParts", (x => HasSameBodyParts(x, creature.BodyParts)))
+					));
+				if (!exists)
+				{
+					collection.Insert(creature);
+				}
+			}
+		}
+
+		private static bool HasSameBodyParts(BsonValue x, Dictionary<string, string> bodyParts)
+		{
+			bool same = true;
+			foreach(Limb limb in Enum.GetValues(typeof(Limb)))
+			{
+				if (limb == Limb.Nothing || limb == Limb.General)
+				{
+					continue;
+				}
+				same = x.AsDocument.Get(limb.ToString()).First().AsString
+					== bodyParts[limb.ToString()];
+				if (!same)
+				{
+					break;
+				}
+			}
+
+			return same;
+		}
+
+
+		/// <summary>
+		/// Removes the creature from the saved creatures collection
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void UnsaveCreature(Creature creature)
+		{
+			using (var db = new LiteDatabase(Utility.DatabaseString))
+			{
+				if (!db.CollectionExists("saved_creatures"))
+				{
+					//CreateSavedCreatures();
+					return;
+				}
+
+				var collection = db.GetCollection<Creature>("saved_creatures");
+				collection.Delete(Query.And(
+					Query.Or(
+					Query.Or(
+						Query.EQ("Left", creature.Left),
+						Query.EQ("Right", creature.Right)),
+					Query.Or(
+						Query.EQ("Left", creature.Right),
+						Query.EQ("Right", creature.Left))),
+					Query.Where("BodyParts", (x => HasSameBodyParts(x, creature.BodyParts)))
+					));
 			}
 		}
 
