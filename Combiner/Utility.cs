@@ -9,7 +9,7 @@ namespace Combiner
 	{
 		public static string StockDirectory = "../../Stock/2.4/";
 		public static string Attrcombiner = "../../Scripts/2.4/attrcombiner.lua";
-		public static string Testcombiner = "../../Scripts/testcombiner.lua";
+		public static string Testcombiner = "../../Scripts/2.4/testcombiner.lua";
 		public static string DatabaseString = "../../Database/Creatures.db";
 		//public static string DatabaseMasterString = "../../Database/Creatures - Master.db";
 

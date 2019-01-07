@@ -1,11 +1,12 @@
---Tellurian Attrcombiner (12/9/2017)
---Changelog (since Tel 2.4 open beta release):
---Loner, defile and web throw costs lowered.
---Horns cost equation glitch fixed, equation improved.
---Barrier destroy cost now depends on your damage.
---Colony and conglomerate costs now depend on your power.
---Build speeds reduced for high-power units.
---Maxpower for L5 raised to 1000. Coal and elec cost calcs tweaked to adjust for this; many L4 and L5 combos will be a bit more expensive, power is cheaper!
+--Tellurian Attrcombiner (5/1/2019)
+
+--Changelog (since Tel 2.4 release):
+--Power from ranged distance slightly increased.
+--Colony/Conglomerate cost eliminated for units that only take up 1 pop space.
+--Immunity cost reduced.
+--Sonic minimum level changed to L2. Sonic base cost reduced.
+--Power equation modified to slightly reduce power of low damage units.
+--Build time for low power units significantly reduced.
 
 --Let's go!
 
@@ -49,7 +50,7 @@ RangeCostMult 	= 1.0;
 damager = max (damage2, max (damage4, max(damage5, max(damage3, damage8))));
 
 if (range_max > 0) then
-	damager = damager*(1+(range_max/35));
+	damager = damager*(1+(range_max/28));
 end
 
 if damager > damagem then
@@ -156,7 +157,7 @@ end
 
 --power equation
 function Power(d, h, a)
-    return (((h/(1-a))^(0.63))*((0.19*d) + 2.56));
+    return (((h/(1-a))^(0.608))*((0.22*d) + 2.8));
 end
 
 -----------------
@@ -204,20 +205,20 @@ AttributeData =
 {
 -- { attribute name, zero ok, min, max, rank list, ui attribute name, game->ui scale factor }
 
-	{ "hitpoints",  nil, 1, nil, {0.0, 180.0, 300.0, 500.0}, "health", 1 },
+	{ "hitpoints",  nil, 1, nil, {0.0, 224.0, 349.0, 574.0}, "health", 1 },
 	{ "armour", 1, 0, nil, {0.0, 0.15, 0.30, 0.45}, "armour", 100 },
-	{ "speed_max", 1, 15, nil, {0.0, 20.0, 30.0, 40.0}, "landspeed", 1 },
-	{ "waterspeed_max", 1, 12, nil, {0.0, 10.0, 20.0, 30.0}, "waterspeed", 1 },
-	{ "airspeed_max", 1, 16, nil, {0.0, 10.0, 20.0, 30.0}, "airspeed", 1 },
-	{ "sight_radius1", nil, nil, nil, {0.0, 25.0, 35.0, 45.0}, "sightradius", 1 },
+	{ "speed_max", 1, 15, nil, {15.0, 21.0, 26.0, 31.0}, "landspeed", 1 },
+	{ "waterspeed_max", 1, 12, nil, {12.0, 20.0, 25.0, 30.0}, "waterspeed", 1 },
+	{ "airspeed_max", 1, 16, nil, {16.0, 20.0, 24.0, 28.0}, "airspeed", 1 },
+	{ "sight_radius1", nil, nil, nil, {20.0, 30.0, 35.0, 45.0}, "sightradius", 1 },
 	{ "size", nil, 1, nil, {0, 3, 6, 9}, "size", 1},
 
-	{ "melee_damage", 1, 0, nil, {0.0, 5.0, 9.0, 11.5}, "damage", 1 },
-	{ "range2_max", 1, 0, nil, {0.0, 5.0, 9.0, 16.0}, "range2_max", 1 },
-	{ "range4_max", 1, 0, nil, {0.0, 5.0, 9.0, 16.0}, "range4_max", 1 },
-	{ "range5_max", 1, 0, nil, {0.0, 5.0, 9.0, 16.0}, "range5_max", 1 },
-	{ "range8_max", 1, 0, nil, {0.0, 5.0, 9.0, 16.0}, "range8_max", 1 },
-	{ "range3_max", 1, 0, nil, {0.0, 5.0, 9.0, 16.0}, "range3_max", 1 },
+	{ "melee_damage", 1, 0, nil, {1.0, 10.0, 17.0, 26.0}, "damage", 1 },
+	{ "range2_max", 1, 0, nil, {1.0, 8.0, 14.0, 21.0}, "range2_max", 1 },
+	{ "range4_max", 1, 0, nil, {1.0, 8.0, 14.0, 21.0}, "range4_max", 1 },
+	{ "range5_max", 1, 0, nil, {1.0, 8.0, 14.0, 21.0}, "range5_max", 1 },
+	{ "range8_max", 1, 0, nil, {1.0, 8.0, 14.0, 21.0}, "range8_max", 1 },
+	{ "range3_max", 1, 0, nil, {1.0, 8.0, 14.0, 21.0}, "range3_max", 1 },
 };
 
 -- Apply boundaries and rank attributes.
@@ -258,48 +259,75 @@ for k, at in AttributeData do
 end
 
 if checkgameattribute( "range2_damage" ) == 1 then
-	val = getgameattribute( "range2_damage" );
-	if (val and val > 0) then
-			rating = Rank( val, {0.0,12.0,20.0,26.0} );
-			setattribute( "range2_damage_rating", rating - 1 );
-		setattribute( "range2_damage_val", val );
-	end
+val = getgameattribute( "range2_damage" );
+if (val and val > -1) then
+rating = Rank( val, {-1.0,12.0,20.0,26.0} );
+setattribute( "range2_damage_rating", rating - 1 );
+setattribute( "range2_damage_val", val );
+end
 end
 
 if checkgameattribute( "range4_damage" ) == 1 then
-	val = getgameattribute( "range4_damage" );
-	if (val and val > 0) then
-			rating = Rank( val, {0.0,12.0,20.0,26.0} );
-			setattribute( "range4_damage_rating", rating - 1 );
-		setattribute( "range4_damage_val", val );
-	end
+val = getgameattribute( "range4_damage" );
+if (val and val > -1) then
+rating = Rank( val, {-1.0,12.0,20.0,26.0} );
+setattribute( "range4_damage_rating", rating - 1 );
+setattribute( "range4_damage_val", val );
+end
 end
 
-if checkgameattribute( "range5_damage" ) == 1 then
-	val = getgameattribute( "range5_damage" );
-	if (val and val > 0) then
-			rating = Rank( val, {0.0,12.0,20.0,26.0} );
-			setattribute( "range5_damage_rating", rating - 1 );
-		setattribute( "range5_damage_val", val );
-	end
+if checkgameattribute( "range8_damage" ) >= 0 then
+val = getgameattribute( "range8_damage" );
+if (val and val > 0) then
+rating = Rank( val, {-1,12.0,20.0,26.0} );
+setattribute( "range8_damage_rating", rating - 1 );
+setattribute( "range8_damage_val", val );
+end
 end
 
-if checkgameattribute( "range8_damage" ) == 1 then
-	val = getgameattribute( "range8_damage" );
-	if (val and val > 0) then
-			rating = Rank( val, {0.0,12.0,20.0,26.0} );
-			setattribute( "range8_damage_rating", rating - 1 );
-		setattribute( "range8_damage_val", val );
-	end
+if checkgameattribute( "range8_damage" ) >= 0 then
+val = getgameattribute( "range8_damage" );
+if (val and val > 0) then
+rating = Rank( val, {-1,12.0,20.0,26.0} );
+setattribute( "range2_damage_rating", rating - 1 );
+setattribute( "range2_damage_val", val );
+end
 end
 
 if checkgameattribute( "range3_damage" ) == 1 then
-	val = getgameattribute( "range3_damage" );
-	if (val and val > 0) then
-			rating = Rank( val, {0.0,12.0,20.0,26.0} );
-			setattribute( "range3_damage_rating", rating - 1 );
-		setattribute( "range3_damage_val", val );
-	end
+val = getgameattribute( "range3_damage" );
+if (val and val > -1) then
+rating = Rank( val, {-1.0,12.0,20.0,26.0} );
+setattribute( "range3_damage_rating", rating - 1 );
+setattribute( "range3_damage_val", val );
+end
+end
+
+if checkgameattribute( "range3_damage" ) == 1 then
+val = getgameattribute( "range3_damage" );
+if (val and val > -1) then
+rating = Rank( val, {-1.0,12.0,20.0,26.0} );
+setattribute( "range2_damage_rating", rating - 1 );
+setattribute( "range2_damage_val", val );
+end
+end
+
+if checkgameattribute( "range5_damage" ) == 1 then
+val = getgameattribute( "range5_damage" );
+if (val and val > -1) then
+rating = Rank( val, {-1.0,12.0,20.0,26.0} );
+setattribute( "range5_damage_rating", rating - 1 );
+setattribute( "range5_damage_val", val );
+end
+end
+
+if checkgameattribute( "range5_damage" ) == 1 then
+val = getgameattribute( "range5_damage" );
+if (val and val > -1) then
+rating = Rank( val, {-1.0,12.0,20.0,26.0} );
+setattribute( "range2_damage_rating", rating - 1 );
+setattribute( "range2_damage_val", val );
+end
 end
 
 -----------------
@@ -355,7 +383,7 @@ AbilityData =
 
 	--{ ability_type, ability_id, minrank, costrenew, costgather, costrenew plus perrank, Rank that the increase starts at }
 
-	{ ABT_Ability, 	"is_immune", 		0, 	10, 	0, 	5 },
+	{ ABT_Ability, 	"is_immune", 		0, 	5, 	0, 	2.5 },
 	{ ABT_Ability, 	"keen_sense", 		0, 	10, 	0, 	0 },
 	{ ABT_Ability, 	"can_dig", 		0, 	10, 	0, 	10 },
 	{ ABT_Ability, 	"sonar_pulse", 		0, 	15, 	0, 	5 },
@@ -367,6 +395,7 @@ AbilityData =
  	{ ABT_Ability, 	"speed_boost", 		0, 	0, 	0, 	0 },
  	{ ABT_Ability, 	"overpopulation", 	2, 	0, 	0, 	0 },
 	{ ABT_Ability, 	"poplow", 		1, 	0, 	0, 	0 },	--special
+	{ ABT_Ability, 	"poplowtorso", 		1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"herding", 		1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"pack_hunter", 		1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"regeneration", 	1, 	0, 	0, 	0 },	--special
@@ -385,7 +414,7 @@ AbilityData =
 	{ ABT_Ability, 	"electric_burst", 	2, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"poison_touch", 	3, 	40, 	0, 	10 },
 	{ ABT_Ability, 	"web_throw", 		3, 	0, 	0, 	0 },	--special
- 	{ ABT_Ability, 	"poison_bite", 		3,  	30, 	0, 	10 },
+ 	{ ABT_Ability, 	"poison_bite", 			3,  	30, 	0, 	10 },
  	{ ABT_Ability, 	"poison_sting", 	3,  	30, 	0, 	10 },
 	{ ABT_Ability, 	"poison_pincers", 	3, 	30, 	0, 	10 },
 	{ ABT_Ability, 	"loner", 		2, 	0, 	0, 	0 },	--special
@@ -393,7 +422,7 @@ AbilityData =
 
 	{ ABT_Range, 	DT_Electric, 		2, 	0, 	0,	0 },
 	{ ABT_Range, 	DT_Poison, 		3, 	0, 	0,	0 },
-	{ ABT_Range, 	DT_Sonic, 		3, 	30, 	0,	0 },
+	{ ABT_Range, 	DT_Sonic, 		2, 	10, 	0,	2.5 },
 	{ ABT_Range, 	DT_VenomSpray, 		3, 	0, 	0,	0 },
 
 	{ ABT_Melee, 	DT_BarrierDestroy, 	0, 	0, 	0, 	0},     --special
@@ -479,13 +508,13 @@ end
 
 if (CreatureRank == 1) then
 	max_power = rank2pow;
-	CostGather = 60;
+	CostGather = 50; 
 	elseif (CreatureRank == 2) then
 		max_power = rank3pow;
-		CostGather = 100;
+		CostGather = 90;
 		elseif (CreatureRank == 3) then
 		    max_power = rank4pow;
-		    CostGather = 160;
+		    CostGather = 150;
 		    elseif (CreatureRank == 4) then
 		        max_power = rank5pow;
 				CostGather = 250;
@@ -545,7 +574,11 @@ if getgameattribute("frenzy_attack") == 1 then
 	CostRenew = CostRenew + (damage*3);
 end
 
-if getgameattribute("poplow") == 1 then
+if (getgameattribute("poplow") == 1) and (power/150 > 1) then
+	CostRenew = CostRenew + (power*0.1);
+end
+
+if (getgameattribute("poplowtorso") == 1) and (power/150 > 1) then
 	CostRenew = CostRenew + (power*0.1);
 end
 
@@ -570,13 +603,9 @@ if getgameattribute("regeneration") == 1 then
 	CostRenew = CostRenew+(CreatureRank*40*armour);
 end
 
-build_time = (30 * CreatureRank)*((power*1.3/max_power)^0.8)*popMult;
-setgameattribute("speedCost", speedCost);
-setgameattribute("power", power);
-setgameattribute("maxpower", max_power);
-setgameattribute("rangecostmult", RangeCostMult);
-setgameattribute("rank", CreatureRank);
-setgameattribute("cost", CostGather);
+-- Build time
+
+build_time = (30 * CreatureRank)*((power*1.2/max_power)^1.2)*popMult;
 CostGather = (CostGather + speedCost)*((power*1.3/max_power)^0.8)*RangeCostMult*1.1+(2/CreatureRank)*1.25;
 CostRenew = CostRenew*((power*1.3/max_power)^0.8);
 
@@ -658,4 +687,4 @@ setattribute( "costrenew", CostRenew );
 setattribute( "cost", CostGather );
 setattribute( "popsize", Pop )
 
--- end
+end

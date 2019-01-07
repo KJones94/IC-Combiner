@@ -12,9 +12,44 @@ namespace Combiner.XML
 	{
 		private static readonly XNamespace ns = "IC";
 
-		public static void CreateSavedCreaturesFromXML()
+		public static void LoadSavedCreaturesFromXML()
 		{
+			XElement xml = GetXML();
+			if (xml == null)
+			{
+				return;
+			}
+			if (!ValidateWithSchema(xml, GetSchema()))
+			{
+				return;
+			}
+			XDocument doc = new XDocument(xml);
 
+			IEnumerable<CreatureData> allCreatureData =
+				from creature in doc.Descendants(ns + "Creature")
+				select new CreatureData()
+				{
+					left = creature.Element(ns + "left").Value,
+					right = creature.Element(ns + "right").Value,
+					bodyParts = BuildBodyParts(creature.Element(ns + "bodyParts"))
+				};
+
+			List<Creature> creatures = new List<Creature>();
+			foreach (var data in allCreatureData)
+			{
+				creatures.Add(Database.GetCreature(data.left, data.right, data.bodyParts));
+			}
+			Database.SaveCreatures(creatures);
+		}
+
+		private static Dictionary<string, string> BuildBodyParts(XElement xmlBodyParts)
+		{
+			Dictionary<string, string> bodyParts = new Dictionary<string, string>();
+			foreach (var item in xmlBodyParts.Descendants(ns + "item"))
+			{
+				bodyParts.Add(item.Element(ns + "key").Value, item.Element(ns + "value").Value);
+			}
+			return bodyParts;
 		}
 
 		public static void AddCreatures(IEnumerable<Creature> creatures)
@@ -78,10 +113,14 @@ namespace Combiner.XML
 
 			try
 			{
-				if (xElement != null)
+				if (xElement != null && schemas != null)
 				{
 					XDocument xmlDoc = new XDocument(xElement);
 					xmlDoc.Validate(schemas, (sender, eventArgs) => { errorMessage = eventArgs.Message; });
+				}
+				else
+				{
+					errorMessage = "Null xml or schema";
 				}
 
 				if (string.IsNullOrWhiteSpace(errorMessage))
@@ -114,6 +153,44 @@ namespace Combiner.XML
 			}
 
 			return xml;
+		}
+
+		public static XElement GetXML()
+		{
+			string file = "../../XML/SavedCreatures.xml";
+			if (!File.Exists(file))
+			{
+				return null;
+			}
+
+			XElement xml;
+			using (Stream sr = File.Open(file, FileMode.Open))
+			{
+				xml = XElement.Load(sr);
+			}
+
+			return xml;
+		}
+
+		public static XmlSchemaSet GetSchema()
+		{
+			string directoryPath = "../../XML";
+			if (!Directory.Exists(directoryPath))
+			{
+				//Directory.CreateDirectory(directoryPath);
+				return null;
+			}
+
+			XmlSchemaSet schemas = new XmlSchemaSet();
+			schemas.Add("IC", Path.Combine(directoryPath, "SavedCreatures.xsd"));
+			return schemas;
+		}
+
+		internal class CreatureData
+		{
+			public string left;
+			public string right;
+			public Dictionary<string, string> bodyParts;
 		}
 	}
 }

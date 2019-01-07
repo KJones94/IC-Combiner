@@ -25,6 +25,29 @@ namespace Combiner
 			}
 		}
 
+		public static Creature GetCreature(string left, string right, Dictionary<string, string> bodyParts)
+		{
+			using (var db = new LiteDatabase(Utility.DatabaseString))
+			{
+				if (!db.CollectionExists("creatures"))
+				{
+					return null;
+				}
+
+				var collection = db.GetCollection<Creature>("creatures");
+				var result = collection
+					.Find(Query.And(
+					Query.Or(
+						Query.EQ("Left", left),
+						Query.EQ("Right", right)),
+					Query.Or(
+						Query.EQ("Left", right),
+						Query.EQ("Right", left))))
+					.Where(x => x.BodyParts.Values.SequenceEqual(bodyParts.Values));
+				return result.First();
+			}
+		}
+
 		public static List<Creature> GetSavedCreatures()
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
@@ -37,6 +60,21 @@ namespace Combiner
 				var collection = db.GetCollection<Creature>("saved_creatures");
 				List<Creature> savedCreatures = collection.FindAll().ToList();
 				return savedCreatures;
+			}
+		}
+
+		public static void SaveCreatures(IEnumerable<Creature> creatures)
+		{
+			using (var db = new LiteDatabase(Utility.DatabaseString))
+			{
+				if (!db.CollectionExists("saved_creatures"))
+				{
+					CreateSavedCreatures();
+					//return;
+				}
+
+				var collection = db.GetCollection<Creature>("saved_creatures");
+				collection.InsertBulk(creatures);
 			}
 		}
 
@@ -54,6 +92,8 @@ namespace Combiner
 				collection.Insert(creature);
 			}
 		}
+
+
 
 		public static void CreateDB()
 		{

@@ -192,6 +192,28 @@ namespace Combiner
 			CreatureXMLHandler.AddCreatures(Database.GetSavedCreatures());
 		}
 
+		private ICommand m_ImportSavedCreaturesCommand;
+		public ICommand ImportSavedCreaturesCommand
+		{
+			get
+			{
+				return m_ImportSavedCreaturesCommand ??
+					(m_ImportSavedCreaturesCommand = new RelayCommand(ImportSavedCreature));
+			}
+			set
+			{
+				if (value != m_ImportSavedCreaturesCommand)
+				{
+					m_ImportSavedCreaturesCommand = value;
+					OnPropertyChanged(nameof(ImportSavedCreaturesCommand));
+				}
+			}
+		}
+		public void ImportSavedCreature(object obj)
+		{
+			CreatureXMLHandler.LoadSavedCreaturesFromXML();
+		}
+
 		private ObservableCollection<string> m_AbilityChoices;
 		public ObservableCollection<string> AbilityChoices
 		{
