@@ -256,17 +256,5 @@ namespace Combiner
 
 			return prunedBodyParts;
 		}
-
-
-	}
-
-	
-
-	public enum Side
-	{
-		Null,
-		Empty,
-		Left,
-		Right
 	}
 }

@@ -383,29 +383,4 @@ namespace Combiner
 			return new Stock(file.Remove(file.Count() - 4), lua.GetLimbAttributes(path + file));
 		}
     }
-
-    public enum Limb
-    {
-        Nothing,
-        General,
-        FrontLegs,
-        BackLegs,
-        Head,
-        Tail,
-        Torso,
-        Wings,
-        Claws
-    }
-
-    public enum StockType
-    {
-        Bird,
-        Quadruped,
-        Arachnid,
-        Snake,
-        Insect,
-        Fish
-    }
-
-    
 }

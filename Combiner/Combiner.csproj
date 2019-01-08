@@ -87,47 +87,49 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AboutWindow.xaml.cs">
+    <Compile Include="Enums\Limb.cs" />
+    <Compile Include="Enums\Side.cs" />
+    <Compile Include="Enums\StockType.cs" />
+    <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\AbilityNameConverter.cs" />
     <Compile Include="Converters\ArtilleryConverter.cs" />
-    <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Base\BaseViewModel.cs" />
     <Compile Include="Converters\BodyPartsConverter.cs" />
     <Compile Include="Converters\BoolToStringConverter.cs" />
     <Compile Include="Converters\ContainsAbilitiesConverter.cs" />
     <Compile Include="Converters\RangeSpecialConverter.cs" />
     <Compile Include="Converters\RangeTypeConverter.cs" />
     <Compile Include="Converters\StockNameConverter.cs" />
-    <Compile Include="CreatureBuilder.cs" />
-    <Compile Include="CreatureContainer.cs" />
-    <Compile Include="CreatureFactory.cs" />
-    <Compile Include="Creature.cs" />
-    <Compile Include="Database.cs" />
+    <Compile Include="Engine\CreatureBuilder.cs" />
+    <Compile Include="Engine\CreatureFactory.cs" />
+    <Compile Include="Models\Creature.cs" />
+    <Compile Include="Utility\Database.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />
-    <Compile Include="GuideWindow.xaml.cs">
+    <Compile Include="Views\GuideWindow.xaml.cs">
       <DependentUpon>GuideWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainVM.cs" />
-    <Compile Include="NewCreatureVM.cs" />
+    <Compile Include="Viewmodels\MainVM.cs" />
+    <Compile Include="Viewmodels\NewCreatureVM.cs" />
     <Compile Include="NewMainWindow.xaml.cs">
       <DependentUpon>NewMainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="ReportWindow.xaml.cs">
+    <Compile Include="Base\RelayCommand.cs" />
+    <Compile Include="Views\ReportWindow.xaml.cs">
       <DependentUpon>ReportWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Stock.cs" />
+    <Compile Include="Models\Stock.cs" />
     <Compile Include="Tests\CreatureCombinerTest.cs" />
     <Compile Include="Tests\CreatureTest.cs" />
     <Compile Include="Tests\StockTest.cs" />
-    <Compile Include="Utility.cs" />
+    <Compile Include="Utility\Utility.cs" />
     <Compile Include="XML\CreatureXMLHandler.cs" />
-    <Page Include="AboutWindow.xaml">
+    <Page Include="Views\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GuideWindow.xaml">
+    <Page Include="Views\GuideWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,13 +137,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CreatureCombiner.cs" />
-    <Compile Include="LuaHandler.cs" />
+    <Compile Include="Engine\CreatureCombiner.cs" />
+    <Compile Include="Engine\LuaHandler.cs" />
     <Page Include="NewMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ReportWindow.xaml">
+    <Page Include="Views\ReportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
