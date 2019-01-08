@@ -224,7 +224,8 @@
 					  AlternatingRowBackground="Gainsboro" 
 					  AlternationCount="2"
 					  AutoGenerateColumns="False" 
-					  VirtualizingStackPanel.VirtualizationMode="Standard">
+					  VirtualizingStackPanel.VirtualizationMode="Standard"
+					  IsReadOnly="True">
 				<DataGrid.ContextMenu>
 					<ContextMenu>
 						<MenuItem Header="Save Creature" Command="{Binding SaveCreatureCommand}"/>

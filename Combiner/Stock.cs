@@ -23,8 +23,6 @@ namespace Combiner
 			InitBodyParts();
         }
 
-		// TODO: Exception handling maybe...
-		// or null handling
         public double GetLimbAttributeValue(string key)
         {
 			var value = LimbAttritbutes[key] as Table;

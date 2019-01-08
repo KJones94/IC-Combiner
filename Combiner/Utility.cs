@@ -151,7 +151,7 @@ namespace Combiner
 		public static string Assassinate = "assassinate";
 		public static string Camouflage = "is_stealthy";
 		public static string ChargeAttack = "charge_attack";
-		public static string DefileLand = "soiled_lang";
+		public static string DefileLand = "soiled_land";
 		public static string DeflectionArmour = "deflection_armour";
 		public static string Digging = "can_dig";
 		public static string DisorientingBarbs = "AutoDefense";
