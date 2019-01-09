@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
-namespace Combiner.XML
+namespace Combiner
 {
 	public static class CreatureXMLHandler
 	{

@@ -1,266 +1,22 @@
-﻿using Combiner.XML;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Combiner
 {
-	public class NewCreatureVM : BaseViewModel
+	public class FiltersVM : BaseViewModel
 	{
-		private ObservableCollection<Creature> m_Creatures;
-		public ObservableCollection<Creature> Creatures
-		{
-			get
-			{
-				return m_Creatures ?? (m_Creatures = new ObservableCollection<Creature>());
-			}
-			set
-			{
-				if (value != m_Creatures)
-				{
-					m_Creatures = value;
-					CreaturesView = CollectionViewSource.GetDefaultView(m_Creatures);
-					OnPropertyChanged(nameof(Creatures));
-				}
-			}
-		}
+		private CreatureDataVM m_NewCreatureVM;
 
-		private ICollectionView m_CreaturesView;
-		public ICollectionView CreaturesView
+		public FiltersVM(CreatureDataVM newCreatureVM)
 		{
-			get
-			{
-				return m_CreaturesView ?? (m_CreaturesView = CollectionViewSource.GetDefaultView(Creatures));
-			}
-			set
-			{
-				if (value != m_CreaturesView)
-				{
-					m_CreaturesView = value;
-					OnPropertyChanged(nameof(CreaturesView));
-				}
-			}
-		}
-
-		private Creature m_SelectedCreature;
-		public Creature SelectedCreature
-		{
-			get
-			{
-				return m_SelectedCreature;
-			}
-			set
-			{
-				if (value != m_SelectedCreature)
-				{
-					m_SelectedCreature = value;
-					OnPropertyChanged(nameof(SelectedCreature));
-				}
-			}
-		}
-
-		public NewCreatureVM()
-		{
+			m_NewCreatureVM = newCreatureVM;
 			SetDefaultFilters();
-		}
-
-		private ICommand m_CreateDatabaseCommand;
-		public ICommand CreateDatabaseCommand
-		{
-			get
-			{
-				return m_CreateDatabaseCommand ??
-				  (m_CreateDatabaseCommand = new RelayCommand(CreateDatabase));
-			}
-			set
-			{
-				if (value != m_CreateDatabaseCommand)
-				{
-					m_CreateDatabaseCommand = value;
-					OnPropertyChanged(nameof(CreateDatabaseCommand));
-				}
-			}
-		}
-		private void CreateDatabase(object obj)
-		{
-			string text = "Creating a new database will delete and replace your current database. This could take a while (around 20-30 minutes), but a dialog box will appear when it is finished. Would you like to continue?";
-			MessageBoxResult result = MessageBox.Show(text, "Database Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-			if (result == MessageBoxResult.Yes)
-			{
-				Database.CreateDB();
-				MessageBox.Show("Finished creating the database.");
-			}
-		}
-
-		private ICommand m_LoadCreaturesCommand;
-		public ICommand LoadCreaturesCommand
-		{
-			get
-			{
-				return m_LoadCreaturesCommand ??
-				  (m_LoadCreaturesCommand = new RelayCommand(LoadCreatures));
-			}
-			set
-			{
-				if (value != m_LoadCreaturesCommand)
-				{
-					m_LoadCreaturesCommand = value;
-					OnPropertyChanged(nameof(LoadCreaturesCommand));
-				}
-			}
-		}
-		private void LoadCreatures(object obj)
-		{
-			Creatures = new ObservableCollection<Creature>(Database.GetAllCreatures());
-			CreaturesView.Filter = CreatureFilter;
-		}
-
-		private ICommand m_LoadSavedCreaturesCommand;
-		public ICommand LoadSavedCreaturesCommand
-		{
-			get
-			{
-				return m_LoadSavedCreaturesCommand ??
-				  (m_LoadSavedCreaturesCommand = new RelayCommand(LoadSavedCreatures));
-			}
-			set
-			{
-				if (value != m_LoadSavedCreaturesCommand)
-				{
-					m_LoadSavedCreaturesCommand = value;
-					OnPropertyChanged(nameof(LoadSavedCreaturesCommand));
-				}
-			}
-		}
-		private void LoadSavedCreatures(object obj)
-		{
-			Creatures = new ObservableCollection<Creature>(Database.GetSavedCreatures());
-			CreaturesView.Filter = CreatureFilter;
-		}
-
-		
-		private ICommand m_DeleteSavedCreaturesCommand;
-		public ICommand DeleteSavedCreaturesCommand
-		{
-			get
-			{
-				return m_DeleteSavedCreaturesCommand ??
-				  (m_DeleteSavedCreaturesCommand = new RelayCommand(DeleteSavedCreatures));
-			}
-			set
-			{
-				if (value != m_DeleteSavedCreaturesCommand)
-				{
-					m_DeleteSavedCreaturesCommand = value;
-					OnPropertyChanged(nameof(DeleteSavedCreaturesCommand));
-				}
-			}
-		}
-		private void DeleteSavedCreatures(object obj)
-		{
-			Database.DeleteSavedCreatures();
-		}
-
-
-		private ICommand m_SaveCreatureCommand;
-		public ICommand SaveCreatureCommand
-		{
-			get
-			{
-				return m_SaveCreatureCommand ??
-					(m_SaveCreatureCommand = new RelayCommand(SaveCreature));
-			}
-			set
-			{
-				if (value != m_SaveCreatureCommand)
-				{
-					m_SaveCreatureCommand = value;
-					OnPropertyChanged(nameof(SaveCreatureCommand));
-				}
-			}
-		}
-		public void SaveCreature(object obj)
-		{
-			if (SelectedCreature != null)
-			{
-				Database.SaveCreature(SelectedCreature);
-			}
-		}
-
-		private ICommand m_UnsaveCreatureCommand;
-		public ICommand UnsaveCreatureCommand
-		{
-			get
-			{
-				return m_UnsaveCreatureCommand ??
-					(m_UnsaveCreatureCommand = new RelayCommand(UnSaveCreature));
-			}
-			set
-			{
-				if (value != m_UnsaveCreatureCommand)
-				{
-					m_UnsaveCreatureCommand = value;
-					OnPropertyChanged(nameof(UnsaveCreatureCommand));
-				}
-			}
-		}
-		public void UnSaveCreature(object obj)
-		{
-			if (SelectedCreature != null)
-			{
-				Database.UnsaveCreature(SelectedCreature);
-			}
-		}
-
-		private ICommand m_ExportSavedCreaturesCommand;
-		public ICommand ExportSavedCreaturesCommand
-		{
-			get
-			{
-				return m_ExportSavedCreaturesCommand ??
-					(m_ExportSavedCreaturesCommand = new RelayCommand(ExportSavedCreature));
-			}
-			set
-			{
-				if (value != m_ExportSavedCreaturesCommand)
-				{
-					m_ExportSavedCreaturesCommand = value;
-					OnPropertyChanged(nameof(ExportSavedCreaturesCommand));
-				}
-			}
-		}
-		public void ExportSavedCreature(object obj)
-		{
-			CreatureXMLHandler.AddCreaturesToXML(Database.GetSavedCreatures());
-		}
-
-		private ICommand m_ImportSavedCreaturesCommand;
-		public ICommand ImportSavedCreaturesCommand
-		{
-			get
-			{
-				return m_ImportSavedCreaturesCommand ??
-					(m_ImportSavedCreaturesCommand = new RelayCommand(ImportSavedCreature));
-			}
-			set
-			{
-				if (value != m_ImportSavedCreaturesCommand)
-				{
-					m_ImportSavedCreaturesCommand = value;
-					OnPropertyChanged(nameof(ImportSavedCreaturesCommand));
-				}
-			}
-		}
-		public void ImportSavedCreature(object obj)
-		{
-			CreatureXMLHandler.LoadSavedCreaturesFromXML();
 		}
 
 		private ObservableCollection<string> m_AbilityChoices;
@@ -532,10 +288,10 @@ namespace Combiner
 		}
 		private void FilterCreatures(object obj)
 		{
-			CreaturesView.Filter = CreatureFilter;
+			m_NewCreatureVM.CreaturesView.Filter = CreatureFilter;
 		}
 
-		private bool CreatureFilter(object obj)
+		public bool CreatureFilter(object obj)
 		{
 			Creature creature = obj as Creature;
 			if (creature != null)
@@ -734,7 +490,7 @@ namespace Combiner
 		{
 			if (ChosenStock.Count > 0)
 			{
-				foreach(string name in ChosenStock)
+				foreach (string name in ChosenStock)
 				{
 					if (creature.Left == name
 						|| creature.Right == name)
@@ -1458,6 +1214,5 @@ namespace Combiner
 				}
 			}
 		}
-
 	}
 }

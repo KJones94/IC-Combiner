@@ -16,9 +16,9 @@ namespace Combiner
 	/// <summary>
 	/// Interaction logic for NewMainWindow.xaml
 	/// </summary>
-	public partial class NewMainWindow : Window
+	public partial class MainWindow : Window
 	{
-		public NewMainWindow()
+		public MainWindow()
 		{
 			InitializeComponent();
 		}
