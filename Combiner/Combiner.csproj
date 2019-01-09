@@ -139,7 +139,6 @@
     <Compile Include="Tests\StockTest.cs" />
     <Compile Include="Utility\Utility.cs" />
     <Compile Include="XML\CreatureXMLHandler.cs" />
-    <Compile Include="XML\XMLHandler.cs" />
     <Page Include="Views\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -63,7 +63,20 @@ namespace Combiner
 		/// <param name="creatures"></param>
 		public static void AddCreaturesToXML(IEnumerable<Creature> creatures, string filePath)
 		{
-			XElement xmlSavedCreatures = CreateXML(filePath);
+			XElement xmlSavedCreatures;
+			if (!File.Exists(filePath))
+			{
+				xmlSavedCreatures = CreateXML(filePath);
+			}
+			else
+			{
+				xmlSavedCreatures = GetXML(filePath);
+			}
+
+			if (xmlSavedCreatures == null)
+			{
+				return;
+			}
 
 			foreach (var creature in creatures)
 			{
@@ -83,46 +96,16 @@ namespace Combiner
 				xmlSavedCreatures.Add(xmlCreature);
 			}
 
-			SaveXml(xmlSavedCreatures, filePath);
+			SaveXML(xmlSavedCreatures, filePath);
 		}
 
 		/// <summary>
-		/// Adds the creature to the saved creatures XML
-		/// </summary>
-		/// <param name="creature"></param>
-		private static void AddCreatureToXML(Creature creature, string filePath)
-		{
-			XElement xmlSavedCreatures = CreateXML(filePath);
-
-			XElement xmlBodyParts = new XElement(ns + "bodyParts");
-			foreach (var key in creature.BodyParts.Keys)
-			{
-				xmlBodyParts.Add(new XElement(ns + "item",
-					new XElement(ns + "key", key),
-					new XElement(ns + "value", creature.BodyParts[key])));
-			}
-
-			XElement xmlCreature = new XElement(ns + "Creature");
-			xmlCreature.Add(new XElement(ns + "left", creature.Left),
-				new XElement(ns + "right", creature.Right),
-				xmlBodyParts);
-
-			xmlSavedCreatures.Add(xmlCreature);
-			SaveXml(xmlSavedCreatures, filePath);
-		}
-
-		/// <summary>
-		/// Saves the given XML
+		/// Saves the given XML to a new file or overwrites the given file
 		/// </summary>
 		/// <param name="xml"></param>
-		private static void SaveXml(XElement xml, string filePath)
+		private static void SaveXML(XElement xml, string filePath)
 		{
 			if (xml == null)
-			{
-				return;
-			}
-
-			if (!File.Exists(filePath))
 			{
 				return;
 			}
@@ -132,6 +115,38 @@ namespace Combiner
 				XDocument doc = new XDocument(xml);
 				doc.Save(filePath);
 			}
+		}
+
+
+		/// <summary>
+		/// Creates a saved creatures XML file
+		/// </summary>
+		/// <returns></returns>
+		private static XElement CreateXML(string filePath)
+		{
+			XElement newXML = new XElement(ns + "SavedCreatures");
+			SaveXML(newXML, filePath);
+			return GetXML(filePath);
+		}
+
+		/// <summary>
+		/// Gets the saved creatures XML from the given file
+		/// </summary>
+		/// <returns></returns>
+		private static XElement GetXML(string filePath)
+		{
+			if (!File.Exists(filePath))
+			{
+				return null;
+			}
+
+			XElement xml;
+			using (Stream sr = File.Open(filePath, FileMode.Open))
+			{
+				xml = XElement.Load(sr);
+			}
+
+			return xml;
 		}
 
 		/// <summary>
@@ -173,49 +188,6 @@ namespace Combiner
 		}
 
 		/// <summary>
-		/// Creates the saved creatures XML file
-		/// </summary>
-		/// <returns></returns>
-		private static XElement CreateXML(string filePath)
-		{
-			if (!File.Exists(filePath))
-			{
-				Stream sr = File.Create(filePath);
-				sr.Close();
-				return new XElement(ns + "SavedCreatures");
-			}
-
-			XElement xml;
-			using (Stream sr = File.Open(filePath, FileMode.Open))
-			{
-				xml = XElement.Load(sr);
-			}
-
-			return xml;
-		}
-
-		/// <summary>
-		/// Gets the XML from the saved creatures XML file
-		/// </summary>
-		/// <returns></returns>
-		private static XElement GetXML(string filePath)
-		{
-			if (!File.Exists(filePath))
-			{
-				return null;
-			}
-
-			XElement xml;
-			using (Stream sr = File.Open(filePath, FileMode.Open))
-			{
-				xml = XElement.Load(sr);
-			}
-
-			return xml;
-		}
-
-
-		/// <summary>
 		/// Gets the saved creatures XML schema
 		/// </summary>
 		/// <returns></returns>
@@ -231,6 +203,6 @@ namespace Combiner
 			return schemas;
 		}
 
-		
+
 	}
 }
