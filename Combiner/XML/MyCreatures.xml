@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SavedCreatures xmlns="IC">
+  <Creature>
+    <left>albatross</left>
+    <right>spider_wasp</right>
+    <bodyParts>
+      <item>
+        <key>FrontLegs</key>
+        <value>x</value>
+      </item>
+      <item>
+        <key>BackLegs</key>
+        <value>L</value>
+      </item>
+      <item>
+        <key>Head</key>
+        <value>L</value>
+      </item>
+      <item>
+        <key>Tail</key>
+        <value>R</value>
+      </item>
+      <item>
+        <key>Torso</key>
+        <value>L</value>
+      </item>
+      <item>
+        <key>Wings</key>
+        <value>L</value>
+      </item>
+      <item>
+        <key>Claws</key>
+        <value>x</value>
+      </item>
+    </bodyParts>
+  </Creature>
+</SavedCreatures>

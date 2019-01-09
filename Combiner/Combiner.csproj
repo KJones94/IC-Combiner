@@ -69,6 +69,7 @@
     <Reference Include="System.Data.SQLite.Linq, Version=1.0.108.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.108.0\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -90,6 +91,8 @@
     <Compile Include="Enums\Limb.cs" />
     <Compile Include="Enums\Side.cs" />
     <Compile Include="Enums\StockType.cs" />
+    <Compile Include="Models\CreatureData.cs" />
+    <Compile Include="Utility\ImportExportHandler.cs" />
     <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
@@ -136,6 +139,7 @@
     <Compile Include="Tests\StockTest.cs" />
     <Compile Include="Utility\Utility.cs" />
     <Compile Include="XML\CreatureXMLHandler.cs" />
+    <Compile Include="XML\XMLHandler.cs" />
     <Page Include="Views\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -510,7 +514,7 @@
     <None Include="Stock\Test\beluga.lua" />
     <None Include="Stock\Test\electric_eel.lua" />
     <None Include="Stock\Test\oogpister.lua" />
-    <None Include="XML\SavedCreatures.xsd">
+    <None Include="XML\Schemas\SavedCreatures.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

@@ -138,7 +138,7 @@ namespace Combiner
 		}
 		public void ExportSavedCreature(object obj)
 		{
-			CreatureXMLHandler.AddCreaturesToXML(Database.GetSavedCreatures());
+			ImportExportHandler.Export();
 		}
 
 		private ICommand m_ImportSavedCreaturesCommand;
@@ -160,7 +160,7 @@ namespace Combiner
 		}
 		public void ImportSavedCreature(object obj)
 		{
-			CreatureXMLHandler.LoadSavedCreaturesFromXML();
+			ImportExportHandler.Import();
 		}
 	}
 }

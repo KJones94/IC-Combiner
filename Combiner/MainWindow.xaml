@@ -9,14 +9,11 @@
 	<Window.DataContext>
 		<local:MainVM/>
 	</Window.DataContext>
-	<Window.Resources>
-		<CollectionViewSource x:Key="creatures" Source="{Binding Creatures, Mode=TwoWay}"/>
-	</Window.Resources>
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="File">
-				<MenuItem Header="Export Saved Creatures" Command="{Binding NewCreatureVM.ExportSavedCreaturesCommand}"/>
-				<MenuItem Header="Import Saved Creatures" Command="{Binding NewCreatureVM.ImportSavedCreaturesCommand}"/>
+				<MenuItem Header="Export Saved Creatures" Command="{Binding DatabaseVM.ExportSavedCreaturesCommand}"/>
+				<MenuItem Header="Import Saved Creatures" Command="{Binding DatabaseVM.ImportSavedCreaturesCommand}"/>
 			</MenuItem>
 			<MenuItem Header="Help">
 				<MenuItem Header="Guide" Click="MenuItem_GuideClick"/>

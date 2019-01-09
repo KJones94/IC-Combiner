@@ -11,20 +11,22 @@ namespace Combiner
 	public static class CreatureXMLHandler
 	{
 		private static readonly XNamespace ns = "IC";
+		private static readonly string m_SchemaDirectory = "../../XML/Schemas";
+		private static readonly string m_SavedCreaturesSchema = "SavedCreatures.xsd";
 
 		/// <summary>
 		/// Adds the creatures from the XML to the database
 		/// </summary>
-		public static void LoadSavedCreaturesFromXML()
+		public static IEnumerable<CreatureData> GetCreatureDataFromXML(string filePath)
 		{
-			XElement xml = GetXML();
+			XElement xml = GetXML(filePath);
 			if (xml == null)
 			{
-				return;
+				return new List<CreatureData>();
 			}
 			if (!ValidateWithSchema(xml, GetSchema()))
 			{
-				return;
+				return new List<CreatureData>();
 			}
 			XDocument doc = new XDocument(xml);
 
@@ -37,12 +39,7 @@ namespace Combiner
 					bodyParts = BuildBodyParts(creature.Element(ns + "bodyParts"))
 				};
 
-			List<Creature> creatures = new List<Creature>();
-			foreach (var data in allCreatureData)
-			{
-				creatures.Add(Database.GetCreature(data.left, data.right, data.bodyParts));
-			}
-			Database.SaveCreatures(creatures);
+			return allCreatureData;
 		}
 
 		/// <summary>
@@ -64,21 +61,38 @@ namespace Combiner
 		/// Adds creatures to saved creatures XML
 		/// </summary>
 		/// <param name="creatures"></param>
-		public static void AddCreaturesToXML(IEnumerable<Creature> creatures)
+		public static void AddCreaturesToXML(IEnumerable<Creature> creatures, string filePath)
 		{
+			XElement xmlSavedCreatures = CreateXML(filePath);
+
 			foreach (var creature in creatures)
 			{
-				AddCreatureToXML(creature);
+				XElement xmlBodyParts = new XElement(ns + "bodyParts");
+				foreach (var key in creature.BodyParts.Keys)
+				{
+					xmlBodyParts.Add(new XElement(ns + "item",
+						new XElement(ns + "key", key),
+						new XElement(ns + "value", creature.BodyParts[key])));
+				}
+
+				XElement xmlCreature = new XElement(ns + "Creature");
+				xmlCreature.Add(new XElement(ns + "left", creature.Left),
+					new XElement(ns + "right", creature.Right),
+					xmlBodyParts);
+
+				xmlSavedCreatures.Add(xmlCreature);
 			}
+
+			SaveXml(xmlSavedCreatures, filePath);
 		}
 
 		/// <summary>
 		/// Adds the creature to the saved creatures XML
 		/// </summary>
 		/// <param name="creature"></param>
-		public static void AddCreatureToXML(Creature creature)
+		private static void AddCreatureToXML(Creature creature, string filePath)
 		{
-			XElement xmlSavedCreatures = CreateXML();
+			XElement xmlSavedCreatures = CreateXML(filePath);
 
 			XElement xmlBodyParts = new XElement(ns + "bodyParts");
 			foreach (var key in creature.BodyParts.Keys)
@@ -94,41 +108,29 @@ namespace Combiner
 				xmlBodyParts);
 
 			xmlSavedCreatures.Add(xmlCreature);
-			SaveXml(xmlSavedCreatures);
+			SaveXml(xmlSavedCreatures, filePath);
 		}
 
 		/// <summary>
 		/// Saves the given XML
 		/// </summary>
 		/// <param name="xml"></param>
-		public static void SaveXml(XElement xml)
+		private static void SaveXml(XElement xml, string filePath)
 		{
 			if (xml == null)
 			{
 				return;
 			}
 
-			string directoryPath = "../../XML";
-			if (!Directory.Exists(directoryPath))
+			if (!File.Exists(filePath))
 			{
-				//Directory.CreateDirectory(directoryPath);
 				return;
 			}
 
-			string filePath = Path.Combine(directoryPath, "SavedCreatures.xsd");
-			//if (File.Exists(filePath) 
-			//{
-
-			//}
-
-			XmlSchemaSet schemas = new XmlSchemaSet();
-			schemas.Add("IC", filePath);
-
-			if (ValidateWithSchema(xml, schemas))
+			if (ValidateWithSchema(xml, GetSchema()))
 			{
 				XDocument doc = new XDocument(xml);
-				string fileName = "SavedCreatures.xml";
-				doc.Save(Path.Combine(directoryPath, fileName));
+				doc.Save(filePath);
 			}
 		}
 
@@ -138,7 +140,7 @@ namespace Combiner
 		/// <param name="xElement"></param>
 		/// <param name="schemas"></param>
 		/// <returns></returns>
-		public static bool ValidateWithSchema(XElement xElement, XmlSchemaSet schemas)
+		private static bool ValidateWithSchema(XElement xElement, XmlSchemaSet schemas)
 		{
 			string errorMessage = string.Empty;
 			bool result = false;
@@ -174,16 +176,17 @@ namespace Combiner
 		/// Creates the saved creatures XML file
 		/// </summary>
 		/// <returns></returns>
-		public static XElement CreateXML()
+		private static XElement CreateXML(string filePath)
 		{
-			string file = "../../XML/SavedCreatures.xml";
-			if (!File.Exists(file))
+			if (!File.Exists(filePath))
 			{
+				Stream sr = File.Create(filePath);
+				sr.Close();
 				return new XElement(ns + "SavedCreatures");
 			}
 
 			XElement xml;
-			using (Stream sr = File.Open(file, FileMode.Open))
+			using (Stream sr = File.Open(filePath, FileMode.Open))
 			{
 				xml = XElement.Load(sr);
 			}
@@ -195,16 +198,15 @@ namespace Combiner
 		/// Gets the XML from the saved creatures XML file
 		/// </summary>
 		/// <returns></returns>
-		public static XElement GetXML()
+		private static XElement GetXML(string filePath)
 		{
-			string file = "../../XML/SavedCreatures.xml";
-			if (!File.Exists(file))
+			if (!File.Exists(filePath))
 			{
 				return null;
 			}
 
 			XElement xml;
-			using (Stream sr = File.Open(file, FileMode.Open))
+			using (Stream sr = File.Open(filePath, FileMode.Open))
 			{
 				xml = XElement.Load(sr);
 			}
@@ -212,29 +214,23 @@ namespace Combiner
 			return xml;
 		}
 
+
 		/// <summary>
 		/// Gets the saved creatures XML schema
 		/// </summary>
 		/// <returns></returns>
-		public static XmlSchemaSet GetSchema()
+		private static XmlSchemaSet GetSchema()
 		{
-			string directoryPath = "../../XML";
-			if (!Directory.Exists(directoryPath))
+			if (!Directory.Exists(m_SchemaDirectory))
 			{
-				//Directory.CreateDirectory(directoryPath);
 				return null;
 			}
 
 			XmlSchemaSet schemas = new XmlSchemaSet();
-			schemas.Add("IC", Path.Combine(directoryPath, "SavedCreatures.xsd"));
+			schemas.Add("IC", Path.Combine(m_SchemaDirectory, m_SavedCreaturesSchema));
 			return schemas;
 		}
 
-		internal class CreatureData
-		{
-			public string left;
-			public string right;
-			public Dictionary<string, string> bodyParts;
-		}
+		
 	}
 }
