@@ -13,6 +13,7 @@ namespace Combiner
 	{
 		private FiltersVM m_FiltersVM;
 		private CreatureDataVM m_NewCreatureVM;
+		private CreatureCsvWriter m_CreatureCsvWriter;
 
 		public DatabaseVM(
 			CreatureDataVM newCreatureVM,
@@ -20,6 +21,7 @@ namespace Combiner
 		{
 			m_NewCreatureVM = newCreatureVM;
 			m_FiltersVM = filtersVM;
+			m_CreatureCsvWriter = new CreatureCsvWriter();
 		}
 
 		private ICommand m_CreateDatabaseCommand;
@@ -161,6 +163,31 @@ namespace Combiner
 		public void ImportSavedCreature(object obj)
 		{
 			ImportExportHandler.Import();
+		}
+
+		private ICommand m_ExportToCsvCommand;
+		public ICommand ExportToCsvCommand
+		{
+			get
+			{
+				return m_ExportToCsvCommand ??
+					(m_ExportToCsvCommand = new RelayCommand(ExportToCsv));
+			}
+			set
+			{
+				if (value != m_ExportToCsvCommand)
+				{
+					m_ExportToCsvCommand = value;
+					OnPropertyChanged(nameof(ExportToCsvCommand));
+				}
+			}
+		}
+		public void ExportToCsv(object obj)
+		{
+			if (m_NewCreatureVM.Creatures.Count > 0)
+			{
+				m_CreatureCsvWriter.WriteFile(m_NewCreatureVM.Creatures);
+			}
 		}
 	}
 }

@@ -92,6 +92,7 @@
     <Compile Include="Enums\Side.cs" />
     <Compile Include="Enums\StockType.cs" />
     <Compile Include="Models\CreatureData.cs" />
+    <Compile Include="Utility\CreatureCsvWriter.cs" />
     <Compile Include="Utility\ImportExportHandler.cs" />
     <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />

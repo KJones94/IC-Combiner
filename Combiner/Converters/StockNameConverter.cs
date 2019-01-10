@@ -9,6 +9,10 @@ namespace Combiner
 {
 	public class StockNameConverter : IValueConverter
 	{
+		public object Convert(object value)
+		{
+			return Convert(value, null, null, null);
+		}
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{

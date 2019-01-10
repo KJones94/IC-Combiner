@@ -7,13 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 	<UserControl.Resources>
-		<local:BoolToStringConverter x:Key="boolConverter"/>
-		<local:DoubleToStringConverter x:Key="doubleConverter"/>
-		<local:ContainsAbilitiesConverter x:Key="abilityConverter"/>
 		<local:BodyPartsConverter x:Key="bodyPartsConverter"/>
-		<local:StockNameConverter x:Key="stockNameConverter"/>
+		<local:BoolToStringConverter x:Key="boolConverter"/>
+		<local:ContainsAbilitiesConverter x:Key="abilityConverter"/>
+		<local:DoubleToStringConverter x:Key="doubleConverter"/>
 		<local:RangeSpecialConverter x:Key="rangeSpecialConverter"/>
 		<local:RangeTypeConverter x:Key="rangeTypeConverter"/>
+		<local:StockNameConverter x:Key="stockNameConverter"/>
 	</UserControl.Resources>
 	<DataGrid ItemsSource="{Binding CreaturesView}" 
 					  SelectedItem="{Binding SelectedCreature, Mode=TwoWay}"

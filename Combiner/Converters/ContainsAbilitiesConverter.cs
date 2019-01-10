@@ -9,6 +9,11 @@ namespace Combiner
 {
 	public class ContainsAbilitiesConverter : IValueConverter
 	{
+		public object Convert(object value)
+		{
+			return Convert(value, null, null, null);
+		}
+
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var abilities = value as Dictionary<string, bool>;
