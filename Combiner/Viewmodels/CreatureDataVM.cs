@@ -28,18 +28,18 @@ namespace Combiner
 				if (value != m_Creatures)
 				{
 					m_Creatures = value;
-					CreaturesView = CollectionViewSource.GetDefaultView(m_Creatures);
+					CreaturesView = (ListCollectionView)CollectionViewSource.GetDefaultView(m_Creatures);
 					OnPropertyChanged(nameof(Creatures));
 				}
 			}
 		}
 
-		private ICollectionView m_CreaturesView;
-		public ICollectionView CreaturesView
+		private ListCollectionView m_CreaturesView;
+		public ListCollectionView CreaturesView
 		{
 			get
 			{
-				return m_CreaturesView ?? (m_CreaturesView = CollectionViewSource.GetDefaultView(Creatures));
+				return m_CreaturesView ?? (m_CreaturesView = (ListCollectionView)CollectionViewSource.GetDefaultView(Creatures));
 			}
 			set
 			{
@@ -47,6 +47,7 @@ namespace Combiner
 				{
 					m_CreaturesView = value;
 					OnPropertyChanged(nameof(CreaturesView));
+					//int x = m_CreaturesView.Cast<object>().Count();
 				}
 			}
 		}

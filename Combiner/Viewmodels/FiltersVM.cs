@@ -540,7 +540,7 @@ namespace Combiner
 			MinEHP = 0;
 			MaxEHP = 5000;
 			MinHitpoints = 0;
-			MaxHitpoints = 2000;
+			MaxHitpoints = 3000;
 			MinArmour = 0;
 			MaxArmour = 1.0;
 			MinSightRadius = 0;

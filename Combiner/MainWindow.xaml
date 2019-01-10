@@ -21,6 +21,23 @@
 				<MenuItem Header="About" Click="MenuItem_AboutClick"/>
 			</MenuItem>
 		</Menu>
+		<StatusBar DockPanel.Dock="Bottom">
+			<StatusBarItem>
+				<TextBlock>Showing</TextBlock>
+			</StatusBarItem>
+			<StatusBarItem>
+				<TextBlock Text="{Binding CreatureDataVM.CreaturesView.Count}"/>
+			</StatusBarItem>
+			<StatusBarItem>
+				<TextBlock>out of</TextBlock>
+			</StatusBarItem>
+			<StatusBarItem>
+				<TextBlock Text="{Binding CreatureDataVM.Creatures.Count}"/>
+			</StatusBarItem>
+			<StatusBarItem>
+				<TextBlock>creatures</TextBlock>
+			</StatusBarItem>
+		</StatusBar>
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="1*"/>
