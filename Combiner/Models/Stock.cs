@@ -216,11 +216,12 @@ namespace Combiner
 		public double CalcLimbArmour(Stock stock, Limb limb)
 		{
 			double limbArmour = CalcLimbStats(limb, "armour");
-			if (limbArmour < 0)
+			double armour = Math.Pow(SizeRatio(stock), GetLimbAttributeValue("exp_armour")) * limbArmour;
+			if (armour < 0)
 			{
 				return 0;
 			}
-			return limbArmour;
+			return armour;
 		}
 
 		public double CalcLimbSightRadius()
