@@ -52,10 +52,10 @@ namespace Combiner
 				var result = collection
 					.Find(Query.And(
 					Query.Or(
-					Query.Or(
+					Query.And(
 						Query.EQ("Left", left),
 						Query.EQ("Right", right)),
-					Query.Or(
+					Query.And(
 						Query.EQ("Left", right),
 						Query.EQ("Right", left))),
 					Query.Where("BodyParts", (x => HasSameBodyParts(x, bodyParts)))

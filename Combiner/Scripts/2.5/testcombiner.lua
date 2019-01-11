@@ -401,7 +401,7 @@ AbilityData =
 	{ ABT_Ability, 	"regeneration", 	1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"frenzy_attack", 	1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"plague_attack", 	1, 	50, 	0, 	5 },
-	{ ABT_Ability, 	"Autodefense", 		1, 	15, 	0, 	5 },
+	{ ABT_Ability, 	"AutoDefense", 		1, 	15, 	0, 	5 },
 	{ ABT_Ability, 	"assassinate", 		1, 	10, 	10, 	20 },
 	{ ABT_Ability, 	"can_SRF", 		1, 	15, 	0, 	10 },
 	{ ABT_Ability, 	"quill_burst", 		2, 	0, 	0, 	0 },	--special
