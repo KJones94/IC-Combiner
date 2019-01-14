@@ -10,6 +10,8 @@ namespace Combiner
 {
 	public static class Database
 	{
+		private static readonly string m_CreaturesCollectionName = "creatures";
+		private static readonly string m_SavedCreaturesCollectionName = "saved_creatures";
 
 		/// <summary>
 		/// Gets all creatures from the creatures collection
@@ -19,12 +21,12 @@ namespace Combiner
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
 			{
-				if (!db.CollectionExists("creatures"))
+				if (!db.CollectionExists(m_CreaturesCollectionName))
 				{
 					return new List<Creature>();
 				}
 
-				var collection = db.GetCollection<Creature>("creatures");
+				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
 				List<Creature> creatures = collection.FindAll().ToList();
 				return creatures;
 			}
@@ -42,24 +44,13 @@ namespace Combiner
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
 			{
-				if (!db.CollectionExists("creatures"))
+				if (!db.CollectionExists(m_CreaturesCollectionName))
 				{
 					return null;
 				}
 
-				// TODO: Currently finding duplicates
-				var collection = db.GetCollection<Creature>("creatures");
-				var result = collection
-					.Find(Query.And(
-					Query.Or(
-					Query.And(
-						Query.EQ("Left", left),
-						Query.EQ("Right", right)),
-					Query.And(
-						Query.EQ("Left", right),
-						Query.EQ("Right", left))),
-					Query.Where("BodyParts", (x => HasSameBodyParts(x, bodyParts)))
-					));
+				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
+				var result = collection.Find(FindCreatureQuery(left, right, bodyParts));
 				return result.First();
 			}
 		}
@@ -72,10 +63,9 @@ namespace Combiner
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
 			{
-				if (db.CollectionExists("saved_creatures"))
+				if (db.CollectionExists(m_SavedCreaturesCollectionName))
 				{
-					var collection = db.GetCollection<Creature>("saved_creatures");
-					collection.Delete(Query.All());
+					db.DropCollection(m_SavedCreaturesCollectionName);
 				}
 			}
 		}
@@ -88,12 +78,12 @@ namespace Combiner
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
 			{
-				if (!db.CollectionExists("saved_creatures"))
+				if (!db.CollectionExists(m_SavedCreaturesCollectionName))
 				{
 					return new List<Creature>();
 				}
 
-				var collection = db.GetCollection<Creature>("saved_creatures");
+				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
 				List<Creature> savedCreatures = collection.FindAll().ToList();
 				return savedCreatures;
 			}
@@ -107,13 +97,8 @@ namespace Combiner
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
 			{
-				if (!db.CollectionExists("saved_creatures"))
-				{
-					CreateSavedCreatures();
-					//return;
-				}
-
-				var collection = db.GetCollection<Creature>("saved_creatures");
+				// Creates collection if necessary
+				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
 				collection.InsertBulk(creatures);
 			}
 		}
@@ -126,29 +111,47 @@ namespace Combiner
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
 			{
-				if (!db.CollectionExists("saved_creatures"))
-				{
-					CreateSavedCreatures();
-					//return;
-				}
-
-				// TODO: Don't allow duplicate creature to be saved
-				var collection = db.GetCollection<Creature>("saved_creatures");
-				bool exists = collection.Exists(Query.And(
-					Query.Or(
-					Query.And(
-						Query.EQ("Left", creature.Left),
-						Query.EQ("Right", creature.Right)),
-					Query.And(
-						Query.EQ("Left", creature.Right),
-						Query.EQ("Right", creature.Left))),
-					Query.Where("BodyParts", (x => HasSameBodyParts(x, creature.BodyParts)))
-					));
-				if (!exists)
+				// Creates collection if necessary
+				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
+				bool creatureExists = collection.Exists(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
+				if (!creatureExists)
 				{
 					collection.Insert(creature);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Removes the creature from the saved creatures collection
+		/// </summary>
+		/// <param name="creature"></param>
+		public static void UnsaveCreature(Creature creature)
+		{
+			using (var db = new LiteDatabase(Utility.DatabaseString))
+			{
+				// No need to unsave if there aren't any saved creatures
+				if (!db.CollectionExists(m_SavedCreaturesCollectionName))
+				{
+					return;
+				}
+
+				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
+				collection.Delete(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
+			}
+		}
+
+		private static Query FindCreatureQuery(string left, string right, Dictionary<string, string> bodyParts)
+		{
+			return
+				Query.And(
+					Query.Or(
+						Query.Or(
+							Query.EQ("Left", left),
+							Query.EQ("Right", right)),
+						Query.Or(
+							Query.EQ("Left", right),
+							Query.EQ("Right", left))),
+					Query.Where("BodyParts", (x => HasSameBodyParts(x, bodyParts))));
 		}
 
 		private static bool HasSameBodyParts(BsonValue x, Dictionary<string, string> bodyParts)
@@ -172,50 +175,20 @@ namespace Combiner
 		}
 
 
-		/// <summary>
-		/// Removes the creature from the saved creatures collection
-		/// </summary>
-		/// <param name="creature"></param>
-		public static void UnsaveCreature(Creature creature)
-		{
-			using (var db = new LiteDatabase(Utility.DatabaseString))
-			{
-				if (!db.CollectionExists("saved_creatures"))
-				{
-					//CreateSavedCreatures();
-					return;
-				}
-
-				var collection = db.GetCollection<Creature>("saved_creatures");
-				collection.Delete(Query.And(
-					Query.Or(
-					Query.Or(
-						Query.EQ("Left", creature.Left),
-						Query.EQ("Right", creature.Right)),
-					Query.Or(
-						Query.EQ("Left", creature.Right),
-						Query.EQ("Right", creature.Left))),
-					Query.Where("BodyParts", (x => HasSameBodyParts(x, creature.BodyParts)))
-					));
-			}
-		}
-
-
-
 		public static void CreateDB()
 		{
 			using (var db = new LiteDatabase(Utility.DatabaseString))
 			{
-				if (db.CollectionExists("creatures"))
+				if (db.CollectionExists(m_CreaturesCollectionName))
 				{
-					db.DropCollection("creatures");
+					db.DropCollection(m_CreaturesCollectionName);
 				}
-				if (db.CollectionExists("saved_creatures"))
+				if (db.CollectionExists(m_SavedCreaturesCollectionName))
 				{
-					db.DropCollection("saved_creatures");
+					db.DropCollection(m_SavedCreaturesCollectionName);
 				}
 
-				var collection = db.GetCollection<Creature>("creatures");
+				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
 				CreateCreatures(collection);
 
 				// Setup indexes
@@ -234,12 +207,13 @@ namespace Combiner
 			{
 				for (int j = i + 1; j < stockNames.Count(); j++)
 				{
-					InsertIntoCollection(collection, stockNames[i], stockNames[j]);
+					List<Creature> creatures = BuildAllPossibleCreatures(collection, stockNames[i], stockNames[j]);
+					collection.InsertBulk(creatures);
 				}
 			}
 		}
 
-		private static void InsertIntoCollection(LiteCollection<Creature> collection, string leftName, string rightName)
+		private static List<Creature> BuildAllPossibleCreatures(LiteCollection<Creature> collection, string leftName, string rightName)
 		{
 			LuaHandler lua = new LuaHandler();
 			List<Creature> creatures = new List<Creature>();
@@ -250,20 +224,7 @@ namespace Combiner
 				lua.LoadScript(creature);
 				creatures.Add(creature.BuildCreature());
 			}
-			collection.InsertBulk(creatures);
-		}
-
-		private static void CreateSavedCreatures()
-		{
-			using (var db = new LiteDatabase(Utility.DatabaseString))
-			{
-				if (db.CollectionExists("saved_creatures"))
-				{
-					return;
-				}
-
-				db.GetCollection<Creature>("saved_creatures");
-			}
+			return creatures;
 		}
 	}
 }
