@@ -15,6 +15,11 @@ Notes...
 	
 Bugs:
 
+Attrcombiner.lua changes:
+	"Autodefense" -> "AutoDefense"
+	Removed "function combine_creature()" and the "end" at the bottom of the file
+	Using the pairs() function in for loops
+
 
 
 
