@@ -36,12 +36,12 @@ web_throws
 
 melee/range#_damage_type:
 	0 = normal
-	1 = poison pincers or venom spray?
+	1 = poison tip, chemical artillery
 	2 = horns
 	4 = barrier destroy
 	8 = electric
 	16 = sonic
-	256 = poison bite or venom spray?
+	256 = poison bite, poison sting, pison direct range
 
 range#_special:
 	0 = normal

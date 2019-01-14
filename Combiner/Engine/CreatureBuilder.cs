@@ -476,7 +476,10 @@ namespace Combiner
 				return true;
 			}
 			// If snake torso then land
-			else if (GetSide(Limb.Torso).Type == StockType.Snake)
+			// Except for eel
+			else if (GetSide(Limb.Torso).Type == StockType.Snake
+				&& Right.Name != "electric_eel"
+				&& Left.Name != "electric_eel") 
 			{
 				return true;
 			}

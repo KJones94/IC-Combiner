@@ -388,7 +388,6 @@
     <None Include="Stock\2.4\spider.lua" />
     <None Include="Stock\2.4\spider_wasp.lua" />
     <None Include="Stock\2.4\spitting_cobra.lua" />
-    <None Include="Stock\2.4\spitting_spider.lua" />
     <None Include="Stock\2.4\squid.lua" />
     <None Include="Stock\2.4\stick_bug.lua" />
     <None Include="Stock\2.4\stink_bug.lua" />
@@ -492,7 +491,6 @@
     <None Include="Stock\2.5\spider.lua" />
     <None Include="Stock\2.5\spider_wasp.lua" />
     <None Include="Stock\2.5\spitting_cobra.lua" />
-    <None Include="Stock\2.5\spitting_spider.lua" />
     <None Include="Stock\2.5\squid.lua" />
     <None Include="Stock\2.5\stick_bug.lua" />
     <None Include="Stock\2.5\stink_bug.lua" />

@@ -54,12 +54,11 @@ namespace Combiner
 			Attrcombiner.Globals["DT_BarrierDestroy"] = 4;
 			Attrcombiner.Globals["DT_HornNegateFull"] = 2;
 			Attrcombiner.Globals["DT_HornNegateArmour"] = 2;
-			Attrcombiner.Globals["DT_Poison"] = 256;
+			Attrcombiner.Globals["DT_Poison"] = 1; // Should this be 256?
 
 			Attrcombiner.Globals["DT_Electric"] = 8;
-			Attrcombiner.Globals["DT_Poison"] = 256;
 			Attrcombiner.Globals["DT_Sonic"] = 16;
-			Attrcombiner.Globals["DT_VenomSpray"] = 256;
+			Attrcombiner.Globals["DT_VenomSpray"] = 256; // Should this be 1?
 		}
 
         private double GetGameAttribute(string key)

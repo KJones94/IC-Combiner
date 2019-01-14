@@ -20,6 +20,9 @@ Attrcombiner.lua changes:
 	Removed "function combine_creature()" and the "end" at the bottom of the file
 	Using the pairs() function in for loops
 
+Other .lua changes:
+	Removed spitting_spider.lua since Tellurian uses the spider.lua file for Spitting Spider
+
 
 
 
