@@ -113,6 +113,11 @@ namespace Combiner
 						BodyParts[Limb.Claws] = false;
 						BodyParts[Limb.Wings] = false;
 					}
+					else if (Name == "octopus")
+					{
+						BodyParts[Limb.Claws] = false;
+						BodyParts[Limb.Wings] = false;
+					}
 					else
 					{
 						BodyParts[Limb.FrontLegs] = false;

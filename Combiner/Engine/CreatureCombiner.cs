@@ -295,6 +295,14 @@ namespace Combiner
 			{
 				return IsHumpbackCorrect(left, right, dict);
 			}
+			if (left.Name == "octopus" || right.Name == "octopus")
+			{
+				return IsBlueRingedOctopusCorrect(left, right, dict);
+			}
+			if (left.Name == "walrus" || right.Name == "walrus")
+			{
+
+			}
 
 			return true;
 		}
@@ -310,24 +318,143 @@ namespace Combiner
 		{
 			if (left.Name == "humpback")
 			{
-				// do some stuff based on if its a bird
-
-				if (dict[Limb.Torso] == Side.Left
-					|| dict[Limb.FrontLegs] == Side.Left)
+				if (right.Type == StockType.Bird
+					|| right.Type == StockType.Fish
+					|| right.Type == StockType.Snake)
 				{
-					return dict[Limb.Torso] == Side.Left
-						&& dict[Limb.FrontLegs] == Side.Left;
+					if (dict[Limb.Torso] == Side.Left
+						|| dict[Limb.FrontLegs] == Side.Left)
+					{
+						return dict[Limb.Torso] == Side.Left
+							&& dict[Limb.FrontLegs] == Side.Left;
+					}
+				}
+
+				if (dict[Limb.FrontLegs] == Side.Left)
+				{
+					return dict[Limb.Torso] == Side.Left;
 				}
 			}
 			else if (right.Name == "humpback")
 			{
-				if (dict[Limb.Torso] == Side.Right
-					|| dict[Limb.FrontLegs] == Side.Right)
+				if (left.Type == StockType.Bird
+					|| left.Type == StockType.Fish
+					|| left.Type == StockType.Snake)
 				{
-					return dict[Limb.Torso] == Side.Right
-						|| dict[Limb.FrontLegs] == Side.Right;
+					if (dict[Limb.Torso] == Side.Right
+						|| dict[Limb.FrontLegs] == Side.Right)
+					{
+						return dict[Limb.Torso] == Side.Right
+							&& dict[Limb.FrontLegs] == Side.Right;
+					}
+				}
+
+				if (dict[Limb.FrontLegs] == Side.Right)
+				{
+					return dict[Limb.Torso] == Side.Right;
 				}
 			}
+			return true;
+		}
+
+		private static bool IsBlueRingedOctopusCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
+		{
+			if (left.Name == "octopus")
+			{
+				if (right.Type == StockType.Fish
+					|| right.Type == StockType.Snake)
+				{
+					if (dict[Limb.Torso] == Side.Left
+						|| dict[Limb.FrontLegs] == Side.Left
+						|| dict[Limb.BackLegs] == Side.Left)
+					{
+						return dict[Limb.Torso] == Side.Left
+							&& dict[Limb.FrontLegs] == Side.Left
+							&& dict[Limb.BackLegs] == Side.Left;
+					}
+				}
+
+				if (right.Type == StockType.Bird)
+				{
+					if (dict[Limb.Torso] == Side.Left
+						|| dict[Limb.FrontLegs] == Side.Left)
+					{
+						return dict[Limb.Torso] == Side.Left
+							&& dict[Limb.FrontLegs] == Side.Left;
+					}
+				}
+
+				if (dict[Limb.FrontLegs] == Side.Left)
+				{
+					return dict[Limb.Torso] == Side.Left;
+				}
+
+				if (dict[Limb.BackLegs] == Side.Left)
+				{
+					return dict[Limb.Torso] == Side.Left;
+				}
+			}
+			else if (right.Name == "octopus")
+			{
+				if (left.Type == StockType.Fish
+					|| left.Type == StockType.Snake)
+				{
+					if (dict[Limb.Torso] == Side.Right
+						|| dict[Limb.FrontLegs] == Side.Right
+						|| dict[Limb.BackLegs] == Side.Right)
+					{
+						return dict[Limb.Torso] == Side.Right
+							&& dict[Limb.FrontLegs] == Side.Right
+							&& dict[Limb.BackLegs] == Side.Right;
+					}
+				}
+
+				if (left.Type == StockType.Bird)
+				{
+					if (dict[Limb.Torso] == Side.Right
+						|| dict[Limb.FrontLegs] == Side.Right)
+					{
+						return dict[Limb.Torso] == Side.Right
+							&& dict[Limb.FrontLegs] == Side.Right;
+					}
+				}
+
+				if (dict[Limb.FrontLegs] == Side.Right)
+				{
+					return dict[Limb.Torso] == Side.Right;
+				}
+
+				if (dict[Limb.BackLegs] == Side.Right)
+				{
+					return dict[Limb.Torso] == Side.Right;
+				}
+			}
+
+
+			return true;
+		}
+
+		private static bool IsWalrusCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
+		{
+			if (left.Name == "walrus")
+			{
+				// What about quadruped?
+
+				if (dict[Limb.FrontLegs] == Side.Left
+					|| dict[Limb.BackLegs] == Side.Left)
+				{
+					return dict[Limb.Torso] == Side.Left;
+				}
+			}
+			else if (right.Name == "walrus")
+			{
+				if (dict[Limb.FrontLegs] == Side.Right
+					|| dict[Limb.BackLegs] == Side.Right)
+				{
+					return dict[Limb.Torso] == Side.Right;
+				}
+			}
+
 			return true;
 		}
 	}

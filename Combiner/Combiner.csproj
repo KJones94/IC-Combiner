@@ -513,7 +513,9 @@
     <None Include="Stock\Test\anaconda.lua" />
     <None Include="Stock\Test\anglerfish.lua" />
     <None Include="Stock\Test\bull.lua" />
-    <None Include="Stock\Test\humpback.lua" />
+    <None Include="Stock\Test\fire_fly.lua" />
+    <None Include="Stock\Test\lobster.lua" />
+    <None Include="Stock\Test\octopus.lua" />
     <None Include="XML\Schemas\SavedCreatures.xsd">
       <SubType>Designer</SubType>
     </None>
