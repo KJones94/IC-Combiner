@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace Combiner
 {
 	// UNTESTED BE CAREFUL
-    public static class CreatureCombiner
-    {
+	public static class CreatureCombiner
+	{
 		private static Dictionary<Limb, bool> ConsolidateBodyParts(Stock left, Stock right)
 		{
 
@@ -30,6 +30,7 @@ namespace Combiner
 			return creatures;
 		}
 
+
 		private static Dictionary<Limb, Side> CopyBodyParts(Dictionary<Limb, Side> original)
 		{
 			Dictionary<Limb, Side> copy = new Dictionary<Limb, Side>();
@@ -41,17 +42,28 @@ namespace Combiner
 		}
 
 		// Not sure if using the copy function is the best method
+		/// <summary>
+		/// Recursively generates all of the possible body part combinations for the two stock.
+		/// This can create duplicates.
+		/// </summary>
+		/// <param name="left"></param>
+		/// <param name="right"></param>
+		/// <param name="possibleBodyParts"></param>
+		/// <param name="limb"></param>
+		/// <returns></returns>
 		private static List<Dictionary<Limb, Side>> GenerateBodyParts(Stock left, Stock right,
 			Dictionary<Limb, Side> possibleBodyParts, Limb limb)
 		{
 			List<Dictionary<Limb, Side>> bodyPartsList = new List<Dictionary<Limb, Side>>();
 
+			// End condition
 			if (limb > Limb.Claws)
 			{
 				bodyPartsList.Add(possibleBodyParts);
 				return bodyPartsList;
 			}
 
+			// Build left side possible body parts
 			if (left.BodyParts[limb])
 			{
 				possibleBodyParts[limb] = Side.Left;
@@ -62,6 +74,7 @@ namespace Combiner
 			}
 			bodyPartsList.AddRange(GenerateBodyParts(left, right, CopyBodyParts(possibleBodyParts), limb + 1));
 
+			// Build right side possible body parts
 			if (right.BodyParts[limb])
 			{
 				possibleBodyParts[limb] = Side.Right;
@@ -76,6 +89,12 @@ namespace Combiner
 		}
 
 		// Unelegant... Would like a better way to do this than brute force
+		/// <summary>
+		/// Post processing of possible body parts to remove any duplicates.
+		/// If both left and right are empty there can be duplicates generated.
+		/// </summary>
+		/// <param name="list"></param>
+		/// <returns></returns>
 		private static List<Dictionary<Limb, Side>> RemoveDuplicates(List<Dictionary<Limb, Side>> list)
 		{
 			List<Dictionary<Limb, Side>> uniqueList = new List<Dictionary<Limb, Side>>();
@@ -100,6 +119,13 @@ namespace Combiner
 			return uniqueList;
 		}
 
+		/// <summary>
+		/// Creates all possible body parts ignoring any special restrictions due to base animal type, 
+		/// combination of types, specific animals, etc.
+		/// </summary>
+		/// <param name="left"></param>
+		/// <param name="right"></param>
+		/// <returns></returns>
 		private static List<Dictionary<Limb, Side>> CreateUnprunedBodyParts(Stock left, Stock right)
 		{
 			Dictionary<Limb, Side> possibleBodyParts = new Dictionary<Limb, Side>();
@@ -112,7 +138,15 @@ namespace Combiner
 			return RemoveDuplicates(unprunedBodyParts);
 		}
 
-		private static List<Dictionary<Limb, Side>> PruneBodyParts(Stock left, Stock right, 
+		/// <summary>
+		/// Prunes the given body parts to remove any that fall under special restrictions due to
+		/// base animal type, combination of types, specific animals, etc.
+		/// </summary>
+		/// <param name="left"></param>
+		/// <param name="right"></param>
+		/// <param name="bodyParts"></param>
+		/// <returns></returns>
+		private static List<Dictionary<Limb, Side>> PruneBodyParts(Stock left, Stock right,
 			List<Dictionary<Limb, Side>> bodyParts)
 		{
 			// Prune based on stock type and limbs
@@ -129,132 +163,113 @@ namespace Combiner
 			foreach (Dictionary<Limb, Side> dict in bodyParts)
 			{
 				// check front legs edge case
-				if (dict[Limb.FrontLegs] == Side.Left)
+				if (!IsQuadrupedBirdFrontLegsCorrect(left, right, dict))
 				{
-					if (left.Type == StockType.Quadruped && right.Type == StockType.Bird)
-					{
-						if (dict[Limb.Torso] != Side.Left)
-						{
-							continue;
-						}
-					}
+					continue; // bad body parts
 				}
-				else if (dict[Limb.FrontLegs] == Side.Right)
-					{
-						if (right.Type == StockType.Quadruped && left.Type == StockType.Bird)
-						{
-							if (dict[Limb.Torso] != Side.Right)
-							{
-								continue;
-							}
-						}
-					}
 
 				// Torso can't be empty or null
 				if (dict[Limb.Torso] == Side.Left)
 				{
-					switch (left.Type)
+					if (IsTorsoRelatedPartsCorrect(left, dict))
 					{
-						case StockType.Bird:
-							if (dict[Limb.BackLegs] != Side.Empty && dict[Limb.Wings] != Side.Empty)
-							{
-								prunedBodyParts.Add(dict);
-							}
-							break;
-
-						case StockType.Quadruped:
-							if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
-							{
-								prunedBodyParts.Add(dict);
-							}
-							break;
-
-						case StockType.Arachnid:
-							if (left.Name == "siphonophore")
-							{
-								if (dict[Limb.Claws] != Side.Empty)
-									prunedBodyParts.Add(dict);
-							}
-							else if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
-							{
-								if (clawedArachnids.Contains(left.Name) && dict[Limb.Claws] == Side.Empty)
-								{
-									continue;
-								}
-								prunedBodyParts.Add(dict);
-							}
-							break;
-
-						case StockType.Insect:
-							if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty
-							&& dict[Limb.Wings] != Side.Empty)
-							{
-								prunedBodyParts.Add(dict);
-							}
-							break;
-
-						//case StockType.Fish:
-						//	if (left.Name == "humpback" )
-						//	{
-
-						//	}
-						//	break;
-
-						default:
-							prunedBodyParts.Add(dict);
-							break;
+						prunedBodyParts.Add(dict);
 					}
 				}
 				else if (dict[Limb.Torso] == Side.Right)
 				{
-					switch (right.Type)
+					if (IsTorsoRelatedPartsCorrect(right, dict))
 					{
-						case StockType.Bird:
-							if (dict[Limb.BackLegs] != Side.Empty && dict[Limb.Wings] != Side.Empty)
-							{
-								prunedBodyParts.Add(dict);
-							}
-							break;
-
-						case StockType.Quadruped:
-							if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
-							{
-								prunedBodyParts.Add(dict);
-							}
-							break;
-
-						case StockType.Arachnid:
-							if (right.Name == "siphonophore")
-							{
-								if (dict[Limb.Claws] != Side.Empty)
-									prunedBodyParts.Add(dict);
-							}
-							else if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
-							{
-								if (clawedArachnids.Contains(right.Name) && dict[Limb.Claws] == Side.Empty)
-								{
-									continue;
-								}
-								prunedBodyParts.Add(dict);
-							}
-							break;
-
-						case StockType.Insect:
-							if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty
-							&& dict[Limb.Wings] != Side.Empty)
-							{
-								prunedBodyParts.Add(dict);
-							}
-							break;
-
-						default:
-							prunedBodyParts.Add(dict);
-							break;
+						prunedBodyParts.Add(dict);
 					}
 				}
 			}
 
 			return prunedBodyParts;
+		}
+
+		/// <summary>
+		/// Ensures if using quadruped torso is is also using quadruped legs when
+		/// combined with a bird.
+		/// </summary>
+		/// <param name="left"></param>
+		/// <param name="right"></param>
+		/// <param name="dict"></param>
+		/// <returns></returns>
+		private static bool IsQuadrupedBirdFrontLegsCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
+		{
+			if (dict[Limb.FrontLegs] == Side.Left)
+			{
+				if (left.Type == StockType.Quadruped && right.Type == StockType.Bird)
+				{
+					if (dict[Limb.Torso] == Side.Left)
+					{
+						return true;
+					}
+				}
+			}
+			else if (dict[Limb.FrontLegs] == Side.Right)
+			{
+				if (right.Type == StockType.Quadruped && left.Type == StockType.Bird)
+				{
+					if (dict[Limb.Torso] == Side.Right)
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		private static bool IsTorsoRelatedPartsCorrect(Stock stock, Dictionary<Limb, Side> dict)
+		{
+			string[] clawedArachnids = new string[] { "lobster", "shrimp", "scorpion", "praying_mantis", "tarantula", "pistol shrimp", "siphonophore", "mantis shrimp" };
+			switch (stock.Type)
+			{
+				case StockType.Bird:
+					if (dict[Limb.BackLegs] != Side.Empty && dict[Limb.Wings] != Side.Empty)
+					{
+						return true;
+					}
+					break;
+
+				case StockType.Quadruped:
+					if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
+					{
+						return true;
+					}
+					break;
+
+				case StockType.Arachnid:
+					if (stock.Name == "siphonophore")
+					{
+						if (dict[Limb.Claws] != Side.Empty)
+						{
+							return true;
+						}
+					}
+					else if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
+					{
+						if (clawedArachnids.Contains(stock.Name) && dict[Limb.Claws] == Side.Empty)
+						{
+							return false;
+						}
+						return true;
+					}
+					break;
+
+				case StockType.Insect:
+					if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty
+						&& dict[Limb.Wings] != Side.Empty)
+					{
+						return true;
+					}
+					break;
+
+				default:
+					return true;
+			}
+			return false;
 		}
 	}
 }
