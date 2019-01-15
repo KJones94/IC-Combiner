@@ -509,13 +509,6 @@
     <None Include="Stock\2.5\wolverine.lua" />
     <None Include="Stock\2.5\woolly_mammoth.lua" />
     <None Include="Stock\2.5\zebra.lua" />
-    <None Include="Stock\Test\albatross.lua" />
-    <None Include="Stock\Test\anaconda.lua" />
-    <None Include="Stock\Test\anglerfish.lua" />
-    <None Include="Stock\Test\bull.lua" />
-    <None Include="Stock\Test\fire_fly.lua" />
-    <None Include="Stock\Test\lobster.lua" />
-    <None Include="Stock\Test\octopus.lua" />
     <None Include="XML\Schemas\SavedCreatures.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -541,7 +534,9 @@
   <ItemGroup>
     <Resource Include="Notes\Features.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Stock\Test\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

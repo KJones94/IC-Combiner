@@ -301,7 +301,7 @@ namespace Combiner
 			}
 			if (left.Name == "walrus" || right.Name == "walrus")
 			{
-
+				return IsWalrusCorrect(left, right, dict);
 			}
 
 			return true;
