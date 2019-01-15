@@ -158,7 +158,6 @@ namespace Combiner
 			// arachnid torso -> front legs, back legs, claws (if clawed)
 			// insect torso -> front legs, back legs, wings
 
-			string[] clawedArachnids = new string[] { "lobster", "shrimp", "scorpion", "praying_mantis", "tarantula", "pistol shrimp", "siphonophore" };
 			List<Dictionary<Limb, Side>> prunedBodyParts = new List<Dictionary<Limb, Side>>();
 			foreach (Dictionary<Limb, Side> dict in bodyParts)
 			{
@@ -221,6 +220,12 @@ namespace Combiner
 			return false;
 		}
 
+		/// <summary>
+		/// Ensures the correct parts when using the torso from the given stock type
+		/// </summary>
+		/// <param name="stock"></param>
+		/// <param name="dict"></param>
+		/// <returns></returns>
 		private static bool IsTorsoRelatedPartsCorrect(Stock stock, Dictionary<Limb, Side> dict)
 		{
 			string[] clawedArachnids = new string[] { "lobster", "shrimp", "scorpion", "praying_mantis", "tarantula", "pistol shrimp", "siphonophore", "mantis shrimp" };
@@ -269,6 +274,11 @@ namespace Combiner
 				default:
 					return true;
 			}
+			return false;
+		}
+
+		private static bool IsHumpbackCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
+		{
 			return false;
 		}
 	}
