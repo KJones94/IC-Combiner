@@ -161,6 +161,11 @@ namespace Combiner
 			List<Dictionary<Limb, Side>> prunedBodyParts = new List<Dictionary<Limb, Side>>();
 			foreach (Dictionary<Limb, Side> dict in bodyParts)
 			{
+				if (!CheckSpecialCases(left, right, dict))
+				{
+					continue; //bad body parts
+				}
+
 				// check front legs edge case
 				if (!IsQuadrupedBirdFrontLegsCorrect(left, right, dict))
 				{
@@ -201,9 +206,9 @@ namespace Combiner
 			{
 				if (left.Type == StockType.Quadruped && right.Type == StockType.Bird)
 				{
-					if (dict[Limb.Torso] == Side.Left)
+					if (dict[Limb.Torso] != Side.Left)
 					{
-						return true;
+						return false;
 					}
 				}
 			}
@@ -211,13 +216,13 @@ namespace Combiner
 			{
 				if (right.Type == StockType.Quadruped && left.Type == StockType.Bird)
 				{
-					if (dict[Limb.Torso] == Side.Right)
+					if (dict[Limb.Torso] != Side.Right)
 					{
-						return true;
+						return false;
 					}
 				}
 			}
-			return false;
+			return true;
 		}
 
 		/// <summary>
@@ -228,7 +233,6 @@ namespace Combiner
 		/// <returns></returns>
 		private static bool IsTorsoRelatedPartsCorrect(Stock stock, Dictionary<Limb, Side> dict)
 		{
-			string[] clawedArachnids = new string[] { "lobster", "shrimp", "scorpion", "praying_mantis", "tarantula", "pistol shrimp", "siphonophore", "mantis shrimp" };
 			switch (stock.Type)
 			{
 				case StockType.Bird:
@@ -255,7 +259,7 @@ namespace Combiner
 					}
 					else if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
 					{
-						if (clawedArachnids.Contains(stock.Name) && dict[Limb.Claws] == Side.Empty)
+						if (Utility.ClawedArachnids.Contains(stock.Name) && dict[Limb.Claws] == Side.Empty)
 						{
 							return false;
 						}
@@ -277,9 +281,54 @@ namespace Combiner
 			return false;
 		}
 
+		/// <summary>
+		/// Returns false if the special cases has bad body parts.
+		/// Returns true if it is not a special case, or if the body parts are good.
+		/// </summary>
+		/// <param name="left"></param>
+		/// <param name="right"></param>
+		/// <param name="dict"></param>
+		/// <returns></returns>
+		private static bool CheckSpecialCases(Stock left, Stock right, Dictionary<Limb, Side> dict)
+		{
+			if (left.Name == "humpback" || right.Name == "humpback")
+			{
+				return IsHumpbackCorrect(left, right, dict);
+			}
+
+			return true;
+		}
+
+		/// <summary>
+		/// Ensures humpback has the its torso if it has its legs.
+		/// </summary>
+		/// <param name="left"></param>
+		/// <param name="right"></param>
+		/// <param name="dict"></param>
+		/// <returns></returns>
 		private static bool IsHumpbackCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
 		{
-			return false;
+			if (left.Name == "humpback")
+			{
+				// do some stuff based on if its a bird
+
+				if (dict[Limb.Torso] == Side.Left
+					|| dict[Limb.FrontLegs] == Side.Left)
+				{
+					return dict[Limb.Torso] == Side.Left
+						&& dict[Limb.FrontLegs] == Side.Left;
+				}
+			}
+			else if (right.Name == "humpback")
+			{
+				if (dict[Limb.Torso] == Side.Right
+					|| dict[Limb.FrontLegs] == Side.Right)
+				{
+					return dict[Limb.Torso] == Side.Right
+						|| dict[Limb.FrontLegs] == Side.Right;
+				}
+			}
+			return true;
 		}
 	}
 }

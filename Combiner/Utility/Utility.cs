@@ -375,6 +375,18 @@ namespace Combiner
 			return names;
 		}
 
+		public static string[] ClawedArachnids = 
+		{
+			"lobster",
+			"shrimp",
+			"scorpion",
+			"praying_mantis",
+			"tarantula",
+			"pistol shrimp",
+			"siphonophore",
+			"mantis shrimp"
+		};
+
 	}
 
 	public enum DamageType

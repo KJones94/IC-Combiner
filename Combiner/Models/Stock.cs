@@ -65,7 +65,6 @@ namespace Combiner
 			}
 			BodyParts[Limb.Nothing] = false;
 
-			string[] clawedArachnids = new string[] { "lobster", "shrimp", "scorpion", "praying_mantis", "tarantula", "pistol shrimp", "siphonophore" };
 			switch (Type)
 			{
 				case StockType.Bird:
@@ -85,7 +84,7 @@ namespace Combiner
 						BodyParts[Limb.BackLegs] = false;
 						BodyParts[Limb.Wings] = false;
 					}
-					else if (clawedArachnids.Contains(Name))
+					else if (Utility.ClawedArachnids.Contains(Name))
 					{
 						BodyParts[Limb.Wings] = false;
 					}

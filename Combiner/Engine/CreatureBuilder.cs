@@ -280,7 +280,7 @@ namespace Combiner
 			InitAbilities();
 		}
 
-		private Stock GetSide(Limb limb)
+		private Stock GetStockSide(Limb limb)
 		{
 			if (ChosenBodyParts[limb] == Side.Left)
 			{
@@ -405,7 +405,7 @@ namespace Combiner
 			// TODO: Could hardcode or cache the limbs for abilities to reduce inner loop
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				Stock side = GetSide(limb);
+				Stock side = GetStockSide(limb);
 				if (side == null)
 					continue;
 				foreach (string ability in Utility.Abilities)
@@ -467,17 +467,19 @@ namespace Combiner
 			{
 				return false;
 			}
-			// If both legs then land
+			// If both legs (but not from fish) then land
 			else if ((ChosenBodyParts[Limb.FrontLegs] == Side.Left
 				|| ChosenBodyParts[Limb.FrontLegs] == Side.Right)
 				&& (ChosenBodyParts[Limb.BackLegs] == Side.Left
-				|| ChosenBodyParts[Limb.BackLegs] == Side.Right))
+				|| ChosenBodyParts[Limb.BackLegs] == Side.Right)
+				&& GetStockSide(Limb.FrontLegs).Type != StockType.Fish
+				&& GetStockSide(Limb.BackLegs).Type != StockType.Fish)
 			{
 				return true;
 			}
 			// If snake torso then land
 			// Except for eel
-			else if (GetSide(Limb.Torso).Type == StockType.Snake
+			else if (GetStockSide(Limb.Torso).Type == StockType.Snake
 				&& Right.Name != "electric_eel"
 				&& Left.Name != "electric_eel") 
 			{
@@ -516,7 +518,7 @@ namespace Combiner
 			Stock side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetSide(limb);
+				side = GetStockSide(limb);
 				if (side == null)
 					continue;
 				hitpoints += side.CalcLimbHitpoints(OtherSide(side), limb);
@@ -543,7 +545,7 @@ namespace Combiner
 			Stock side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetSide(limb);
+				side = GetStockSide(limb);
 				if (side == null)
 					continue;
 				armour += side.CalcLimbArmour(OtherSide(side), limb);
@@ -553,7 +555,7 @@ namespace Combiner
 
 		private void CalcSightRadius()
 		{
-			Stock side = GetSide(Limb.Head);
+			Stock side = GetStockSide(Limb.Head);
 			SightRadius = side.CalcLimbSightRadius();
 		}
 
@@ -563,7 +565,7 @@ namespace Combiner
 			Stock side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetSide(limb);
+				side = GetStockSide(limb);
 				if (side == null)
 					continue;
 
@@ -578,7 +580,7 @@ namespace Combiner
 			Stock side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetSide(limb);
+				side = GetStockSide(limb);
 				if (side == null)
 					continue;
 				airSpeed += side.CalcLimbAirSpeed(OtherSide(side), limb);
@@ -596,7 +598,7 @@ namespace Combiner
 			Stock side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetSide(limb);
+				side = GetStockSide(limb);
 				if (side == null)
 					continue;
 				waterSpeed += side.CalcLimbWaterSpeed(OtherSide(side), limb);
@@ -614,7 +616,7 @@ namespace Combiner
 			Stock side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetSide(limb);
+				side = GetStockSide(limb);
 				if (side == null)
 					continue;
 				meleeDamage += side.CalcLimbMeleeDamage(OtherSide(side), limb);
@@ -627,7 +629,7 @@ namespace Combiner
 			Stock side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetSide(limb);
+				side = GetStockSide(limb);
 				if (side == null)
 					continue;
 				if (GameAttributes.ContainsKey(Utility.RangeDamage[(int)limb]))
@@ -642,7 +644,7 @@ namespace Combiner
 			Stock side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetSide(limb);
+				side = GetStockSide(limb);
 				if (side == null)
 					continue;
 				if (GameAttributes.ContainsKey(Utility.RangeMax[(int)limb]))
@@ -661,7 +663,7 @@ namespace Combiner
 			Stock side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetSide(limb);
+				side = GetStockSide(limb);
 				if (side == null)
 					continue;
 				if (GameAttributes.ContainsKey(Utility.RangeType[(int)limb]))
@@ -676,7 +678,7 @@ namespace Combiner
 			Stock side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetSide(limb);
+				side = GetStockSide(limb);
 				if (side == null)
 					continue;
 				if (GameAttributes.ContainsKey(Utility.RangeSpecial[(int)limb]))
@@ -691,7 +693,7 @@ namespace Combiner
 			Stock side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetSide(limb);
+				side = GetStockSide(limb);
 				if (side == null)
 					continue;
 				if (GameAttributes.ContainsKey(Utility.MeleeType[(int)limb]))
