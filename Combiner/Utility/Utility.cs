@@ -359,7 +359,7 @@ namespace Combiner
 			names.Add("tarantula", "Tarantula");
 			names.Add("termite", "Termite");
 			names.Add("tiger", "Tiger");
-			names.Add("tuna", "Tuna");
+			names.Add("tuna", "Bluefin Tuna");
 			names.Add("velvet_worm", "Velvet Worm");
 			names.Add("vulture", "Vulture");
 			names.Add("stick_bug", "Walking Stick");
