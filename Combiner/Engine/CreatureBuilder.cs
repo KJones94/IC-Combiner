@@ -278,6 +278,8 @@ namespace Combiner
 			InitGameAttributes();
 			InitStats();
 			InitAbilities();
+			FixTunaLeapAttack();
+			FixNarwhalChargeAttack();
 		}
 
 		private Stock GetStockSide(Limb limb)
@@ -437,6 +439,68 @@ namespace Combiner
 				{
 					GameAttributes[ability] = 1;
 					continue;
+				}
+			}
+		}
+
+		private void FixTunaLeapAttack()
+		{
+			if (Left.Name == "tuna" || Right.Name == "tuna")
+			{
+				Stock backLegsSide = GetStockSide(Limb.BackLegs);
+
+				// Check if using back legs for leap attack
+				if (GameAttributes[Utility.LeapAttack] > 0
+					&& backLegsSide != null
+					&& backLegsSide.GetLimbAttributeValue(Utility.LeapAttack) > 0)
+				{
+					return; // Leap attack is good
+				}
+
+				// Check if tuna leap is good
+				Stock tailSide = GetStockSide(Limb.Tail);
+				if (tailSide.Name == "tuna"
+					&& ChosenBodyParts[Limb.BackLegs] == Side.Empty
+					&& !HasLandSpeed()
+					&& !HasAirSpeed()
+					&& GetStockSide(Limb.Torso).Name != "squid")
+				{
+					GameAttributes[Utility.LeapAttack] = 1; // Leap attack is good
+				}
+				else
+				{
+					GameAttributes[Utility.LeapAttack] = 0; // Bad leap attack from tuna
+				}
+			}
+		}
+
+		private void FixNarwhalChargeAttack()
+		{
+			if (Left.Name == "narwhal" || Right.Name == "narwhal")
+			{
+				Stock backLegsSide = GetStockSide(Limb.BackLegs);
+
+				// Check if using back legs for charge attack
+				if (GameAttributes[Utility.ChargeAttack] > 0
+					&& backLegsSide != null
+					&& backLegsSide.GetLimbAttributeValue(Utility.ChargeAttack) > 0)
+				{
+					return; // Charge attack is good
+				}
+
+				// Check if narwhal charge is good
+				Stock tailSide = GetStockSide(Limb.Tail);
+				if (tailSide.Name == "narwhal"
+					&& ChosenBodyParts[Limb.BackLegs] == Side.Empty
+					&& !HasLandSpeed()
+					&& !HasAirSpeed()
+					&& GetStockSide(Limb.Torso).Name != "squid")
+				{
+					GameAttributes[Utility.ChargeAttack] = 1; // Charge attack is good
+				}
+				else
+				{
+					GameAttributes[Utility.ChargeAttack] = 0; // Bad charge attack from tuna
 				}
 			}
 		}

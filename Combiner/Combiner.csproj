@@ -511,6 +511,7 @@
     <None Include="Stock\2.5\zebra.lua" />
     <None Include="Stock\Test\albatross.lua" />
     <None Include="Stock\Test\anglerfish.lua" />
+    <None Include="Stock\Test\narwhal.lua" />
     <None Include="Stock\Test\octopus.lua" />
     <None Include="Stock\Test\squid.lua" />
     <None Include="Stock\Test\tiger.lua" />
