@@ -82,7 +82,7 @@ namespace Combiner
 		}
 		private void AddAbilityChoice(object obj)
 		{
-			if (!ChosenAbilities.Contains(SelectedAddAbility))
+			if (!string.IsNullOrEmpty(SelectedAddAbility) && !ChosenAbilities.Contains(SelectedAddAbility))
 			{
 				ChosenAbilities.Add(SelectedAddAbility);
 				ChosenAbilities = new ObservableCollection<string>(ChosenAbilities.OrderBy(s => s));
@@ -110,10 +110,13 @@ namespace Combiner
 		}
 		private void RemoveAbilityChoice(object obj)
 		{
-			AbilityChoices.Add(SelectedRemoveAbility);
-			AbilityChoices = new ObservableCollection<string>(AbilityChoices.OrderBy(s => s));
-			// sort stock choices
-			ChosenAbilities.Remove(SelectedRemoveAbility);
+			if (!string.IsNullOrEmpty(SelectedRemoveAbility))
+			{
+				AbilityChoices.Add(SelectedRemoveAbility);
+				AbilityChoices = new ObservableCollection<string>(AbilityChoices.OrderBy(s => s));
+				// sort stock choices
+				ChosenAbilities.Remove(SelectedRemoveAbility);
+			}
 		}
 
 		private ICommand m_RemoveAllAbilityChoicesCommand;
@@ -190,7 +193,7 @@ namespace Combiner
 		}
 		private void AddStockChoice(object obj)
 		{
-			if (!ChosenStock.Contains(SelectedAddStock))
+			if (!string.IsNullOrEmpty(SelectedAddStock) && !ChosenStock.Contains(SelectedAddStock))
 			{
 				ChosenStock.Add(SelectedAddStock);
 				ChosenStock = new ObservableCollection<string>(ChosenStock.OrderBy(s => s));
@@ -236,10 +239,13 @@ namespace Combiner
 		}
 		private void RemoveStockChoice(object obj)
 		{
-			StockChoices.Add(SelectedRemoveStock);
-			StockChoices = new ObservableCollection<string>(StockChoices.OrderBy(s => s));
-			// sort stock choices
-			ChosenStock.Remove(SelectedRemoveStock);
+			if (!string.IsNullOrEmpty(SelectedRemoveStock))
+			{
+				StockChoices.Add(SelectedRemoveStock);
+				StockChoices = new ObservableCollection<string>(StockChoices.OrderBy(s => s));
+				// sort stock choices
+				ChosenStock.Remove(SelectedRemoveStock);
+			}
 		}
 
 		private ICommand m_RemoveAllStockChoicesCommand;
@@ -358,16 +364,42 @@ namespace Combiner
 
 		private bool FilterAbilities(Creature creature)
 		{
+			if (DoOnlySelectedAbilitiesFilter)
+			{
+				return FilterOnlySelectedAbiltiies(creature);
+			}
+
+			if (ChosenAbilities.Count == 0)
+			{
+				return true;
+			}
+
+			foreach (string ability in ChosenAbilities)
+			{
+				if (creature.Abilities.ContainsKey(ability))
+				{
+					if (creature.Abilities[ability])
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		private bool FilterOnlySelectedAbiltiies(Creature creature)
+		{
+			if (ChosenAbilities.Count == 0)
+			{
+				return true;
+			}
+
 			bool hasAbilities = true;
 			foreach (string ability in ChosenAbilities)
 			{
 				if (creature.Abilities.ContainsKey(ability))
 				{
-					hasAbilities = (creature.Abilities[ability]);
-					if (!hasAbilities)
-					{
-						break;
-					}
+					hasAbilities = hasAbilities && (creature.Abilities[ability]);
 				}
 			}
 			return hasAbilities;
@@ -488,19 +520,29 @@ namespace Combiner
 
 		private bool FilterStockName(Creature creature)
 		{
-			if (ChosenStock.Count > 0)
+			if (DoOnlySelectedStockFilter)
 			{
-				foreach (string name in ChosenStock)
-				{
-					if (creature.Left == name
-						|| creature.Right == name)
-					{
-						return true;
-					}
-				}
-				return false;
+				return FilterOnlySelectedStockName(creature);
 			}
-			return true;
+
+			if (ChosenStock.Count == 0)
+			{
+				return true;
+			}
+
+			return ChosenStock.Contains(creature.Left)
+				|| ChosenStock.Contains(creature.Right);
+		}
+
+		private bool FilterOnlySelectedStockName(Creature creature)
+		{
+			if (ChosenStock.Count == 0)
+			{
+				return true;
+			}
+
+			return ChosenStock.Contains(creature.Left)
+				&& ChosenStock.Contains(creature.Right);
 		}
 
 
@@ -557,6 +599,8 @@ namespace Combiner
 			MaxMeleeDamage = 100;
 			MinRangeDamage = 0;
 			MaxRangeDamage = 100;
+			DoOnlySelectedAbilitiesFilter = false;
+			DoOnlySelectedStockFilter = false;
 			DoArtilleryOnlyFilter = false;
 			DoSingleRangeFilter = false;
 			DoDirectRangeFilter = false;
@@ -989,6 +1033,40 @@ namespace Combiner
 				{
 					m_MaxRangeDamage = value;
 					OnPropertyChanged(nameof(MaxRangeDamage));
+				}
+			}
+		}
+
+		private bool m_DoOnlySelectedAbilitiesFilter;
+		public bool DoOnlySelectedAbilitiesFilter
+		{
+			get
+			{
+				return m_DoOnlySelectedAbilitiesFilter;
+			}
+			set
+			{
+				if (m_DoOnlySelectedAbilitiesFilter != value)
+				{
+					m_DoOnlySelectedAbilitiesFilter = value;
+					OnPropertyChanged(nameof(DoOnlySelectedAbilitiesFilter));
+				}
+			}
+		}
+
+		private bool m_DoOnlySelectedStockFilter;
+		public bool DoOnlySelectedStockFilter
+		{
+			get
+			{
+				return m_DoOnlySelectedStockFilter;
+			}
+			set
+			{
+				if (m_DoOnlySelectedStockFilter != value)
+				{
+					m_DoOnlySelectedStockFilter = value;
+					OnPropertyChanged(nameof(DoOnlySelectedStockFilter));
 				}
 			}
 		}

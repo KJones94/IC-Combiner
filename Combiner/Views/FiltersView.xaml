@@ -9,6 +9,7 @@
 	<UserControl.Resources>
 		<local:AbilityNameConverter x:Key="abilityNameConverter"/>
 		<local:StockNameConverter x:Key="stockNameConverter"/>
+		<local:BoolComplimentConverter x:Key="boolComplimentConverter"/>
 	</UserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -116,6 +117,14 @@
 				</ComboBox>
 				<Button Width="30" Content="Drop" Command="{Binding RemoveAbilityChoiceCommand}"/>
 				<Button Width="50" Content="Drop All" Command="{Binding RemoveAllAbilityChoicesCommand}"/>
+				<Label>Count:</Label>
+				<Label Content="{Binding ChosenAbilities.Count, Mode=OneWay}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<CheckBox IsChecked="{Binding DoOnlySelectedAbilitiesFilter, Converter={StaticResource boolComplimentConverter}}"/>
+				<Label>ANY chosen ability</Label>
+				<CheckBox IsChecked="{Binding DoOnlySelectedAbilitiesFilter}"/>
+				<Label>Only chosen abilities</Label>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<Label>Stock:</Label>
@@ -140,6 +149,14 @@
 				</ComboBox>
 				<Button Width="30" Content="Drop" Command="{Binding RemoveStockChoiceCommand}"/>
 				<Button Width="50" Content="Drop All" Command="{Binding RemoveAllStockChoicesCommand}"/>
+				<Label>Count:</Label>
+				<Label Content="{Binding ChosenStock.Count, Mode=OneWay}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<CheckBox IsChecked="{Binding DoOnlySelectedStockFilter, Converter={StaticResource boolComplimentConverter}}"/>
+				<Label>ANY chosen stock</Label>
+				<CheckBox IsChecked="{Binding DoOnlySelectedStockFilter}"/>
+				<Label>Only chosen stock</Label>
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<CheckBox IsChecked="{Binding DoSingleRangeFilter}"/>
