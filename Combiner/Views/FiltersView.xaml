@@ -122,7 +122,7 @@
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<CheckBox IsChecked="{Binding DoOnlySelectedAbilitiesFilter, Converter={StaticResource boolComplimentConverter}}"/>
-				<Label>ANY chosen ability</Label>
+				<Label>Any chosen ability</Label>
 				<CheckBox IsChecked="{Binding DoOnlySelectedAbilitiesFilter}"/>
 				<Label>Only chosen abilities</Label>
 			</StackPanel>
@@ -154,7 +154,7 @@
 			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<CheckBox IsChecked="{Binding DoOnlySelectedStockFilter, Converter={StaticResource boolComplimentConverter}}"/>
-				<Label>ANY chosen stock</Label>
+				<Label>Any chosen stock</Label>
 				<CheckBox IsChecked="{Binding DoOnlySelectedStockFilter}"/>
 				<Label>Only chosen stock</Label>
 			</StackPanel>
