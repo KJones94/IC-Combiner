@@ -220,12 +220,16 @@ namespace Combiner
 			set { GameAttributes[Utility.Melee8Type] = value; }
 		}
 
+		public double IsLand
+		{
+			get { return GameAttributes[Utility.IsLand]; }
+			set { GameAttributes[Utility.IsLand] = value; }
+		}
 		public double IsSwimmer
 		{
 			get { return GameAttributes[Utility.IsSwimmer]; }
 			set { GameAttributes[Utility.IsSwimmer] = value; }
 		}
-
 		public double IsFlyer
 		{
 			get { return GameAttributes[Utility.IsFlyer]; }
@@ -359,6 +363,7 @@ namespace Combiner
 			GameAttributes.Add(Utility.Range8Special, 0);
 			GameAttributes.Add(Utility.Melee8Type, 0);
 
+			GameAttributes.Add(Utility.IsLand, 0);
 			GameAttributes.Add(Utility.IsSwimmer, 0);
 			GameAttributes.Add(Utility.IsFlyer, 0);
 
@@ -636,6 +641,10 @@ namespace Combiner
 				landSpeed += side.CalcLimbLandSpeed(OtherSide(side), limb);
 			}
 			LandSpeed = landSpeed;
+			if (LandSpeed > 0)
+			{
+				IsLand = 1;
+			}
 		}
 
 		private void CalcAirSpeed()

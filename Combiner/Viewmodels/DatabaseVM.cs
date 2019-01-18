@@ -43,7 +43,16 @@ namespace Combiner
 		}
 		private void CreateDatabase(object obj)
 		{
-			string text = "Creating a new database will delete and replace your current database. This could take a while (around 20-30 minutes), but a dialog box will appear when it is finished. Would you like to continue?";
+			string text = string.Empty;
+			if (Database.Exists())
+			{
+				text = "The database has already been created. If you continue the database will be over written, including saved creatures. Would you like to continue?";
+			}
+			else
+			{
+				text = "Creating a new database will delete and replace your current database. This could take a while (around 20-30 minutes), but a dialog box will appear when it is finished. Would you like to continue?";
+			}
+
 			MessageBoxResult result = MessageBox.Show(text, "Database Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 			if (result == MessageBoxResult.Yes)
 			{

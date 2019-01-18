@@ -145,6 +145,7 @@ namespace Combiner
 			Melee8Type
 		};
 
+		public static readonly string IsLand = "is_land";
 		public static readonly string IsSwimmer = "is_swimmer";
 		public static readonly string IsFlyer = "is_flyer";
 

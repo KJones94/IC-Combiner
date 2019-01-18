@@ -174,6 +174,17 @@ namespace Combiner
 			return same;
 		}
 
+		public static bool Exists()
+		{
+			using (var db = new LiteDatabase(Utility.DatabaseString))
+			{
+				if (db.CollectionExists(m_CreaturesCollectionName))
+				{
+					return db.GetCollection<Creature>(m_CreaturesCollectionName).Count() > 0;
+				}
+				return false;
+			}
+		}
 
 		public static void CreateDB()
 		{
