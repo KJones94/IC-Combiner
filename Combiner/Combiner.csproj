@@ -89,6 +89,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BoolComplimentConverter.cs" />
+    <Compile Include="Engine\StockFactory.cs" />
     <Compile Include="Enums\Limb.cs" />
     <Compile Include="Enums\Side.cs" />
     <Compile Include="Enums\StockType.cs" />
