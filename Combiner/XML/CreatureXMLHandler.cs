@@ -17,22 +17,22 @@ namespace Combiner
 		/// <summary>
 		/// Adds the creatures from the XML to the database
 		/// </summary>
-		public static IEnumerable<CreatureData> GetCreatureDataFromXML(string filePath)
+		public static IEnumerable<CreatureQueryData> GetCreatureDataFromXML(string filePath)
 		{
 			XElement xml = GetXML(filePath);
 			if (xml == null)
 			{
-				return new List<CreatureData>();
+				return new List<CreatureQueryData>();
 			}
 			if (!ValidateWithSchema(xml, GetSchema()))
 			{
-				return new List<CreatureData>();
+				return new List<CreatureQueryData>();
 			}
 			XDocument doc = new XDocument(xml);
 
-			IEnumerable<CreatureData> allCreatureData =
+			IEnumerable<CreatureQueryData> allCreatureData =
 				from creature in doc.Descendants(ns + "Creature")
-				select new CreatureData()
+				select new CreatureQueryData()
 				{
 					left = creature.Element(ns + "left").Value,
 					right = creature.Element(ns + "right").Value,

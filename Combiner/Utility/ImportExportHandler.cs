@@ -35,7 +35,7 @@ namespace Combiner
 
 			// Read XML and all that
 
-			IEnumerable<CreatureData> importedCreatureData = CreatureXMLHandler.GetCreatureDataFromXML(filePath);
+			IEnumerable<CreatureQueryData> importedCreatureData = CreatureXMLHandler.GetCreatureDataFromXML(filePath);
 
 			// Save creatures to database
 

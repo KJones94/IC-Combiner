@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Combiner
 {
-	public class CreatureData
+	public class CreatureQueryData
 	{
 		public string left;
 		public string right;
