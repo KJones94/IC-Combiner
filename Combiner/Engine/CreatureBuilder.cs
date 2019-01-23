@@ -7,8 +7,8 @@ namespace Combiner
 {
 	public class CreatureBuilder
 	{
-		public Stock Left { get; set; }
-		public Stock Right { get; set; }
+		public StockStatCalculator Left { get; set; }
+		public StockStatCalculator Right { get; set; }
 		Dictionary<Limb, Side> ChosenBodyParts { get; set; }
 
 		public Dictionary<string, double> GameAttributes { get; set; } = new Dictionary<string, double>();
@@ -249,8 +249,8 @@ namespace Combiner
 
 		public CreatureBuilder(Stock left, Stock right, Dictionary<Limb, Side> chosenBodyParts)
 		{
-			Left = left;
-			Right = right;
+			Left =  new StockStatCalculator(left);
+			Right = new StockStatCalculator(right);
 			ChosenBodyParts = chosenBodyParts;
 			InitGameAttributes();
 			InitStats();
@@ -259,7 +259,7 @@ namespace Combiner
 			FixNarwhalChargeAttack();
 		}
 
-		private Stock GetStockSide(Limb limb)
+		private StockStatCalculator GetStockSide(Limb limb)
 		{
 			if (ChosenBodyParts[limb] == Side.Left)
 			{
@@ -275,15 +275,15 @@ namespace Combiner
 			}
 		}
 
-		private Stock OtherSide(Stock stock)
+		private Stock OtherSide(StockStatCalculator stock)
 		{
 			if (stock.Name == Left.Name)
 			{
-				return Right;
+				return Right.Stock;
 			}
 			else
 			{
-				return Left;
+				return Left.Stock;
 			}
 		}
 
@@ -385,7 +385,7 @@ namespace Combiner
 			// TODO: Could hardcode or cache the limbs for abilities to reduce inner loop
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				Stock side = GetStockSide(limb);
+				StockStatCalculator side = GetStockSide(limb);
 				if (side == null)
 					continue;
 				foreach (string ability in Utility.Abilities)
@@ -423,9 +423,9 @@ namespace Combiner
 
 		private void FixTunaLeapAttack()
 		{
-			if (Left.Name == "tuna" || Right.Name == "tuna")
+			if (Left.Stock.Name == "tuna" || Right.Stock.Name == "tuna")
 			{
-				Stock backLegsSide = GetStockSide(Limb.BackLegs);
+				StockStatCalculator backLegsSide = GetStockSide(Limb.BackLegs);
 
 				// Check if using back legs for leap attack
 				if (GameAttributes[Utility.LeapAttack] > 0
@@ -436,7 +436,7 @@ namespace Combiner
 				}
 
 				// Check if tuna leap is good
-				Stock tailSide = GetStockSide(Limb.Tail);
+				StockStatCalculator tailSide = GetStockSide(Limb.Tail);
 				if (tailSide.Name == "tuna"
 					&& ChosenBodyParts[Limb.BackLegs] == Side.Empty
 					&& !HasLandSpeed()
@@ -454,9 +454,9 @@ namespace Combiner
 
 		private void FixNarwhalChargeAttack()
 		{
-			if (Left.Name == "narwhal" || Right.Name == "narwhal")
+			if (Left.Stock.Name == "narwhal" || Right.Stock.Name == "narwhal")
 			{
-				Stock backLegsSide = GetStockSide(Limb.BackLegs);
+				StockStatCalculator backLegsSide = GetStockSide(Limb.BackLegs);
 
 				// Check if using back legs for charge attack
 				if (GameAttributes[Utility.ChargeAttack] > 0
@@ -467,7 +467,7 @@ namespace Combiner
 				}
 
 				// Check if narwhal charge is good
-				Stock tailSide = GetStockSide(Limb.Tail);
+				StockStatCalculator tailSide = GetStockSide(Limb.Tail);
 				if (tailSide.Name == "narwhal"
 					&& ChosenBodyParts[Limb.BackLegs] == Side.Empty
 					&& !HasLandSpeed()
@@ -504,8 +504,8 @@ namespace Combiner
 			// If snake torso then land
 			// Except for eel
 			else if (GetStockSide(Limb.Torso).Type == StockType.Snake
-				&& Right.Name != "electric_eel"
-				&& Left.Name != "electric_eel") 
+				&& Right.Stock.Name != "electric_eel"
+				&& Left.Stock.Name != "electric_eel") 
 			{
 				return true;
 			}
@@ -539,7 +539,7 @@ namespace Combiner
 		private void CalcHitpoints()
 		{
 			double hitpoints = 0.0;
-			Stock side;
+			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetStockSide(limb);
@@ -552,7 +552,7 @@ namespace Combiner
 
 		private void CalcSize()
 		{
-			if (Left.IsGreaterSize(Right))
+			if (Left.IsGreaterSize(Right.Stock))
 			{
 				Size = Left.GetLimbAttributeValue("size");
 			}
@@ -565,7 +565,7 @@ namespace Combiner
 		private void CalcArmour()
 		{
 			double armour = 0.0;
-			Stock side;
+			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetStockSide(limb);
@@ -578,14 +578,14 @@ namespace Combiner
 
 		private void CalcSightRadius()
 		{
-			Stock side = GetStockSide(Limb.Head);
+			StockStatCalculator side = GetStockSide(Limb.Head);
 			SightRadius = side.CalcLimbSightRadius();
 		}
 
 		private void CalcLandSpeed()
 		{
 			double landSpeed = 0.0;
-			Stock side;
+			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetStockSide(limb);
@@ -604,7 +604,7 @@ namespace Combiner
 		private void CalcAirSpeed()
 		{
 			double airSpeed = 0.0;
-			Stock side;
+			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetStockSide(limb);
@@ -622,7 +622,7 @@ namespace Combiner
 		private void CalcWaterSpeed()
 		{
 			double waterSpeed = 0.0;
-			Stock side;
+			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetStockSide(limb);
@@ -640,7 +640,7 @@ namespace Combiner
 		private void CalcMeleeDamage()
 		{
 			double meleeDamage = 0.0;
-			Stock side;
+			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetStockSide(limb);
@@ -653,7 +653,7 @@ namespace Combiner
 
 		private void CalcRangeDamage()
 		{
-			Stock side;
+			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetStockSide(limb);
@@ -669,7 +669,7 @@ namespace Combiner
 		// TODO: Is this used for anything?
 		private void SetRangeMax()
 		{
-			Stock side;
+			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetStockSide(limb);
@@ -688,7 +688,7 @@ namespace Combiner
 
 		private void SetRangeType()
 		{
-			Stock side;
+			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetStockSide(limb);
@@ -703,7 +703,7 @@ namespace Combiner
 
 		private void SetRangeSpecial()
 		{
-			Stock side;
+			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetStockSide(limb);
@@ -718,7 +718,7 @@ namespace Combiner
 
 		private void SetMeleeType()
 		{
-			Stock side;
+			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				side = GetStockSide(limb);
