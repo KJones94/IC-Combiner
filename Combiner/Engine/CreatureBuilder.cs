@@ -11,34 +11,6 @@ namespace Combiner
 		public Stock Right { get; set; }
 		Dictionary<Limb, Side> ChosenBodyParts { get; set; }
 
-		public string BodyParts
-		{
-			get { return CreateBodyPartsText(); }
-		}
-
-		private string CreateBodyPartsText()
-		{
-			StringBuilder sb = new StringBuilder();
-			foreach (Limb limb in ChosenBodyParts.Keys)
-			{
-				Side side = ChosenBodyParts[limb];
-				if (side == Side.Left)
-				{
-					sb.Append('L');
-				}
-				else if (side == Side.Right)
-				{
-					sb.Append('R');
-				}
-				else if (side == Side.Empty)
-				{
-					sb.Append('x');
-				}
-			}
-			return sb.ToString();
-		}
-
-		//Table GameAttributes { get; set; }  // Need to connect to script...
 		public Dictionary<string, double> GameAttributes { get; set; } = new Dictionary<string, double>();
 
 		#region Stat Properties
@@ -236,6 +208,7 @@ namespace Combiner
 			set { GameAttributes[Utility.IsFlyer] = value; }
 		}
 
+		// TODO: Remove this and make an issue for possibly adding ticks to data
 		public double Ticks
 		{
 			get { return GameAttributes[Utility.Ticks]; }
@@ -510,24 +483,6 @@ namespace Combiner
 			}
 		}
 
-		public bool HasAbilities(IEnumerable<string> abilities)
-		{
-			bool hasAbilities = true;
-			foreach (string ability in abilities)
-			{
-				if (GameAttributes.ContainsKey(ability))
-				{
-					hasAbilities = (GameAttributes[ability] > 0);
-					if (!hasAbilities)
-					{
-						break;
-					}
-				}
-			}
-
-			return hasAbilities;
-		}
-
 		private bool HasLandSpeed()
 		{
 			// If wings then no land
@@ -592,7 +547,6 @@ namespace Combiner
 					continue;
 				hitpoints += side.CalcLimbHitpoints(OtherSide(side), limb);
 			}
-			//GameAttributes.Set("hitpoints", DynValue.NewNumber(health));
 			Hitpoints = hitpoints;
 		}
 
@@ -712,6 +666,7 @@ namespace Combiner
 			}
 		}
 
+		// TODO: Is this used for anything?
 		private void SetRangeMax()
 		{
 			Stock side;
@@ -725,7 +680,7 @@ namespace Combiner
 					GameAttributes[Utility.RangeMax[(int)limb]] = side.GetLimbRangeMax(OtherSide(side), limb);
 					if (GameAttributes[Utility.RangeMax[(int)limb]] > 0)
 					{
-						Console.WriteLine("hello");
+						Console.WriteLine("hello"); 
 					}
 				}
 			}
