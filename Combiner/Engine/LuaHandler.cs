@@ -86,10 +86,6 @@ namespace Combiner
 
 		private void SetGameAttribute(string key, double value)
 		{
-			if (key == "hello1")
-			{
-				Console.WriteLine("Hello");
-			}
 			if (Creature.GameAttributes.ContainsKey(key))
 			{
 				Creature.GameAttributes[key] = value;
@@ -98,7 +94,7 @@ namespace Combiner
 
 		private void SetUIAttribute(string key, double value)
 		{
-			
+			// Lua needs to hook into this, but shouldn't do anything
 		}
 
 		private double HasMeleeDmgType(double value)

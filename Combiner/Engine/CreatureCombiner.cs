@@ -10,11 +10,18 @@ namespace Combiner
 	// UNTESTED BE CAREFUL
 	public static class CreatureCombiner
 	{
-		private static Dictionary<Limb, bool> ConsolidateBodyParts(Stock left, Stock right)
+		public static List<Creature> CreateAllPossibleCreatures(string leftName, string rightName)
 		{
-
-
-			return null;
+			LuaHandler lua = new LuaHandler();
+			List<Creature> creatures = new List<Creature>();
+			Stock left = StockFactory.Instance.CreateStock(leftName, lua);
+			Stock right = StockFactory.Instance.CreateStock(rightName, lua);
+			foreach (var creature in Combine(left, right))
+			{
+				lua.LoadScript(creature);
+				creatures.Add(creature.BuildCreature());
+			}
+			return creatures;
 		}
 
 		public static List<CreatureBuilder> Combine(Stock left, Stock right)

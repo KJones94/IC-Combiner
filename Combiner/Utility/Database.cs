@@ -218,24 +218,10 @@ namespace Combiner
 			{
 				for (int j = i + 1; j < stockNames.Count(); j++)
 				{
-					List<Creature> creatures = BuildAllPossibleCreatures(collection, stockNames[i], stockNames[j]);
+					List<Creature> creatures = CreatureCombiner.CreateAllPossibleCreatures(stockNames[i], stockNames[j]);
 					collection.InsertBulk(creatures);
 				}
 			}
-		}
-
-		private static List<Creature> BuildAllPossibleCreatures(LiteCollection<Creature> collection, string leftName, string rightName)
-		{
-			LuaHandler lua = new LuaHandler();
-			List<Creature> creatures = new List<Creature>();
-			Stock left = StockFactory.Instance.CreateStock(leftName, lua);
-			Stock right = StockFactory.Instance.CreateStock(rightName, lua);
-			foreach (var creature in CreatureCombiner.Combine(left, right))
-			{
-				lua.LoadScript(creature);
-				creatures.Add(creature.BuildCreature());
-			}
-			return creatures;
 		}
 	}
 }
