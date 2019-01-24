@@ -43,9 +43,9 @@ namespace Combiner
 			return -1;
 		}
 
-		public bool IsGreaterSize(Stock stock)
+		public bool IsGreaterSize(double stockSize)
 		{
-			return GetLimbAttributeValue("size") >= stock.GetLimbAttributeValue("size");
+			return GetLimbAttributeValue("size") >= stockSize;
 		}
 
 		/// <summary>
@@ -54,17 +54,17 @@ namespace Combiner
 		/// Used to increase the stat value of body parts that have grown from their original size.
 		/// For example, an ant torso's health value will increase when combined with a sperm whale.
 		/// </summary>
-		/// <param name="stock"></param>
+		/// <param name="stockSize"></param>
 		/// <returns></returns>
-		private double SizeRatio(Stock stock)
+		private double SizeRatio(double stockSize)
 		{
-			if (IsGreaterSize(stock))
+			if (IsGreaterSize(stockSize))
 			{
 				return 1.0;
 			}
 			else
 			{
-				return stock.GetLimbAttributeValue("size") / GetLimbAttributeValue("size");
+				return stockSize / GetLimbAttributeValue("size");
 			}
 		}
 
@@ -101,10 +101,10 @@ namespace Combiner
 			return limbStats;
 		}
 
-		public double CalcLimbHitpoints(Stock stock, Limb limb)
+		public double CalcLimbHitpoints(double stockSize, Limb limb)
 		{
-			double limbHitpoints = CalcLimbStats(limb, "hitpoints");
-			double health = Math.Pow(SizeRatio(stock), GetLimbAttributeValue("exp_hitpoints")) * limbHitpoints;
+			double limbHitpoints = CalcLimbStats(limb, Utility.Hitpoints);
+			double health = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_hitpoints")) * limbHitpoints;
 			if (health < 0)
 			{
 				return 0;
@@ -112,10 +112,10 @@ namespace Combiner
 			return health;
 		}
 
-		public double CalcLimbArmour(Stock stock, Limb limb)
+		public double CalcLimbArmour(double stockSize, Limb limb)
 		{
-			double limbArmour = CalcLimbStats(limb, "armour");
-			double armour = Math.Pow(SizeRatio(stock), GetLimbAttributeValue("exp_armour")) * limbArmour;
+			double limbArmour = CalcLimbStats(limb, Utility.Armour);
+			double armour = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_armour")) * limbArmour;
 			if (armour < 0)
 			{
 				return 0;
@@ -133,10 +133,10 @@ namespace Combiner
 			return sightRadius;
 		}
 
-		public double CalcLimbLandSpeed(Stock stock, Limb limb)
+		public double CalcLimbLandSpeed(double stockSize, Limb limb)
 		{
-			double limbLandSpeed = CalcLimbStats(limb, "speed_max");
-			double speed = Math.Pow(SizeRatio(stock), GetLimbAttributeValue("exp_speed_max")) * limbLandSpeed;
+			double limbLandSpeed = CalcLimbStats(limb, Utility.LandSpeed);
+			double speed = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_speed_max")) * limbLandSpeed;
 			if (speed < 0)
 			{
 				return 0;
@@ -144,11 +144,11 @@ namespace Combiner
 			return speed;
 		}
 
-		public double CalcLimbWaterSpeed(Stock stock, Limb limb)
+		public double CalcLimbWaterSpeed(double stockSize, Limb limb)
 		{
-			double limbWaterSpeed = CalcLimbStats(limb, "waterspeed_max");
+			double limbWaterSpeed = CalcLimbStats(limb, Utility.WaterSpeed);
 			// Not right
-			double speed = Math.Pow(SizeRatio(stock),
+			double speed = Math.Pow(SizeRatio(stockSize),
 				GetLimbAttributeValue("exp_waterspeed_max")
 				+ GetLimbAttributeValue("exp_speed_max"))
 				* limbWaterSpeed;
@@ -159,10 +159,10 @@ namespace Combiner
 			return speed;
 		}
 
-		public double CalcLimbAirSpeed(Stock stock, Limb limb)
+		public double CalcLimbAirSpeed(double stockSize, Limb limb)
 		{
-			double limbAirSpeed = CalcLimbStats(limb, "airspeed_max");
-			double speed = Math.Pow(SizeRatio(stock), GetLimbAttributeValue("exp_airspeed_max")) * limbAirSpeed;
+			double limbAirSpeed = CalcLimbStats(limb, Utility.AirSpeed);
+			double speed = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_airspeed_max")) * limbAirSpeed;
 			if (speed < 0)
 			{
 				return 0;
@@ -170,11 +170,11 @@ namespace Combiner
 			return speed;
 		}
 
-		public double CalcLimbMeleeDamage(Stock stock, Limb limb)
+		public double CalcLimbMeleeDamage(double stockSize, Limb limb)
 		{
 			string damageName = "melee" + (int)limb + "_damage";
 			string damageExp = "exp_" + damageName;
-			double damage = Math.Pow(SizeRatio(stock), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(damageName);
+			double damage = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(damageName);
 			if (damage < 0)
 			{
 				return 0;
@@ -182,11 +182,11 @@ namespace Combiner
 			return damage;
 		}
 
-		public double CalcLimbRangeDamage(Stock stock, Limb limb)
+		public double CalcLimbRangeDamage(double stockSize, Limb limb)
 		{
 			string damageName = "range" + (int)limb + "_damage";
 			string damageExp = "exp_" + damageName;
-			double damage = Math.Pow(SizeRatio(stock), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(damageName);
+			double damage = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(damageName);
 			if (damage < 0)
 			{
 				return 0;
@@ -194,11 +194,11 @@ namespace Combiner
 			return damage;
 		}
 
-		public double GetLimbRangeMax(Stock stock, Limb limb)
+		public double GetLimbRangeMax(double stockSize, Limb limb)
 		{
 			string rangeMax = "range" + (int)limb + "_max";
 			string rangeExp = "exp_range" + (int)limb + "_max";
-			double value = Math.Pow(SizeRatio(stock), GetLimbAttributeValue(rangeExp)) * GetLimbAttributeValue(rangeMax);
+			double value = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue(rangeExp)) * GetLimbAttributeValue(rangeMax);
 			if (value < 0)
 			{
 				return 0;
