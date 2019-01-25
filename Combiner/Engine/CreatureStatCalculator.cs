@@ -19,6 +19,8 @@ namespace Combiner
 			Dictionary<Limb, Side> chosenBodyParts)
 		{
 			ChosenLimbs = InitChosenLimbs(left, right, chosenBodyParts);
+			Left = left;
+			Right = right;
 		}
 
 		private Dictionary<Limb, StockStatCalculator> InitChosenLimbs(
@@ -32,15 +34,15 @@ namespace Combiner
 				Side side = chosenBodyParts[limb];
 				if (side == Side.Left)
 				{
-					ChosenLimbs.Add(limb, left);
+					chosenLimbs.Add(limb, left);
 				}
 				else if (side == Side.Right)
 				{
-					ChosenLimbs.Add(limb, right);
+					chosenLimbs.Add(limb, right);
 				}
 				else
 				{
-					ChosenLimbs.Add(limb, null);
+					chosenLimbs.Add(limb, null);
 				}
 			}
 			return chosenLimbs;
@@ -58,7 +60,7 @@ namespace Combiner
 			}
 		}
 
-		private double CalcHitpoints()
+		public double CalcHitpoints()
 		{
 			double hitpoints = 0.0;
 			StockStatCalculator side;
@@ -72,7 +74,7 @@ namespace Combiner
 			return hitpoints;
 		}
 
-		private double CalcSize()
+		public double CalcSize()
 		{
 			double leftSize = Left.GetLimbAttributeValue("size");
 			double rightSize = Right.GetLimbAttributeValue("size");
@@ -86,7 +88,7 @@ namespace Combiner
 			}
 		}
 
-		private double CalcArmour()
+		public double CalcArmour()
 		{
 			double armour = 0.0;
 			StockStatCalculator side;
@@ -100,12 +102,12 @@ namespace Combiner
 			return armour;
 		}
 
-		private double CalcSightRadius()
+		public double CalcSightRadius()
 		{
 			return ChosenLimbs[Limb.Head].CalcLimbSightRadius();
 		}
 
-		private double CalcLandSpeed()
+		public double CalcLandSpeed()
 		{
 			double landSpeed = 0.0;
 			StockStatCalculator side;
@@ -126,7 +128,7 @@ namespace Combiner
 			//}
 		}
 
-		private double CalcAirSpeed()
+		public double CalcAirSpeed()
 		{
 			double airSpeed = 0.0;
 			StockStatCalculator side;
@@ -146,7 +148,7 @@ namespace Combiner
 			//}
 		}
 
-		private double CalcWaterSpeed()
+		public double CalcWaterSpeed()
 		{
 			double waterSpeed = 0.0;
 			StockStatCalculator side;
@@ -166,7 +168,7 @@ namespace Combiner
 			//}
 		}
 
-		private double CalcMeleeDamage()
+		public double CalcMeleeDamage()
 		{
 			double meleeDamage = 0.0;
 			StockStatCalculator side;
@@ -180,25 +182,44 @@ namespace Combiner
 			return meleeDamage;
 		}
 
-		// TODO: Need to calculate range damages individually
-		private void CalcRangeDamage(Dictionary<string, double> gameAttributes)
+		public double CalcRangeDamage(Limb limb)
 		{
-			StockStatCalculator side;
-			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
-			{
-				side = ChosenLimbs[limb];
-				if (side == null)
-					continue;
-				if (gameAttributes.ContainsKey(Utility.RangeDamage[(int)limb]))
-				{
-					gameAttributes[Utility.RangeDamage[(int)limb]] = side.CalcLimbRangeDamage(OtherSideSize(side), limb);
-				}
-			}
+			StockStatCalculator side = ChosenLimbs[limb];
+			if (side == null)
+				return 0;
+			return side.CalcLimbRangeDamage(OtherSideSize(side), limb);
 		}
 
-		private double CalcRangeDamage(Limb limb, StockStatCalculator side)
+		public double CalcRangeMax(Limb limb)
 		{
-			return side.CalcLimbRangeDamage(OtherSideSize(side), limb);
+			StockStatCalculator side = ChosenLimbs[limb];
+			if (side == null)
+				return 0;
+			return side.GetLimbRangeMax(OtherSideSize(side), limb);
+		}
+
+		public double GetRangeType(Limb limb)
+		{
+			StockStatCalculator side = ChosenLimbs[limb];
+			if (side == null)
+				return 0;
+			return side.GetLimbRangeType(limb);
+		}
+
+		public double GetRangeSpecial(Limb limb)
+		{
+			StockStatCalculator side = ChosenLimbs[limb];
+			if (side == null)
+				return 0;
+			return side.GetLimbRangeSpecial(limb);
+		}
+
+		public double GetMeleeType(Limb limb)
+		{
+			StockStatCalculator side = ChosenLimbs[limb];
+			if (side == null)
+				return 0;
+			return side.GetLimbMeleeType(limb);
 		}
 	}
 }

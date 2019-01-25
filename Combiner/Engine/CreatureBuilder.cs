@@ -9,6 +9,7 @@ namespace Combiner
 	{
 		public StockStatCalculator Left { get; set; }
 		public StockStatCalculator Right { get; set; }
+		public CreatureStatCalculator Calculator { get; set; }
 		Dictionary<Limb, Side> ChosenBodyParts { get; set; }
 
 		public Dictionary<string, double> GameAttributes { get; set; } = new Dictionary<string, double>();
@@ -252,6 +253,7 @@ namespace Combiner
 			Left =  new StockStatCalculator(left);
 			Right = new StockStatCalculator(right);
 			ChosenBodyParts = chosenBodyParts;
+			Calculator = new CreatureStatCalculator(Left, Right, ChosenBodyParts);
 			InitGameAttributes();
 			InitStats();
 			InitAbilities();
@@ -350,30 +352,45 @@ namespace Combiner
 
 		private void InitStats()
 		{
-			CalcHitpoints();
-			CalcSize();
-			CalcArmour();
-			CalcSightRadius();
-			CalcLandSpeed();
-			CalcWaterSpeed();
-			CalcAirSpeed();
-			CalcMeleeDamage();
+			// Calculate total for all limbs
+			Hitpoints = Calculator.CalcHitpoints();
+			Size = Calculator.CalcSize();
+			Armour = Calculator.CalcArmour();
+			SightRadius = Calculator.CalcSightRadius();
+			LandSpeed = Calculator.CalcLandSpeed();
+			WaterSpeed = Calculator.CalcWaterSpeed();
+			AirSpeed = Calculator.CalcAirSpeed();
+			MeleeDamage = Calculator.CalcMeleeDamage();
+
+			// Independent limb values
 			CalcRangeDamage();
-			SetRangeMax();
+			CalcRangeMax();
 			SetRangeType();
 			SetRangeSpecial();
 			SetMeleeType();
 
 			// Ensure speed values set properly
-			if (!HasLandSpeed())
+			if (HasLandSpeed())
+			{
+				IsLand = 1;
+			}
+			else
 			{
 				LandSpeed = 0;
 			}
-			if (!HasWaterSpeed())
+			if (HasWaterSpeed())
+			{
+				IsSwimmer = 1;
+			}
+			else
 			{
 				WaterSpeed = 0;
 			}
-			if (!HasAirSpeed())
+			if (HasAirSpeed())
+			{
+				IsFlyer = 1;
+			}
+			else
 			{
 				AirSpeed = 0;
 			}
@@ -536,197 +553,58 @@ namespace Combiner
 
 		#region Calculate Stats
 
-		private void CalcHitpoints()
-		{
-			double hitpoints = 0.0;
-			StockStatCalculator side;
-			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
-			{
-				side = GetStockSide(limb);
-				if (side == null)
-					continue;
-				hitpoints += side.CalcLimbHitpoints(OtherSide(side), limb);
-			}
-			Hitpoints = hitpoints;
-		}
-
-		private void CalcSize()
-		{
-			if (Left.IsGreaterSize(Right.Stock))
-			{
-				Size = Left.GetLimbAttributeValue("size");
-			}
-			else
-			{
-				Size = Right.GetLimbAttributeValue("size");
-			}
-		}
-
-		private void CalcArmour()
-		{
-			double armour = 0.0;
-			StockStatCalculator side;
-			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
-			{
-				side = GetStockSide(limb);
-				if (side == null)
-					continue;
-				armour += side.CalcLimbArmour(OtherSide(side), limb);
-			}
-			Armour = armour;
-		}
-
-		private void CalcSightRadius()
-		{
-			StockStatCalculator side = GetStockSide(Limb.Head);
-			SightRadius = side.CalcLimbSightRadius();
-		}
-
-		private void CalcLandSpeed()
-		{
-			double landSpeed = 0.0;
-			StockStatCalculator side;
-			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
-			{
-				side = GetStockSide(limb);
-				if (side == null)
-					continue;
-
-				landSpeed += side.CalcLimbLandSpeed(OtherSide(side), limb);
-			}
-			LandSpeed = landSpeed;
-			if (LandSpeed > 0)
-			{
-				IsLand = 1;
-			}
-		}
-
-		private void CalcAirSpeed()
-		{
-			double airSpeed = 0.0;
-			StockStatCalculator side;
-			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
-			{
-				side = GetStockSide(limb);
-				if (side == null)
-					continue;
-				airSpeed += side.CalcLimbAirSpeed(OtherSide(side), limb);
-			}
-			AirSpeed = airSpeed;
-			if (AirSpeed > 0)
-			{
-				IsFlyer = 1;
-			}
-		}
-
-		private void CalcWaterSpeed()
-		{
-			double waterSpeed = 0.0;
-			StockStatCalculator side;
-			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
-			{
-				side = GetStockSide(limb);
-				if (side == null)
-					continue;
-				waterSpeed += side.CalcLimbWaterSpeed(OtherSide(side), limb);
-			}
-			WaterSpeed = waterSpeed;
-			if (WaterSpeed > 0)
-			{
-				IsSwimmer = 1;
-			}
-		}
-
-		private void CalcMeleeDamage()
-		{
-			double meleeDamage = 0.0;
-			StockStatCalculator side;
-			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
-			{
-				side = GetStockSide(limb);
-				if (side == null)
-					continue;
-				meleeDamage += side.CalcLimbMeleeDamage(OtherSide(side), limb);
-			}
-			MeleeDamage = meleeDamage;
-		}
-
 		private void CalcRangeDamage()
 		{
-			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetStockSide(limb);
-				if (side == null)
-					continue;
 				if (GameAttributes.ContainsKey(Utility.RangeDamage[(int)limb]))
 				{
-					GameAttributes[Utility.RangeDamage[(int)limb]] = side.CalcLimbRangeDamage(OtherSide(side), limb);
+					GameAttributes[Utility.RangeDamage[(int)limb]] = Calculator.CalcRangeDamage(limb);
 				}
 			}
 		}
 
 		// TODO: Is this used for anything?
-		private void SetRangeMax()
+		private void CalcRangeMax()
 		{
-			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetStockSide(limb);
-				if (side == null)
-					continue;
 				if (GameAttributes.ContainsKey(Utility.RangeMax[(int)limb]))
 				{
-					GameAttributes[Utility.RangeMax[(int)limb]] = side.GetLimbRangeMax(OtherSide(side), limb);
-					if (GameAttributes[Utility.RangeMax[(int)limb]] > 0)
-					{
-						Console.WriteLine("hello"); 
-					}
+					GameAttributes[Utility.RangeMax[(int)limb]] = Calculator.CalcRangeMax(limb);
 				}
 			}
 		}
 
 		private void SetRangeType()
 		{
-			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetStockSide(limb);
-				if (side == null)
-					continue;
 				if (GameAttributes.ContainsKey(Utility.RangeType[(int)limb]))
 				{
-					GameAttributes[Utility.RangeType[(int)limb]] = side.GetLimbRangeType(limb);
+					GameAttributes[Utility.RangeType[(int)limb]] = Calculator.GetRangeType(limb);
 				}
 			}
 		}
 
 		private void SetRangeSpecial()
 		{
-			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetStockSide(limb);
-				if (side == null)
-					continue;
 				if (GameAttributes.ContainsKey(Utility.RangeSpecial[(int)limb]))
 				{
-					GameAttributes[Utility.RangeSpecial[(int)limb]] = side.GetLimbRangeSpecial(limb);
+					GameAttributes[Utility.RangeSpecial[(int)limb]] = Calculator.GetRangeSpecial(limb);
 				}
 			}
 		}
 
 		private void SetMeleeType()
 		{
-			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = GetStockSide(limb);
-				if (side == null)
-					continue;
 				if (GameAttributes.ContainsKey(Utility.MeleeType[(int)limb]))
 				{
-					GameAttributes[Utility.MeleeType[(int)limb]] = side.GetLimbMeleeType(limb);
+					GameAttributes[Utility.MeleeType[(int)limb]] = Calculator.GetMeleeType(limb);
 				}
 			}
 		}
