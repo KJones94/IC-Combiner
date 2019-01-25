@@ -23,7 +23,7 @@ namespace Combiner
 			}
 
 			string finalName;
-			if (Utility.ProperStockNames.TryGetValue(name, out finalName))
+			if (Names.ProperStockNames.TryGetValue(name, out finalName))
 			{
 				return finalName;
 			}

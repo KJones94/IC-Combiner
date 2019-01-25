@@ -30,8 +30,8 @@
 			</ContextMenu>
 		</DataGrid.ContextMenu>
 		<DataGrid.Columns>
-			<DataGridTextColumn Header="Left" Binding="{Binding Left, Converter={StaticResource stockNameConverter}}"/>
-			<DataGridTextColumn Header="Right" Binding="{Binding Right, Converter={StaticResource stockNameConverter}}"/>
+			<DataGridTextColumn Header="Left" Binding="{Binding Left}"/>
+			<DataGridTextColumn Header="Right" Binding="{Binding Right}"/>
 			<DataGridTextColumn Header="Body Parts" Binding="{Binding BodyParts, Converter={StaticResource bodyPartsConverter}}"/>
 			<DataGridTextColumn Header="Rank" Binding="{Binding Rank}"/>
 			<DataGridTextColumn Header="Coal" Binding="{Binding Coal, Converter={StaticResource doubleConverter}}"/>

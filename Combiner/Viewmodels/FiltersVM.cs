@@ -158,7 +158,7 @@ namespace Combiner
 						Select(s => s.Replace(".lua", "").Replace(Utility.StockDirectory, ""));
 					foreach (string stock in stockNames)
 					{
-						m_StockChoices.Add(stock);
+						m_StockChoices.Add(Names.ProperStockNames[stock]);
 					}
 				}
 				return m_StockChoices;

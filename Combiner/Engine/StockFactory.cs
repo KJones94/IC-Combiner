@@ -20,12 +20,12 @@ namespace Combiner
 		}
 
 		private StockFactory() { }
-
+		
 		public Stock CreateStock(string animalName, LuaStockProxy lua)
 		{
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			string path = Path.Combine(Environment.CurrentDirectory, Utility.StockDirectory);
-			return new Stock(animalName, lua.GetLimbAttributes(path + animalName + ".lua"));
+			return new Stock(Names.ProperStockNames[animalName], lua.GetLimbAttributes(path + animalName + ".lua"));
 		}
 	}
 }

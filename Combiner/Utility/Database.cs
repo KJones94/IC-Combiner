@@ -213,15 +213,20 @@ namespace Combiner
 
 		private static void CreateCreatures(LiteCollection<Creature> collection)
 		{
-			var stockNames = Directory.GetFiles(Utility.StockDirectory).
-						Select(s => s.Replace(".lua", "").Replace(Utility.StockDirectory, "")).ToList();
+			var stockNames = Directory.GetFiles(Utility.StockDirectory)
+				.Select(s => s.Replace(".lua", "")
+				.Replace(Utility.StockDirectory, ""))
+				.ToList();
 
 			CreatureCombiner creatureCombiner = new CreatureCombiner(stockNames);
 			for (int i = 0; i < stockNames.Count(); i++)
 			{
 				for (int j = i + 1; j < stockNames.Count(); j++)
 				{
-					List<Creature> creatures = creatureCombiner.CreateAllPossibleCreatures(stockNames[i], stockNames[j]);
+					List<Creature> creatures = creatureCombiner
+						.CreateAllPossibleCreatures(
+							Names.ProperStockNames[stockNames[i]], 
+							Names.ProperStockNames[stockNames[j]]);
 					collection.InsertBulk(creatures);
 				}
 			}

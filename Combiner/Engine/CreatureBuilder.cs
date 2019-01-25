@@ -439,7 +439,7 @@ namespace Combiner
 
 		private void FixTunaLeapAttack()
 		{
-			if (Left.Stock.Name == "tuna" || Right.Stock.Name == "tuna")
+			if (Left.Stock.Name == Names.BluefinTuna || Right.Stock.Name == Names.BluefinTuna)
 			{
 				StockStatCalculator backLegsSide = GetStockSide(Limb.BackLegs);
 
@@ -453,11 +453,11 @@ namespace Combiner
 
 				// Check if tuna leap is good
 				StockStatCalculator tailSide = GetStockSide(Limb.Tail);
-				if (tailSide.Name == "tuna"
+				if (tailSide.Name == Names.BluefinTuna
 					&& ChosenBodyParts[Limb.BackLegs] == Side.Empty
 					&& !HasLandSpeed()
 					&& !HasAirSpeed()
-					&& GetStockSide(Limb.Torso).Name != "squid")
+					&& GetStockSide(Limb.Torso).Name != Names.GiantSquid) // Special case idk why
 				{
 					GameAttributes[Utility.LeapAttack] = 1; // Leap attack is good
 				}
@@ -470,7 +470,7 @@ namespace Combiner
 
 		private void FixNarwhalChargeAttack()
 		{
-			if (Left.Stock.Name == "narwhal" || Right.Stock.Name == "narwhal")
+			if (Left.Stock.Name == Names.Narwhal || Right.Stock.Name == Names.Narwhal)
 			{
 				StockStatCalculator backLegsSide = GetStockSide(Limb.BackLegs);
 
@@ -484,11 +484,11 @@ namespace Combiner
 
 				// Check if narwhal charge is good
 				StockStatCalculator tailSide = GetStockSide(Limb.Tail);
-				if (tailSide.Name == "narwhal"
+				if (tailSide.Name == Names.Narwhal
 					&& ChosenBodyParts[Limb.BackLegs] == Side.Empty
 					&& !HasLandSpeed()
 					&& !HasAirSpeed()
-					&& GetStockSide(Limb.Torso).Name != "squid")
+					&& GetStockSide(Limb.Torso).Name != Names.GiantSquid) // Special case idk why
 				{
 					GameAttributes[Utility.ChargeAttack] = 1; // Charge attack is good
 				}
@@ -520,8 +520,8 @@ namespace Combiner
 			// If snake torso then land
 			// Except for eel
 			else if (GetStockSide(Limb.Torso).Type == StockType.Snake
-				&& Right.Stock.Name != "electric_eel"
-				&& Left.Stock.Name != "electric_eel") 
+				&& Right.Stock.Name != Names.ElectricEel
+				&& Left.Stock.Name != Names.ElectricEel) 
 			{
 				return true;
 			}

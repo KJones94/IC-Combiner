@@ -78,8 +78,8 @@ namespace Combiner
 
 		public double CalcSize()
 		{
-			double leftSize = Left.GetLimbAttributeValue("size");
-			double rightSize = Right.GetLimbAttributeValue("size");
+			double leftSize = Left.GetLimbAttributeValue(Utility.Size);
+			double rightSize = Right.GetLimbAttributeValue(Utility.Size);
 			if (leftSize >= rightSize)
 			{
 				return leftSize;

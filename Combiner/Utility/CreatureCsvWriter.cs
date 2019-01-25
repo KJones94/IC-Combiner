@@ -14,7 +14,6 @@ namespace Combiner
 		DoubleToStringConverter doubleToStringConverter = new DoubleToStringConverter();
 		RangeSpecialConverter rangeSpecialConverter = new RangeSpecialConverter();
 		RangeTypeConverter rangeTypeConverter = new RangeTypeConverter();
-		StockNameConverter stockNameConverter = new StockNameConverter();
 
 		public void WriteFile(IEnumerable<Creature> creatures)
 		{
@@ -66,8 +65,8 @@ namespace Combiner
 		private string BuildRow(Creature creature)
 		{
 			StringBuilder builder = new StringBuilder();
-			AppendValue(builder, stockNameConverter.Convert(creature.Left), true);
-			AppendValue(builder, stockNameConverter.Convert(creature.Right), false);
+			AppendValue(builder, creature.Left, true);
+			AppendValue(builder, creature.Right, false);
 			AppendValue(builder, bodyPartsConverter.Convert(creature.BodyParts), false);
 			AppendValue(builder, creature.Rank.ToString(), false);
 			AppendValue(builder, doubleToStringConverter.Convert(creature.Coal), false);

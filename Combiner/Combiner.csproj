@@ -100,6 +100,7 @@
     <Compile Include="Models\CreatureQueryData.cs" />
     <Compile Include="Utility\CreatureCsvWriter.cs" />
     <Compile Include="Utility\ImportExportHandler.cs" />
+    <Compile Include="Utility\Names.cs" />
     <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
@@ -167,7 +168,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Engine\CreatureCombiner.cs" />
-    <Compile Include="Engine\LuaProxy.cs" />
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
