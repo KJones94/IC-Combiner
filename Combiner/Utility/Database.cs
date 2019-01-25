@@ -217,8 +217,6 @@ namespace Combiner
 						Select(s => s.Replace(".lua", "").Replace(Utility.StockDirectory, "")).ToList();
 
 			CreatureCombiner creatureCombiner = new CreatureCombiner(stockNames);
-			Stopwatch watch = new Stopwatch();
-			watch.Start();
 			for (int i = 0; i < stockNames.Count(); i++)
 			{
 				for (int j = i + 1; j < stockNames.Count(); j++)
@@ -227,8 +225,6 @@ namespace Combiner
 					collection.InsertBulk(creatures);
 				}
 			}
-			watch.Stop();
-			Debug.WriteLine(watch.ElapsedMilliseconds);
 		}
 	}
 }
