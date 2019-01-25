@@ -224,7 +224,6 @@ namespace Combiner
 				for (int j = i + 1; j < stockNames.Count(); j++)
 				{
 					List<Creature> creatures = creatureCombiner.CreateAllPossibleCreatures(stockNames[i], stockNames[j]);
-					//List<Creature> creatures = creatureCombiner.OldCombine(stockNames[i], stockNames[j]);
 					collection.InsertBulk(creatures);
 				}
 			}
