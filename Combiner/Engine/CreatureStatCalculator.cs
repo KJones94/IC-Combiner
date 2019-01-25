@@ -68,7 +68,9 @@ namespace Combiner
 			{
 				side = ChosenLimbs[limb];
 				if (side == null)
+				{
 					continue;
+				}
 				hitpoints += side.CalcLimbHitpoints(OtherSideSize(side), limb);
 			}
 			return hitpoints;
@@ -96,7 +98,9 @@ namespace Combiner
 			{
 				side = ChosenLimbs[limb];
 				if (side == null)
+				{
 					continue;
+				}
 				armour += side.CalcLimbArmour(OtherSideSize(side), limb);
 			}
 			return armour;
@@ -115,17 +119,12 @@ namespace Combiner
 			{
 				side = ChosenLimbs[limb];
 				if (side == null)
+				{
 					continue;
-
+				}
 				landSpeed += side.CalcLimbLandSpeed(OtherSideSize(side), limb);
 			}
 			return landSpeed;
-
-			// TODO: put this back somewhere
-			//if (LandSpeed > 0)
-			//{
-			//	IsLand = 1;
-			//}
 		}
 
 		public double CalcAirSpeed()
@@ -136,16 +135,12 @@ namespace Combiner
 			{
 				side = ChosenLimbs[limb];
 				if (side == null)
+				{
 					continue;
+				}
 				airSpeed += side.CalcLimbAirSpeed(OtherSideSize(side), limb);
 			}
 			return airSpeed;
-
-			// TODO: put this back somewhere
-			//if (AirSpeed > 0)
-			//{
-			//	IsFlyer = 1;
-			//}
 		}
 
 		public double CalcWaterSpeed()
@@ -156,16 +151,12 @@ namespace Combiner
 			{
 				side = ChosenLimbs[limb];
 				if (side == null)
+				{
 					continue;
+				}
 				waterSpeed += side.CalcLimbWaterSpeed(OtherSideSize(side), limb);
 			}
 			return waterSpeed;
-
-			// TODO: put this back somewhere
-			//if (WaterSpeed > 0)
-			//{
-			//	IsSwimmer = 1;
-			//}
 		}
 
 		public double CalcMeleeDamage()
@@ -176,7 +167,9 @@ namespace Combiner
 			{
 				side = ChosenLimbs[limb];
 				if (side == null)
+				{
 					continue;
+				}
 				meleeDamage += side.CalcLimbMeleeDamage(OtherSideSize(side), limb);
 			}
 			return meleeDamage;
@@ -186,7 +179,9 @@ namespace Combiner
 		{
 			StockStatCalculator side = ChosenLimbs[limb];
 			if (side == null)
+			{
 				return 0;
+			}
 			return side.CalcLimbRangeDamage(OtherSideSize(side), limb);
 		}
 
@@ -194,7 +189,9 @@ namespace Combiner
 		{
 			StockStatCalculator side = ChosenLimbs[limb];
 			if (side == null)
+			{
 				return 0;
+			}
 			return side.GetLimbRangeMax(OtherSideSize(side), limb);
 		}
 
@@ -202,7 +199,9 @@ namespace Combiner
 		{
 			StockStatCalculator side = ChosenLimbs[limb];
 			if (side == null)
+			{
 				return 0;
+			}
 			return side.GetLimbRangeType(limb);
 		}
 
@@ -210,7 +209,9 @@ namespace Combiner
 		{
 			StockStatCalculator side = ChosenLimbs[limb];
 			if (side == null)
+			{
 				return 0;
+			}
 			return side.GetLimbRangeSpecial(limb);
 		}
 
@@ -218,7 +219,9 @@ namespace Combiner
 		{
 			StockStatCalculator side = ChosenLimbs[limb];
 			if (side == null)
+			{
 				return 0;
+			}
 			return side.GetLimbMeleeType(limb);
 		}
 	}

@@ -4,43 +4,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Combiner
 {
-    public class LuaHandler
-    {
-        private Script Attrcombiner { get; set; }
+	public class LuaCreatureProxy
+	{
+		private Script Attrcombiner { get; set; }
 		private CreatureBuilder Creature { get; set; }
 
-        public LuaHandler()
-        {
-            Attrcombiner = new Script();
-            Attrcombiner.Options.ScriptLoader = new FileSystemScriptLoader();
-            SetupGlobals();
-        }
+		public LuaCreatureProxy()
+		{
+			Attrcombiner = new Script();
+			Attrcombiner.Options.ScriptLoader = new FileSystemScriptLoader();
+			SetupGlobals();
+		}
 
-        public void LoadScript(CreatureBuilder creature)
-        {
+		public void LoadScript(CreatureBuilder creature)
+		{
 			Creature = creature;
 			//Attrcombiner.DoFile(Utility.Attrcombiner);
 			Attrcombiner.DoFile(Utility.Testcombiner);
 		}
 
-        public Table GetLimbAttributes(string stockFile)
-        {
-            Attrcombiner.DoFile(stockFile);
-            Table table = Attrcombiner.Globals["limbattributes"] as Table;
-            return table;
-        }
-
-        public Table GetGlobals()
-        {
-            return Attrcombiner.Globals as Table;
-        }
-
-        private void SetupGlobals()
-        {
+		private void SetupGlobals()
+		{
 			// TODO: should I use DynValue or regular types
 			Attrcombiner.Globals["getgameattribute"] = (Func<string, double>)GetGameAttribute;
 			Attrcombiner.Globals["checkgameattribute"] = (Func<string, double>)CheckGameAttribute;
@@ -61,7 +48,7 @@ namespace Combiner
 			Attrcombiner.Globals["DT_VenomSpray"] = 256; // Should this be 1?
 		}
 
-        private double GetGameAttribute(string key)
+		private double GetGameAttribute(string key)
 		{
 			double value;
 			if (Creature.GameAttributes.TryGetValue(key, out value))

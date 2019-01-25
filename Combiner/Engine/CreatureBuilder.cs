@@ -209,7 +209,6 @@ namespace Combiner
 			set { GameAttributes[Utility.IsFlyer] = value; }
 		}
 
-		// TODO: Remove this and make an issue for possibly adding ticks to data
 		public double Ticks
 		{
 			get { return GameAttributes[Utility.Ticks]; }

@@ -19,27 +19,13 @@ namespace Combiner
 			}
 		}
 
-		private Dictionary<Limb, bool> CreateBodyParts(bool[] values)
-		{
-			Limb[] limbs = (Limb[])Enum.GetValues(typeof(Limb));
-			return limbs.Zip(values, (k, v) => new { k, v })
-				.ToDictionary(x => x.k, x => x.v);
-		}
-
 		private StockFactory() { }
 
-		public Stock CreateStock(string animalName, LuaHandler lua)
+		public Stock CreateStock(string animalName, LuaStockProxy lua)
 		{
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			string path = Path.Combine(Environment.CurrentDirectory, Utility.StockDirectory);
 			return new Stock(animalName, lua.GetLimbAttributes(path + animalName + ".lua"));
-		}
-
-		public Stock CreateStockFromFile(string file, LuaHandler lua)
-		{
-			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-			string path = Path.Combine(Environment.CurrentDirectory, Utility.StockDirectory);
-			return new Stock(file.Remove(file.Count() - 4), lua.GetLimbAttributes(path + file));
 		}
 	}
 }

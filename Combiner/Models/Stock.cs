@@ -33,16 +33,6 @@ namespace Combiner
 			return -1;
 		}
 
-		public int GetLimbAttributeBodyPart(string key)
-		{
-			var bodyPart = LimbAttritbutes[key] as Table;
-			if (bodyPart != null)
-			{
-				return (int)(double)bodyPart[1];
-			}
-			return -1;
-		}
-
 		private StockType DoubleToStockType(double d)
 		{
 			foreach (StockType stockType in Enum.GetValues(typeof(StockType)))
@@ -129,11 +119,6 @@ namespace Combiner
 				default:
 					break;
 			}
-		}
-
-		public bool IsGreaterSize(Stock stock)
-		{
-			return GetLimbAttributeValue("size") >= stock.GetLimbAttributeValue("size");
 		}
 
 		public override string ToString()

@@ -1,6 +1,7 @@
 ﻿using LiteDB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -204,8 +205,9 @@ namespace Combiner
 
 				// Setup indexes
 				// May not need if not querying to filter
-				collection.EnsureIndex(x => x.Rank);
-				collection.EnsureIndex(x => x.Abilities);
+				// These caused a 3GB spike in memory usage
+				//collection.EnsureIndex(x => x.Rank);
+				//collection.EnsureIndex(x => x.Abilities);
 			}
 		}
 
@@ -214,14 +216,20 @@ namespace Combiner
 			var stockNames = Directory.GetFiles(Utility.StockDirectory).
 						Select(s => s.Replace(".lua", "").Replace(Utility.StockDirectory, "")).ToList();
 
+			CreatureCombiner creatureCombiner = new CreatureCombiner(stockNames);
+			Stopwatch watch = new Stopwatch();
+			watch.Start();
 			for (int i = 0; i < stockNames.Count(); i++)
 			{
 				for (int j = i + 1; j < stockNames.Count(); j++)
 				{
-					List<Creature> creatures = CreatureCombiner.CreateAllPossibleCreatures(stockNames[i], stockNames[j]);
+					List<Creature> creatures = creatureCombiner.CreateAllPossibleCreatures(stockNames[i], stockNames[j]);
+					//List<Creature> creatures = creatureCombiner.OldCombine(stockNames[i], stockNames[j]);
 					collection.InsertBulk(creatures);
 				}
 			}
+			watch.Stop();
+			Debug.WriteLine(watch.ElapsedMilliseconds);
 		}
 	}
 }
