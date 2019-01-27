@@ -11,7 +11,9 @@ namespace Combiner
 		//public static string StockDirectory = "../../Stock/Test/";
 		public static string Attrcombiner = "../../Scripts/2.4/attrcombiner.lua";
 		public static string Testcombiner = "../../Scripts/2.5/testcombiner.lua";
-		public static string DatabaseString = "../../Database/Creatures.db";
+		public static string DatabaseFolder = "../../Database";
+		public static string DatabaseName = "Creatures.db";
+		public static string DatabaseString = $"{DatabaseFolder}/{DatabaseName}";
 		//public static string DatabaseString = "../../Database/Test.db";
 		//public static string DatabaseMasterString = "../../Database/Creatures - Master.db";
 
