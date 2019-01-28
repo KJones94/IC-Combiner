@@ -21,7 +21,7 @@ namespace Combiner
 			{
 				return ability;
 			}
-			return Utility.ProperAbilityNames[ability];
+			return AbilityNames.ProperAbilityNames[ability];
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

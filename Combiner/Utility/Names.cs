@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Combiner
 {
-	public static class Names
+	public static class StockNames
 	{
 
 

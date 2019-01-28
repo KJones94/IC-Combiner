@@ -25,7 +25,7 @@ namespace Combiner
 		{
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			string path = Path.Combine(Environment.CurrentDirectory, Utility.StockDirectory);
-			return new Stock(Names.ProperStockNames[animalName], lua.GetLimbAttributes(path + animalName + ".lua"));
+			return new Stock(StockNames.ProperStockNames[animalName], lua.GetLimbAttributes(path + animalName + ".lua"));
 		}
 	}
 }

@@ -98,6 +98,8 @@
     <Compile Include="Enums\Side.cs" />
     <Compile Include="Enums\StockType.cs" />
     <Compile Include="Models\CreatureQueryData.cs" />
+    <Compile Include="Utility\AbilityNames.cs" />
+    <Compile Include="Utility\Attributes.cs" />
     <Compile Include="Utility\CreatureCsvWriter.cs" />
     <Compile Include="Utility\ImportExportHandler.cs" />
     <Compile Include="Utility\Names.cs" />
@@ -114,7 +116,6 @@
     <Compile Include="Converters\ContainsAbilitiesConverter.cs" />
     <Compile Include="Converters\RangeSpecialConverter.cs" />
     <Compile Include="Converters\RangeTypeConverter.cs" />
-    <Compile Include="Converters\StockNameConverter.cs" />
     <Compile Include="Engine\CreatureBuilder.cs" />
     <Compile Include="Engine\CreatureFactory.cs" />
     <Compile Include="Models\Creature.cs" />

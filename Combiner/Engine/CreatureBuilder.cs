@@ -341,7 +341,7 @@ namespace Combiner
 			GameAttributes.Add(Utility.IsSwimmer, 0);
 			GameAttributes.Add(Utility.IsFlyer, 0);
 
-			foreach (string ability in Utility.Abilities)
+			foreach (string ability in AbilityNames.Abilities)
 			{
 				GameAttributes.Add(ability, 0);
 			}
@@ -404,7 +404,7 @@ namespace Combiner
 				StockStatCalculator side = GetStockSide(limb);
 				if (side == null)
 					continue;
-				foreach (string ability in Utility.Abilities)
+				foreach (string ability in AbilityNames.Abilities)
 				{
 					int bodyPart = side.GetLimbAttributeBodyPart(ability);
 					if (bodyPart > -1
@@ -419,7 +419,7 @@ namespace Combiner
 
 		private void InitPassiveAbilities()
 		{
-			foreach (string ability in Utility.Abilities)
+			foreach (string ability in AbilityNames.Abilities)
 			{
 				if (Left.GetLimbAttributeBodyPart(ability) == 0
 					&& Left.GetLimbAttributeValue(ability) > 0)
@@ -439,62 +439,62 @@ namespace Combiner
 
 		private void FixTunaLeapAttack()
 		{
-			if (Left.Stock.Name == Names.BluefinTuna || Right.Stock.Name == Names.BluefinTuna)
+			if (Left.Stock.Name == StockNames.BluefinTuna || Right.Stock.Name == StockNames.BluefinTuna)
 			{
 				StockStatCalculator backLegsSide = GetStockSide(Limb.BackLegs);
 
 				// Check if using back legs for leap attack
-				if (GameAttributes[Utility.LeapAttack] > 0
+				if (GameAttributes[AbilityNames.LeapAttack] > 0
 					&& backLegsSide != null
-					&& backLegsSide.GetLimbAttributeValue(Utility.LeapAttack) > 0)
+					&& backLegsSide.GetLimbAttributeValue(AbilityNames.LeapAttack) > 0)
 				{
 					return; // Leap attack is good
 				}
 
 				// Check if tuna leap is good
 				StockStatCalculator tailSide = GetStockSide(Limb.Tail);
-				if (tailSide.Name == Names.BluefinTuna
+				if (tailSide.Name == StockNames.BluefinTuna
 					&& ChosenBodyParts[Limb.BackLegs] == Side.Empty
 					&& !HasLandSpeed()
 					&& !HasAirSpeed()
-					&& GetStockSide(Limb.Torso).Name != Names.GiantSquid) // Special case idk why
+					&& GetStockSide(Limb.Torso).Name != StockNames.GiantSquid) // Special case idk why
 				{
-					GameAttributes[Utility.LeapAttack] = 1; // Leap attack is good
+					GameAttributes[AbilityNames.LeapAttack] = 1; // Leap attack is good
 				}
 				else
 				{
-					GameAttributes[Utility.LeapAttack] = 0; // Bad leap attack from tuna
+					GameAttributes[AbilityNames.LeapAttack] = 0; // Bad leap attack from tuna
 				}
 			}
 		}
 
 		private void FixNarwhalChargeAttack()
 		{
-			if (Left.Stock.Name == Names.Narwhal || Right.Stock.Name == Names.Narwhal)
+			if (Left.Stock.Name == StockNames.Narwhal || Right.Stock.Name == StockNames.Narwhal)
 			{
 				StockStatCalculator backLegsSide = GetStockSide(Limb.BackLegs);
 
 				// Check if using back legs for charge attack
-				if (GameAttributes[Utility.ChargeAttack] > 0
+				if (GameAttributes[AbilityNames.ChargeAttack] > 0
 					&& backLegsSide != null
-					&& backLegsSide.GetLimbAttributeValue(Utility.ChargeAttack) > 0)
+					&& backLegsSide.GetLimbAttributeValue(AbilityNames.ChargeAttack) > 0)
 				{
 					return; // Charge attack is good
 				}
 
 				// Check if narwhal charge is good
 				StockStatCalculator tailSide = GetStockSide(Limb.Tail);
-				if (tailSide.Name == Names.Narwhal
+				if (tailSide.Name == StockNames.Narwhal
 					&& ChosenBodyParts[Limb.BackLegs] == Side.Empty
 					&& !HasLandSpeed()
 					&& !HasAirSpeed()
-					&& GetStockSide(Limb.Torso).Name != Names.GiantSquid) // Special case idk why
+					&& GetStockSide(Limb.Torso).Name != StockNames.GiantSquid) // Special case idk why
 				{
-					GameAttributes[Utility.ChargeAttack] = 1; // Charge attack is good
+					GameAttributes[AbilityNames.ChargeAttack] = 1; // Charge attack is good
 				}
 				else
 				{
-					GameAttributes[Utility.ChargeAttack] = 0; // Bad charge attack from tuna
+					GameAttributes[AbilityNames.ChargeAttack] = 0; // Bad charge attack from tuna
 				}
 			}
 		}
@@ -520,8 +520,8 @@ namespace Combiner
 			// If snake torso then land
 			// Except for eel
 			else if (GetStockSide(Limb.Torso).Type == StockType.Snake
-				&& Right.Stock.Name != Names.ElectricEel
-				&& Left.Stock.Name != Names.ElectricEel) 
+				&& Right.Stock.Name != StockNames.ElectricEel
+				&& Left.Stock.Name != StockNames.ElectricEel) 
 			{
 				return true;
 			}
@@ -750,9 +750,9 @@ namespace Combiner
 		private void AddAbiltiies(Creature creature)
 		{
 			Dictionary<string, bool> abilities = new Dictionary<string, bool>();
-			foreach (string ability in Utility.Abilities)
+			foreach (string ability in AbilityNames.Abilities)
 			{
-				abilities.Add(ability, (GameAttributes[ability] > 0));
+				abilities.Add(AbilityNames.ProperAbilityNames[ability], (GameAttributes[ability] > 0));
 			}
 			creature.Abilities = abilities;
 		}

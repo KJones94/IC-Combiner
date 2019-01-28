@@ -24,7 +24,7 @@ namespace Combiner
 			foreach (var stockName in stockNames)
 			{
 				LuaStockProxy lua = new LuaStockProxy();
-				stockPool.Add(Names.ProperStockNames[stockName], StockFactory.Instance.CreateStock(stockName, lua));
+				stockPool.Add(StockNames.ProperStockNames[stockName], StockFactory.Instance.CreateStock(stockName, lua));
 			}
 			return stockPool;
 		}
@@ -276,7 +276,7 @@ namespace Combiner
 					break;
 
 				case StockType.Arachnid:
-					if (stock.Name == Names.ManOWar)
+					if (stock.Name == StockNames.ManOWar)
 					{
 						if (dict[Limb.Claws] != Side.Empty)
 						{
@@ -285,7 +285,7 @@ namespace Combiner
 					}
 					else if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
 					{
-						if (Names.ClawedArachnids.Contains(stock.Name) && dict[Limb.Claws] == Side.Empty)
+						if (StockNames.ClawedArachnids.Contains(stock.Name) && dict[Limb.Claws] == Side.Empty)
 						{
 							return false;
 						}
@@ -317,15 +317,15 @@ namespace Combiner
 		/// <returns></returns>
 		private bool CheckSpecialCases(Stock left, Stock right, Dictionary<Limb, Side> dict)
 		{
-			if (left.Name == Names.HumpbackWhale || right.Name == Names.HumpbackWhale)
+			if (left.Name == StockNames.HumpbackWhale || right.Name == StockNames.HumpbackWhale)
 			{
 				return IsHumpbackCorrect(left, right, dict);
 			}
-			if (left.Name == Names.BlueRingedOctopus || right.Name == Names.BlueRingedOctopus)
+			if (left.Name == StockNames.BlueRingedOctopus || right.Name == StockNames.BlueRingedOctopus)
 			{
 				return IsBlueRingedOctopusCorrect(left, right, dict);
 			}
-			if (left.Name == Names.Walrus || right.Name == Names.Walrus)
+			if (left.Name == StockNames.Walrus || right.Name == StockNames.Walrus)
 			{
 				return IsWalrusCorrect(left, right, dict);
 			}
@@ -342,7 +342,7 @@ namespace Combiner
 		/// <returns></returns>
 		private bool IsHumpbackCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
 		{
-			if (left.Name == Names.HumpbackWhale)
+			if (left.Name == StockNames.HumpbackWhale)
 			{
 				if (right.Type == StockType.Bird
 					|| right.Type == StockType.Fish
@@ -361,7 +361,7 @@ namespace Combiner
 					return dict[Limb.Torso] == Side.Left;
 				}
 			}
-			else if (right.Name == Names.HumpbackWhale)
+			else if (right.Name == StockNames.HumpbackWhale)
 			{
 				if (left.Type == StockType.Bird
 					|| left.Type == StockType.Fish
@@ -385,7 +385,7 @@ namespace Combiner
 
 		private bool IsBlueRingedOctopusCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
 		{
-			if (left.Name == Names.BlueRingedOctopus)
+			if (left.Name == StockNames.BlueRingedOctopus)
 			{
 				if (right.Type == StockType.Fish
 					|| right.Type == StockType.Snake)
@@ -420,7 +420,7 @@ namespace Combiner
 					return dict[Limb.Torso] == Side.Left;
 				}
 			}
-			else if (right.Name == Names.BlueRingedOctopus)
+			else if (right.Name == StockNames.BlueRingedOctopus)
 			{
 				if (left.Type == StockType.Fish
 					|| left.Type == StockType.Snake)
@@ -462,7 +462,7 @@ namespace Combiner
 
 		private bool IsWalrusCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
 		{
-			if (left.Name == Names.Walrus)
+			if (left.Name == StockNames.Walrus)
 			{
 				// What about quadruped?
 
@@ -472,7 +472,7 @@ namespace Combiner
 					return dict[Limb.Torso] == Side.Left;
 				}
 			}
-			else if (right.Name == Names.Walrus)
+			else if (right.Name == StockNames.Walrus)
 			{
 				if (dict[Limb.FrontLegs] == Side.Right
 					|| dict[Limb.BackLegs] == Side.Right)

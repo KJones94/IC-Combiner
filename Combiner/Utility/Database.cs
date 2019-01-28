@@ -225,8 +225,8 @@ namespace Combiner
 				{
 					List<Creature> creatures = creatureCombiner
 						.CreateAllPossibleCreatures(
-							Names.ProperStockNames[stockNames[i]], 
-							Names.ProperStockNames[stockNames[j]]);
+							StockNames.ProperStockNames[stockNames[i]], 
+							StockNames.ProperStockNames[stockNames[j]]);
 					collection.InsertBulk(creatures);
 				}
 			}

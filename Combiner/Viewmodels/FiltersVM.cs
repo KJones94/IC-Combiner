@@ -27,9 +27,9 @@ namespace Combiner
 				if (m_AbilityChoices == null)
 				{
 					m_AbilityChoices = new ObservableCollection<string>();
-					foreach (string ability in Utility.Abilities)
+					foreach (string ability in AbilityNames.Abilities)
 					{
-						m_AbilityChoices.Add(ability);
+						m_AbilityChoices.Add(AbilityNames.ProperAbilityNames[ability]);
 					}
 				}
 				return m_AbilityChoices;
@@ -158,7 +158,7 @@ namespace Combiner
 						Select(s => s.Replace(".lua", "").Replace(Utility.StockDirectory, ""));
 					foreach (string stock in stockNames)
 					{
-						m_StockChoices.Add(Names.ProperStockNames[stock]);
+						m_StockChoices.Add(StockNames.ProperStockNames[stock]);
 					}
 				}
 				return m_StockChoices;

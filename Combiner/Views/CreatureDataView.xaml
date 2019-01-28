@@ -13,7 +13,6 @@
 		<local:DoubleToStringConverter x:Key="doubleConverter"/>
 		<local:RangeSpecialConverter x:Key="rangeSpecialConverter"/>
 		<local:RangeTypeConverter x:Key="rangeTypeConverter"/>
-		<local:StockNameConverter x:Key="stockNameConverter"/>
 	</UserControl.Resources>
 	<DataGrid ItemsSource="{Binding CreaturesView}" 
 					  SelectedItem="{Binding SelectedCreature, Mode=TwoWay}"

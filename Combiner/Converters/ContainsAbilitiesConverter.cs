@@ -20,13 +20,14 @@ namespace Combiner
 			if (abilities != null)
 			{
 				StringBuilder sb = new StringBuilder();
-				foreach (string ability in Utility.Abilities)
+				foreach (string ability in AbilityNames.Abilities)
 				{
-					if (abilities.ContainsKey(ability))
+					string key = AbilityNames.ProperAbilityNames[ability];
+					if (abilities.ContainsKey(key))
 					{
-						if (abilities[ability])
+						if (abilities[key])
 						{
-							sb.Append(Utility.ProperAbilityNames[ability]);
+							sb.Append(key);
 							sb.Append(", ");
 						}
 					}

@@ -67,13 +67,13 @@ namespace Combiner
 					break;
 
 				case StockType.Arachnid:
-					if (Name == Names.ManOWar)
+					if (Name == StockNames.ManOWar)
 					{
 						BodyParts[Limb.FrontLegs] = false;
 						BodyParts[Limb.BackLegs] = false;
 						BodyParts[Limb.Wings] = false;
 					}
-					else if (Names.ClawedArachnids.Contains(Name))
+					else if (StockNames.ClawedArachnids.Contains(Name))
 					{
 						BodyParts[Limb.Wings] = false;
 					}
@@ -96,13 +96,13 @@ namespace Combiner
 					break;
 
 				case StockType.Fish:
-					if (Name == Names.HumpbackWhale)
+					if (Name == StockNames.HumpbackWhale)
 					{
 						BodyParts[Limb.BackLegs] = false;
 						BodyParts[Limb.Claws] = false;
 						BodyParts[Limb.Wings] = false;
 					}
-					else if (Name == Names.BlueRingedOctopus)
+					else if (Name == StockNames.BlueRingedOctopus)
 					{
 						BodyParts[Limb.Claws] = false;
 						BodyParts[Limb.Wings] = false;
