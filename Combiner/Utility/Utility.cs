@@ -151,22 +151,5 @@ namespace Combiner
 
 	}
 
-	public enum DamageType
-	{
-		Normal = 0,
-		VenomSpray = 1,
-		Horns = 2,
-		BarrierDestroy = 4,
-		Electric = 8,
-		Sonic = 16,
-		Poison = 256,
-	}
-
-	public enum ArtilleryType
-	{
-		Normal = 0,
-		Rock = 1,
-		Water = 2,
-		Chemical = 3,
-	}
+	
 }

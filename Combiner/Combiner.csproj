@@ -94,6 +94,8 @@
     <Compile Include="Engine\LuaStockProxy.cs" />
     <Compile Include="Engine\StockFactory.cs" />
     <Compile Include="Engine\StockStatCalculator.cs" />
+    <Compile Include="Enums\ArtilleryType.cs" />
+    <Compile Include="Enums\DamageType.cs" />
     <Compile Include="Enums\Limb.cs" />
     <Compile Include="Enums\Side.cs" />
     <Compile Include="Enums\StockType.cs" />
