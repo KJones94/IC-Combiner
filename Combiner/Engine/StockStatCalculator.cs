@@ -103,7 +103,7 @@ namespace Combiner
 
 		public double CalcLimbHitpoints(double stockSize, Limb limb)
 		{
-			double limbHitpoints = CalcLimbStats(limb, Utility.Hitpoints);
+			double limbHitpoints = CalcLimbStats(limb, Attributes.Hitpoints);
 			double health = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_hitpoints")) * limbHitpoints;
 			if (health < 0)
 			{
@@ -114,7 +114,7 @@ namespace Combiner
 
 		public double CalcLimbArmour(double stockSize, Limb limb)
 		{
-			double limbArmour = CalcLimbStats(limb, Utility.Armour);
+			double limbArmour = CalcLimbStats(limb, Attributes.Armour);
 			double armour = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_armour")) * limbArmour;
 			if (armour < 0)
 			{
@@ -125,7 +125,7 @@ namespace Combiner
 
 		public double CalcLimbSightRadius()
 		{
-			double sightRadius = GetLimbAttributeValue(Utility.SightRadius);
+			double sightRadius = GetLimbAttributeValue(Attributes.SightRadius);
 			if (sightRadius < 0)
 			{
 				return 0;
@@ -135,7 +135,7 @@ namespace Combiner
 
 		public double CalcLimbLandSpeed(double stockSize, Limb limb)
 		{
-			double limbLandSpeed = CalcLimbStats(limb, Utility.LandSpeed);
+			double limbLandSpeed = CalcLimbStats(limb, Attributes.LandSpeed);
 			double speed = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_speed_max")) * limbLandSpeed;
 			if (speed < 0)
 			{
@@ -146,7 +146,7 @@ namespace Combiner
 
 		public double CalcLimbWaterSpeed(double stockSize, Limb limb)
 		{
-			double limbWaterSpeed = CalcLimbStats(limb, Utility.WaterSpeed);
+			double limbWaterSpeed = CalcLimbStats(limb, Attributes.WaterSpeed);
 			// Not right
 			double speed = Math.Pow(SizeRatio(stockSize),
 				GetLimbAttributeValue("exp_waterspeed_max")
@@ -161,7 +161,7 @@ namespace Combiner
 
 		public double CalcLimbAirSpeed(double stockSize, Limb limb)
 		{
-			double limbAirSpeed = CalcLimbStats(limb, Utility.AirSpeed);
+			double limbAirSpeed = CalcLimbStats(limb, Attributes.AirSpeed);
 			double speed = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_airspeed_max")) * limbAirSpeed;
 			if (speed < 0)
 			{

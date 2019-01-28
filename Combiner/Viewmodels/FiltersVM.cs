@@ -154,8 +154,8 @@ namespace Combiner
 				if (m_StockChoices == null)
 				{
 					m_StockChoices = new ObservableCollection<string>();
-					var stockNames = Directory.GetFiles(Utility.StockDirectory).
-						Select(s => s.Replace(".lua", "").Replace(Utility.StockDirectory, ""));
+					var stockNames = Directory.GetFiles(DirectoryConstants.StockDirectory).
+						Select(s => s.Replace(".lua", "").Replace(DirectoryConstants.StockDirectory, ""));
 					foreach (string stock in stockNames)
 					{
 						m_StockChoices.Add(StockNames.ProperStockNames[stock]);

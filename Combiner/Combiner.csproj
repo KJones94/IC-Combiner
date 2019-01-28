@@ -148,7 +148,7 @@
     <Compile Include="Tests\CreatureCombinerTest.cs" />
     <Compile Include="Tests\CreatureTest.cs" />
     <Compile Include="Tests\StockTest.cs" />
-    <Compile Include="Utility\Utility.cs" />
+    <Compile Include="Utility\DirectoryConstants.cs" />
     <Compile Include="XML\CreatureXMLHandler.cs" />
     <Page Include="Views\AboutWindow.xaml">
       <SubType>Designer</SubType>

@@ -22,8 +22,8 @@ namespace Combiner
 		public void LoadScript(CreatureBuilder creature)
 		{
 			Creature = creature;
-			//Attrcombiner.DoFile(Utility.Attrcombiner);
-			Attrcombiner.DoFile(Utility.Testcombiner);
+			//Attrcombiner.DoFile(Attributes.Attrcombiner);
+			Attrcombiner.DoFile(DirectoryConstants.Testcombiner);
 		}
 
 		private void SetupGlobals()
@@ -86,23 +86,23 @@ namespace Combiner
 
 		private double HasMeleeDmgType(double value)
 		{
-			if (Creature.GameAttributes[Utility.Melee2Type] == value)
+			if (Creature.GameAttributes[Attributes.Melee2Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Melee3Type] == value)
+			else if (Creature.GameAttributes[Attributes.Melee3Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Melee4Type] == value)
+			else if (Creature.GameAttributes[Attributes.Melee4Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Melee5Type] == value)
+			else if (Creature.GameAttributes[Attributes.Melee5Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Melee8Type] == value)
+			else if (Creature.GameAttributes[Attributes.Melee8Type] == value)
 			{
 				return 1;
 			}
@@ -111,23 +111,23 @@ namespace Combiner
 
 		private double HasRangeDmgType(double value)
 		{
-			if (Creature.GameAttributes[Utility.Range2Type] == value)
+			if (Creature.GameAttributes[Attributes.Range2Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Range3Type] == value)
+			else if (Creature.GameAttributes[Attributes.Range3Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Range4Type] == value)
+			else if (Creature.GameAttributes[Attributes.Range4Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Range5Type] == value)
+			else if (Creature.GameAttributes[Attributes.Range5Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Range8Type] == value)
+			else if (Creature.GameAttributes[Attributes.Range8Type] == value)
 			{
 				return 1;
 			}

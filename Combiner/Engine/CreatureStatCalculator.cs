@@ -52,11 +52,11 @@ namespace Combiner
 		{
 			if (stock.Name == Left.Name)
 			{
-				return Right.GetLimbAttributeValue(Utility.Size);
+				return Right.GetLimbAttributeValue(Attributes.Size);
 			}
 			else
 			{
-				return Left.GetLimbAttributeValue(Utility.Size);
+				return Left.GetLimbAttributeValue(Attributes.Size);
 			}
 		}
 
@@ -78,8 +78,8 @@ namespace Combiner
 
 		public double CalcSize()
 		{
-			double leftSize = Left.GetLimbAttributeValue(Utility.Size);
-			double rightSize = Right.GetLimbAttributeValue(Utility.Size);
+			double leftSize = Left.GetLimbAttributeValue(Attributes.Size);
+			double rightSize = Right.GetLimbAttributeValue(Attributes.Size);
 			if (leftSize >= rightSize)
 			{
 				return leftSize;
