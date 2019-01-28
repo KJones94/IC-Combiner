@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,23 +9,41 @@ using System.Threading.Tasks;
 namespace Combiner
 {
 	// UNTESTED BE CAREFUL
-	public static class CreatureCombiner
+	public class CreatureCombiner
 	{
-		public static List<Creature> CreateAllPossibleCreatures(string leftName, string rightName)
+		private Dictionary<string, Stock> m_StockPool;
+
+		public CreatureCombiner(List<string> stockNames)
 		{
-			LuaHandler lua = new LuaHandler();
-			List<Creature> creatures = new List<Creature>();
-			Stock left = StockFactory.Instance.CreateStock(leftName, lua);
-			Stock right = StockFactory.Instance.CreateStock(rightName, lua);
-			foreach (var creature in Combine(left, right))
+			m_StockPool = InitStockPool(stockNames);
+		}
+
+		private Dictionary<string, Stock> InitStockPool(List<string> stockNames)
+		{
+			Dictionary<string, Stock> stockPool = new Dictionary<string, Stock>();
+			foreach (var stockName in stockNames)
 			{
+				LuaStockProxy lua = new LuaStockProxy();
+				stockPool.Add(StockNames.ProperStockNames[stockName], StockFactory.Instance.CreateStock(stockName, lua));
+			}
+			return stockPool;
+		}
+
+		public List<Creature> CreateAllPossibleCreatures(string leftName, string rightName)
+		{
+			List<Creature> creatures = new List<Creature>();
+			List<CreatureBuilder> builders = Combine(m_StockPool[leftName], m_StockPool[rightName]);
+			LuaCreatureProxy lua = new LuaCreatureProxy();
+			foreach (var creature in builders)
+			{
+				// Use same LuaCreatureProxy to reduce time, but increases memory usage spikes
 				lua.LoadScript(creature);
 				creatures.Add(creature.BuildCreature());
 			}
 			return creatures;
 		}
 
-		public static List<CreatureBuilder> Combine(Stock left, Stock right)
+		public List<CreatureBuilder> Combine(Stock left, Stock right)
 		{
 			List<Dictionary<Limb, Side>> unprunedBodyParts = CreateUnprunedBodyParts(left, right);
 			List<Dictionary<Limb, Side>> prunedBodyParts = PruneBodyParts(left, right, unprunedBodyParts);
@@ -38,7 +57,7 @@ namespace Combiner
 		}
 
 
-		private static Dictionary<Limb, Side> CopyBodyParts(Dictionary<Limb, Side> original)
+		private Dictionary<Limb, Side> CopyBodyParts(Dictionary<Limb, Side> original)
 		{
 			Dictionary<Limb, Side> copy = new Dictionary<Limb, Side>();
 			foreach (KeyValuePair<Limb, Side> entry in original)
@@ -58,7 +77,7 @@ namespace Combiner
 		/// <param name="possibleBodyParts"></param>
 		/// <param name="limb"></param>
 		/// <returns></returns>
-		private static List<Dictionary<Limb, Side>> GenerateBodyParts(Stock left, Stock right,
+		private List<Dictionary<Limb, Side>> GenerateBodyParts(Stock left, Stock right,
 			Dictionary<Limb, Side> possibleBodyParts, Limb limb)
 		{
 			List<Dictionary<Limb, Side>> bodyPartsList = new List<Dictionary<Limb, Side>>();
@@ -102,7 +121,7 @@ namespace Combiner
 		/// </summary>
 		/// <param name="list"></param>
 		/// <returns></returns>
-		private static List<Dictionary<Limb, Side>> RemoveDuplicates(List<Dictionary<Limb, Side>> list)
+		private List<Dictionary<Limb, Side>> RemoveDuplicates(List<Dictionary<Limb, Side>> list)
 		{
 			List<Dictionary<Limb, Side>> uniqueList = new List<Dictionary<Limb, Side>>();
 			foreach (Dictionary<Limb, Side> dict in list)
@@ -133,7 +152,7 @@ namespace Combiner
 		/// <param name="left"></param>
 		/// <param name="right"></param>
 		/// <returns></returns>
-		private static List<Dictionary<Limb, Side>> CreateUnprunedBodyParts(Stock left, Stock right)
+		private List<Dictionary<Limb, Side>> CreateUnprunedBodyParts(Stock left, Stock right)
 		{
 			Dictionary<Limb, Side> possibleBodyParts = new Dictionary<Limb, Side>();
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
@@ -153,7 +172,7 @@ namespace Combiner
 		/// <param name="right"></param>
 		/// <param name="bodyParts"></param>
 		/// <returns></returns>
-		private static List<Dictionary<Limb, Side>> PruneBodyParts(Stock left, Stock right,
+		private List<Dictionary<Limb, Side>> PruneBodyParts(Stock left, Stock right,
 			List<Dictionary<Limb, Side>> bodyParts)
 		{
 			// Prune based on stock type and limbs
@@ -207,7 +226,7 @@ namespace Combiner
 		/// <param name="right"></param>
 		/// <param name="dict"></param>
 		/// <returns></returns>
-		private static bool IsQuadrupedBirdFrontLegsCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
+		private bool IsQuadrupedBirdFrontLegsCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
 		{
 			if (dict[Limb.FrontLegs] == Side.Left)
 			{
@@ -238,7 +257,7 @@ namespace Combiner
 		/// <param name="stock"></param>
 		/// <param name="dict"></param>
 		/// <returns></returns>
-		private static bool IsTorsoRelatedPartsCorrect(Stock stock, Dictionary<Limb, Side> dict)
+		private bool IsTorsoRelatedPartsCorrect(Stock stock, Dictionary<Limb, Side> dict)
 		{
 			switch (stock.Type)
 			{
@@ -257,7 +276,7 @@ namespace Combiner
 					break;
 
 				case StockType.Arachnid:
-					if (stock.Name == "siphonophore")
+					if (stock.Name == StockNames.ManOWar)
 					{
 						if (dict[Limb.Claws] != Side.Empty)
 						{
@@ -266,7 +285,7 @@ namespace Combiner
 					}
 					else if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
 					{
-						if (Utility.ClawedArachnids.Contains(stock.Name) && dict[Limb.Claws] == Side.Empty)
+						if (StockNames.ClawedArachnids.Contains(stock.Name) && dict[Limb.Claws] == Side.Empty)
 						{
 							return false;
 						}
@@ -296,17 +315,17 @@ namespace Combiner
 		/// <param name="right"></param>
 		/// <param name="dict"></param>
 		/// <returns></returns>
-		private static bool CheckSpecialCases(Stock left, Stock right, Dictionary<Limb, Side> dict)
+		private bool CheckSpecialCases(Stock left, Stock right, Dictionary<Limb, Side> dict)
 		{
-			if (left.Name == "humpback" || right.Name == "humpback")
+			if (left.Name == StockNames.HumpbackWhale || right.Name == StockNames.HumpbackWhale)
 			{
 				return IsHumpbackCorrect(left, right, dict);
 			}
-			if (left.Name == "octopus" || right.Name == "octopus")
+			if (left.Name == StockNames.BlueRingedOctopus || right.Name == StockNames.BlueRingedOctopus)
 			{
 				return IsBlueRingedOctopusCorrect(left, right, dict);
 			}
-			if (left.Name == "walrus" || right.Name == "walrus")
+			if (left.Name == StockNames.Walrus || right.Name == StockNames.Walrus)
 			{
 				return IsWalrusCorrect(left, right, dict);
 			}
@@ -321,9 +340,9 @@ namespace Combiner
 		/// <param name="right"></param>
 		/// <param name="dict"></param>
 		/// <returns></returns>
-		private static bool IsHumpbackCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
+		private bool IsHumpbackCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
 		{
-			if (left.Name == "humpback")
+			if (left.Name == StockNames.HumpbackWhale)
 			{
 				if (right.Type == StockType.Bird
 					|| right.Type == StockType.Fish
@@ -342,7 +361,7 @@ namespace Combiner
 					return dict[Limb.Torso] == Side.Left;
 				}
 			}
-			else if (right.Name == "humpback")
+			else if (right.Name == StockNames.HumpbackWhale)
 			{
 				if (left.Type == StockType.Bird
 					|| left.Type == StockType.Fish
@@ -364,9 +383,9 @@ namespace Combiner
 			return true;
 		}
 
-		private static bool IsBlueRingedOctopusCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
+		private bool IsBlueRingedOctopusCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
 		{
-			if (left.Name == "octopus")
+			if (left.Name == StockNames.BlueRingedOctopus)
 			{
 				if (right.Type == StockType.Fish
 					|| right.Type == StockType.Snake)
@@ -401,7 +420,7 @@ namespace Combiner
 					return dict[Limb.Torso] == Side.Left;
 				}
 			}
-			else if (right.Name == "octopus")
+			else if (right.Name == StockNames.BlueRingedOctopus)
 			{
 				if (left.Type == StockType.Fish
 					|| left.Type == StockType.Snake)
@@ -441,9 +460,9 @@ namespace Combiner
 			return true;
 		}
 
-		private static bool IsWalrusCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
+		private bool IsWalrusCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
 		{
-			if (left.Name == "walrus")
+			if (left.Name == StockNames.Walrus)
 			{
 				// What about quadruped?
 
@@ -453,7 +472,7 @@ namespace Combiner
 					return dict[Limb.Torso] == Side.Left;
 				}
 			}
-			else if (right.Name == "walrus")
+			else if (right.Name == StockNames.Walrus)
 			{
 				if (dict[Limb.FrontLegs] == Side.Right
 					|| dict[Limb.BackLegs] == Side.Right)

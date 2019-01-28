@@ -13,7 +13,6 @@
 		<local:DoubleToStringConverter x:Key="doubleConverter"/>
 		<local:RangeSpecialConverter x:Key="rangeSpecialConverter"/>
 		<local:RangeTypeConverter x:Key="rangeTypeConverter"/>
-		<local:StockNameConverter x:Key="stockNameConverter"/>
 	</UserControl.Resources>
 	<DataGrid ItemsSource="{Binding CreaturesView}" 
 					  SelectedItem="{Binding SelectedCreature, Mode=TwoWay}"
@@ -30,8 +29,8 @@
 			</ContextMenu>
 		</DataGrid.ContextMenu>
 		<DataGrid.Columns>
-			<DataGridTextColumn Header="Left" Binding="{Binding Left, Converter={StaticResource stockNameConverter}}"/>
-			<DataGridTextColumn Header="Right" Binding="{Binding Right, Converter={StaticResource stockNameConverter}}"/>
+			<DataGridTextColumn Header="Left" Binding="{Binding Left}"/>
+			<DataGridTextColumn Header="Right" Binding="{Binding Right}"/>
 			<DataGridTextColumn Header="Body Parts" Binding="{Binding BodyParts, Converter={StaticResource bodyPartsConverter}}"/>
 			<DataGridTextColumn Header="Rank" Binding="{Binding Rank}"/>
 			<DataGridTextColumn Header="Coal" Binding="{Binding Coal, Converter={StaticResource doubleConverter}}"/>

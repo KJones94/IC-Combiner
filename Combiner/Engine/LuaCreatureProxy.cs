@@ -4,43 +4,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Combiner
 {
-    public class LuaHandler
-    {
-        private Script Attrcombiner { get; set; }
+	public class LuaCreatureProxy
+	{
+		private Script Attrcombiner { get; set; }
 		private CreatureBuilder Creature { get; set; }
 
-        public LuaHandler()
-        {
-            Attrcombiner = new Script();
-            Attrcombiner.Options.ScriptLoader = new FileSystemScriptLoader();
-            SetupGlobals();
-        }
-
-        public void LoadScript(CreatureBuilder creature)
-        {
-			Creature = creature;
-			//Attrcombiner.DoFile(Utility.Attrcombiner);
-			Attrcombiner.DoFile(Utility.Testcombiner);
+		public LuaCreatureProxy()
+		{
+			Attrcombiner = new Script();
+			Attrcombiner.Options.ScriptLoader = new FileSystemScriptLoader();
+			SetupGlobals();
 		}
 
-        public Table GetLimbAttributes(string stockFile)
-        {
-            Attrcombiner.DoFile(stockFile);
-            Table table = Attrcombiner.Globals["limbattributes"] as Table;
-            return table;
-        }
+		public void LoadScript(CreatureBuilder creature)
+		{
+			Creature = creature;
+			//Attrcombiner.DoFile(Attributes.Attrcombiner);
+			Attrcombiner.DoFile(DirectoryConstants.Testcombiner);
+		}
 
-        public Table GetGlobals()
-        {
-            return Attrcombiner.Globals as Table;
-        }
-
-        private void SetupGlobals()
-        {
+		private void SetupGlobals()
+		{
 			// TODO: should I use DynValue or regular types
 			Attrcombiner.Globals["getgameattribute"] = (Func<string, double>)GetGameAttribute;
 			Attrcombiner.Globals["checkgameattribute"] = (Func<string, double>)CheckGameAttribute;
@@ -61,7 +48,7 @@ namespace Combiner
 			Attrcombiner.Globals["DT_VenomSpray"] = 256; // Should this be 1?
 		}
 
-        private double GetGameAttribute(string key)
+		private double GetGameAttribute(string key)
 		{
 			double value;
 			if (Creature.GameAttributes.TryGetValue(key, out value))
@@ -99,23 +86,23 @@ namespace Combiner
 
 		private double HasMeleeDmgType(double value)
 		{
-			if (Creature.GameAttributes[Utility.Melee2Type] == value)
+			if (Creature.GameAttributes[Attributes.Melee2Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Melee3Type] == value)
+			else if (Creature.GameAttributes[Attributes.Melee3Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Melee4Type] == value)
+			else if (Creature.GameAttributes[Attributes.Melee4Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Melee5Type] == value)
+			else if (Creature.GameAttributes[Attributes.Melee5Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Melee8Type] == value)
+			else if (Creature.GameAttributes[Attributes.Melee8Type] == value)
 			{
 				return 1;
 			}
@@ -124,23 +111,23 @@ namespace Combiner
 
 		private double HasRangeDmgType(double value)
 		{
-			if (Creature.GameAttributes[Utility.Range2Type] == value)
+			if (Creature.GameAttributes[Attributes.Range2Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Range3Type] == value)
+			else if (Creature.GameAttributes[Attributes.Range3Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Range4Type] == value)
+			else if (Creature.GameAttributes[Attributes.Range4Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Range5Type] == value)
+			else if (Creature.GameAttributes[Attributes.Range5Type] == value)
 			{
 				return 1;
 			}
-			else if (Creature.GameAttributes[Utility.Range8Type] == value)
+			else if (Creature.GameAttributes[Attributes.Range8Type] == value)
 			{
 				return 1;
 			}

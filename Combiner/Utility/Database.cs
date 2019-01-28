@@ -1,6 +1,7 @@
 ﻿using LiteDB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Combiner
 		/// <returns></returns>
 		public static List<Creature> GetAllCreatures()
 		{
-			using (var db = new LiteDatabase(Utility.DatabaseString))
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				if (!db.CollectionExists(m_CreaturesCollectionName))
 				{
@@ -42,7 +43,7 @@ namespace Combiner
 		/// <returns></returns>
 		public static Creature GetCreature(string left, string right, Dictionary<string, string> bodyParts)
 		{
-			using (var db = new LiteDatabase(Utility.DatabaseString))
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				if (!db.CollectionExists(m_CreaturesCollectionName))
 				{
@@ -61,7 +62,7 @@ namespace Combiner
 		/// </summary>
 		public static void DeleteSavedCreatures()
 		{
-			using (var db = new LiteDatabase(Utility.DatabaseString))
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				if (db.CollectionExists(m_SavedCreaturesCollectionName))
 				{
@@ -76,7 +77,7 @@ namespace Combiner
 		/// <returns></returns>
 		public static List<Creature> GetSavedCreatures()
 		{
-			using (var db = new LiteDatabase(Utility.DatabaseString))
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				if (!db.CollectionExists(m_SavedCreaturesCollectionName))
 				{
@@ -95,7 +96,7 @@ namespace Combiner
 		/// <param name="creatures"></param>
 		public static void SaveCreatures(IEnumerable<Creature> creatures)
 		{
-			using (var db = new LiteDatabase(Utility.DatabaseString))
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				// Creates collection if necessary
 				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
@@ -109,7 +110,7 @@ namespace Combiner
 		/// <param name="creature"></param>
 		public static void SaveCreature(Creature creature)
 		{
-			using (var db = new LiteDatabase(Utility.DatabaseString))
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				// Creates collection if necessary
 				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
@@ -127,7 +128,7 @@ namespace Combiner
 		/// <param name="creature"></param>
 		public static void UnsaveCreature(Creature creature)
 		{
-			using (var db = new LiteDatabase(Utility.DatabaseString))
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				// No need to unsave if there aren't any saved creatures
 				if (!db.CollectionExists(m_SavedCreaturesCollectionName))
@@ -176,7 +177,7 @@ namespace Combiner
 
 		public static bool Exists()
 		{
-			using (var db = new LiteDatabase(Utility.DatabaseString))
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				try
 				{
@@ -194,9 +195,9 @@ namespace Combiner
 
 		public static void CreateDB()
 		{
-			Directory.CreateDirectory(Utility.DatabaseFolder);
+			Directory.CreateDirectory(DirectoryConstants.DatabaseLocation);
 
-			using (var db = new LiteDatabase(Utility.DatabaseString))
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				if (db.CollectionExists(m_CreaturesCollectionName))
 				{
@@ -212,21 +213,28 @@ namespace Combiner
 
 				// Setup indexes
 				// May not need if not querying to filter
-				collection.EnsureIndex(x => x.Rank);
-				collection.EnsureIndex(x => x.Abilities);
+				// These caused a 3GB spike in memory usage
+				//collection.EnsureIndex(x => x.Rank);
+				//collection.EnsureIndex(x => x.Abilities);
 			}
 		}
 
 		private static void CreateCreatures(LiteCollection<Creature> collection)
 		{
-			var stockNames = Directory.GetFiles(Utility.StockDirectory).
-						Select(s => s.Replace(".lua", "").Replace(Utility.StockDirectory, "")).ToList();
+			var stockNames = Directory.GetFiles(DirectoryConstants.StockDirectory)
+				.Select(s => s.Replace(".lua", "")
+				.Replace(DirectoryConstants.StockDirectory, ""))
+				.ToList();
 
+			CreatureCombiner creatureCombiner = new CreatureCombiner(stockNames);
 			for (int i = 0; i < stockNames.Count(); i++)
 			{
 				for (int j = i + 1; j < stockNames.Count(); j++)
 				{
-					List<Creature> creatures = CreatureCombiner.CreateAllPossibleCreatures(stockNames[i], stockNames[j]);
+					List<Creature> creatures = creatureCombiner
+						.CreateAllPossibleCreatures(
+							StockNames.ProperStockNames[stockNames[i]], 
+							StockNames.ProperStockNames[stockNames[j]]);
 					collection.InsertBulk(creatures);
 				}
 			}

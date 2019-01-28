@@ -89,15 +89,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BoolComplimentConverter.cs" />
-    <Compile Include="Engine\StockBuilder.cs" />
+    <Compile Include="Engine\CreatureStatCalculator.cs" />
+    <Compile Include="Engine\LuaCreatureProxy.cs" />
+    <Compile Include="Engine\LuaStockProxy.cs" />
     <Compile Include="Engine\StockFactory.cs" />
     <Compile Include="Engine\StockStatCalculator.cs" />
+    <Compile Include="Enums\ArtilleryType.cs" />
+    <Compile Include="Enums\DamageType.cs" />
     <Compile Include="Enums\Limb.cs" />
     <Compile Include="Enums\Side.cs" />
     <Compile Include="Enums\StockType.cs" />
     <Compile Include="Models\CreatureQueryData.cs" />
+    <Compile Include="Utility\AbilityNames.cs" />
+    <Compile Include="Utility\Attributes.cs" />
     <Compile Include="Utility\CreatureCsvWriter.cs" />
     <Compile Include="Utility\ImportExportHandler.cs" />
+    <Compile Include="Utility\Names.cs" />
     <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
@@ -111,7 +118,6 @@
     <Compile Include="Converters\ContainsAbilitiesConverter.cs" />
     <Compile Include="Converters\RangeSpecialConverter.cs" />
     <Compile Include="Converters\RangeTypeConverter.cs" />
-    <Compile Include="Converters\StockNameConverter.cs" />
     <Compile Include="Engine\CreatureBuilder.cs" />
     <Compile Include="Engine\CreatureFactory.cs" />
     <Compile Include="Models\Creature.cs" />
@@ -142,7 +148,7 @@
     <Compile Include="Tests\CreatureCombinerTest.cs" />
     <Compile Include="Tests\CreatureTest.cs" />
     <Compile Include="Tests\StockTest.cs" />
-    <Compile Include="Utility\Utility.cs" />
+    <Compile Include="Utility\DirectoryConstants.cs" />
     <Compile Include="XML\CreatureXMLHandler.cs" />
     <Page Include="Views\AboutWindow.xaml">
       <SubType>Designer</SubType>
@@ -165,7 +171,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Engine\CreatureCombiner.cs" />
-    <Compile Include="Engine\LuaHandler.cs" />
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -513,6 +518,16 @@
     <None Include="Stock\2.5\wolverine.lua" />
     <None Include="Stock\2.5\woolly_mammoth.lua" />
     <None Include="Stock\2.5\zebra.lua" />
+    <None Include="Stock\Test\albatross.lua" />
+    <None Include="Stock\Test\anaconda.lua" />
+    <None Include="Stock\Test\anglerfish.lua" />
+    <None Include="Stock\Test\ant.lua" />
+    <None Include="Stock\Test\archerfish.lua" />
+    <None Include="Stock\Test\armadillo.lua" />
+    <None Include="Stock\Test\baboon.lua" />
+    <None Include="Stock\Test\behemoth.lua" />
+    <None Include="Stock\Test\beluga.lua" />
+    <None Include="Stock\Test\black_widow.lua" />
     <None Include="XML\Schemas\SavedCreatures.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -538,9 +553,7 @@
   <ItemGroup>
     <Resource Include="Notes\Features.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Stock\Test\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

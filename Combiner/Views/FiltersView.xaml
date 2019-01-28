@@ -8,7 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300">
 	<UserControl.Resources>
 		<local:AbilityNameConverter x:Key="abilityNameConverter"/>
-		<local:StockNameConverter x:Key="stockNameConverter"/>
 		<local:BoolComplimentConverter x:Key="boolComplimentConverter"/>
 	</UserControl.Resources>
 	<Grid>
@@ -99,21 +98,21 @@
 				<ComboBox Width="100"
 							  ItemsSource="{Binding AbilityChoices}"
 							  SelectedItem="{Binding SelectedAddAbility}">
-					<ComboBox.ItemTemplate>
+					<!--<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<ContentPresenter Content="{Binding Converter={StaticResource abilityNameConverter}}"/>
 						</DataTemplate>
-					</ComboBox.ItemTemplate>
+					</ComboBox.ItemTemplate>-->
 				</ComboBox>
 				<Button Width="30" Content="Add" Command="{Binding AddAbilityChoiceCommand}"/>
 				<ComboBox Width="100"
 							  ItemsSource="{Binding ChosenAbilities}"
 							  SelectedItem="{Binding SelectedRemoveAbility}">
-					<ComboBox.ItemTemplate>
+					<!--<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<ContentPresenter Content="{Binding Converter={StaticResource abilityNameConverter}}"/>
 						</DataTemplate>
-					</ComboBox.ItemTemplate>
+					</ComboBox.ItemTemplate>-->
 				</ComboBox>
 				<Button Width="30" Content="Drop" Command="{Binding RemoveAbilityChoiceCommand}"/>
 				<Button Width="50" Content="Drop All" Command="{Binding RemoveAllAbilityChoicesCommand}"/>
@@ -131,21 +130,11 @@
 				<ComboBox Width="100"
 							  ItemsSource="{Binding StockChoices}"
 							  SelectedItem="{Binding SelectedAddStock}">
-					<ComboBox.ItemTemplate>
-						<DataTemplate>
-							<ContentPresenter Content="{Binding Converter={StaticResource stockNameConverter}}"/>
-						</DataTemplate>
-					</ComboBox.ItemTemplate>
 				</ComboBox>
 				<Button Width="30" Content="Add" Command="{Binding AddStockChoiceCommand}"/>
 				<ComboBox Width="100"
 							  ItemsSource="{Binding ChosenStock}"
 							  SelectedItem="{Binding SelectedRemoveStock}">
-					<ComboBox.ItemTemplate>
-						<DataTemplate>
-							<ContentPresenter Content="{Binding Converter={StaticResource stockNameConverter}}"/>
-						</DataTemplate>
-					</ComboBox.ItemTemplate>
 				</ComboBox>
 				<Button Width="30" Content="Drop" Command="{Binding RemoveStockChoiceCommand}"/>
 				<Button Width="50" Content="Drop All" Command="{Binding RemoveAllStockChoicesCommand}"/>

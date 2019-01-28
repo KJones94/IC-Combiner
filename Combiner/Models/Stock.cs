@@ -33,16 +33,6 @@ namespace Combiner
 			return -1;
 		}
 
-		public int GetLimbAttributeBodyPart(string key)
-		{
-			var bodyPart = LimbAttritbutes[key] as Table;
-			if (bodyPart != null)
-			{
-				return (int)(double)bodyPart[1];
-			}
-			return -1;
-		}
-
 		private StockType DoubleToStockType(double d)
 		{
 			foreach (StockType stockType in Enum.GetValues(typeof(StockType)))
@@ -77,13 +67,13 @@ namespace Combiner
 					break;
 
 				case StockType.Arachnid:
-					if (Name == "siphonophore")
+					if (Name == StockNames.ManOWar)
 					{
 						BodyParts[Limb.FrontLegs] = false;
 						BodyParts[Limb.BackLegs] = false;
 						BodyParts[Limb.Wings] = false;
 					}
-					else if (Utility.ClawedArachnids.Contains(Name))
+					else if (StockNames.ClawedArachnids.Contains(Name))
 					{
 						BodyParts[Limb.Wings] = false;
 					}
@@ -106,13 +96,13 @@ namespace Combiner
 					break;
 
 				case StockType.Fish:
-					if (Name == "humpback")
+					if (Name == StockNames.HumpbackWhale)
 					{
 						BodyParts[Limb.BackLegs] = false;
 						BodyParts[Limb.Claws] = false;
 						BodyParts[Limb.Wings] = false;
 					}
-					else if (Name == "octopus")
+					else if (Name == StockNames.BlueRingedOctopus)
 					{
 						BodyParts[Limb.Claws] = false;
 						BodyParts[Limb.Wings] = false;
@@ -129,11 +119,6 @@ namespace Combiner
 				default:
 					break;
 			}
-		}
-
-		public bool IsGreaterSize(Stock stock)
-		{
-			return GetLimbAttributeValue("size") >= stock.GetLimbAttributeValue("size");
 		}
 
 		public override string ToString()
