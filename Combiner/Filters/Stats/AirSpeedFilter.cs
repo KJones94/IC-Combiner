@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Combiner
+{
+	public class AirSpeedFilter : StatFilter
+	{
+		public AirSpeedFilter()
+			: base("Air Speed", 0, 50) { }
+
+		public override bool Filter(Creature creature)
+		{
+			return creature.AirSpeed >= MinValue
+				&& creature.AirSpeed <= MaxValue;
+		}
+
+		public override string ToString()
+		{
+			return nameof(AirSpeedFilter);
+		}
+	}
+}

@@ -19,6 +19,12 @@ namespace Combiner
 			SetDefaultFilters();
 		}
 
+		private NewFiltersVM m_NewFiltersVM;
+		public NewFiltersVM NewFiltersVM
+		{
+			get { return m_NewFiltersVM ?? (m_NewFiltersVM = new NewFiltersVM(m_NewCreatureVM)); }
+		}
+
 		private ObservableCollection<string> m_AbilityChoices;
 		public ObservableCollection<string> AbilityChoices
 		{
@@ -299,26 +305,27 @@ namespace Combiner
 
 		public bool CreatureFilter(object obj)
 		{
-			Creature creature = obj as Creature;
-			if (creature != null)
-			{
-				return FilterStats(creature)
-					&& FilterSingleRangeDamage(creature)
-					&& FilterRange(creature)
-					&& FilterDirectRange(creature)
-					&& FilterSonicRange(creature)
-					&& FilterArtilleryOnly(creature)
-					&& FilterWaterArtillery(creature)
-					&& FilterRockArtillery(creature)
-					&& FilterChemicalArtillery(creature)
-					&& FilterRangeDamage(creature)
-					&& FilterHorns(creature)
-					&& FilterBarrierDestroy(creature)
-					&& FilterPoison(creature)
-					&& FilterAbilities(creature)
-					&& FilterStockName(creature);
-			}
-			return false;
+			return NewFiltersVM.CreatureFilter(obj);
+			//Creature creature = obj as Creature;
+			//if (creature != null)
+			//{
+			//	return FilterStats(creature)
+			//		&& FilterSingleRangeDamage(creature)
+			//		&& FilterRange(creature)
+			//		&& FilterDirectRange(creature)
+			//		&& FilterSonicRange(creature)
+			//		&& FilterArtilleryOnly(creature)
+			//		&& FilterWaterArtillery(creature)
+			//		&& FilterRockArtillery(creature)
+			//		&& FilterChemicalArtillery(creature)
+			//		&& FilterRangeDamage(creature)
+			//		&& FilterHorns(creature)
+			//		&& FilterBarrierDestroy(creature)
+			//		&& FilterPoison(creature)
+			//		&& FilterAbilities(creature)
+			//		&& FilterStockName(creature);
+			//}
+			//return false;
 		}
 
 		private bool FilterStats(Creature creature)

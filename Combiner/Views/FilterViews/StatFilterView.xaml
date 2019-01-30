@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Combiner.StatFilterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Combiner"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="300">
+	<StackPanel Orientation="Horizontal">
+		<Label Content="{Binding Name}"/>
+		<TextBox Width="50" Text="{Binding MinValue, Mode=TwoWay}"/>
+		<Label>-</Label>
+		<TextBox Width="50" Text="{Binding MaxValue, Mode=TwoWay}"/>
+		<Button Content="Drop"
+				Width="30"
+				Command="{Binding DataContext.DropStatFilterCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NewFiltersView}}}"
+				CommandParameter="{Binding .}"/>
+	</StackPanel>
+</UserControl>

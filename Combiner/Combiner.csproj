@@ -69,13 +69,13 @@
     <Reference Include="System.Data.SQLite.Linq, Version=1.0.108.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.108.0\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -99,6 +99,22 @@
     <Compile Include="Enums\Limb.cs" />
     <Compile Include="Enums\Side.cs" />
     <Compile Include="Enums\StockType.cs" />
+    <Compile Include="Filters\Stats\AirSpeedFilter.cs" />
+    <Compile Include="Filters\Stats\ArmourFilter.cs" />
+    <Compile Include="Filters\Stats\CoalFilter.cs" />
+    <Compile Include="Filters\CreatureFilter.cs" />
+    <Compile Include="Filters\Stats\EffectiveHitpointsFilter.cs" />
+    <Compile Include="Filters\Stats\ElectricityFilter.cs" />
+    <Compile Include="Filters\Stats\HitpointsFilter.cs" />
+    <Compile Include="Filters\Stats\LandSpeedFilter.cs" />
+    <Compile Include="Filters\Stats\MeleeDamageFilter.cs" />
+    <Compile Include="Filters\Stats\PowerFilter.cs" />
+    <Compile Include="Filters\Stats\RangeDamageFilter.cs" />
+    <Compile Include="Filters\Stats\RankFilter.cs" />
+    <Compile Include="Filters\Stats\SightRadiusFilter.cs" />
+    <Compile Include="Filters\Stats\SizeFilter.cs" />
+    <Compile Include="Filters\StatFilter.cs" />
+    <Compile Include="Filters\Stats\WaterSpeedFilter.cs" />
     <Compile Include="Models\CreatureQueryData.cs" />
     <Compile Include="Utility\AbilityNames.cs" />
     <Compile Include="Utility\Attributes.cs" />
@@ -107,6 +123,7 @@
     <Compile Include="Utility\Names.cs" />
     <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />
+    <Compile Include="Viewmodels\NewFiltersVM.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -129,6 +146,9 @@
     <Compile Include="Views\FiltersView.xaml.cs">
       <DependentUpon>FiltersView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FilterViews\StatFilterView.xaml.cs">
+      <DependentUpon>StatFilterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GuideWindow.xaml.cs">
       <DependentUpon>GuideWindow.xaml</DependentUpon>
     </Compile>
@@ -140,6 +160,9 @@
     <Compile Include="Base\RelayCommand.cs" />
     <Compile Include="Views\CreatureDataView.xaml.cs">
       <DependentUpon>CreatureDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewFiltersView.xaml.cs">
+      <DependentUpon>NewFiltersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReportWindow.xaml.cs">
       <DependentUpon>ReportWindow.xaml</DependentUpon>
@@ -162,6 +185,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FilterViews\StatFilterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GuideWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -176,6 +203,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreatureDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewFiltersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
