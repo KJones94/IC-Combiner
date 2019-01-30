@@ -11,9 +11,9 @@
 		<TextBox Width="50" Text="{Binding MinValue, Mode=TwoWay}"/>
 		<Label>-</Label>
 		<TextBox Width="50" Text="{Binding MaxValue, Mode=TwoWay}"/>
-		<Button Content="Drop"
-				Width="30"
-				Command="{Binding DataContext.DropStatFilterCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NewFiltersView}}}"
+		<Button Content="Remove"
+				Width="50"
+				Command="{Binding DataContext.DropFilterCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NewFiltersView}}}"
 				CommandParameter="{Binding .}"/>
 	</StackPanel>
 </UserControl>

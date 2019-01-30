@@ -8,7 +8,7 @@ namespace Combiner
 	public class EffectiveHitpointsFilter : StatFilter
 	{
 		public EffectiveHitpointsFilter()
-			: base("EHP", 0, 5000) { }
+			: base("E.HP", 0, 5000) { }
 
 		public override bool Filter(Creature creature)
 		{

@@ -99,22 +99,26 @@
     <Compile Include="Enums\Limb.cs" />
     <Compile Include="Enums\Side.cs" />
     <Compile Include="Enums\StockType.cs" />
-    <Compile Include="Filters\Stats\AirSpeedFilter.cs" />
-    <Compile Include="Filters\Stats\ArmourFilter.cs" />
-    <Compile Include="Filters\Stats\CoalFilter.cs" />
+    <Compile Include="Filters\OptionFilter.cs" />
+    <Compile Include="Filters\SelectionFilter.cs" />
+    <Compile Include="Filters\SelectionFilters\AbilityFilter.cs" />
+    <Compile Include="Filters\SelectionFilters\StockFilter.cs" />
+    <Compile Include="Filters\StatFilters\AirSpeedFilter.cs" />
+    <Compile Include="Filters\StatFilters\ArmourFilter.cs" />
+    <Compile Include="Filters\StatFilters\CoalFilter.cs" />
     <Compile Include="Filters\CreatureFilter.cs" />
-    <Compile Include="Filters\Stats\EffectiveHitpointsFilter.cs" />
-    <Compile Include="Filters\Stats\ElectricityFilter.cs" />
-    <Compile Include="Filters\Stats\HitpointsFilter.cs" />
-    <Compile Include="Filters\Stats\LandSpeedFilter.cs" />
-    <Compile Include="Filters\Stats\MeleeDamageFilter.cs" />
-    <Compile Include="Filters\Stats\PowerFilter.cs" />
-    <Compile Include="Filters\Stats\RangeDamageFilter.cs" />
-    <Compile Include="Filters\Stats\RankFilter.cs" />
-    <Compile Include="Filters\Stats\SightRadiusFilter.cs" />
-    <Compile Include="Filters\Stats\SizeFilter.cs" />
+    <Compile Include="Filters\StatFilters\EffectiveHitpointsFilter.cs" />
+    <Compile Include="Filters\StatFilters\ElectricityFilter.cs" />
+    <Compile Include="Filters\StatFilters\HitpointsFilter.cs" />
+    <Compile Include="Filters\StatFilters\LandSpeedFilter.cs" />
+    <Compile Include="Filters\StatFilters\MeleeDamageFilter.cs" />
+    <Compile Include="Filters\StatFilters\PowerFilter.cs" />
+    <Compile Include="Filters\StatFilters\RangeDamageFilter.cs" />
+    <Compile Include="Filters\StatFilters\RankFilter.cs" />
+    <Compile Include="Filters\StatFilters\SightRadiusFilter.cs" />
+    <Compile Include="Filters\StatFilters\SizeFilter.cs" />
     <Compile Include="Filters\StatFilter.cs" />
-    <Compile Include="Filters\Stats\WaterSpeedFilter.cs" />
+    <Compile Include="Filters\StatFilters\WaterSpeedFilter.cs" />
     <Compile Include="Models\CreatureQueryData.cs" />
     <Compile Include="Utility\AbilityNames.cs" />
     <Compile Include="Utility\Attributes.cs" />
@@ -145,6 +149,12 @@
     </Compile>
     <Compile Include="Views\FiltersView.xaml.cs">
       <DependentUpon>FiltersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FilterViews\OptionFilterView.xaml.cs">
+      <DependentUpon>OptionFilterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FilterViews\SelectionFilterView.xaml.cs">
+      <DependentUpon>SelectionFilterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FilterViews\StatFilterView.xaml.cs">
       <DependentUpon>StatFilterView.xaml</DependentUpon>
@@ -182,6 +192,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FiltersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FilterViews\OptionFilterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FilterViews\SelectionFilterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -584,7 +602,9 @@
   <ItemGroup>
     <Resource Include="Notes\Features.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Filters\OptionFilters\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

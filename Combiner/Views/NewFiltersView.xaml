@@ -8,23 +8,34 @@
              d:DesignHeight="300" d:DesignWidth="300">
 	<StackPanel>
 		<StackPanel Orientation="Horizontal">
-			<ComboBox ItemsSource="{Binding StatFilterChoices}" 
+			<ComboBox ItemsSource="{Binding FilterChoices}" 
 					  Width="150"
 					  IsEditable="False"
-					  SelectedItem="{Binding SelectedStatFilter}"/>
-			<Button Content="Add" Width="30" Command="{Binding AddStatFilterCommand}"/>
+					  SelectedItem="{Binding SelectedFilter}"/>
+			<Button Content="Add" Width="30" Command="{Binding AddFilterCommand}"/>
 		</StackPanel>
-		<ItemsControl ItemsSource="{Binding ChosenStatFilters}">
+		<ItemsControl ItemsSource="{Binding ChosenFilters}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<StackPanel/>
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
+			<ItemsControl.Resources>
 				<DataTemplate DataType="{x:Type local:StatFilter}">
 					<local:StatFilterView/>
 				</DataTemplate>
-			</ItemsControl.ItemTemplate>
+				<DataTemplate DataType="{x:Type local:SelectionFilter}">
+					<local:SelectionFilterView/>
+				</DataTemplate>
+			</ItemsControl.Resources>
+			<!--<ItemsControl.ItemTemplate>
+				<DataTemplate DataType="{x:Type local:StatFilter}">
+					<local:StatFilterView/>
+				</DataTemplate>
+				<DataTemplate DataType="{x:Type local:SelectionFilter}">
+					<local:SelectionFilterView/>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>-->
 		</ItemsControl>
 	</StackPanel>
 </UserControl>

@@ -17,7 +17,7 @@ namespace Combiner
 
 		public bool CreatureFilter(object obj)
 		{
-			if (ChosenStatFilters.Count == 0)
+			if (ChosenFilters.Count == 0)
 			{
 				return true;
 			}
@@ -26,7 +26,7 @@ namespace Combiner
 			if (creature != null)
 			{
 				bool result = true;
-				foreach (StatFilter filter in ChosenStatFilters)
+				foreach (CreatureFilter filter in ChosenFilters)
 				{
 					result = result && filter.Filter(creature);
 				}
@@ -35,118 +35,120 @@ namespace Combiner
 			return false;
 		}
 
-		private ObservableCollection<StatFilter> m_StatFilterChoices;
-		public ObservableCollection<StatFilter> StatFilterChoices
+		private ObservableCollection<CreatureFilter> m_FilterChoices;
+		public ObservableCollection<CreatureFilter> FilterChoices
 		{
 			get
 			{
-				return m_StatFilterChoices ?? 
-					(m_StatFilterChoices = InitStatFilterChoices());
+				return m_FilterChoices ?? 
+					(m_FilterChoices = InitFilterChoices());
 			}
 			set
 			{
-				if (m_StatFilterChoices != value)
+				if (m_FilterChoices != value)
 				{
-					m_StatFilterChoices = value;
-					OnPropertyChanged(nameof(StatFilterChoices));
+					m_FilterChoices = value;
+					OnPropertyChanged(nameof(FilterChoices));
 				}
 			}
 		}
 
-		private ObservableCollection<StatFilter> m_ChosenStatFilters;
-		public ObservableCollection<StatFilter> ChosenStatFilters
+		private ObservableCollection<CreatureFilter> m_ChosenFilters;
+		public ObservableCollection<CreatureFilter> ChosenFilters
 		{
 			get
 			{
-				return m_ChosenStatFilters ?? 
-					(m_ChosenStatFilters = new ObservableCollection<StatFilter>());
+				return m_ChosenFilters ?? 
+					(m_ChosenFilters = new ObservableCollection<CreatureFilter>());
 			}
 			set
 			{
-				if (m_ChosenStatFilters != value)
+				if (m_ChosenFilters != value)
 				{
-					m_ChosenStatFilters = value;
-					OnPropertyChanged(nameof(ChosenStatFilters));
+					m_ChosenFilters = value;
+					OnPropertyChanged(nameof(ChosenFilters));
 				}
 			}
 		}
 
-		private ObservableCollection<StatFilter> InitStatFilterChoices()
+		private ObservableCollection<CreatureFilter> InitFilterChoices()
 		{
-			ObservableCollection<StatFilter> statFilterChoices = new ObservableCollection<StatFilter>();
-			statFilterChoices.Add(new RankFilter());
-			statFilterChoices.Add(new CoalFilter());
-			statFilterChoices.Add(new ElectricityFilter());
-			statFilterChoices.Add(new PowerFilter());
-			statFilterChoices.Add(new HitpointsFilter());
-			statFilterChoices.Add(new ArmourFilter());
-			statFilterChoices.Add(new SightRadiusFilter());
-			statFilterChoices.Add(new SizeFilter());
-			statFilterChoices.Add(new EffectiveHitpointsFilter());
-			statFilterChoices.Add(new LandSpeedFilter());
-			statFilterChoices.Add(new WaterSpeedFilter());
-			statFilterChoices.Add(new AirSpeedFilter());
-			statFilterChoices.Add(new MeleeDamageFilter());
-			statFilterChoices.Add(new RangeDamageFilter());
-			return statFilterChoices;
+			ObservableCollection<CreatureFilter> filterChoices = new ObservableCollection<CreatureFilter>();
+			filterChoices.Add(new RankFilter());
+			filterChoices.Add(new CoalFilter());
+			filterChoices.Add(new ElectricityFilter());
+			filterChoices.Add(new PowerFilter());
+			filterChoices.Add(new HitpointsFilter());
+			filterChoices.Add(new ArmourFilter());
+			filterChoices.Add(new SightRadiusFilter());
+			filterChoices.Add(new SizeFilter());
+			filterChoices.Add(new EffectiveHitpointsFilter());
+			filterChoices.Add(new LandSpeedFilter());
+			filterChoices.Add(new WaterSpeedFilter());
+			filterChoices.Add(new AirSpeedFilter());
+			filterChoices.Add(new MeleeDamageFilter());
+			filterChoices.Add(new RangeDamageFilter());
+			filterChoices.Add(new AbilityFilter());
+			filterChoices.Add(new StockFilter());
+			return new ObservableCollection<CreatureFilter>(filterChoices.OrderBy(s => s.Name));
 		}
 
-		public StatFilter SelectedStatFilter { get; set; }
+		public CreatureFilter SelectedFilter { get; set; }
 
-		private RelayCommand m_AddStatFilterCommand;
-		public RelayCommand AddStatFilterCommand
+		private RelayCommand m_AddFilterCommand;
+		public RelayCommand AddFilterCommand
 		{
 			get
 			{
-				return m_AddStatFilterCommand ??
-					  (m_AddStatFilterCommand = new RelayCommand(AddStatFilter));
+				return m_AddFilterCommand ??
+					  (m_AddFilterCommand = new RelayCommand(AddFilter));
 			}
 			set
 			{
-				if (m_AddStatFilterCommand != value)
+				if (m_AddFilterCommand != value)
 				{
-					m_AddStatFilterCommand = value;
-					OnPropertyChanged(nameof(AddStatFilter));
+					m_AddFilterCommand = value;
+					OnPropertyChanged(nameof(AddFilter));
 				}
 			}
 		}
 
-		private void AddStatFilter(object o)
+		private void AddFilter(object o)
 		{
-			if (SelectedStatFilter != null)
+			if (SelectedFilter != null)
 			{
-				ChosenStatFilters.Add(SelectedStatFilter);
-				ChosenStatFilters = new ObservableCollection<StatFilter>(ChosenStatFilters.OrderBy(s => s.ToString()));
-				StatFilterChoices.Remove(SelectedStatFilter);
+				ChosenFilters.Add(SelectedFilter);
+				ChosenFilters = new ObservableCollection<CreatureFilter>(ChosenFilters.OrderBy(s => s.Name));
+				FilterChoices.Remove(SelectedFilter);
 			}
 		}
 
-		private RelayCommand m_DropStatFilterCommand;
-		public RelayCommand DropStatFilterCommand
+		private RelayCommand m_DropFilterCommand;
+		public RelayCommand DropFilterCommand
 		{
 			get
 			{
-				return m_DropStatFilterCommand ??
-					(m_DropStatFilterCommand = new RelayCommand(DropStatFilter));
+				return m_DropFilterCommand ??
+					(m_DropFilterCommand = new RelayCommand(DropFilter));
 			}
 			set
 			{
-				if (m_DropStatFilterCommand != value)
+				if (m_DropFilterCommand != value)
 				{
-					m_DropStatFilterCommand = value;
-					OnPropertyChanged(nameof(DropStatFilterCommand));
+					m_DropFilterCommand = value;
+					OnPropertyChanged(nameof(DropFilterCommand));
 				}
 			}
 		}
 
-		private void DropStatFilter(object o)
+		private void DropFilter(object o)
 		{
-			StatFilter filter = o as StatFilter;
+			CreatureFilter filter = o as CreatureFilter;
 			if (filter != null)
 			{
-				StatFilterChoices.Add(filter);
-				StatFilterChoices = new ObservableCollection<StatFilter>(StatFilterChoices.OrderBy(s => s.ToString()));
-				ChosenStatFilters.Remove(filter);
+				FilterChoices.Add(filter);
+				FilterChoices = new ObservableCollection<CreatureFilter>(FilterChoices.OrderBy(s => s.Name));
+				ChosenFilters.Remove(filter);
 			}
 		}
 	}
