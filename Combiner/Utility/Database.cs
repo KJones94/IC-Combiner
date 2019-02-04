@@ -179,16 +179,24 @@ namespace Combiner
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (db.CollectionExists(m_CreaturesCollectionName))
+				try
 				{
-					return db.GetCollection<Creature>(m_CreaturesCollectionName).Count() > 0;
+					var collectionExists = db.CollectionExists(m_CreaturesCollectionName);
+					return collectionExists
+						? db.GetCollection<Creature>(m_CreaturesCollectionName).Count() > 0
+						: false;
 				}
-				return false;
+				catch (DirectoryNotFoundException ex)
+				{
+					return false;
+				}
 			}
 		}
 
 		public static void CreateDB()
 		{
+			Directory.CreateDirectory(DirectoryConstants.DatabaseLocation);
+
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				if (db.CollectionExists(m_CreaturesCollectionName))
