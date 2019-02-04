@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Combiner
 {
 	/// <summary>
-	/// Interaction logic for NewFiltersView.xaml
+	/// Interaction logic for RangeOptionsFilterView.xaml
 	/// </summary>
-	public partial class NewFiltersView : UserControl
+	public partial class RangeOptionsFilterView : UserControl
 	{
-		public NewFiltersView()
+		public RangeOptionsFilterView()
 		{
 			InitializeComponent();
 		}

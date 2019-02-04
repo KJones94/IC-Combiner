@@ -100,10 +100,19 @@
     <Compile Include="Enums\Side.cs" />
     <Compile Include="Enums\StockType.cs" />
     <Compile Include="Filters\OptionFilter.cs" />
+    <Compile Include="Filters\OptionFilters\ArtilleryOnlyFilter.cs" />
     <Compile Include="Filters\OptionFilters\ArtilleryTypeFilter.cs" />
+    <Compile Include="Filters\OptionFilters\BarrierDestroyFilter.cs" />
+    <Compile Include="Filters\OptionFilters\ChemicalArtilleryFilter.cs" />
+    <Compile Include="Filters\OptionFilters\DirectRangeFilter.cs" />
     <Compile Include="Filters\OptionFilters\HornsFilter.cs" />
-    <Compile Include="Filters\OptionFilters\RangeTypeFilter.cs" />
+    <Compile Include="Filters\OptionFilters\PoisonFilter.cs" />
+    <Compile Include="Filters\OptionFilters\RangeOnlyFilter.cs" />
+    <Compile Include="Filters\OptionFilters\RockArtilleryFilter.cs" />
     <Compile Include="Filters\OptionFilters\SingleRangedFilter.cs" />
+    <Compile Include="Filters\OptionFilters\SonicRangeFilter.cs" />
+    <Compile Include="Filters\OptionFilters\WaterArtilleryFilter.cs" />
+    <Compile Include="Filters\RangeOptionsFilter.cs" />
     <Compile Include="Filters\SelectionFilter.cs" />
     <Compile Include="Filters\SelectionFilters\AbilityFilter.cs" />
     <Compile Include="Filters\SelectionFilters\StockFilter.cs" />
@@ -157,6 +166,9 @@
     <Compile Include="Views\FilterViews\OptionFilterView.xaml.cs">
       <DependentUpon>OptionFilterView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FilterViews\RangeOptionsFilterView.xaml.cs">
+      <DependentUpon>RangeOptionsFilterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FilterViews\SelectionFilterView.xaml.cs">
       <DependentUpon>SelectionFilterView.xaml</DependentUpon>
     </Compile>
@@ -200,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FilterViews\OptionFilterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FilterViews\RangeOptionsFilterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

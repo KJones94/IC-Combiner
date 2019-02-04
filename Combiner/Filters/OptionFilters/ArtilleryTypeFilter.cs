@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Combiner
 {
-	public class ArtilleryTypeFilter : OptionFilter
-	{
-		public ArtilleryTypeFilter()
-			: base("Artillery Type") { }
+	//public class ArtilleryTypeFilter : OptionFilter
+	//{
+	//	public ArtilleryTypeFilter()
+	//		: base("Artillery Type") { }
 
-		public override bool Filter(Creature creature)
-		{
-			throw new NotImplementedException();
-		}
-	}
+	//	public override bool Filter(Creature creature)
+	//	{
+	//		throw new NotImplementedException();
+	//	}
+	//}
 }

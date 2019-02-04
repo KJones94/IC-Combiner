@@ -5,19 +5,19 @@ using System.Text;
 
 namespace Combiner
 {
-	public class SingleRangedFilter : OptionFilter
+	public class RockArtilleryFilter : OptionFilter
 	{
-		public SingleRangedFilter()
-			: base("Single Ranged Attack") { }
+		public RockArtilleryFilter()
+			: base("Rock Artillery") { }
 
 		protected override bool OnOptionChecked(Creature creature)
 		{
-			return !(creature.RangeDamage2 > 0);
+			return creature.RangeSpecial1 == 1 || creature.RangeSpecial2 == 1;
 		}
 
 		public override string ToString()
 		{
-			return nameof(SingleRangedFilter);
+			return nameof(RockArtilleryFilter);
 		}
 	}
 }

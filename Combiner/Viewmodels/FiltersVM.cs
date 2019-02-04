@@ -11,274 +11,134 @@ namespace Combiner
 {
 	public class FiltersVM : BaseViewModel
 	{
-		private CreatureDataVM m_NewCreatureVM;
+		private CreatureDataVM m_CreatureDataVM;
 
-		public FiltersVM(CreatureDataVM newCreatureVM)
+		public FiltersVM(CreatureDataVM creatureDataVM)
 		{
-			m_NewCreatureVM = newCreatureVM;
-			SetDefaultFilters();
+			m_CreatureDataVM = creatureDataVM;
 		}
 
-		private NewFiltersVM m_NewFiltersVM;
-		public NewFiltersVM NewFiltersVM
-		{
-			get { return m_NewFiltersVM ?? (m_NewFiltersVM = new NewFiltersVM(m_NewCreatureVM)); }
-		}
 
-		private ObservableCollection<string> m_AbilityChoices;
-		public ObservableCollection<string> AbilityChoices
+		private ObservableCollection<CreatureFilter> m_FilterChoices;
+		public ObservableCollection<CreatureFilter> FilterChoices
 		{
 			get
 			{
-				if (m_AbilityChoices == null)
-				{
-					m_AbilityChoices = new ObservableCollection<string>();
-					foreach (string ability in AbilityNames.Abilities)
-					{
-						m_AbilityChoices.Add(AbilityNames.ProperAbilityNames[ability]);
-					}
-				}
-				return m_AbilityChoices;
+				return m_FilterChoices ??
+					(m_FilterChoices = InitFilterChoices());
 			}
 			set
 			{
-				if (value != m_AbilityChoices)
+				if (m_FilterChoices != value)
 				{
-					m_AbilityChoices = value;
-					OnPropertyChanged(nameof(AbilityChoices));
+					m_FilterChoices = value;
+					OnPropertyChanged(nameof(FilterChoices));
 				}
-			}
-		}
-		public string SelectedAddAbility { get; set; }
-
-		private ObservableCollection<string> m_ChosenAbilities = new ObservableCollection<string>();
-		public ObservableCollection<string> ChosenAbilities
-		{
-			get
-			{
-				return m_ChosenAbilities;
-			}
-			set
-			{
-				if (value != m_ChosenAbilities)
-				{
-					m_ChosenAbilities = value;
-					OnPropertyChanged(nameof(ChosenAbilities));
-				}
-			}
-		}
-		public string SelectedRemoveAbility { get; set; }
-
-		private ICommand m_AddAbilityChoiceCommand;
-		public ICommand AddAbilityChoiceCommand
-		{
-			get
-			{
-				return m_AddAbilityChoiceCommand ??
-				  (m_AddAbilityChoiceCommand = new RelayCommand(AddAbilityChoice));
-			}
-			set
-			{
-				if (value != m_AddAbilityChoiceCommand)
-				{
-					m_AddAbilityChoiceCommand = value;
-					OnPropertyChanged(nameof(AddAbilityChoiceCommand));
-				}
-			}
-		}
-		private void AddAbilityChoice(object obj)
-		{
-			if (!string.IsNullOrEmpty(SelectedAddAbility) && !ChosenAbilities.Contains(SelectedAddAbility))
-			{
-				ChosenAbilities.Add(SelectedAddAbility);
-				ChosenAbilities = new ObservableCollection<string>(ChosenAbilities.OrderBy(s => s));
-				// sort chosen stock
-				AbilityChoices.Remove(SelectedAddAbility);
 			}
 		}
 
-		private ICommand m_RemoveAbilityChoiceCommand;
-		public ICommand RemoveAbilityChoiceCommand
+		private ObservableCollection<CreatureFilter> m_ChosenFilters;
+		public ObservableCollection<CreatureFilter> ChosenFilters
 		{
 			get
 			{
-				return m_RemoveAbilityChoiceCommand ??
-				  (m_RemoveAbilityChoiceCommand = new RelayCommand(RemoveAbilityChoice));
+				return m_ChosenFilters ??
+					(m_ChosenFilters = new ObservableCollection<CreatureFilter>());
 			}
 			set
 			{
-				if (value != m_RemoveAbilityChoiceCommand)
+				if (m_ChosenFilters != value)
 				{
-					m_RemoveAbilityChoiceCommand = value;
-					OnPropertyChanged(nameof(RemoveAbilityChoiceCommand));
+					m_ChosenFilters = value;
+					OnPropertyChanged(nameof(ChosenFilters));
 				}
-			}
-		}
-		private void RemoveAbilityChoice(object obj)
-		{
-			if (!string.IsNullOrEmpty(SelectedRemoveAbility))
-			{
-				AbilityChoices.Add(SelectedRemoveAbility);
-				AbilityChoices = new ObservableCollection<string>(AbilityChoices.OrderBy(s => s));
-				// sort stock choices
-				ChosenAbilities.Remove(SelectedRemoveAbility);
 			}
 		}
 
-		private ICommand m_RemoveAllAbilityChoicesCommand;
-		public ICommand RemoveAllAbilityChoicesCommand
+		private ObservableCollection<CreatureFilter> InitFilterChoices()
 		{
-			get
-			{
-				return m_RemoveAllAbilityChoicesCommand ??
-				  (m_RemoveAllAbilityChoicesCommand = new RelayCommand(RemoveAllAbilityChoices));
-			}
-			set
-			{
-				if (value != m_RemoveAllAbilityChoicesCommand)
-				{
-					m_RemoveAllAbilityChoicesCommand = value;
-					OnPropertyChanged(nameof(RemoveAllAbilityChoicesCommand));
-				}
-			}
-		}
-		private void RemoveAllAbilityChoices(object obj)
-		{
-			foreach (string ability in ChosenAbilities)
-			{
-				AbilityChoices.Add(ability);
-			}
-			ChosenAbilities = new ObservableCollection<string>();
-			AbilityChoices = new ObservableCollection<string>(AbilityChoices.OrderBy(s => s));
+			ObservableCollection<CreatureFilter> filterChoices = new ObservableCollection<CreatureFilter>();
+			filterChoices.Add(new RankFilter());
+			filterChoices.Add(new CoalFilter());
+			filterChoices.Add(new ElectricityFilter());
+			filterChoices.Add(new PowerFilter());
+			filterChoices.Add(new HitpointsFilter());
+			filterChoices.Add(new ArmourFilter());
+			filterChoices.Add(new SightRadiusFilter());
+			filterChoices.Add(new SizeFilter());
+			filterChoices.Add(new EffectiveHitpointsFilter());
+			filterChoices.Add(new LandSpeedFilter());
+			filterChoices.Add(new WaterSpeedFilter());
+			filterChoices.Add(new AirSpeedFilter());
+			filterChoices.Add(new MeleeDamageFilter());
+			filterChoices.Add(new RangeDamageFilter());
+			filterChoices.Add(new AbilityFilter());
+			filterChoices.Add(new StockFilter());
+			filterChoices.Add(new SingleRangedFilter());
+			filterChoices.Add(new HornsFilter());
+			filterChoices.Add(new BarrierDestroyFilter());
+			filterChoices.Add(new PoisonFilter());
+			filterChoices.Add(new RangeOptionsFilter());
+			return new ObservableCollection<CreatureFilter>(filterChoices.OrderBy(s => s.Name));
 		}
 
-		private ObservableCollection<string> m_StockChoices;
-		public ObservableCollection<string> StockChoices
-		{
-			get
-			{
-				if (m_StockChoices == null)
-				{
-					m_StockChoices = new ObservableCollection<string>();
-					var stockNames = Directory.GetFiles(DirectoryConstants.StockDirectory).
-						Select(s => s.Replace(".lua", "").Replace(DirectoryConstants.StockDirectory, ""));
-					foreach (string stock in stockNames)
-					{
-						m_StockChoices.Add(StockNames.ProperStockNames[stock]);
-					}
-				}
-				return m_StockChoices;
-			}
-			set
-			{
-				if (value != m_StockChoices)
-				{
-					m_StockChoices = value;
-					OnPropertyChanged(nameof(StockChoices));
-				}
-			}
-		}
-		public string SelectedAddStock { get; set; }
+		public CreatureFilter SelectedFilter { get; set; }
 
-		private ICommand m_AddStockChoiceCommand;
-		public ICommand AddStockChoiceCommand
+		private RelayCommand m_AddFilterCommand;
+		public RelayCommand AddFilterCommand
 		{
 			get
 			{
-				return m_AddStockChoiceCommand ??
-				  (m_AddStockChoiceCommand = new RelayCommand(AddStockChoice));
+				return m_AddFilterCommand ??
+					  (m_AddFilterCommand = new RelayCommand(AddFilter));
 			}
 			set
 			{
-				if (value != m_AddStockChoiceCommand)
+				if (m_AddFilterCommand != value)
 				{
-					m_AddStockChoiceCommand = value;
-					OnPropertyChanged(nameof(AddStockChoiceCommand));
+					m_AddFilterCommand = value;
+					OnPropertyChanged(nameof(AddFilter));
 				}
-			}
-		}
-		private void AddStockChoice(object obj)
-		{
-			if (!string.IsNullOrEmpty(SelectedAddStock) && !ChosenStock.Contains(SelectedAddStock))
-			{
-				ChosenStock.Add(SelectedAddStock);
-				ChosenStock = new ObservableCollection<string>(ChosenStock.OrderBy(s => s));
-				// sort chosen stock
-				StockChoices.Remove(SelectedAddStock);
 			}
 		}
 
-		private ObservableCollection<string> m_ChosenStock = new ObservableCollection<string>();
-		public ObservableCollection<string> ChosenStock
+		private void AddFilter(object o)
 		{
-			get
+			if (SelectedFilter != null)
 			{
-				return m_ChosenStock;
-			}
-			set
-			{
-				if (value != m_ChosenStock)
-				{
-					m_ChosenStock = value;
-					OnPropertyChanged(nameof(ChosenStock));
-				}
-			}
-		}
-		public string SelectedRemoveStock { get; set; }
-
-		private ICommand m_RemoveStockChoiceCommand;
-		public ICommand RemoveStockChoiceCommand
-		{
-			get
-			{
-				return m_RemoveStockChoiceCommand ??
-				  (m_RemoveStockChoiceCommand = new RelayCommand(RemoveStockChoice));
-			}
-			set
-			{
-				if (value != m_RemoveStockChoiceCommand)
-				{
-					m_RemoveStockChoiceCommand = value;
-					OnPropertyChanged(nameof(RemoveStockChoiceCommand));
-				}
-			}
-		}
-		private void RemoveStockChoice(object obj)
-		{
-			if (!string.IsNullOrEmpty(SelectedRemoveStock))
-			{
-				StockChoices.Add(SelectedRemoveStock);
-				StockChoices = new ObservableCollection<string>(StockChoices.OrderBy(s => s));
-				// sort stock choices
-				ChosenStock.Remove(SelectedRemoveStock);
+				ChosenFilters.Add(SelectedFilter);
+				ChosenFilters = new ObservableCollection<CreatureFilter>(ChosenFilters.OrderBy(s => s.Name));
+				FilterChoices.Remove(SelectedFilter);
 			}
 		}
 
-		private ICommand m_RemoveAllStockChoicesCommand;
-		public ICommand RemoveAllStockChoicesCommand
+		private RelayCommand m_DropFilterCommand;
+		public RelayCommand DropFilterCommand
 		{
 			get
 			{
-				return m_RemoveAllStockChoicesCommand ??
-				  (m_RemoveAllStockChoicesCommand = new RelayCommand(RemoveAllStockChoices));
+				return m_DropFilterCommand ??
+					(m_DropFilterCommand = new RelayCommand(DropFilter));
 			}
 			set
 			{
-				if (value != m_RemoveStockChoiceCommand)
+				if (m_DropFilterCommand != value)
 				{
-					m_RemoveAllStockChoicesCommand = value;
-					OnPropertyChanged(nameof(RemoveAllStockChoicesCommand));
+					m_DropFilterCommand = value;
+					OnPropertyChanged(nameof(DropFilterCommand));
 				}
 			}
 		}
-		private void RemoveAllStockChoices(object obj)
+
+		private void DropFilter(object o)
 		{
-			foreach (string stock in ChosenStock)
+			CreatureFilter filter = o as CreatureFilter;
+			if (filter != null)
 			{
-				StockChoices.Add(stock);
+				FilterChoices.Add(filter);
+				FilterChoices = new ObservableCollection<CreatureFilter>(FilterChoices.OrderBy(s => s.Name));
+				ChosenFilters.Remove(filter);
 			}
-			ChosenStock = new ObservableCollection<string>();
-			StockChoices = new ObservableCollection<string>(StockChoices.OrderBy(s => s));
 		}
 
 		private ICommand m_FilterCreaturesCommand;
@@ -300,1004 +160,27 @@ namespace Combiner
 		}
 		private void FilterCreatures(object obj)
 		{
-			m_NewCreatureVM.CreaturesView.Filter = CreatureFilter;
+			m_CreatureDataVM.CreaturesView.Filter = CreatureFilter;
 		}
 
 		public bool CreatureFilter(object obj)
 		{
-			return NewFiltersVM.CreatureFilter(obj);
-			//Creature creature = obj as Creature;
-			//if (creature != null)
-			//{
-			//	return FilterStats(creature)
-			//		&& FilterSingleRangeDamage(creature)
-			//		&& FilterRange(creature)
-			//		&& FilterDirectRange(creature)
-			//		&& FilterSonicRange(creature)
-			//		&& FilterArtilleryOnly(creature)
-			//		&& FilterWaterArtillery(creature)
-			//		&& FilterRockArtillery(creature)
-			//		&& FilterChemicalArtillery(creature)
-			//		&& FilterRangeDamage(creature)
-			//		&& FilterHorns(creature)
-			//		&& FilterBarrierDestroy(creature)
-			//		&& FilterPoison(creature)
-			//		&& FilterAbilities(creature)
-			//		&& FilterStockName(creature);
-			//}
-			//return false;
-		}
-
-		private bool FilterStats(Creature creature)
-		{
-			return creature.Rank >= MinRank
-					&& creature.Rank <= MaxRank
-					&& creature.Coal >= MinCoal
-					&& creature.Coal <= MaxCoal
-					&& creature.Electricity >= MinElec
-					&& creature.Electricity <= MaxElec
-					&& creature.Power >= MinPower
-					&& creature.Power <= MaxPower
-					&& creature.EffectiveHitpoints >= MinEHP
-					&& creature.EffectiveHitpoints <= MaxEHP
-					&& creature.Hitpoints >= MinHitpoints
-					&& creature.Hitpoints <= MaxHitpoints
-					&& creature.Armour >= MinArmour
-					&& creature.Armour <= MaxArmour
-					&& creature.SightRadius >= MinSightRadius
-					&& creature.SightRadius <= MaxSightRadius
-					&& creature.Size >= MinSize
-					&& creature.Size <= MaxSize
-					&& creature.LandSpeed >= MinLandSpeed
-					&& creature.LandSpeed <= MaxLandSpeed
-					&& creature.WaterSpeed >= MinWaterSpeed
-					&& creature.WaterSpeed <= MaxWaterSpeed
-					&& creature.AirSpeed >= MinAirSpeed
-					&& creature.AirSpeed <= MaxAirSpeed
-					&& creature.MeleeDamage >= MinMeleeDamage
-					&& creature.MeleeDamage <= MaxMeleeDamage;
-		}
-
-		private bool FilterRangeDamage(Creature creature)
-		{
-			bool isBothUnderMax = creature.RangeDamage1 <= MaxRangeDamage
-				&& creature.RangeDamage2 <= MaxRangeDamage;
-
-			bool isOneOverMin = creature.RangeDamage1 >= MinRangeDamage
-				|| creature.RangeDamage2 >= MinRangeDamage;
-
-			return isBothUnderMax && isOneOverMin;
-		}
-
-		private bool FilterAbilities(Creature creature)
-		{
-			if (DoOnlySelectedAbilitiesFilter)
-			{
-				return FilterOnlySelectedAbiltiies(creature);
-			}
-
-			if (ChosenAbilities.Count == 0)
+			if (ChosenFilters.Count == 0)
 			{
 				return true;
 			}
 
-			foreach (string ability in ChosenAbilities)
+			Creature creature = obj as Creature;
+			if (creature != null)
 			{
-				if (creature.Abilities.ContainsKey(ability))
+				bool result = true;
+				foreach (CreatureFilter filter in ChosenFilters)
 				{
-					if (creature.Abilities[ability])
-					{
-						return true;
-					}
+					result = result && filter.Filter(creature);
 				}
+				return result;
 			}
 			return false;
-		}
-
-		private bool FilterOnlySelectedAbiltiies(Creature creature)
-		{
-			if (ChosenAbilities.Count == 0)
-			{
-				return true;
-			}
-
-			bool hasAbilities = true;
-			foreach (string ability in ChosenAbilities)
-			{
-				if (creature.Abilities.ContainsKey(ability))
-				{
-					hasAbilities = hasAbilities && (creature.Abilities[ability]);
-				}
-			}
-			return hasAbilities;
-		}
-
-		private bool FilterArtilleryOnly(Creature creature)
-		{
-			if (DoArtilleryOnlyFilter)
-			{
-				return creature.RangeSpecial1 > 0 || creature.RangeSpecial2 > 0;
-			}
-			return true;
-		}
-
-		private bool FilterWaterArtillery(Creature creature)
-		{
-			if (DoWaterArtilleryFilter)
-			{
-				return creature.RangeSpecial1 == 2 || creature.RangeSpecial2 == 2;
-			}
-			return true;
-		}
-
-		private bool FilterRockArtillery(Creature creature)
-		{
-			if (DoRockArtilleryFilter)
-			{
-				return creature.RangeSpecial1 == 1 || creature.RangeSpecial2 == 1;
-			}
-			return true;
-		}
-
-		private bool FilterChemicalArtillery(Creature creature)
-		{
-			if (DoChemicalArtilleryFilter)
-			{
-				return creature.RangeSpecial1 == 3 || creature.RangeSpecial2 == 3;
-			}
-			return true;
-		}
-
-		private bool FilterRange(Creature creature)
-		{
-			if (DoRangeFilter)
-			{
-				return creature.RangeDamage1 > 0
-					&& creature.RangeSpecial1 == 0
-					&& creature.RangeSpecial2 == 0;
-			}
-			return true;
-		}
-
-		private bool FilterDirectRange(Creature creature)
-		{
-			if (DoDirectRangeFilter)
-			{
-				bool range1HasDirect = creature.RangeDamage1 > 0
-					&& creature.RangeSpecial1 == 0
-					&& (int)creature.RangeType1 != (int)DamageType.Sonic;
-				bool range2HasDirect = creature.RangeDamage2 > 0
-					&& creature.RangeSpecial2 == 0
-					&& (int)creature.RangeType2 != (int)DamageType.Sonic;
-
-				return range1HasDirect || range2HasDirect;
-			}
-			return true;
-		}
-
-		private bool FilterSonicRange(Creature creature)
-		{
-			if (DoSonicRangeFilter)
-			{
-				bool range1HasSonic = creature.RangeSpecial1 == 0
-					&& (int)creature.RangeType1 == (int)DamageType.Sonic;
-				bool range2HasSonic = creature.RangeSpecial2 == 0
-					&& (int)creature.RangeType2 == (int)DamageType.Sonic;
-
-				return range1HasSonic || range2HasSonic;
-			}
-			return true;
-		}
-
-		private bool FilterSingleRangeDamage(Creature creature)
-		{
-			if (DoSingleRangeFilter)
-			{
-				return !(creature.RangeDamage2 > 0);
-			}
-			return true;
-		}
-
-		private bool FilterHorns(Creature creature)
-		{
-			if (DoHornsFilter)
-			{
-				return creature.HasHorns;
-			}
-			return true;
-		}
-
-		private bool FilterBarrierDestroy(Creature creature)
-		{
-			if (DoBarrierDestroyFilter)
-			{
-				return creature.HasBarrierDestroy;
-			}
-			return true;
-		}
-
-		private bool FilterPoison(Creature creature)
-		{
-			if (DoPoisonFilter)
-			{
-				return creature.HasPoison;
-			}
-			return true;
-		}
-
-		private bool FilterStockName(Creature creature)
-		{
-			if (DoOnlySelectedStockFilter)
-			{
-				return FilterOnlySelectedStockName(creature);
-			}
-
-			if (ChosenStock.Count == 0)
-			{
-				return true;
-			}
-
-			return ChosenStock.Contains(creature.Left)
-				|| ChosenStock.Contains(creature.Right);
-		}
-
-		private bool FilterOnlySelectedStockName(Creature creature)
-		{
-			if (ChosenStock.Count == 0)
-			{
-				return true;
-			}
-
-			return ChosenStock.Contains(creature.Left)
-				&& ChosenStock.Contains(creature.Right);
-		}
-
-
-
-		private ICommand m_SetDefaultFiltersCommand;
-		public ICommand SetDefaultFiltersCommand
-		{
-			get
-			{
-				return m_SetDefaultFiltersCommand ??
-				  (m_SetDefaultFiltersCommand = new RelayCommand(SetDefaultFilters));
-			}
-			set
-			{
-				if (value != m_SetDefaultFiltersCommand)
-				{
-					m_SetDefaultFiltersCommand = value;
-					OnPropertyChanged(nameof(SetDefaultFiltersCommand));
-				}
-			}
-		}
-		private void SetDefaultFilters(object obj)
-		{
-			SetDefaultFilters();
-		}
-
-		private void SetDefaultFilters()
-		{
-			MinRank = 0;
-			MaxRank = 5;
-			MinCoal = 0;
-			MaxCoal = 2000;
-			MinElec = 0;
-			MaxElec = 2000;
-			MinPower = 0;
-			MaxPower = 10000;
-			MinEHP = 0;
-			MaxEHP = 5000;
-			MinHitpoints = 0;
-			MaxHitpoints = 3000;
-			MinArmour = 0;
-			MaxArmour = 1.0;
-			MinSightRadius = 0;
-			MaxSightRadius = 50;
-			MinSize = 0;
-			MaxSize = 10;
-			MinLandSpeed = 0;
-			MaxLandSpeed = 50;
-			MinWaterSpeed = 0;
-			MaxWaterSpeed = 50;
-			MinAirSpeed = 0;
-			MaxAirSpeed = 50;
-			MinMeleeDamage = 0;
-			MaxMeleeDamage = 100;
-			MinRangeDamage = 0;
-			MaxRangeDamage = 100;
-			DoOnlySelectedAbilitiesFilter = false;
-			DoOnlySelectedStockFilter = false;
-			DoArtilleryOnlyFilter = false;
-			DoSingleRangeFilter = false;
-			DoDirectRangeFilter = false;
-			DoSonicRangeFilter = false;
-			DoHornsFilter = false;
-			DoBarrierDestroyFilter = false;
-			DoPoisonFilter = false;
-
-			RemoveAllAbilityChoices(null);
-			RemoveAllStockChoices(null);
-		}
-
-		private void RemoveOtherRangeFilters(string filter)
-		{
-			if (filter != nameof(DoRangeFilter))
-			{
-				DoRangeFilter = false;
-			}
-			if (filter != nameof(DoDirectRangeFilter))
-			{
-				DoDirectRangeFilter = false;
-			}
-			if (filter != nameof(DoSonicRangeFilter))
-			{
-				DoSonicRangeFilter = false;
-			}
-			if (filter != nameof(DoArtilleryOnlyFilter))
-			{
-				DoArtilleryOnlyFilter = false;
-			}
-			if (filter != nameof(DoWaterArtilleryFilter))
-			{
-				DoWaterArtilleryFilter = false;
-			}
-			if (filter != nameof(DoRockArtilleryFilter))
-			{
-				DoRockArtilleryFilter = false;
-			}
-			if (filter != nameof(DoChemicalArtilleryFilter))
-			{
-				DoChemicalArtilleryFilter = false;
-			}
-		}
-
-		private int m_MinRank;
-		public int MinRank
-		{
-			get { return m_MinRank; }
-			set
-			{
-				if (m_MinRank != value)
-				{
-					m_MinRank = value;
-					OnPropertyChanged(nameof(MinRank));
-				}
-			}
-		}
-
-		private int m_MaxRank;
-		public int MaxRank
-		{
-			get { return m_MaxRank; }
-			set
-			{
-				if (m_MaxRank != value)
-				{
-					m_MaxRank = value;
-					OnPropertyChanged(nameof(MaxRank));
-				}
-			}
-		}
-
-		private int m_MinCoal;
-		public int MinCoal
-		{
-			get { return m_MinCoal; }
-			set
-			{
-				if (m_MinCoal != value)
-				{
-					m_MinCoal = value;
-					OnPropertyChanged(nameof(MinCoal));
-				}
-			}
-		}
-
-		private int m_MaxCoal;
-		public int MaxCoal
-		{
-			get { return m_MaxCoal; }
-			set
-			{
-				if (m_MaxCoal != value)
-				{
-					m_MaxCoal = value;
-					OnPropertyChanged(nameof(MaxCoal));
-				}
-			}
-		}
-
-		private int m_MinElec;
-		public int MinElec
-		{
-			get { return m_MinElec; }
-			set
-			{
-				if (m_MinElec != value)
-				{
-					m_MinElec = value;
-					OnPropertyChanged(nameof(MinElec));
-				}
-			}
-		}
-
-		private int m_MaxElec;
-		public int MaxElec
-		{
-			get { return m_MaxElec; }
-			set
-			{
-				if (m_MaxElec != value)
-				{
-					m_MaxElec = value;
-					OnPropertyChanged(nameof(MaxElec));
-				}
-			}
-		}
-
-		private int m_MinPower;
-		public int MinPower
-		{
-			get { return m_MinPower; }
-			set
-			{
-				if (m_MinPower != value)
-				{
-					m_MinPower = value;
-					OnPropertyChanged(nameof(MinPower));
-				}
-			}
-		}
-
-		private int m_MaxPower;
-		public int MaxPower
-		{
-			get { return m_MaxPower; }
-			set
-			{
-				if (m_MaxPower != value)
-				{
-					m_MaxPower = value;
-					OnPropertyChanged(nameof(MaxPower));
-				}
-			}
-		}
-
-		private int m_MinEHP;
-		public int MinEHP
-		{
-			get { return m_MinEHP; }
-			set
-			{
-				if (m_MinEHP != value)
-				{
-					m_MinEHP = value;
-					OnPropertyChanged(nameof(MinEHP));
-				}
-			}
-		}
-
-		private int m_MaxEHP;
-		public int MaxEHP
-		{
-			get { return m_MaxEHP; }
-			set
-			{
-				if (m_MaxEHP != value)
-				{
-					m_MaxEHP = value;
-					OnPropertyChanged(nameof(MaxEHP));
-				}
-			}
-		}
-
-		private int m_MinHitpoints;
-		public int MinHitpoints
-		{
-			get { return m_MinHitpoints; }
-			set
-			{
-				if (m_MinHitpoints != value)
-				{
-					m_MinHitpoints = value;
-					OnPropertyChanged(nameof(MinHitpoints));
-				}
-			}
-		}
-
-		private int m_MaxHitpoints;
-		public int MaxHitpoints
-		{
-			get { return m_MaxHitpoints; }
-			set
-			{
-				if (m_MaxHitpoints != value)
-				{
-					m_MaxHitpoints = value;
-					OnPropertyChanged(nameof(MaxHitpoints));
-				}
-			}
-		}
-
-		private double m_MinArmour;
-		public double MinArmour
-		{
-			get { return m_MinArmour; }
-			set
-			{
-				if (m_MinArmour != value)
-				{
-					m_MinArmour = value;
-					OnPropertyChanged(nameof(MinArmour));
-				}
-			}
-		}
-
-		private double m_MaxArmour;
-		public double MaxArmour
-		{
-			get { return m_MaxArmour; }
-			set
-			{
-				if (m_MaxArmour != value)
-				{
-					m_MaxArmour = value;
-					OnPropertyChanged(nameof(MaxArmour));
-				}
-			}
-		}
-
-		private int m_MinSightRadius;
-		public int MinSightRadius
-		{
-			get { return m_MinSightRadius; }
-			set
-			{
-				if (m_MinSightRadius != value)
-				{
-					m_MinSightRadius = value;
-					OnPropertyChanged(nameof(MinSightRadius));
-				}
-			}
-		}
-
-		private int m_MaxSightRadius;
-		public int MaxSightRadius
-		{
-			get { return m_MaxSightRadius; }
-			set
-			{
-				if (m_MaxSightRadius != value)
-				{
-					m_MaxSightRadius = value;
-					OnPropertyChanged(nameof(MaxSightRadius));
-				}
-			}
-		}
-
-		private int m_MinSize;
-		public int MinSize
-		{
-			get { return m_MinSize; }
-			set
-			{
-				if (m_MinSize != value)
-				{
-					m_MinSize = value;
-					OnPropertyChanged(nameof(MinSize));
-				}
-			}
-		}
-
-		private int m_MaxSize;
-		public int MaxSize
-		{
-			get { return m_MaxSize; }
-			set
-			{
-				if (m_MaxSize != value)
-				{
-					m_MaxSize = value;
-					OnPropertyChanged(nameof(MaxSize));
-				}
-			}
-		}
-
-		private int m_MinLandSpeed;
-		public int MinLandSpeed
-		{
-			get { return m_MinLandSpeed; }
-			set
-			{
-				if (m_MinLandSpeed != value)
-				{
-					m_MinLandSpeed = value;
-					OnPropertyChanged(nameof(MinLandSpeed));
-				}
-			}
-		}
-
-		private int m_MaxLandSpeed;
-		public int MaxLandSpeed
-		{
-			get { return m_MaxLandSpeed; }
-			set
-			{
-				if (m_MaxLandSpeed != value)
-				{
-					m_MaxLandSpeed = value;
-					OnPropertyChanged(nameof(MaxLandSpeed));
-				}
-			}
-		}
-
-		private int m_MinWaterSpeed;
-		public int MinWaterSpeed
-		{
-			get { return m_MinWaterSpeed; }
-			set
-			{
-				if (m_MinWaterSpeed != value)
-				{
-					m_MinWaterSpeed = value;
-					OnPropertyChanged(nameof(MinWaterSpeed));
-				}
-			}
-		}
-
-		private int m_MaxWaterSpeed;
-		public int MaxWaterSpeed
-		{
-			get { return m_MaxWaterSpeed; }
-			set
-			{
-				if (m_MaxWaterSpeed != value)
-				{
-					m_MaxWaterSpeed = value;
-					OnPropertyChanged(nameof(MaxWaterSpeed));
-				}
-			}
-		}
-
-		private int m_MinAirSpeed;
-		public int MinAirSpeed
-		{
-			get { return m_MinAirSpeed; }
-			set
-			{
-				if (m_MinAirSpeed != value)
-				{
-					m_MinAirSpeed = value;
-					OnPropertyChanged(nameof(MinAirSpeed));
-				}
-			}
-		}
-
-		private int m_MaxAirSpeed;
-		public int MaxAirSpeed
-		{
-			get { return m_MaxAirSpeed; }
-			set
-			{
-				if (m_MaxAirSpeed != value)
-				{
-					m_MaxAirSpeed = value;
-					OnPropertyChanged(nameof(MaxAirSpeed));
-				}
-			}
-		}
-
-		private int m_MinMeleeDamage;
-		public int MinMeleeDamage
-		{
-			get { return m_MinMeleeDamage; }
-			set
-			{
-				if (m_MinMeleeDamage != value)
-				{
-					m_MinMeleeDamage = value;
-					OnPropertyChanged(nameof(MinMeleeDamage));
-				}
-			}
-		}
-
-		private int m_MaxMeleeDamage;
-		public int MaxMeleeDamage
-		{
-			get { return m_MaxMeleeDamage; }
-			set
-			{
-				if (m_MaxMeleeDamage != value)
-				{
-					m_MaxMeleeDamage = value;
-					OnPropertyChanged(nameof(MaxMeleeDamage));
-				}
-			}
-		}
-
-		private int m_MinRangeDamage;
-		public int MinRangeDamage
-		{
-			get { return m_MinRangeDamage; }
-			set
-			{
-				if (m_MinRangeDamage != value)
-				{
-					m_MinRangeDamage = value;
-					OnPropertyChanged(nameof(MinRangeDamage));
-				}
-			}
-		}
-
-		private int m_MaxRangeDamage;
-		public int MaxRangeDamage
-		{
-			get { return m_MaxRangeDamage; }
-			set
-			{
-				if (m_MaxRangeDamage != value)
-				{
-					m_MaxRangeDamage = value;
-					OnPropertyChanged(nameof(MaxRangeDamage));
-				}
-			}
-		}
-
-		private bool m_DoOnlySelectedAbilitiesFilter;
-		public bool DoOnlySelectedAbilitiesFilter
-		{
-			get
-			{
-				return m_DoOnlySelectedAbilitiesFilter;
-			}
-			set
-			{
-				if (m_DoOnlySelectedAbilitiesFilter != value)
-				{
-					m_DoOnlySelectedAbilitiesFilter = value;
-					OnPropertyChanged(nameof(DoOnlySelectedAbilitiesFilter));
-				}
-			}
-		}
-
-		private bool m_DoOnlySelectedStockFilter;
-		public bool DoOnlySelectedStockFilter
-		{
-			get
-			{
-				return m_DoOnlySelectedStockFilter;
-			}
-			set
-			{
-				if (m_DoOnlySelectedStockFilter != value)
-				{
-					m_DoOnlySelectedStockFilter = value;
-					OnPropertyChanged(nameof(DoOnlySelectedStockFilter));
-				}
-			}
-		}
-
-		private bool m_DoArtilleryOnlyFilter;
-		public bool DoArtilleryOnlyFilter
-		{
-			get
-			{
-				return m_DoArtilleryOnlyFilter;
-			}
-			set
-			{
-				if (m_DoArtilleryOnlyFilter != value)
-				{
-					// turned on
-					if (value)
-					{
-						RemoveOtherRangeFilters(nameof(DoArtilleryOnlyFilter));
-					}
-					m_DoArtilleryOnlyFilter = value;
-					OnPropertyChanged(nameof(DoArtilleryOnlyFilter));
-				}
-			}
-		}
-
-		private bool m_DoWaterArtilleryFilter;
-		public bool DoWaterArtilleryFilter
-		{
-			get
-			{
-				return m_DoWaterArtilleryFilter;
-			}
-			set
-			{
-				if (m_DoWaterArtilleryFilter != value)
-				{
-					// turned on
-					if (value)
-					{
-						RemoveOtherRangeFilters(nameof(DoWaterArtilleryFilter));
-					}
-					m_DoWaterArtilleryFilter = value;
-					OnPropertyChanged(nameof(DoWaterArtilleryFilter));
-				}
-			}
-		}
-
-		private bool m_DoRockArtilleryFilter;
-		public bool DoRockArtilleryFilter
-		{
-			get
-			{
-				return m_DoRockArtilleryFilter;
-			}
-			set
-			{
-				if (m_DoRockArtilleryFilter != value)
-				{
-					// turned on
-					if (value)
-					{
-						RemoveOtherRangeFilters(nameof(DoRockArtilleryFilter));
-					}
-					m_DoRockArtilleryFilter = value;
-					OnPropertyChanged(nameof(DoRockArtilleryFilter));
-				}
-			}
-		}
-
-		private bool m_DoChemicalArtilleryFilter;
-		public bool DoChemicalArtilleryFilter
-		{
-			get
-			{
-				return m_DoChemicalArtilleryFilter;
-			}
-			set
-			{
-				if (m_DoChemicalArtilleryFilter != value)
-				{
-					// turned on
-					if (value)
-					{
-						RemoveOtherRangeFilters(nameof(DoChemicalArtilleryFilter));
-					}
-					m_DoChemicalArtilleryFilter = value;
-					OnPropertyChanged(nameof(DoChemicalArtilleryFilter));
-				}
-			}
-		}
-
-		private bool m_DoRangeFilter;
-		public bool DoRangeFilter
-		{
-			get
-			{
-				return m_DoRangeFilter;
-			}
-			set
-			{
-				if (m_DoRangeFilter != value)
-				{
-					// turned on
-					if (value)
-					{
-						RemoveOtherRangeFilters(nameof(DoRangeFilter));
-					}
-					m_DoRangeFilter = value;
-					OnPropertyChanged(nameof(DoRangeFilter));
-				}
-			}
-		}
-
-		private bool m_DoDirectRangeFilter;
-		public bool DoDirectRangeFilter
-		{
-			get
-			{
-				return m_DoDirectRangeFilter;
-			}
-			set
-			{
-				if (m_DoDirectRangeFilter != value)
-				{
-					// turned on
-					if (value)
-					{
-						RemoveOtherRangeFilters(nameof(DoDirectRangeFilter));
-					}
-					m_DoDirectRangeFilter = value;
-					OnPropertyChanged(nameof(DoDirectRangeFilter));
-				}
-			}
-		}
-
-		private bool m_DoSonicRangeFilter;
-		public bool DoSonicRangeFilter
-		{
-			get
-			{
-				return m_DoSonicRangeFilter;
-			}
-			set
-			{
-				if (m_DoSonicRangeFilter != value)
-				{
-					// turned on
-					if (value)
-					{
-						RemoveOtherRangeFilters(nameof(DoSonicRangeFilter));
-					}
-					m_DoSonicRangeFilter = value;
-					OnPropertyChanged(nameof(DoSonicRangeFilter));
-				}
-			}
-		}
-
-		private bool m_DoSingleRangeFilter;
-		public bool DoSingleRangeFilter
-		{
-			get
-			{
-				return m_DoSingleRangeFilter;
-			}
-			set
-			{
-				if (m_DoSingleRangeFilter != value)
-				{
-					m_DoSingleRangeFilter = value;
-					OnPropertyChanged(nameof(DoSingleRangeFilter));
-				}
-			}
-		}
-
-		private bool m_DoHornsFilter;
-		public bool DoHornsFilter
-		{
-			get
-			{
-				return m_DoHornsFilter;
-			}
-			set
-			{
-				if (m_DoHornsFilter != value)
-				{
-					m_DoHornsFilter = value;
-					OnPropertyChanged(nameof(DoHornsFilter));
-				}
-			}
-		}
-
-		private bool m_DoBarrierDestroyFilter;
-		public bool DoBarrierDestroyFilter
-		{
-			get
-			{
-				return m_DoBarrierDestroyFilter;
-			}
-			set
-			{
-				if (m_DoBarrierDestroyFilter != value)
-				{
-					m_DoBarrierDestroyFilter = value;
-					OnPropertyChanged(nameof(DoBarrierDestroyFilter));
-				}
-			}
-		}
-
-		private bool m_DoPoisonFilter;
-		public bool DoPoisonFilter
-		{
-			get
-			{
-				return m_DoPoisonFilter;
-			}
-			set
-			{
-				if (m_DoPoisonFilter != value)
-				{
-					m_DoPoisonFilter = value;
-					OnPropertyChanged(nameof(DoPoisonFilter));
-				}
-			}
 		}
 	}
 }

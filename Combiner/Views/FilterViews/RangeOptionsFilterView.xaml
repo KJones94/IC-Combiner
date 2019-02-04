@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Combiner.RangeOptionsFilterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Combiner"
+             mc:Ignorable="d">
+    <StackPanel>
+		<StackPanel Orientation="Horizontal">
+			<local:OptionFilterView DataContext="{Binding RangeOnlyFilter}"/>
+			<local:OptionFilterView DataContext="{Binding DirectRangeFilter}"/>
+			<local:OptionFilterView DataContext="{Binding SonicRangeFilter}"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal">
+			<local:OptionFilterView DataContext="{Binding ArtilleryOnlyFilter}"/>
+			<local:OptionFilterView DataContext="{Binding RockArtilleryFilter}"/>
+			<local:OptionFilterView DataContext="{Binding WaterArtilleryFilter}"/>
+			<local:OptionFilterView DataContext="{Binding ChemicalArtilleryFilter}"/>
+		</StackPanel>
+    </StackPanel>
+</UserControl>

@@ -10,9 +10,14 @@ namespace Combiner
 		public HornsFilter()
 			: base("Has Horns") { }
 
-		public override bool Filter(Creature creature)
+		protected override bool OnOptionChecked(Creature creature)
 		{
-			throw new NotImplementedException();
+			return creature.HasHorns;
+		}
+
+		public override string ToString()
+		{
+			return nameof(HornsFilter);
 		}
 	}
 }
