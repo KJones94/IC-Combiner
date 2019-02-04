@@ -13,8 +13,12 @@ namespace Combiner
 {
 	public class CreatureDataVM : BaseViewModel
 	{
+		private Database m_Database;
 
-		public CreatureDataVM() {}
+		public CreatureDataVM(Database database)
+		{
+			m_Database = database;
+		}
 
 		private ObservableCollection<Creature> m_Creatures;
 		public ObservableCollection<Creature> Creatures
@@ -47,7 +51,6 @@ namespace Combiner
 				{
 					m_CreaturesView = value;
 					OnPropertyChanged(nameof(CreaturesView));
-					//int x = m_CreaturesView.Cast<object>().Count();
 				}
 			}
 		}
@@ -90,7 +93,7 @@ namespace Combiner
 		{
 			if (SelectedCreature != null)
 			{
-				Database.SaveCreature(SelectedCreature);
+				m_Database.SaveCreature(SelectedCreature);
 			}
 		}
 
@@ -115,7 +118,7 @@ namespace Combiner
 		{
 			if (SelectedCreature != null)
 			{
-				Database.UnsaveCreature(SelectedCreature);
+				m_Database.UnsaveCreature(SelectedCreature);
 			}
 		}
 

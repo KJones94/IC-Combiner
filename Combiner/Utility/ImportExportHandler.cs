@@ -8,11 +8,20 @@ using System.Windows.Forms;
 
 namespace Combiner
 {
-	public static class ImportExportHandler
+	public class ImportExportHandler
 	{
-		private static string m_XMLDirectory = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) , "..\\..\\XML"));
+		private string m_XMLDirectory = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) , "..\\..\\XML"));
 
-		public static void Import()
+		private Database m_Database;
+		private CreatureXMLHandler m_CreatureXMLHandler;
+
+		public ImportExportHandler(Database database)
+		{
+			m_Database = database;
+			m_CreatureXMLHandler = new CreatureXMLHandler();
+		}
+
+		public void Import()
 		{
 			// Select file from dialog
 			string filePath = string.Empty;
@@ -35,19 +44,19 @@ namespace Combiner
 
 			// Read XML and all that
 
-			IEnumerable<CreatureQueryData> importedCreatureData = CreatureXMLHandler.GetCreatureDataFromXML(filePath);
+			IEnumerable<CreatureQueryData> importedCreatureData = m_CreatureXMLHandler.GetCreatureDataFromXML(filePath);
 
 			// Save creatures to database
 
 			List<Creature> creatures = new List<Creature>();
 			foreach (var data in importedCreatureData)
 			{
-				creatures.Add(Database.GetCreature(data.left, data.right, data.bodyParts));
+				creatures.Add(m_Database.GetCreature(data.left, data.right, data.bodyParts));
 			}
-			Database.SaveCreatures(creatures);
+			m_Database.SaveCreatures(creatures);
 		}
 
-		public static void Export()
+		public void Export()
 		{
 			// Select file to save as
 
@@ -71,11 +80,11 @@ namespace Combiner
 
 			// Get creature data from database
 
-			List<Creature> savedCreatures = Database.GetSavedCreatures();
+			List<Creature> savedCreatures = m_Database.GetSavedCreatures();
 
 			// Write to XML
 
-			CreatureXMLHandler.AddCreaturesToXML(savedCreatures, filePath);
+			m_CreatureXMLHandler.AddCreaturesToXML(savedCreatures, filePath);
 
 		}
 	}

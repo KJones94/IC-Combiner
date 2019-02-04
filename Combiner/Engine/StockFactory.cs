@@ -6,21 +6,8 @@ using System.Text;
 
 namespace Combiner
 {
-	// Not thread safe
 	public class StockFactory
 	{
-		private static readonly StockFactory _instance = new StockFactory();
-
-		public static StockFactory Instance
-		{
-			get
-			{
-				return _instance;
-			}
-		}
-
-		private StockFactory() { }
-		
 		public Stock CreateStock(string animalName, LuaStockProxy lua)
 		{
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);

@@ -13,15 +13,22 @@ namespace Combiner
 	{
 		private FiltersVM m_FiltersVM;
 		private CreatureDataVM m_NewCreatureVM;
+		private Database m_Database;
+		private ImportExportHandler m_ImportExportHandler;
 		private CreatureCsvWriter m_CreatureCsvWriter;
 
 		public DatabaseVM(
 			CreatureDataVM newCreatureVM,
-			FiltersVM filtersVM)
+			FiltersVM filtersVM,
+			Database database,
+			ImportExportHandler importExportHandler,
+			CreatureCsvWriter creatureCsvWriter)
 		{
 			m_NewCreatureVM = newCreatureVM;
 			m_FiltersVM = filtersVM;
-			m_CreatureCsvWriter = new CreatureCsvWriter();
+			m_Database = database;
+			m_ImportExportHandler = importExportHandler;
+			m_CreatureCsvWriter = creatureCsvWriter;
 		}
 
 		private ICommand m_CreateDatabaseCommand;
@@ -44,7 +51,7 @@ namespace Combiner
 		private void CreateDatabase(object obj)
 		{
 			string text = string.Empty;
-			if (Database.Exists())
+			if (m_Database.Exists())
 			{
 				text = "The database has already been created. If you continue the database will be over written, including saved creatures. Would you like to continue?";
 			}
@@ -56,7 +63,7 @@ namespace Combiner
 			MessageBoxResult result = MessageBox.Show(text, "Database Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 			if (result == MessageBoxResult.Yes)
 			{
-				Database.CreateDB();
+				m_Database.CreateDB();
 				MessageBox.Show("Finished creating the database.");
 			}
 		}
@@ -80,7 +87,7 @@ namespace Combiner
 		}
 		private void LoadCreatures(object obj)
 		{
-			m_NewCreatureVM.Creatures = new ObservableCollection<Creature>(Database.GetAllCreatures());
+			m_NewCreatureVM.Creatures = new ObservableCollection<Creature>(m_Database.GetAllCreatures());
 			m_NewCreatureVM.CreaturesView.Filter = m_FiltersVM.CreatureFilter;
 		}
 
@@ -103,7 +110,7 @@ namespace Combiner
 		}
 		private void LoadSavedCreatures(object obj)
 		{
-			m_NewCreatureVM.Creatures = new ObservableCollection<Creature>(Database.GetSavedCreatures());
+			m_NewCreatureVM.Creatures = new ObservableCollection<Creature>(m_Database.GetSavedCreatures());
 			m_NewCreatureVM.CreaturesView.Filter = m_FiltersVM.CreatureFilter;
 		}
 
@@ -127,7 +134,7 @@ namespace Combiner
 		}
 		private void DeleteSavedCreatures(object obj)
 		{
-			Database.DeleteSavedCreatures();
+			m_Database.DeleteSavedCreatures();
 		}
 
 		private ICommand m_ExportSavedCreaturesCommand;
@@ -149,7 +156,7 @@ namespace Combiner
 		}
 		public void ExportSavedCreature(object obj)
 		{
-			ImportExportHandler.Export();
+			m_ImportExportHandler.Export();
 		}
 
 		private ICommand m_ImportSavedCreaturesCommand;
@@ -171,7 +178,7 @@ namespace Combiner
 		}
 		public void ImportSavedCreature(object obj)
 		{
-			ImportExportHandler.Import();
+			m_ImportExportHandler.Import();
 		}
 
 		private ICommand m_ExportToCsvCommand;

@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Combiner"
         mc:Ignorable="d"
-        Title="Combiner" Height="1000" Width="1500">
+        Title="Combiner" 
+		Height="1000" 
+		Width="1500"
+		WindowState="Maximized"
+		SizeToContent="Manual">
 	<Window.DataContext>
 		<local:MainVM/>
 	</Window.DataContext>

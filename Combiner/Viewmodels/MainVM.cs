@@ -8,7 +8,6 @@ namespace Combiner
 {
 	public class MainVM : BaseViewModel
 	{
-
 		private CreatureDataVM m_CreatureDataVM;
 		public CreatureDataVM CreatureDataVM
 		{
@@ -62,9 +61,13 @@ namespace Combiner
 
 		public MainVM()
 		{
-			CreatureDataVM = new CreatureDataVM();
+			Database database = new Database();
+			ImportExportHandler importExportHandler = new ImportExportHandler(database);
+			CreatureCsvWriter creatureCsvWriter = new CreatureCsvWriter();
+
+			CreatureDataVM = new CreatureDataVM(database);
 			FiltersVM = new FiltersVM(CreatureDataVM);
-			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM);
+			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, database, importExportHandler, creatureCsvWriter);
 		}
 
 		

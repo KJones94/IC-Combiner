@@ -9,16 +9,16 @@ using System.Threading;
 
 namespace Combiner
 {
-	public static class Database
+	public class Database
 	{
-		private static readonly string m_CreaturesCollectionName = "creatures";
-		private static readonly string m_SavedCreaturesCollectionName = "saved_creatures";
+		private readonly string m_CreaturesCollectionName = "creatures";
+		private readonly string m_SavedCreaturesCollectionName = "saved_creatures";
 
 		/// <summary>
 		/// Gets all creatures from the creatures collection
 		/// </summary>
 		/// <returns></returns>
-		public static List<Creature> GetAllCreatures()
+		public List<Creature> GetAllCreatures()
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
@@ -41,7 +41,7 @@ namespace Combiner
 		/// <param name="right"></param>
 		/// <param name="bodyParts"></param>
 		/// <returns></returns>
-		public static Creature GetCreature(string left, string right, Dictionary<string, string> bodyParts)
+		public Creature GetCreature(string left, string right, Dictionary<string, string> bodyParts)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
@@ -60,7 +60,7 @@ namespace Combiner
 		/// Function used for testing import/export.
 		/// Could continue to use in the application
 		/// </summary>
-		public static void DeleteSavedCreatures()
+		public void DeleteSavedCreatures()
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
@@ -75,7 +75,7 @@ namespace Combiner
 		/// Gets the creatures from the saved creatures collection
 		/// </summary>
 		/// <returns></returns>
-		public static List<Creature> GetSavedCreatures()
+		public List<Creature> GetSavedCreatures()
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
@@ -94,7 +94,7 @@ namespace Combiner
 		/// Adds the creatures to the saved creatures collection
 		/// </summary>
 		/// <param name="creatures"></param>
-		public static void SaveCreatures(IEnumerable<Creature> creatures)
+		public void SaveCreatures(IEnumerable<Creature> creatures)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
@@ -108,7 +108,7 @@ namespace Combiner
 		/// Adds the creature to the saved creatures collection
 		/// </summary>
 		/// <param name="creature"></param>
-		public static void SaveCreature(Creature creature)
+		public void SaveCreature(Creature creature)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
@@ -126,7 +126,7 @@ namespace Combiner
 		/// Removes the creature from the saved creatures collection
 		/// </summary>
 		/// <param name="creature"></param>
-		public static void UnsaveCreature(Creature creature)
+		public void UnsaveCreature(Creature creature)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
@@ -141,7 +141,7 @@ namespace Combiner
 			}
 		}
 
-		private static Query FindCreatureQuery(string left, string right, Dictionary<string, string> bodyParts)
+		private Query FindCreatureQuery(string left, string right, Dictionary<string, string> bodyParts)
 		{
 			return
 				Query.And(
@@ -155,7 +155,7 @@ namespace Combiner
 					Query.Where("BodyParts", (x => HasSameBodyParts(x, bodyParts))));
 		}
 
-		private static bool HasSameBodyParts(BsonValue x, Dictionary<string, string> bodyParts)
+		private bool HasSameBodyParts(BsonValue x, Dictionary<string, string> bodyParts)
 		{
 			bool same = true;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
@@ -175,7 +175,7 @@ namespace Combiner
 			return same;
 		}
 
-		public static bool Exists()
+		public bool Exists()
 		{
 			if (File.Exists(DirectoryConstants.DatabaseString))
 			{
@@ -190,7 +190,7 @@ namespace Combiner
 			return false;
 		}
 
-		public static void CreateDB()
+		public void CreateDB()
 		{
 			Directory.CreateDirectory(DirectoryConstants.DatabaseDirectory);
 
@@ -216,7 +216,7 @@ namespace Combiner
 			}
 		}
 
-		private static void CreateCreatures(LiteCollection<Creature> collection)
+		private void CreateCreatures(LiteCollection<Creature> collection)
 		{
 			var stockNames = Directory.GetFiles(DirectoryConstants.StockDirectory)
 				.Select(s => s.Replace(".lua", "")

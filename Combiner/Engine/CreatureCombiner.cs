@@ -20,11 +20,12 @@ namespace Combiner
 
 		private Dictionary<string, Stock> InitStockPool(List<string> stockNames)
 		{
+			StockFactory stockFactory = new StockFactory();
 			Dictionary<string, Stock> stockPool = new Dictionary<string, Stock>();
 			foreach (var stockName in stockNames)
 			{
 				LuaStockProxy lua = new LuaStockProxy();
-				stockPool.Add(StockNames.ProperStockNames[stockName], StockFactory.Instance.CreateStock(stockName, lua));
+				stockPool.Add(StockNames.ProperStockNames[stockName], stockFactory.CreateStock(stockName, lua));
 			}
 			return stockPool;
 		}
@@ -48,10 +49,11 @@ namespace Combiner
 			List<Dictionary<Limb, Side>> unprunedBodyParts = CreateUnprunedBodyParts(left, right);
 			List<Dictionary<Limb, Side>> prunedBodyParts = PruneBodyParts(left, right, unprunedBodyParts);
 
+			CreatureFactory creatureFactory = new CreatureFactory();
 			List<CreatureBuilder> creatures = new List<CreatureBuilder>();
 			foreach (Dictionary<Limb, Side> dict in prunedBodyParts)
 			{
-				creatures.Add(CreatureFactory.Instance.CreateCreature(left, right, dict));
+				creatures.Add(creatureFactory.CreateCreature(left, right, dict));
 			}
 			return creatures;
 		}

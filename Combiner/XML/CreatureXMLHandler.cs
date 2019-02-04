@@ -8,7 +8,7 @@ using System.Xml.Schema;
 
 namespace Combiner
 {
-	public static class CreatureXMLHandler
+	public class CreatureXMLHandler
 	{
 		private static readonly XNamespace ns = "IC";
 		private static readonly string m_SchemaDirectory = "../../XML/Schemas";
@@ -17,7 +17,7 @@ namespace Combiner
 		/// <summary>
 		/// Adds the creatures from the XML to the database
 		/// </summary>
-		public static IEnumerable<CreatureQueryData> GetCreatureDataFromXML(string filePath)
+		public IEnumerable<CreatureQueryData> GetCreatureDataFromXML(string filePath)
 		{
 			XElement xml = GetXML(filePath);
 			if (xml == null)
@@ -47,7 +47,7 @@ namespace Combiner
 		/// </summary>
 		/// <param name="xmlBodyParts"></param>
 		/// <returns></returns>
-		private static Dictionary<string, string> BuildBodyParts(XElement xmlBodyParts)
+		private Dictionary<string, string> BuildBodyParts(XElement xmlBodyParts)
 		{
 			Dictionary<string, string> bodyParts = new Dictionary<string, string>();
 			foreach (var item in xmlBodyParts.Descendants(ns + "item"))
@@ -61,7 +61,7 @@ namespace Combiner
 		/// Adds creatures to saved creatures XML
 		/// </summary>
 		/// <param name="creatures"></param>
-		public static void AddCreaturesToXML(IEnumerable<Creature> creatures, string filePath)
+		public void AddCreaturesToXML(IEnumerable<Creature> creatures, string filePath)
 		{
 			XElement xmlSavedCreatures;
 			if (!File.Exists(filePath))
@@ -103,7 +103,7 @@ namespace Combiner
 		/// Saves the given XML to a new file or overwrites the given file
 		/// </summary>
 		/// <param name="xml"></param>
-		private static void SaveXML(XElement xml, string filePath)
+		private void SaveXML(XElement xml, string filePath)
 		{
 			if (xml == null)
 			{
@@ -122,7 +122,7 @@ namespace Combiner
 		/// Creates a saved creatures XML file
 		/// </summary>
 		/// <returns></returns>
-		private static XElement CreateXML(string filePath)
+		private XElement CreateXML(string filePath)
 		{
 			XElement newXML = new XElement(ns + "SavedCreatures");
 			SaveXML(newXML, filePath);
@@ -133,7 +133,7 @@ namespace Combiner
 		/// Gets the saved creatures XML from the given file
 		/// </summary>
 		/// <returns></returns>
-		private static XElement GetXML(string filePath)
+		private XElement GetXML(string filePath)
 		{
 			if (!File.Exists(filePath))
 			{
@@ -155,7 +155,7 @@ namespace Combiner
 		/// <param name="xElement"></param>
 		/// <param name="schemas"></param>
 		/// <returns></returns>
-		private static bool ValidateWithSchema(XElement xElement, XmlSchemaSet schemas)
+		private bool ValidateWithSchema(XElement xElement, XmlSchemaSet schemas)
 		{
 			string errorMessage = string.Empty;
 			bool result = false;
@@ -191,7 +191,7 @@ namespace Combiner
 		/// Gets the saved creatures XML schema
 		/// </summary>
 		/// <returns></returns>
-		private static XmlSchemaSet GetSchema()
+		private XmlSchemaSet GetSchema()
 		{
 			if (!Directory.Exists(m_SchemaDirectory))
 			{
