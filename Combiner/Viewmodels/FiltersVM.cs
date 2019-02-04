@@ -141,6 +141,83 @@ namespace Combiner
 			}
 		}
 
+		private RelayCommand m_DropAllFiltersCommand;
+		public RelayCommand DropAllFiltersCommand
+		{
+			get
+			{
+				return m_DropAllFiltersCommand ??
+					(m_DropAllFiltersCommand = new RelayCommand(DropAllFilters));
+			}
+			set
+			{
+				if (m_DropAllFiltersCommand != value)
+				{
+					m_DropAllFiltersCommand = value;
+					OnPropertyChanged(nameof(DropAllFiltersCommand));
+				}
+			}
+		}
+
+		private void DropAllFilters(object o)
+		{
+			ChosenFilters.ToList().ForEach(FilterChoices.Add);
+			FilterChoices = new ObservableCollection<Combiner.CreatureFilter>(FilterChoices.OrderBy(s => s.Name));
+			ChosenFilters = new ObservableCollection<Combiner.CreatureFilter>();
+		}
+
+		private RelayCommand m_AddAllFiltersCommand;
+		public RelayCommand AddAllFiltersCommand
+		{
+			get
+			{
+				return m_AddAllFiltersCommand ??
+					(m_AddAllFiltersCommand = new RelayCommand(AddAllFilters));
+			}
+			set
+			{
+				if (m_AddAllFiltersCommand != value)
+				{
+					m_AddAllFiltersCommand = value;
+					OnPropertyChanged(nameof(AddAllFiltersCommand));
+				}
+			}
+		}
+
+		private void AddAllFilters(object o)
+		{
+			FilterChoices.ToList().ForEach(ChosenFilters.Add);
+			ChosenFilters = new ObservableCollection<Combiner.CreatureFilter>(ChosenFilters.OrderBy(s => s.Name));
+			FilterChoices = new ObservableCollection<Combiner.CreatureFilter>();
+		}
+
+		private RelayCommand m_ResetFiltersCommand;
+		public RelayCommand ResetFiltersCommand
+		{
+			get
+			{
+				return m_ResetFiltersCommand ??
+					(m_ResetFiltersCommand = new RelayCommand(ResetFilters));
+			}
+			set
+			{
+				if (m_ResetFiltersCommand != value)
+				{
+					m_ResetFiltersCommand = value;
+					OnPropertyChanged(nameof(ResetFiltersCommand));
+				}
+			}
+		}
+
+		private void ResetFilters(object o)
+		{
+			DropAllFilters(o);
+			foreach (CreatureFilter filter in FilterChoices)
+			{
+				filter.ResetFilter();
+			}
+		}
+
 		private ICommand m_FilterCreaturesCommand;
 		public ICommand FilterCreaturesCommand
 		{

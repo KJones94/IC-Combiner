@@ -24,7 +24,7 @@
 			<Label Content="{Binding Selected.Count, Mode=OneWay}"/>
 			<Button Content="Remove"
 				Width="50"
-				Command="{Binding DataContext.DropFilterCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NewFiltersView}}}"
+				Command="{Binding DataContext.DropFilterCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:FiltersView}}}"
 				CommandParameter="{Binding .}"/>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal">

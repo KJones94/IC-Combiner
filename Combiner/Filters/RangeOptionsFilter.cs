@@ -208,8 +208,6 @@ namespace Combiner
 			}
 		}
 
-		// TODO: Change this to set an active filter so that we don't have to check which one is on
-		// TODO: Need to hook into IsOptionChecked PropertyChanged event because the filters themselves won't be changing
 		public override bool Filter(Creature creature)
 		{
 			if (m_ActiveFilter != null)
@@ -217,6 +215,19 @@ namespace Combiner
 				return m_ActiveFilter.Filter(creature);
 			}
 			return true;
+		}
+
+		public override void ResetFilter()
+		{
+			RangeOnlyFilter.IsOptionChecked = false;
+			DirectRangeFilter.IsOptionChecked = false;
+			SonicRangeFilter.IsOptionChecked = false;
+			ArtilleryOnlyFilter.IsOptionChecked = false;
+			RockArtilleryFilter.IsOptionChecked = false;
+			WaterArtilleryFilter.IsOptionChecked = false;
+			ChemicalArtilleryFilter.IsOptionChecked = false;
+
+			m_ActiveFilter = null;
 		}
 
 		private void OnIsOptionCheckChanged(object sender, PropertyChangedEventArgs args)

@@ -140,7 +140,6 @@
     <Compile Include="Utility\Names.cs" />
     <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />
-    <Compile Include="Viewmodels\NewFiltersVM.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -186,9 +185,6 @@
     <Compile Include="Base\RelayCommand.cs" />
     <Compile Include="Views\CreatureDataView.xaml.cs">
       <DependentUpon>CreatureDataView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NewFiltersView.xaml.cs">
-      <DependentUpon>NewFiltersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReportWindow.xaml.cs">
       <DependentUpon>ReportWindow.xaml</DependentUpon>
@@ -241,10 +237,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreatureDataView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\NewFiltersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

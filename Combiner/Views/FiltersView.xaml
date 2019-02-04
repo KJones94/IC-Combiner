@@ -17,11 +17,13 @@
 		<ScrollViewer VerticalScrollBarVisibility="Auto">
 			<StackPanel Grid.Column="0">
 				<StackPanel Orientation="Horizontal">
-					<ComboBox ItemsSource="{Binding FilterChoices}" 
+					<ComboBox ItemsSource="{Binding FilterChoices}"
 					  Width="150"
 					  IsEditable="False"
 					  SelectedItem="{Binding SelectedFilter}"/>
 					<Button Content="Add" Width="30" Command="{Binding AddFilterCommand}"/>
+					<Button Content="Drop All" Width="50" Command="{Binding DropAllFiltersCommand}"/>
+					<Button Content="Add All" Width="50" Command="{Binding AddAllFiltersCommand}"/>
 				</StackPanel>
 				<ItemsControl ItemsSource="{Binding ChosenFilters}">
 					<ItemsControl.ItemsPanel>
@@ -47,7 +49,7 @@
 			</StackPanel>
 		</ScrollViewer>
 		<StackPanel Grid.Column="1">
-			<Button Content="Reset Filters" Command="{Binding SetDefaultFiltersCommand}"/>
+			<Button Content="Reset Filters" Command="{Binding ResetFiltersCommand}"/>
 			<Button Content="Filter" Command="{Binding FilterCreaturesCommand}"/>
 		</StackPanel>
 	</Grid>

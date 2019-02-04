@@ -37,6 +37,9 @@ namespace Combiner
 			return true;
 		}
 
-
+		public override void ResetFilter()
+		{
+			IsOptionChecked = false;
+		}
 	}
 }

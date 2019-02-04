@@ -10,14 +10,14 @@ namespace Combiner
 		public StatFilter(string name, double minDefaultValue, double maxDefaultValue)
 			: base(name)
 		{
-			MinDefaultValue = minDefaultValue;
-			MaxDefaultValue = maxDefaultValue;
+			m_MinDefaultValue = minDefaultValue;
+			m_MaxDefaultValue = maxDefaultValue;
 			MinValue = minDefaultValue;
 			MaxValue = maxDefaultValue;
 		}
 
-		public double MinDefaultValue { get; private set; }
-		public double MaxDefaultValue { get; private set; }
+		private double m_MinDefaultValue;
+		private double m_MaxDefaultValue;
 
 		private double m_MinValue;
 		public double MinValue
@@ -45,6 +45,12 @@ namespace Combiner
 					OnPropertyChanged(nameof(MaxValue));
 				}
 			}
+		}
+
+		public override void ResetFilter()
+		{
+			MinValue = m_MinDefaultValue;
+			MaxValue = m_MaxDefaultValue;
 		}
 	}
 }

@@ -33,6 +33,12 @@ namespace Combiner
 			return FilterAnySelected(creature);
 		}
 
+		public override void ResetFilter()
+		{
+			RemoveAllSelected(null);
+			IsOnlySelectedFiltered = false;
+		}
+
 		private ObservableCollection<string> m_Choices;
 		public ObservableCollection<string> Choices
 		{
