@@ -158,7 +158,7 @@ namespace Combiner
 		private static bool HasSameBodyParts(BsonValue x, Dictionary<string, string> bodyParts)
 		{
 			bool same = true;
-			foreach(Limb limb in Enum.GetValues(typeof(Limb)))
+			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
 				if (limb == Limb.Nothing || limb == Limb.General)
 				{
@@ -177,25 +177,22 @@ namespace Combiner
 
 		public static bool Exists()
 		{
-			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			if (File.Exists(DirectoryConstants.DatabaseString))
 			{
-				try
+				using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 				{
 					var collectionExists = db.CollectionExists(m_CreaturesCollectionName);
 					return collectionExists
 						? db.GetCollection<Creature>(m_CreaturesCollectionName).Count() > 0
 						: false;
 				}
-				catch (DirectoryNotFoundException ex)
-				{
-					return false;
-				}
 			}
+			return false;
 		}
 
 		public static void CreateDB()
 		{
-			Directory.CreateDirectory(DirectoryConstants.DatabaseLocation);
+			Directory.CreateDirectory(DirectoryConstants.DatabaseDirectory);
 
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
@@ -233,7 +230,7 @@ namespace Combiner
 				{
 					List<Creature> creatures = creatureCombiner
 						.CreateAllPossibleCreatures(
-							StockNames.ProperStockNames[stockNames[i]], 
+							StockNames.ProperStockNames[stockNames[i]],
 							StockNames.ProperStockNames[stockNames[j]]);
 					collection.InsertBulk(creatures);
 				}
