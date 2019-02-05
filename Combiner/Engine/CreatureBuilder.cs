@@ -536,7 +536,7 @@ namespace Combiner
 			{
 				return false;
 			}
-			return true;
+			return WaterSpeed > 0;
 		}
 
 		private bool HasAirSpeed()
