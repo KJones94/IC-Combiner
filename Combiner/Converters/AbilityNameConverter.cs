@@ -20,6 +20,7 @@
 			{
 				return ability;
 			}
+
 			return AbilityNames.ProperAbilityNames[ability];
 		}
 

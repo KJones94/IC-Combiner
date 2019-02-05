@@ -166,6 +166,7 @@
 				{
 					continue;
 				}
+
 				same = x.AsDocument.Get(limb.ToString()).First().AsString
 					== bodyParts[limb.ToString()];
 				if (!same)
@@ -189,6 +190,7 @@
 						: false;
 				}
 			}
+
 			return false;
 		}
 
@@ -202,6 +204,7 @@
 				{
 					db.DropCollection(this.m_CreaturesCollectionName);
 				}
+
 				if (db.CollectionExists(this.m_SavedCreaturesCollectionName))
 				{
 					db.DropCollection(this.m_SavedCreaturesCollectionName);
@@ -213,16 +216,16 @@
 				// Setup indexes
 				// May not need if not querying to filter
 				// These caused a 3GB spike in memory usage
-				//collection.EnsureIndex(x => x.Rank);
-				//collection.EnsureIndex(x => x.Abilities);
+				// collection.EnsureIndex(x => x.Rank);
+				// collection.EnsureIndex(x => x.Abilities);
 			}
 		}
 
 		private void CreateCreatures(LiteCollection<Creature> collection)
 		{
 			var stockNames = Directory.GetFiles(DirectoryConstants.StockDirectory)
-				.Select(s => s.Replace(".lua", "")
-				.Replace(DirectoryConstants.StockDirectory, ""))
+				.Select(s => s.Replace(".lua", string.Empty)
+				.Replace(DirectoryConstants.StockDirectory, string.Empty))
 				.ToList();
 
 			CreatureCombiner creatureCombiner = new CreatureCombiner(stockNames);

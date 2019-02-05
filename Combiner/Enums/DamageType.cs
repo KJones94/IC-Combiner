@@ -8,6 +8,6 @@
 		BarrierDestroy = 4,
 		Electric = 8,
 		Sonic = 16,
-		Poison = 256,
+		Poison = 256
 	}
 }

@@ -28,6 +28,7 @@
 				return this.m_RangeOnlyFilter
 					?? (this.m_RangeOnlyFilter = new RangeOnlyFilter());
 			}
+
 			set
 			{
 				if (this.m_RangeOnlyFilter != value)
@@ -46,6 +47,7 @@
 				return this.m_DirectRangeFilter
 					?? (this.m_DirectRangeFilter = new DirectRangeFilter());
 			}
+
 			set
 			{
 				if (this.m_DirectRangeFilter != value)
@@ -64,6 +66,7 @@
 				return this.m_SonicRangeFilter
 					?? (this.m_SonicRangeFilter = new SonicRangeFilter());
 			}
+
 			set
 			{
 				if (this.m_SonicRangeFilter != value)
@@ -82,6 +85,7 @@
 				return this.m_ArtilleryOnlyFilter
 					?? (this.m_ArtilleryOnlyFilter = new ArtilleryOnlyFilter());
 			}
+
 			set
 			{
 				if (this.m_ArtilleryOnlyFilter != value)
@@ -100,6 +104,7 @@
 				return this.m_RockArtilleryFilter
 					?? (this.m_RockArtilleryFilter = new RockArtilleryFilter());
 			}
+
 			set
 			{
 				if (this.m_RockArtilleryFilter != value)
@@ -118,6 +123,7 @@
 				return this.m_WaterArtilleryFilter
 					?? (this.m_WaterArtilleryFilter = new WaterArtilleryFilter());
 			}
+
 			set
 			{
 				if (this.m_WaterArtilleryFilter != value)
@@ -136,6 +142,7 @@
 				return this.m_ChemicalArtilleryFilter
 					?? (this.m_ChemicalArtilleryFilter = new ChemicalArtilleryFilter());
 			}
+
 			set
 			{
 				if (this.m_ChemicalArtilleryFilter != value)
@@ -181,26 +188,32 @@
 			{
 				this.RangeOnlyFilter.IsOptionChecked = false;
 			}
+
 			if (!(filter is DirectRangeFilter))
 			{
 				this.DirectRangeFilter.IsOptionChecked = false;
 			}
+
 			if (!(filter is SonicRangeFilter))
 			{
 				this.SonicRangeFilter.IsOptionChecked = false;
 			}
+
 			if (!(filter is ArtilleryOnlyFilter))
 			{
 				this.ArtilleryOnlyFilter.IsOptionChecked = false;
 			}
+
 			if (!(filter is RockArtilleryFilter))
 			{
 				this.RockArtilleryFilter.IsOptionChecked = false;
 			}
+
 			if (!(filter is WaterArtilleryFilter))
 			{
 				this.WaterArtilleryFilter.IsOptionChecked = false;
 			}
+
 			if (!(filter is ChemicalArtilleryFilter))
 			{
 				this.ChemicalArtilleryFilter.IsOptionChecked = false;
@@ -213,6 +226,7 @@
 			{
 				return this.m_ActiveFilter.Filter(creature);
 			}
+
 			return true;
 		}
 

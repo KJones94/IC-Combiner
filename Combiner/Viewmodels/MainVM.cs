@@ -12,6 +12,7 @@
 			{
 				return this.m_CreatureDataVM;
 			}
+
 			set
 			{
 				if (value != this.m_CreatureDataVM)
@@ -29,6 +30,7 @@
 			{
 				return this.m_DatabaseVM;
 			}
+
 			set
 			{
 				if (value != this.m_DatabaseVM)
@@ -46,6 +48,7 @@
 			{
 				return this.m_FiltersVM;
 			}
+
 			set
 			{
 				if (value != this.m_FiltersVM)

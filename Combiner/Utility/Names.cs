@@ -109,8 +109,8 @@
 		public static string WoollyMammoth = "Woolly Mammoth";
 		public static string Zebra = "Zebra";
 
-		public static Dictionary<string, string> ProperStockNames = new Dictionary<string, string>()
-		{
+		public static Dictionary<string, string> ProperStockNames = new Dictionary<string, string>
+		                                                            {
 			{"albatross", Albatross },
 			{"anaconda", Anaconda },
 			{"anglerfish", Anglerfish },

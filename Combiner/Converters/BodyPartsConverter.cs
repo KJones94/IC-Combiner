@@ -24,8 +24,10 @@
 				{
 					sb.Append(limb);
 				}
+
 				return sb.ToString();
 			}
+
 			return string.Empty;
 		}
 

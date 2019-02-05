@@ -22,7 +22,8 @@
 		public void LoadScript(CreatureBuilder creature)
 		{
 			this.Creature = creature;
-			//Attrcombiner.DoFile(Attributes.Attrcombiner);
+
+			// Attrcombiner.DoFile(Attributes.Attrcombiner);
 			this.Attrcombiner.DoFile(DirectoryConstants.Testcombiner);
 		}
 
@@ -55,6 +56,7 @@
 			{
 				return value;
 			}
+
 			return 0;
 		}
 
@@ -68,6 +70,7 @@
 					return 1;
 				}
 			}
+
 			return 0;
 		}
 
@@ -90,22 +93,27 @@
 			{
 				return 1;
 			}
-			else if (this.Creature.GameAttributes[Attributes.Melee3Type] == value)
+
+			if (this.Creature.GameAttributes[Attributes.Melee3Type] == value)
 			{
 				return 1;
 			}
-			else if (this.Creature.GameAttributes[Attributes.Melee4Type] == value)
+
+			if (this.Creature.GameAttributes[Attributes.Melee4Type] == value)
 			{
 				return 1;
 			}
-			else if (this.Creature.GameAttributes[Attributes.Melee5Type] == value)
+
+			if (this.Creature.GameAttributes[Attributes.Melee5Type] == value)
 			{
 				return 1;
 			}
-			else if (this.Creature.GameAttributes[Attributes.Melee8Type] == value)
+
+			if (this.Creature.GameAttributes[Attributes.Melee8Type] == value)
 			{
 				return 1;
 			}
+
 			return 0;
 		}
 
@@ -115,22 +123,27 @@
 			{
 				return 1;
 			}
-			else if (this.Creature.GameAttributes[Attributes.Range3Type] == value)
+
+			if (this.Creature.GameAttributes[Attributes.Range3Type] == value)
 			{
 				return 1;
 			}
-			else if (this.Creature.GameAttributes[Attributes.Range4Type] == value)
+
+			if (this.Creature.GameAttributes[Attributes.Range4Type] == value)
 			{
 				return 1;
 			}
-			else if (this.Creature.GameAttributes[Attributes.Range5Type] == value)
+
+			if (this.Creature.GameAttributes[Attributes.Range5Type] == value)
 			{
 				return 1;
 			}
-			else if (this.Creature.GameAttributes[Attributes.Range8Type] == value)
+
+			if (this.Creature.GameAttributes[Attributes.Range8Type] == value)
 			{
 				return 1;
 			}
+
 			return 0;
 		}
 
@@ -140,10 +153,8 @@
 			{
 				return x;
 			}
-			else
-			{
-				return y;
-			}
+
+			return y;
 		}
 
 		private double Min(double x, double y)
@@ -152,10 +163,8 @@
 			{
 				return x;
 			}
-			else
-			{
-				return y;
-			}
+
+			return y;
 		}
 	}
 }

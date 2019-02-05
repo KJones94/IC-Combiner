@@ -27,6 +27,7 @@
 				LuaStockProxy lua = new LuaStockProxy();
 				stockPool.Add(StockNames.ProperStockNames[stockName], stockFactory.CreateStock(stockName, lua));
 			}
+
 			return stockPool;
 		}
 
@@ -41,6 +42,7 @@
 				lua.LoadScript(creature);
 				creatures.Add(creature.BuildCreature());
 			}
+
 			return creatures;
 		}
 
@@ -55,6 +57,7 @@
 			{
 				creatures.Add(creatureFactory.CreateCreature(left, right, dict));
 			}
+
 			return creatures;
 		}
 
@@ -66,6 +69,7 @@
 			{
 				copy.Add(entry.Key, entry.Value);
 			}
+
 			return copy;
 		}
 
@@ -100,6 +104,7 @@
 			{
 				possibleBodyParts[limb] = Side.Empty;
 			}
+
 			bodyPartsList.AddRange(this.GenerateBodyParts(left, right, this.CopyBodyParts(possibleBodyParts), limb + 1));
 
 			// Build right side possible body parts
@@ -111,6 +116,7 @@
 			{
 				possibleBodyParts[limb] = Side.Empty;
 			}
+
 			bodyPartsList.AddRange(this.GenerateBodyParts(left, right, this.CopyBodyParts(possibleBodyParts), limb + 1));
 
 			return bodyPartsList;
@@ -137,6 +143,7 @@
 						break;
 					}
 				}
+
 				if (isUnique)
 				{
 					uniqueList.Add(dict);
@@ -185,13 +192,12 @@
 			// quad torso -> front legs, back legs
 			// arachnid torso -> front legs, back legs, claws (if clawed)
 			// insect torso -> front legs, back legs, wings
-
 			List<Dictionary<Limb, Side>> prunedBodyParts = new List<Dictionary<Limb, Side>>();
 			foreach (Dictionary<Limb, Side> dict in bodyParts)
 			{
 				if (!this.CheckSpecialCases(left, right, dict))
 				{
-					continue; //bad body parts
+					continue; // bad body parts
 				}
 
 				// check front legs edge case
@@ -250,6 +256,7 @@
 					}
 				}
 			}
+
 			return true;
 		}
 
@@ -268,6 +275,7 @@
 					{
 						return true;
 					}
+
 					break;
 
 				case StockType.Quadruped:
@@ -275,6 +283,7 @@
 					{
 						return true;
 					}
+
 					break;
 
 				case StockType.Arachnid:
@@ -291,8 +300,10 @@
 						{
 							return false;
 						}
+
 						return true;
 					}
+
 					break;
 
 				case StockType.Insect:
@@ -301,6 +312,7 @@
 					{
 						return true;
 					}
+
 					break;
 
 				default:
@@ -323,10 +335,12 @@
 			{
 				return this.IsHumpbackCorrect(left, right, dict);
 			}
+
 			if (left.Name == StockNames.BlueRingedOctopus || right.Name == StockNames.BlueRingedOctopus)
 			{
 				return this.IsBlueRingedOctopusCorrect(left, right, dict);
 			}
+
 			if (left.Name == StockNames.Walrus || right.Name == StockNames.Walrus)
 			{
 				return this.IsWalrusCorrect(left, right, dict);
@@ -382,6 +396,7 @@
 					return dict[Limb.Torso] == Side.Right;
 				}
 			}
+
 			return true;
 		}
 
@@ -467,7 +482,6 @@
 			if (left.Name == StockNames.Walrus)
 			{
 				// What about quadruped?
-
 				if (dict[Limb.FrontLegs] == Side.Left
 					|| dict[Limb.BackLegs] == Side.Left)
 				{

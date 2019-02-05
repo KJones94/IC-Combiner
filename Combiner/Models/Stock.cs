@@ -31,6 +31,7 @@
 			{
 				return (double)value[2];
 			}
+
 			return -1;
 		}
 
@@ -43,6 +44,7 @@
 					return stockType;
 				}
 			}
+
 			return StockType.Bird;
 		}
 
@@ -53,6 +55,7 @@
 			{
 				this.BodyParts.Add(limb, true);
 			}
+
 			this.BodyParts[Limb.Nothing] = false;
 
 			switch (this.Type)
@@ -83,6 +86,7 @@
 						this.BodyParts[Limb.Claws] = false;
 						this.BodyParts[Limb.Wings] = false;
 					}
+
 					break;
 
 				case StockType.Snake:
@@ -115,9 +119,7 @@
 						this.BodyParts[Limb.Claws] = false;
 						this.BodyParts[Limb.Wings] = false;
 					}
-					break;
 
-				default:
 					break;
 			}
 		}

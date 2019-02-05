@@ -32,6 +32,7 @@
 			{
 				return (int)(double)bodyPart[1];
 			}
+
 			return -1;
 		}
 
@@ -42,6 +43,7 @@
 			{
 				return (double)value[2];
 			}
+
 			return -1;
 		}
 
@@ -64,10 +66,8 @@
 			{
 				return 1.0;
 			}
-			else
-			{
-				return stockSize / this.GetLimbAttributeValue("size");
-			}
+
+			return stockSize / this.GetLimbAttributeValue("size");
 		}
 
 		private double CalcLimbStats(Limb limb, string stat)
@@ -96,9 +96,6 @@
 				case Limb.Claws:
 					limbStats = this.GetLimbAttributeValue(stat + "-claws");
 					break;
-				default:
-					// throw exception
-					break;
 			}
 			return limbStats;
 		}
@@ -111,6 +108,7 @@
 			{
 				return 0;
 			}
+
 			return health;
 		}
 
@@ -122,6 +120,7 @@
 			{
 				return 0;
 			}
+
 			return armour;
 		}
 
@@ -132,6 +131,7 @@
 			{
 				return 0;
 			}
+
 			return sightRadius;
 		}
 
@@ -143,21 +143,24 @@
 			{
 				return 0;
 			}
+
 			return speed;
 		}
 
 		public double CalcLimbWaterSpeed(double stockSize, Limb limb)
 		{
 			double limbWaterSpeed = this.CalcLimbStats(limb, Attributes.WaterSpeed);
+
 			// Not right
-			double speed = Math.Pow(this.SizeRatio(stockSize),
-				this.GetLimbAttributeValue("exp_waterspeed_max")
-				+ this.GetLimbAttributeValue("exp_speed_max"))
-				* limbWaterSpeed;
+			double speed = Math.Pow(
+				               this.SizeRatio(stockSize),
+				               this.GetLimbAttributeValue("exp_waterspeed_max")
+				               + this.GetLimbAttributeValue("exp_speed_max")) * limbWaterSpeed;
 			if (speed < 0)
 			{
 				return 0;
 			}
+
 			return speed;
 		}
 
@@ -169,6 +172,7 @@
 			{
 				return 0;
 			}
+
 			return speed;
 		}
 
@@ -181,6 +185,7 @@
 			{
 				return 0;
 			}
+
 			return damage;
 		}
 
@@ -193,6 +198,7 @@
 			{
 				return 0;
 			}
+
 			return damage;
 		}
 
@@ -205,6 +211,7 @@
 			{
 				return 0;
 			}
+
 			return value;
 		}
 
@@ -216,6 +223,7 @@
 			{
 				return 0;
 			}
+
 			return value;
 		}
 
@@ -227,6 +235,7 @@
 			{
 				return 0;
 			}
+
 			return value;
 		}
 
@@ -238,6 +247,7 @@
 			{
 				return 0;
 			}
+
 			return value;
 		}
 

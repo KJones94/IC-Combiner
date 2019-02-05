@@ -42,23 +42,21 @@
 			}
 
 			// Read XML and all that
-
 			IEnumerable<CreatureQueryData> importedCreatureData = this.m_CreatureXMLHandler.GetCreatureDataFromXML(filePath);
 
 			// Save creatures to database
-
 			List<Creature> creatures = new List<Creature>();
 			foreach (var data in importedCreatureData)
 			{
 				creatures.Add(this.m_Database.GetCreature(data.left, data.right, data.bodyParts));
 			}
+
 			this.m_Database.SaveCreatures(creatures);
 		}
 
 		public void Export()
 		{
 			// Select file to save as
-
 			string filePath = string.Empty;
 			using (SaveFileDialog saveFileDialog = new SaveFileDialog())
 			{
@@ -78,11 +76,9 @@
 			}
 
 			// Get creature data from database
-
 			List<Creature> savedCreatures = this.m_Database.GetSavedCreatures();
 
 			// Write to XML
-
 			this.m_CreatureXMLHandler.AddCreaturesToXML(savedCreatures, filePath);
 
 		}

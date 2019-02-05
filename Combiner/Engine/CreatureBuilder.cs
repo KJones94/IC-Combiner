@@ -268,14 +268,13 @@
 			{
 				return this.Left;
 			}
-			else if (this.ChosenBodyParts[limb] == Side.Right)
+
+			if (this.ChosenBodyParts[limb] == Side.Right)
 			{
 				return this.Right;
 			}
-			else
-			{
-				return null;
-			}
+
+			return null;
 		}
 
 		private Stock OtherSide(StockStatCalculator stock)
@@ -284,10 +283,8 @@
 			{
 				return this.Right.Stock;
 			}
-			else
-			{
-				return this.Left.Stock;
-			}
+
+			return this.Left.Stock;
 		}
 
 		private void InitGameAttributes()
@@ -379,6 +376,7 @@
 			{
 				this.LandSpeed = 0;
 			}
+
 			if (this.HasWaterSpeed())
 			{
 				this.IsSwimmer = 1;
@@ -387,6 +385,7 @@
 			{
 				this.WaterSpeed = 0;
 			}
+
 			if (this.HasAirSpeed())
 			{
 				this.IsFlyer = 1;
@@ -400,6 +399,7 @@
 		private void InitAbilities()
 		{
 			this.InitPassiveAbilities();
+
 			// TODO: Could hardcode or cache the limbs for abilities to reduce inner loop
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
@@ -409,9 +409,7 @@
 				foreach (string ability in AbilityNames.Abilities)
 				{
 					int bodyPart = side.GetLimbAttributeBodyPart(ability);
-					if (bodyPart > -1
-						&& (Limb)bodyPart == limb
-						&& side.GetLimbAttributeValue(ability) > 0)
+					if (bodyPart > -1 && (Limb)bodyPart == limb && side.GetLimbAttributeValue(ability) > 0)
 					{
 						this.GameAttributes[ability] = 1;
 					}
@@ -434,7 +432,6 @@
 					&& this.Right.GetLimbAttributeValue(ability) > 0)
 				{
 					this.GameAttributes[ability] = 1;
-					continue;
 				}
 			}
 		}
@@ -459,8 +456,9 @@
 					&& this.ChosenBodyParts[Limb.BackLegs] == Side.Empty
 					&& !this.HasLandSpeed()
 					&& !this.HasAirSpeed()
-					&& this.GetStockSide(Limb.Torso).Name != StockNames.GiantSquid) // Special case idk why
+					&& this.GetStockSide(Limb.Torso).Name != StockNames.GiantSquid)
 				{
+					// Special case idk why
 					this.GameAttributes[AbilityNames.LeapAttack] = 1; // Leap attack is good
 				}
 				else
@@ -490,8 +488,9 @@
 					&& this.ChosenBodyParts[Limb.BackLegs] == Side.Empty
 					&& !this.HasLandSpeed()
 					&& !this.HasAirSpeed()
-					&& this.GetStockSide(Limb.Torso).Name != StockNames.GiantSquid) // Special case idk why
+					&& this.GetStockSide(Limb.Torso).Name != StockNames.GiantSquid)
 				{
+					// Special case idk why
 					this.GameAttributes[AbilityNames.ChargeAttack] = 1; // Charge attack is good
 				}
 				else
@@ -504,29 +503,31 @@
 		private bool HasLandSpeed()
 		{
 			// If wings then no land
-			if (this.ChosenBodyParts[Limb.Wings] == Side.Left
-				|| this.ChosenBodyParts[Limb.Wings] == Side.Right)
+			if (this.ChosenBodyParts[Limb.Wings] == Side.Left || this.ChosenBodyParts[Limb.Wings] == Side.Right)
 			{
 				return false;
 			}
+
 			// If both legs (but not from fish) then land
-			else if ((this.ChosenBodyParts[Limb.FrontLegs] == Side.Left
-				|| this.ChosenBodyParts[Limb.FrontLegs] == Side.Right)
-				&& (this.ChosenBodyParts[Limb.BackLegs] == Side.Left
-				|| this.ChosenBodyParts[Limb.BackLegs] == Side.Right)
-				&& this.GetStockSide(Limb.FrontLegs).Type != StockType.Fish
-				&& this.GetStockSide(Limb.BackLegs).Type != StockType.Fish)
+			if ((this.ChosenBodyParts[Limb.FrontLegs] == Side.Left
+			     || this.ChosenBodyParts[Limb.FrontLegs] == Side.Right)
+			    && (this.ChosenBodyParts[Limb.BackLegs] == Side.Left
+			        || this.ChosenBodyParts[Limb.BackLegs] == Side.Right)
+			    && this.GetStockSide(Limb.FrontLegs).Type != StockType.Fish
+			    && this.GetStockSide(Limb.BackLegs).Type != StockType.Fish)
 			{
 				return true;
 			}
+
 			// If snake torso then land
 			// Except for eel
-			else if (this.GetStockSide(Limb.Torso).Type == StockType.Snake
-				&& this.Right.Stock.Name != StockNames.ElectricEel
-				&& this.Left.Stock.Name != StockNames.ElectricEel) 
+			if (this.GetStockSide(Limb.Torso).Type == StockType.Snake
+			    && this.Right.Stock.Name != StockNames.ElectricEel
+			    && this.Left.Stock.Name != StockNames.ElectricEel) 
 			{
 				return true;
 			}
+
 			return false;
 		}
 
@@ -538,6 +539,7 @@
 			{
 				return false;
 			}
+
 			return this.WaterSpeed > 0;
 		}
 
@@ -549,6 +551,7 @@
 			{
 				return true;
 			}
+
 			return false;
 		}
 
@@ -614,8 +617,8 @@
 
 		public Creature BuildCreature()
 		{
-			Creature creature = new Creature()
-			{
+			Creature creature = new Creature
+			                    {
 				Left = this.Left.ToString(),
 				Right = this.Right.ToString(),
 				BodyParts = this.BuildBodyParts(),
@@ -631,7 +634,7 @@
 				LandSpeed = this.LandSpeed,
 				WaterSpeed = this.WaterSpeed,
 				AirSpeed = this.AirSpeed,
-				MeleeDamage = this.MeleeDamage,
+				MeleeDamage = this.MeleeDamage
 			};
 			this.AddRangeDamageToCreature(creature);
 			this.AddMeleeDamageTypes(creature);
@@ -659,6 +662,7 @@
 					bodyParts.Add(limb.ToString(), "x");
 				}
 			}
+
 			return bodyParts;
 		}
 
@@ -756,6 +760,7 @@
 			{
 				abilities.Add(AbilityNames.ProperAbilityNames[ability], (this.GameAttributes[ability] > 0));
 			}
+
 			creature.Abilities = abilities;
 		}
 	}

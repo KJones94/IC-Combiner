@@ -8,8 +8,9 @@
 	{
 		#region Fields
 
-		readonly Action<object> _execute = null;
-		readonly Predicate<object> _canExecute = null;
+		readonly Action<object> _execute;
+
+		readonly Predicate<object> _canExecute;
 
 		#endregion
 
@@ -52,7 +53,7 @@
 		///</returns>
 		public bool CanExecute(object parameter)
 		{
-			return this._canExecute == null ? true : this._canExecute((object)parameter);
+			return _canExecute?.Invoke(parameter) ?? true;
 		}
 
 		///<summary>
@@ -70,7 +71,7 @@
 		///<param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to <see langword="null" />.</param>
 		public void Execute(object parameter)
 		{
-			this._execute((object)parameter);
+			this._execute(parameter);
 		}
 
 		#endregion

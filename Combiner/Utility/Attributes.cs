@@ -28,10 +28,9 @@
 		public static string Range7Damage = "range7_damage";
 		public static string Range8Damage = "range8_damage";
 
-		public static string[] RangeDamage = new string[]
-		{
-			"",
-			"",
+		public static string[] RangeDamage = {
+			string.Empty,
+			string.Empty,
 			Range2Damage,
 			Range3Damage,
 			Range4Damage,
@@ -49,10 +48,9 @@
 		public static string Range7Max = "range7_max";
 		public static string Range8Max = "range8_max";
 
-		public static string[] RangeMax = new string[]
-		{
-			"",
-			"",
+		public static string[] RangeMax = {
+			string.Empty,
+			string.Empty,
 			Range2Max,
 			Range3Max,
 			Range4Max,
@@ -70,10 +68,9 @@
 		public static string Range7Type = "range7_dmgtype";
 		public static string Range8Type = "range8_dmgtype";
 
-		public static string[] RangeType = new string[]
-		{
-			"",
-			"",
+		public static string[] RangeType = {
+			string.Empty,
+			string.Empty,
 			Range2Type,
 			Range3Type,
 			Range4Type,
@@ -91,10 +88,9 @@
 		public static string Range7Special = "range7_special";
 		public static string Range8Special = "range8_special";
 
-		public static string[] RangeSpecial = new string[]
-		{
-			"",
-			"",
+		public static string[] RangeSpecial = {
+			string.Empty,
+			string.Empty,
 			Range2Special,
 			Range3Special,
 			Range4Special,
@@ -120,10 +116,9 @@
 		public static string Melee7Type = "melee7_dmgtype";
 		public static string Melee8Type = "melee8_dmgtype";
 
-		public static string[] MeleeType = new string[]
-		{
-			"",
-			"",
+		public static string[] MeleeType = {
+			string.Empty,
+			string.Empty,
 			Melee2Type,
 			Melee3Type,
 			Melee4Type,

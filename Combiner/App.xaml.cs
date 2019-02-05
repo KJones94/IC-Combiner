@@ -1,7 +1,7 @@
-﻿using System.Windows;
-
-namespace Combiner
+﻿namespace Combiner
 {
+	using System.Windows;
+
 	/// <summary>
 	/// Interaction logic for App.xaml
 	/// </summary>

@@ -38,6 +38,7 @@
 				return this.m_CreateDatabaseCommand ??
 				  (this.m_CreateDatabaseCommand = new RelayCommand(this.CreateDatabase));
 			}
+
 			set
 			{
 				if (value != this.m_CreateDatabaseCommand)
@@ -75,6 +76,7 @@
 				return this.m_LoadCreaturesCommand ??
 				  (this.m_LoadCreaturesCommand = new RelayCommand(this.LoadCreatures));
 			}
+
 			set
 			{
 				if (value != this.m_LoadCreaturesCommand)
@@ -98,6 +100,7 @@
 				return this.m_LoadSavedCreaturesCommand ??
 				  (this.m_LoadSavedCreaturesCommand = new RelayCommand(this.LoadSavedCreatures));
 			}
+
 			set
 			{
 				if (value != this.m_LoadSavedCreaturesCommand)
@@ -122,6 +125,7 @@
 				return this.m_DeleteSavedCreaturesCommand ??
 				  (this.m_DeleteSavedCreaturesCommand = new RelayCommand(this.DeleteSavedCreatures));
 			}
+
 			set
 			{
 				if (value != this.m_DeleteSavedCreaturesCommand)
@@ -144,6 +148,7 @@
 				return this.m_ExportSavedCreaturesCommand ??
 					(this.m_ExportSavedCreaturesCommand = new RelayCommand(this.ExportSavedCreature));
 			}
+
 			set
 			{
 				if (value != this.m_ExportSavedCreaturesCommand)
@@ -166,6 +171,7 @@
 				return this.m_ImportSavedCreaturesCommand ??
 					(this.m_ImportSavedCreaturesCommand = new RelayCommand(this.ImportSavedCreature));
 			}
+
 			set
 			{
 				if (value != this.m_ImportSavedCreaturesCommand)
@@ -188,6 +194,7 @@
 				return this.m_ExportToCsvCommand ??
 					(this.m_ExportToCsvCommand = new RelayCommand(this.ExportToCsv));
 			}
+
 			set
 			{
 				if (value != this.m_ExportToCsvCommand)

@@ -29,6 +29,7 @@
 				return this.m_FilterChoices ??
 					(this.m_FilterChoices = this.InitFilterChoices());
 			}
+
 			set
 			{
 				if (this.m_FilterChoices != value)
@@ -47,6 +48,7 @@
 				return this.m_ChosenFilters ??
 					(this.m_ChosenFilters = new ObservableCollection<CreatureFilter>());
 			}
+
 			set
 			{
 				if (this.m_ChosenFilters != value)
@@ -94,6 +96,7 @@
 				return this.m_AddFilterCommand ??
 					  (this.m_AddFilterCommand = new RelayCommand(this.AddFilter));
 			}
+
 			set
 			{
 				if (this.m_AddFilterCommand != value)
@@ -122,6 +125,7 @@
 				return this.m_DropFilterCommand ??
 					(this.m_DropFilterCommand = new RelayCommand(this.DropFilter));
 			}
+
 			set
 			{
 				if (this.m_DropFilterCommand != value)
@@ -151,6 +155,7 @@
 				return this.m_DropAllFiltersCommand ??
 					(this.m_DropAllFiltersCommand = new RelayCommand(this.DropAllFilters));
 			}
+
 			set
 			{
 				if (this.m_DropAllFiltersCommand != value)
@@ -176,6 +181,7 @@
 				return this.m_AddAllFiltersCommand ??
 					(this.m_AddAllFiltersCommand = new RelayCommand(this.AddAllFilters));
 			}
+
 			set
 			{
 				if (this.m_AddAllFiltersCommand != value)
@@ -201,6 +207,7 @@
 				return this.m_ResetFiltersCommand ??
 					(this.m_ResetFiltersCommand = new RelayCommand(this.ResetFilters));
 			}
+
 			set
 			{
 				if (this.m_ResetFiltersCommand != value)
@@ -228,6 +235,7 @@
 				return this.m_FilterCreaturesCommand ??
 				  (this.m_FilterCreaturesCommand = new RelayCommand(this.FilterCreatures));
 			}
+
 			set
 			{
 				if (value != this.m_FilterCreaturesCommand)
@@ -257,8 +265,10 @@
 				{
 					result = result && filter.Filter(creature);
 				}
+
 				return result;
 			}
+
 			return false;
 		}
 	}

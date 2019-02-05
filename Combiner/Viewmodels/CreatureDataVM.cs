@@ -24,6 +24,7 @@
 			{
 				return this.m_Creatures ?? (this.m_Creatures = new ObservableCollection<Creature>());
 			}
+
 			set
 			{
 				if (value != this.m_Creatures)
@@ -42,6 +43,7 @@
 			{
 				return this.m_CreaturesView ?? (this.m_CreaturesView = (ListCollectionView)CollectionViewSource.GetDefaultView(this.Creatures));
 			}
+
 			set
 			{
 				if (value != this.m_CreaturesView)
@@ -59,6 +61,7 @@
 			{
 				return this.m_SelectedCreature;
 			}
+
 			set
 			{
 				if (value != this.m_SelectedCreature)
@@ -77,6 +80,7 @@
 				return this.m_SaveCreatureCommand ??
 					(this.m_SaveCreatureCommand = new RelayCommand(this.SaveCreature));
 			}
+
 			set
 			{
 				if (value != this.m_SaveCreatureCommand)
@@ -102,6 +106,7 @@
 				return this.m_UnsaveCreatureCommand ??
 					(this.m_UnsaveCreatureCommand = new RelayCommand(this.UnSaveCreature));
 			}
+
 			set
 			{
 				if (value != this.m_UnsaveCreatureCommand)

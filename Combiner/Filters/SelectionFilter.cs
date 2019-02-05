@@ -30,6 +30,7 @@
 			{
 				return this.FilterOnlySelected(creature);
 			}
+
 			return this.FilterAnySelected(creature);
 		}
 
@@ -47,6 +48,7 @@
 				return this.m_Choices
 					?? (this.m_Choices = new ObservableCollection<string>());
 			}
+
 			set
 			{
 				if (this.m_Choices != value)
@@ -67,6 +69,7 @@
 				return this.m_Selected
 					?? (this.m_Selected = new ObservableCollection<string>());
 			}
+
 			set
 			{
 				if (this.m_Selected != value)
@@ -87,6 +90,7 @@
 				return this.m_AddChoiceCommand ??
 				  (this.m_AddChoiceCommand = new RelayCommand(this.AddChoice));
 			}
+
 			set
 			{
 				if (value != this.m_AddChoiceCommand)
@@ -114,6 +118,7 @@
 				return this.m_RemovedSelectedCommand ??
 				  (this.m_RemovedSelectedCommand = new RelayCommand(this.RemoveSelected));
 			}
+
 			set
 			{
 				if (value != this.m_RemovedSelectedCommand)
@@ -141,6 +146,7 @@
 				return this.m_RemoveAllSelectedCommand ??
 				  (this.m_RemoveAllSelectedCommand = new RelayCommand(this.RemoveAllSelected));
 			}
+
 			set
 			{
 				if (value != this.m_RemoveAllSelectedCommand)
@@ -156,6 +162,7 @@
 			{
 				this.Choices.Add(ability);
 			}
+
 			this.Selected = new ObservableCollection<string>();
 			this.Choices = new ObservableCollection<string>(this.Choices.OrderBy(s => s));
 		}

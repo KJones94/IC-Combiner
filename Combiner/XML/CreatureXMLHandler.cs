@@ -25,16 +25,18 @@
 			{
 				return new List<CreatureQueryData>();
 			}
+
 			if (!this.ValidateWithSchema(xml, this.GetSchema()))
 			{
 				return new List<CreatureQueryData>();
 			}
+
 			XDocument doc = new XDocument(xml);
 
 			IEnumerable<CreatureQueryData> allCreatureData =
 				from creature in doc.Descendants(ns + "Creature")
-				select new CreatureQueryData()
-				{
+				select new CreatureQueryData
+				       {
 					left = creature.Element(ns + "left").Value,
 					right = creature.Element(ns + "right").Value,
 					bodyParts = this.BuildBodyParts(creature.Element(ns + "bodyParts"))
@@ -55,6 +57,7 @@
 			{
 				bodyParts.Add(item.Element(ns + "key").Value, item.Element(ns + "value").Value);
 			}
+
 			return bodyParts;
 		}
 

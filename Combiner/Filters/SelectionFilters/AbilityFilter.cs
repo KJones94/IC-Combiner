@@ -22,6 +22,7 @@
 					}
 				}
 			}
+
 			return false;
 		}
 
@@ -35,6 +36,7 @@
 					hasAbilities = hasAbilities && (creature.Abilities[ability]);
 				}
 			}
+
 			return hasAbilities;
 		}
 
@@ -45,6 +47,7 @@
 			{
 				choices.Add(AbilityNames.ProperAbilityNames[ability]);
 			}
+
 			return choices;
 		}
 

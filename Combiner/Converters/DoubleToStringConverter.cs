@@ -18,10 +18,8 @@
 				int floor = (int)Math.Floor((double)value);
 				return floor.ToString();
 			}
-			else
-			{
-				return Math.Truncate((double)value * 100) / 100;
-			}
+
+			return Math.Truncate((double)value * 100) / 100;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -33,6 +33,7 @@
 			{
 				return this.OnOptionChecked(creature);
 			}
+
 			return true;
 		}
 

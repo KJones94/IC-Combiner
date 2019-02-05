@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-
-namespace Combiner.Tests
+﻿namespace Combiner.Tests
 {
+	using NUnit.Framework;
+
 	[TestFixture]
 	class CreatureTest
 	{

@@ -33,13 +33,16 @@
 						}
 					}
 				}
+
 				// Remove ", " at end if exists
 				if (sb.Length > 0)
 				{
 					sb.Remove(sb.Length - 2, 2);
 				}
+
 				return sb.ToString();
 			}
+
 			return string.Empty;
 		}
 

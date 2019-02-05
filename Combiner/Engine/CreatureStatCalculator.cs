@@ -46,6 +46,7 @@
 					chosenLimbs.Add(limb, null);
 				}
 			}
+
 			return chosenLimbs;
 		}
 
@@ -55,10 +56,8 @@
 			{
 				return this.Right.GetLimbAttributeValue(Attributes.Size);
 			}
-			else
-			{
-				return this.Left.GetLimbAttributeValue(Attributes.Size);
-			}
+
+			return this.Left.GetLimbAttributeValue(Attributes.Size);
 		}
 
 		public double CalcHitpoints()
@@ -72,8 +71,10 @@
 				{
 					continue;
 				}
+
 				hitpoints += side.CalcLimbHitpoints(this.OtherSideSize(side), limb);
 			}
+
 			return hitpoints;
 		}
 
@@ -85,10 +86,8 @@
 			{
 				return leftSize;
 			}
-			else
-			{
-				return rightSize;
-			}
+
+			return rightSize;
 		}
 
 		public double CalcArmour()
@@ -102,8 +101,10 @@
 				{
 					continue;
 				}
+
 				armour += side.CalcLimbArmour(this.OtherSideSize(side), limb);
 			}
+
 			return armour;
 		}
 
@@ -123,8 +124,10 @@
 				{
 					continue;
 				}
+
 				landSpeed += side.CalcLimbLandSpeed(this.OtherSideSize(side), limb);
 			}
+
 			return landSpeed;
 		}
 
@@ -139,8 +142,10 @@
 				{
 					continue;
 				}
+
 				airSpeed += side.CalcLimbAirSpeed(this.OtherSideSize(side), limb);
 			}
+
 			return airSpeed;
 		}
 
@@ -155,8 +160,10 @@
 				{
 					continue;
 				}
+
 				waterSpeed += side.CalcLimbWaterSpeed(this.OtherSideSize(side), limb);
 			}
+
 			return waterSpeed;
 		}
 
@@ -171,8 +178,10 @@
 				{
 					continue;
 				}
+
 				meleeDamage += side.CalcLimbMeleeDamage(this.OtherSideSize(side), limb);
 			}
+
 			return meleeDamage;
 		}
 
@@ -183,6 +192,7 @@
 			{
 				return 0;
 			}
+
 			return side.CalcLimbRangeDamage(this.OtherSideSize(side), limb);
 		}
 
@@ -193,6 +203,7 @@
 			{
 				return 0;
 			}
+
 			return side.GetLimbRangeMax(this.OtherSideSize(side), limb);
 		}
 
@@ -203,6 +214,7 @@
 			{
 				return 0;
 			}
+
 			return side.GetLimbRangeType(limb);
 		}
 
@@ -213,6 +225,7 @@
 			{
 				return 0;
 			}
+
 			return side.GetLimbRangeSpecial(limb);
 		}
 
@@ -223,6 +236,7 @@
 			{
 				return 0;
 			}
+
 			return side.GetLimbMeleeType(limb);
 		}
 	}

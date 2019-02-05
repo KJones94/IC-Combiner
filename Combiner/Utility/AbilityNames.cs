@@ -77,8 +77,8 @@
 			WebThrow
 		};
 
-		public static Dictionary<string, string> ProperAbilityNames = new Dictionary<string, string>()
-		{
+		public static Dictionary<string, string> ProperAbilityNames = new Dictionary<string, string>
+		                                                              {
 			{ Assassinate, nameof(Assassinate) },
 			{ Camouflage, nameof(Camouflage) },
 			{ ChargeAttack, nameof(ChargeAttack) },

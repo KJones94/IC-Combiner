@@ -28,11 +28,12 @@
 		{
 			ObservableCollection<string> choices = new ObservableCollection<string>();
 			var stockNames = Directory.GetFiles(DirectoryConstants.StockDirectory).
-				Select(s => s.Replace(".lua", "").Replace(DirectoryConstants.StockDirectory, ""));
+				Select(s => s.Replace(".lua", string.Empty).Replace(DirectoryConstants.StockDirectory, string.Empty));
 			foreach (string stock in stockNames)
 			{
 				choices.Add(StockNames.ProperStockNames[stock]);
 			}
+
 			return choices;
 		}
 
