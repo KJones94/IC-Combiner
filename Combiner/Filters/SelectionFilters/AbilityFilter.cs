@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Combiner
+﻿namespace Combiner.Filters.SelectionFilters
 {
+	using System.Collections.ObjectModel;
+
+	using Combiner.Models;
+	using Combiner.Utility;
+
 	public class AbilityFilter : SelectionFilter
 	{
 		public AbilityFilter()
@@ -9,7 +12,7 @@ namespace Combiner
 
 		protected override bool FilterAnySelected(Creature creature)
 		{
-			foreach (string ability in Selected)
+			foreach (string ability in this.Selected)
 			{
 				if (creature.Abilities.ContainsKey(ability))
 				{
@@ -25,7 +28,7 @@ namespace Combiner
 		protected override bool FilterOnlySelected(Creature creature)
 		{
 			bool hasAbilities = true;
-			foreach (string ability in Selected)
+			foreach (string ability in this.Selected)
 			{
 				if (creature.Abilities.ContainsKey(ability))
 				{

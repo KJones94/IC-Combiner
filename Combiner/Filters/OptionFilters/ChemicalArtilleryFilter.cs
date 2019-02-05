@@ -1,5 +1,7 @@
-﻿namespace Combiner
+﻿namespace Combiner.Filters.OptionFilters
 {
+	using Combiner.Models;
+
 	public class ChemicalArtilleryFilter : OptionFilter
 	{
 		public ChemicalArtilleryFilter()

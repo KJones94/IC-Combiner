@@ -1,7 +1,7 @@
-﻿using System.Windows;
-
-namespace Combiner
+﻿namespace Combiner.Views
 {
+	using System.Windows;
+
 	/// <summary>
 	/// Interaction logic for AboutWindow.xaml
 	/// </summary>
@@ -9,7 +9,7 @@ namespace Combiner
 	{
 		public AboutWindow()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 	}
 }

@@ -1,5 +1,7 @@
-﻿namespace Combiner
+﻿namespace Combiner.Filters.StatFilters
 {
+	using Combiner.Models;
+
 	public class RangeDamageFilter : StatFilter
 	{
 		public RangeDamageFilter()
@@ -7,11 +9,11 @@
 
 		public override bool Filter(Creature creature)
 		{
-			bool isBothUnderMax = creature.RangeDamage1 <= MaxValue
-				&& creature.RangeDamage2 <= MaxValue;
+			bool isBothUnderMax = creature.RangeDamage1 <= this.MaxValue
+				&& creature.RangeDamage2 <= this.MaxValue;
 
-			bool isOneOverMin = creature.RangeDamage1 >= MinValue
-				|| creature.RangeDamage2 >= MinValue;
+			bool isOneOverMin = creature.RangeDamage1 >= this.MinValue
+				|| creature.RangeDamage2 >= this.MinValue;
 
 			return isBothUnderMax && isOneOverMin;
 		}

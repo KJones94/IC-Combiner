@@ -1,10 +1,14 @@
-﻿using MoonSharp.Interpreter;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Combiner
+﻿namespace Combiner.Models
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+
+	using Combiner.Enums;
+	using Combiner.Utility;
+
+	using MoonSharp.Interpreter;
+
 	public class Stock
 	{
 		public string Name { get; set; }
@@ -14,15 +18,15 @@ namespace Combiner
 
 		public Stock(string name, Table limbAttributes)
 		{
-			Name = name;
-			LimbAttritbutes = limbAttributes;
-			Type = DoubleToStockType(GetLimbAttributeValue("stocktype"));
-			InitBodyParts();
+			this.Name = name;
+			this.LimbAttritbutes = limbAttributes;
+			this.Type = this.DoubleToStockType(this.GetLimbAttributeValue("stocktype"));
+			this.InitBodyParts();
 		}
 
 		public double GetLimbAttributeValue(string key)
 		{
-			var value = LimbAttritbutes[key] as Table;
+			var value = this.LimbAttritbutes[key] as Table;
 			if (value != null)
 			{
 				return (double)value[2];
@@ -44,72 +48,72 @@ namespace Combiner
 
 		private void InitBodyParts()
 		{
-			BodyParts = new Dictionary<Limb, bool>();
+			this.BodyParts = new Dictionary<Limb, bool>();
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				BodyParts.Add(limb, true);
+				this.BodyParts.Add(limb, true);
 			}
-			BodyParts[Limb.Nothing] = false;
+			this.BodyParts[Limb.Nothing] = false;
 
-			switch (Type)
+			switch (this.Type)
 			{
 				case StockType.Bird:
-					BodyParts[Limb.FrontLegs] = false;
-					BodyParts[Limb.Claws] = false;
+					this.BodyParts[Limb.FrontLegs] = false;
+					this.BodyParts[Limb.Claws] = false;
 					break;
 
 				case StockType.Quadruped:
-					BodyParts[Limb.Claws] = false;
-					BodyParts[Limb.Wings] = false;
+					this.BodyParts[Limb.Claws] = false;
+					this.BodyParts[Limb.Wings] = false;
 					break;
 
 				case StockType.Arachnid:
-					if (Name == StockNames.ManOWar)
+					if (this.Name == StockNames.ManOWar)
 					{
-						BodyParts[Limb.FrontLegs] = false;
-						BodyParts[Limb.BackLegs] = false;
-						BodyParts[Limb.Wings] = false;
+						this.BodyParts[Limb.FrontLegs] = false;
+						this.BodyParts[Limb.BackLegs] = false;
+						this.BodyParts[Limb.Wings] = false;
 					}
-					else if (StockNames.ClawedArachnids.Contains(Name))
+					else if (StockNames.ClawedArachnids.Contains(this.Name))
 					{
-						BodyParts[Limb.Wings] = false;
+						this.BodyParts[Limb.Wings] = false;
 					}
 					else
 					{
-						BodyParts[Limb.Claws] = false;
-						BodyParts[Limb.Wings] = false;
+						this.BodyParts[Limb.Claws] = false;
+						this.BodyParts[Limb.Wings] = false;
 					}
 					break;
 
 				case StockType.Snake:
-					BodyParts[Limb.FrontLegs] = false;
-					BodyParts[Limb.BackLegs] = false;
-					BodyParts[Limb.Claws] = false;
-					BodyParts[Limb.Wings] = false;
+					this.BodyParts[Limb.FrontLegs] = false;
+					this.BodyParts[Limb.BackLegs] = false;
+					this.BodyParts[Limb.Claws] = false;
+					this.BodyParts[Limb.Wings] = false;
 					break;
 
 				case StockType.Insect:
-					BodyParts[Limb.Claws] = false;
+					this.BodyParts[Limb.Claws] = false;
 					break;
 
 				case StockType.Fish:
-					if (Name == StockNames.HumpbackWhale)
+					if (this.Name == StockNames.HumpbackWhale)
 					{
-						BodyParts[Limb.BackLegs] = false;
-						BodyParts[Limb.Claws] = false;
-						BodyParts[Limb.Wings] = false;
+						this.BodyParts[Limb.BackLegs] = false;
+						this.BodyParts[Limb.Claws] = false;
+						this.BodyParts[Limb.Wings] = false;
 					}
-					else if (Name == StockNames.BlueRingedOctopus)
+					else if (this.Name == StockNames.BlueRingedOctopus)
 					{
-						BodyParts[Limb.Claws] = false;
-						BodyParts[Limb.Wings] = false;
+						this.BodyParts[Limb.Claws] = false;
+						this.BodyParts[Limb.Wings] = false;
 					}
 					else
 					{
-						BodyParts[Limb.FrontLegs] = false;
-						BodyParts[Limb.BackLegs] = false;
-						BodyParts[Limb.Claws] = false;
-						BodyParts[Limb.Wings] = false;
+						this.BodyParts[Limb.FrontLegs] = false;
+						this.BodyParts[Limb.BackLegs] = false;
+						this.BodyParts[Limb.Claws] = false;
+						this.BodyParts[Limb.Wings] = false;
 					}
 					break;
 
@@ -120,7 +124,7 @@ namespace Combiner
 
 		public override string ToString()
 		{
-			return Name;
+			return this.Name;
 		}
 	}
 }

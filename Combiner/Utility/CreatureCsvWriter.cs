@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-namespace Combiner
+﻿namespace Combiner.Utility
 {
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Text;
+
+	using Combiner.Converters;
+	using Combiner.Models;
+
 	public class CreatureCsvWriter
 	{
 		BodyPartsConverter bodyPartsConverter = new BodyPartsConverter();
@@ -17,11 +20,11 @@ namespace Combiner
 		{
 			using (StreamWriter writer = new StreamWriter(File.Create("./Creatures.csv")))
 			{
-				writer.WriteLine(HeaderRow());
+				writer.WriteLine(this.HeaderRow());
 
 				foreach (Creature creature in creatures)
 				{
-					writer.WriteLine(BuildRow(creature));
+					writer.WriteLine(this.BuildRow(creature));
 				}
 			}
 		}
@@ -30,32 +33,32 @@ namespace Combiner
 		{
 			StringBuilder builder = new StringBuilder();
 
-			AppendValue(builder, "Left", true);
-			AppendValue(builder, "Right", false);
-			AppendValue(builder, "Body Parts", false);
-			AppendValue(builder, "Rank", false);
-			AppendValue(builder, "Coal", false);
-			AppendValue(builder, "Elec", false);
-			AppendValue(builder, "Power", false);
-			AppendValue(builder, "E.HP", false);
-			AppendValue(builder, "Hitpoints", false);
-			AppendValue(builder, "Armour", false);
-			AppendValue(builder, "Sight Radius", false);
-			AppendValue(builder, "Size", false);
-			AppendValue(builder, "Land Speed", false);
-			AppendValue(builder, "Water Speed", false);
-			AppendValue(builder, "Air Speed", false);
-			AppendValue(builder, "Melee Damage", false);
-			AppendValue(builder, "Range Damage 1", false);
-			AppendValue(builder, "Artillery Type 1", false);
-			AppendValue(builder, "Range Type 1", false);
-			AppendValue(builder, "Range Damage 2", false);
-			AppendValue(builder, "Artillery Type 2", false);
-			AppendValue(builder, "Range Type 2", false);
-			AppendValue(builder, "Horns", false);
-			AppendValue(builder, "Barrier Destroy", false);
-			AppendValue(builder, "Poison", false);
-			AppendValue(builder, "Abilties", false);
+			this.AppendValue(builder, "Left", true);
+			this.AppendValue(builder, "Right", false);
+			this.AppendValue(builder, "Body Parts", false);
+			this.AppendValue(builder, "Rank", false);
+			this.AppendValue(builder, "Coal", false);
+			this.AppendValue(builder, "Elec", false);
+			this.AppendValue(builder, "Power", false);
+			this.AppendValue(builder, "E.HP", false);
+			this.AppendValue(builder, "Hitpoints", false);
+			this.AppendValue(builder, "Armour", false);
+			this.AppendValue(builder, "Sight Radius", false);
+			this.AppendValue(builder, "Size", false);
+			this.AppendValue(builder, "Land Speed", false);
+			this.AppendValue(builder, "Water Speed", false);
+			this.AppendValue(builder, "Air Speed", false);
+			this.AppendValue(builder, "Melee Damage", false);
+			this.AppendValue(builder, "Range Damage 1", false);
+			this.AppendValue(builder, "Artillery Type 1", false);
+			this.AppendValue(builder, "Range Type 1", false);
+			this.AppendValue(builder, "Range Damage 2", false);
+			this.AppendValue(builder, "Artillery Type 2", false);
+			this.AppendValue(builder, "Range Type 2", false);
+			this.AppendValue(builder, "Horns", false);
+			this.AppendValue(builder, "Barrier Destroy", false);
+			this.AppendValue(builder, "Poison", false);
+			this.AppendValue(builder, "Abilties", false);
 
 			return builder.ToString();
 		}
@@ -63,38 +66,38 @@ namespace Combiner
 		private string BuildRow(Creature creature)
 		{
 			StringBuilder builder = new StringBuilder();
-			AppendValue(builder, creature.Left, true);
-			AppendValue(builder, creature.Right, false);
-			AppendValue(builder, bodyPartsConverter.Convert(creature.BodyParts), false);
-			AppendValue(builder, creature.Rank.ToString(), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.Coal), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.Electricity), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.Power), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.EffectiveHitpoints), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.Hitpoints), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.Armour), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.SightRadius), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.Size), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.LandSpeed), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.WaterSpeed), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.AirSpeed), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.MeleeDamage), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.RangeDamage1), false);
-			AppendValue(builder, rangeSpecialConverter.Convert(creature.RangeSpecial1), false);
-			AppendValue(builder, rangeTypeConverter.Convert(creature.RangeType1), false);
-			AppendValue(builder, doubleToStringConverter.Convert(creature.RangeDamage2), false);
-			AppendValue(builder, rangeSpecialConverter.Convert(creature.RangeSpecial2), false);
-			AppendValue(builder, rangeTypeConverter.Convert(creature.RangeType2), false);
-			AppendValue(builder, boolToStringConverter.Convert(creature.HasHorns), false);
-			AppendValue(builder, boolToStringConverter.Convert(creature.HasBarrierDestroy), false);
-			AppendValue(builder, boolToStringConverter.Convert(creature.HasPoison), false);
-			AppendValue(builder, containsAbilitiesConverter.Convert(creature.Abilities), false);
+			this.AppendValue(builder, creature.Left, true);
+			this.AppendValue(builder, creature.Right, false);
+			this.AppendValue(builder, this.bodyPartsConverter.Convert(creature.BodyParts), false);
+			this.AppendValue(builder, creature.Rank.ToString(), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.Coal), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.Electricity), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.Power), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.EffectiveHitpoints), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.Hitpoints), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.Armour), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.SightRadius), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.Size), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.LandSpeed), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.WaterSpeed), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.AirSpeed), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.MeleeDamage), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.RangeDamage1), false);
+			this.AppendValue(builder, this.rangeSpecialConverter.Convert(creature.RangeSpecial1), false);
+			this.AppendValue(builder, this.rangeTypeConverter.Convert(creature.RangeType1), false);
+			this.AppendValue(builder, this.doubleToStringConverter.Convert(creature.RangeDamage2), false);
+			this.AppendValue(builder, this.rangeSpecialConverter.Convert(creature.RangeSpecial2), false);
+			this.AppendValue(builder, this.rangeTypeConverter.Convert(creature.RangeType2), false);
+			this.AppendValue(builder, this.boolToStringConverter.Convert(creature.HasHorns), false);
+			this.AppendValue(builder, this.boolToStringConverter.Convert(creature.HasBarrierDestroy), false);
+			this.AppendValue(builder, this.boolToStringConverter.Convert(creature.HasPoison), false);
+			this.AppendValue(builder, this.containsAbilitiesConverter.Convert(creature.Abilities), false);
 			return builder.ToString();
 		}
 
 		private void AppendValue(StringBuilder builder, object obj, bool firstColumn)
 		{
-			AppendValue(builder, obj.ToString(), firstColumn);
+			this.AppendValue(builder, obj.ToString(), firstColumn);
 		}
 
 		private void AppendValue(StringBuilder builder, string value, bool firstColumn)

@@ -1,5 +1,8 @@
-﻿namespace Combiner
+﻿namespace Combiner.Viewmodels
 {
+	using Combiner.Base;
+	using Combiner.Utility;
+
 	public class MainVM : BaseViewModel
 	{
 		private CreatureDataVM m_CreatureDataVM;
@@ -7,14 +10,14 @@
 		{
 			get
 			{
-				return m_CreatureDataVM;
+				return this.m_CreatureDataVM;
 			}
 			set
 			{
-				if (value != m_CreatureDataVM)
+				if (value != this.m_CreatureDataVM)
 				{
-					m_CreatureDataVM = value;
-					OnPropertyChanged(nameof(CreatureDataVM));
+					this.m_CreatureDataVM = value;
+					this.OnPropertyChanged(nameof(this.CreatureDataVM));
 				}
 			}
 		}
@@ -24,14 +27,14 @@
 		{
 			get
 			{
-				return m_DatabaseVM;
+				return this.m_DatabaseVM;
 			}
 			set
 			{
-				if (value != m_DatabaseVM)
+				if (value != this.m_DatabaseVM)
 				{
-					m_DatabaseVM = value;
-					OnPropertyChanged(nameof(DatabaseVM));
+					this.m_DatabaseVM = value;
+					this.OnPropertyChanged(nameof(this.DatabaseVM));
 				}
 			}
 		}
@@ -41,14 +44,14 @@
 		{
 			get
 			{
-				return m_FiltersVM;
+				return this.m_FiltersVM;
 			}
 			set
 			{
-				if (value != m_FiltersVM)
+				if (value != this.m_FiltersVM)
 				{
-					m_FiltersVM = value;
-					OnPropertyChanged(nameof(FiltersVM));
+					this.m_FiltersVM = value;
+					this.OnPropertyChanged(nameof(this.FiltersVM));
 				}
 			}
 		}
@@ -59,9 +62,9 @@
 			ImportExportHandler importExportHandler = new ImportExportHandler(database);
 			CreatureCsvWriter creatureCsvWriter = new CreatureCsvWriter();
 
-			CreatureDataVM = new CreatureDataVM(database);
-			FiltersVM = new FiltersVM(CreatureDataVM);
-			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, database, importExportHandler, creatureCsvWriter);
+			this.CreatureDataVM = new CreatureDataVM(database);
+			this.FiltersVM = new FiltersVM(this.CreatureDataVM);
+			this.DatabaseVM = new DatabaseVM(this.CreatureDataVM, this.FiltersVM, database, importExportHandler, creatureCsvWriter);
 		}
 
 		

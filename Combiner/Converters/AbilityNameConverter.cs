@@ -1,14 +1,16 @@
-﻿using System;
-using System.Globalization;
-using System.Windows.Data;
-
-namespace Combiner
+﻿namespace Combiner.Converters
 {
+	using System;
+	using System.Globalization;
+	using System.Windows.Data;
+
+	using Combiner.Utility;
+
 	public class AbilityNameConverter : IValueConverter
 	{
 		public object Convert(object value)
 		{
-			return Convert(value, null, null, null);
+			return this.Convert(value, null, null, null);
 		}
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

@@ -1,4 +1,4 @@
-﻿namespace Combiner
+﻿namespace Combiner.Filters.OptionFilters
 {
 	//public class ArtilleryTypeFilter : OptionFilter
 	//{

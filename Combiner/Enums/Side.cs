@@ -1,4 +1,4 @@
-﻿namespace Combiner
+﻿namespace Combiner.Enums
 {
 	public enum Side
 	{

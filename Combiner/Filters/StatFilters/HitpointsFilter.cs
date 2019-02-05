@@ -1,5 +1,7 @@
-﻿namespace Combiner
+﻿namespace Combiner.Filters.StatFilters
 {
+	using Combiner.Models;
+
 	public class HitpointsFilter : StatFilter
 	{
 		public HitpointsFilter()
@@ -7,8 +9,8 @@
 
 		public override bool Filter(Creature creature)
 		{
-			return creature.Hitpoints >= MinValue
-				&& creature.Hitpoints <= MaxValue;
+			return creature.Hitpoints >= this.MinValue
+				&& creature.Hitpoints <= this.MaxValue;
 		}
 
 		public override string ToString()

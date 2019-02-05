@@ -2,6 +2,8 @@
 
 namespace Combiner
 {
+	using Combiner.Views;
+
 	/// <summary>
 	/// Interaction logic for NewMainWindow.xaml
 	/// </summary>

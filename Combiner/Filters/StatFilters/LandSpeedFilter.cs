@@ -1,5 +1,7 @@
-﻿namespace Combiner
+﻿namespace Combiner.Filters.StatFilters
 {
+	using Combiner.Models;
+
 	public class LandSpeedFilter : StatFilter
 	{
 		public LandSpeedFilter()
@@ -7,8 +9,8 @@
 
 		public override bool Filter(Creature creature)
 		{
-			return creature.LandSpeed >= MinValue
-				&& creature.LandSpeed <= MaxValue;
+			return creature.LandSpeed >= this.MinValue
+				&& creature.LandSpeed <= this.MaxValue;
 		}
 
 		public override string ToString()

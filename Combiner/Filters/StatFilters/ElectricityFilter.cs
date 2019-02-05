@@ -1,5 +1,7 @@
-﻿namespace Combiner
+﻿namespace Combiner.Filters.StatFilters
 {
+	using Combiner.Models;
+
 	public class ElectricityFilter : StatFilter
 	{
 		public ElectricityFilter()
@@ -7,8 +9,8 @@
 
 		public override bool Filter(Creature creature)
 		{
-			return creature.Electricity >= MinValue
-				&& creature.Electricity <= MaxValue;
+			return creature.Electricity >= this.MinValue
+				&& creature.Electricity <= this.MaxValue;
 		}
 
 		public override string ToString()

@@ -1,9 +1,12 @@
-﻿using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-
-namespace Combiner
+﻿namespace Combiner.Filters.SelectionFilters
 {
+	using System.Collections.ObjectModel;
+	using System.IO;
+	using System.Linq;
+
+	using Combiner.Models;
+	using Combiner.Utility;
+
 	public class StockFilter : SelectionFilter
 	{
 		public StockFilter()
@@ -11,14 +14,14 @@ namespace Combiner
 
 		protected override bool FilterAnySelected(Creature creature)
 		{
-			return Selected.Contains(creature.Left)
-				|| Selected.Contains(creature.Right);
+			return this.Selected.Contains(creature.Left)
+				|| this.Selected.Contains(creature.Right);
 		}
 
 		protected override bool FilterOnlySelected(Creature creature)
 		{
-			return Selected.Contains(creature.Left)
-				&& Selected.Contains(creature.Right);
+			return this.Selected.Contains(creature.Left)
+				&& this.Selected.Contains(creature.Right);
 		}
 
 		protected override ObservableCollection<string> InitChoices()

@@ -1,16 +1,23 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Input;
-
-namespace Combiner
+﻿namespace Combiner.Viewmodels
 {
+	using System.Collections.ObjectModel;
+	using System.Linq;
+	using System.Windows.Input;
+
+	using Combiner.Base;
+	using Combiner.Filters;
+	using Combiner.Filters.OptionFilters;
+	using Combiner.Filters.SelectionFilters;
+	using Combiner.Filters.StatFilters;
+	using Combiner.Models;
+
 	public class FiltersVM : BaseViewModel
 	{
 		private CreatureDataVM m_CreatureDataVM;
 
 		public FiltersVM(CreatureDataVM creatureDataVM)
 		{
-			m_CreatureDataVM = creatureDataVM;
+			this.m_CreatureDataVM = creatureDataVM;
 		}
 
 
@@ -19,15 +26,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_FilterChoices ??
-					(m_FilterChoices = InitFilterChoices());
+				return this.m_FilterChoices ??
+					(this.m_FilterChoices = this.InitFilterChoices());
 			}
 			set
 			{
-				if (m_FilterChoices != value)
+				if (this.m_FilterChoices != value)
 				{
-					m_FilterChoices = value;
-					OnPropertyChanged(nameof(FilterChoices));
+					this.m_FilterChoices = value;
+					this.OnPropertyChanged(nameof(this.FilterChoices));
 				}
 			}
 		}
@@ -37,15 +44,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_ChosenFilters ??
-					(m_ChosenFilters = new ObservableCollection<CreatureFilter>());
+				return this.m_ChosenFilters ??
+					(this.m_ChosenFilters = new ObservableCollection<CreatureFilter>());
 			}
 			set
 			{
-				if (m_ChosenFilters != value)
+				if (this.m_ChosenFilters != value)
 				{
-					m_ChosenFilters = value;
-					OnPropertyChanged(nameof(ChosenFilters));
+					this.m_ChosenFilters = value;
+					this.OnPropertyChanged(nameof(this.ChosenFilters));
 				}
 			}
 		}
@@ -84,26 +91,26 @@ namespace Combiner
 		{
 			get
 			{
-				return m_AddFilterCommand ??
-					  (m_AddFilterCommand = new RelayCommand(AddFilter));
+				return this.m_AddFilterCommand ??
+					  (this.m_AddFilterCommand = new RelayCommand(this.AddFilter));
 			}
 			set
 			{
-				if (m_AddFilterCommand != value)
+				if (this.m_AddFilterCommand != value)
 				{
-					m_AddFilterCommand = value;
-					OnPropertyChanged(nameof(AddFilter));
+					this.m_AddFilterCommand = value;
+					this.OnPropertyChanged(nameof(this.AddFilter));
 				}
 			}
 		}
 
 		private void AddFilter(object o)
 		{
-			if (SelectedFilter != null)
+			if (this.SelectedFilter != null)
 			{
-				ChosenFilters.Add(SelectedFilter);
-				ChosenFilters = new ObservableCollection<CreatureFilter>(ChosenFilters.OrderBy(s => s.Name));
-				FilterChoices.Remove(SelectedFilter);
+				this.ChosenFilters.Add(this.SelectedFilter);
+				this.ChosenFilters = new ObservableCollection<CreatureFilter>(this.ChosenFilters.OrderBy(s => s.Name));
+				this.FilterChoices.Remove(this.SelectedFilter);
 			}
 		}
 
@@ -112,15 +119,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_DropFilterCommand ??
-					(m_DropFilterCommand = new RelayCommand(DropFilter));
+				return this.m_DropFilterCommand ??
+					(this.m_DropFilterCommand = new RelayCommand(this.DropFilter));
 			}
 			set
 			{
-				if (m_DropFilterCommand != value)
+				if (this.m_DropFilterCommand != value)
 				{
-					m_DropFilterCommand = value;
-					OnPropertyChanged(nameof(DropFilterCommand));
+					this.m_DropFilterCommand = value;
+					this.OnPropertyChanged(nameof(this.DropFilterCommand));
 				}
 			}
 		}
@@ -130,9 +137,9 @@ namespace Combiner
 			CreatureFilter filter = o as CreatureFilter;
 			if (filter != null)
 			{
-				FilterChoices.Add(filter);
-				FilterChoices = new ObservableCollection<CreatureFilter>(FilterChoices.OrderBy(s => s.Name));
-				ChosenFilters.Remove(filter);
+				this.FilterChoices.Add(filter);
+				this.FilterChoices = new ObservableCollection<CreatureFilter>(this.FilterChoices.OrderBy(s => s.Name));
+				this.ChosenFilters.Remove(filter);
 			}
 		}
 
@@ -141,24 +148,24 @@ namespace Combiner
 		{
 			get
 			{
-				return m_DropAllFiltersCommand ??
-					(m_DropAllFiltersCommand = new RelayCommand(DropAllFilters));
+				return this.m_DropAllFiltersCommand ??
+					(this.m_DropAllFiltersCommand = new RelayCommand(this.DropAllFilters));
 			}
 			set
 			{
-				if (m_DropAllFiltersCommand != value)
+				if (this.m_DropAllFiltersCommand != value)
 				{
-					m_DropAllFiltersCommand = value;
-					OnPropertyChanged(nameof(DropAllFiltersCommand));
+					this.m_DropAllFiltersCommand = value;
+					this.OnPropertyChanged(nameof(this.DropAllFiltersCommand));
 				}
 			}
 		}
 
 		private void DropAllFilters(object o)
 		{
-			ChosenFilters.ToList().ForEach(FilterChoices.Add);
-			FilterChoices = new ObservableCollection<Combiner.CreatureFilter>(FilterChoices.OrderBy(s => s.Name));
-			ChosenFilters = new ObservableCollection<Combiner.CreatureFilter>();
+			this.ChosenFilters.ToList().ForEach(this.FilterChoices.Add);
+			this.FilterChoices = new ObservableCollection<CreatureFilter>(this.FilterChoices.OrderBy(s => s.Name));
+			this.ChosenFilters = new ObservableCollection<CreatureFilter>();
 		}
 
 		private RelayCommand m_AddAllFiltersCommand;
@@ -166,24 +173,24 @@ namespace Combiner
 		{
 			get
 			{
-				return m_AddAllFiltersCommand ??
-					(m_AddAllFiltersCommand = new RelayCommand(AddAllFilters));
+				return this.m_AddAllFiltersCommand ??
+					(this.m_AddAllFiltersCommand = new RelayCommand(this.AddAllFilters));
 			}
 			set
 			{
-				if (m_AddAllFiltersCommand != value)
+				if (this.m_AddAllFiltersCommand != value)
 				{
-					m_AddAllFiltersCommand = value;
-					OnPropertyChanged(nameof(AddAllFiltersCommand));
+					this.m_AddAllFiltersCommand = value;
+					this.OnPropertyChanged(nameof(this.AddAllFiltersCommand));
 				}
 			}
 		}
 
 		private void AddAllFilters(object o)
 		{
-			FilterChoices.ToList().ForEach(ChosenFilters.Add);
-			ChosenFilters = new ObservableCollection<Combiner.CreatureFilter>(ChosenFilters.OrderBy(s => s.Name));
-			FilterChoices = new ObservableCollection<Combiner.CreatureFilter>();
+			this.FilterChoices.ToList().ForEach(this.ChosenFilters.Add);
+			this.ChosenFilters = new ObservableCollection<CreatureFilter>(this.ChosenFilters.OrderBy(s => s.Name));
+			this.FilterChoices = new ObservableCollection<CreatureFilter>();
 		}
 
 		private RelayCommand m_ResetFiltersCommand;
@@ -191,23 +198,23 @@ namespace Combiner
 		{
 			get
 			{
-				return m_ResetFiltersCommand ??
-					(m_ResetFiltersCommand = new RelayCommand(ResetFilters));
+				return this.m_ResetFiltersCommand ??
+					(this.m_ResetFiltersCommand = new RelayCommand(this.ResetFilters));
 			}
 			set
 			{
-				if (m_ResetFiltersCommand != value)
+				if (this.m_ResetFiltersCommand != value)
 				{
-					m_ResetFiltersCommand = value;
-					OnPropertyChanged(nameof(ResetFiltersCommand));
+					this.m_ResetFiltersCommand = value;
+					this.OnPropertyChanged(nameof(this.ResetFiltersCommand));
 				}
 			}
 		}
 
 		private void ResetFilters(object o)
 		{
-			DropAllFilters(o);
-			foreach (CreatureFilter filter in FilterChoices)
+			this.DropAllFilters(o);
+			foreach (CreatureFilter filter in this.FilterChoices)
 			{
 				filter.ResetFilter();
 			}
@@ -218,26 +225,26 @@ namespace Combiner
 		{
 			get
 			{
-				return m_FilterCreaturesCommand ??
-				  (m_FilterCreaturesCommand = new RelayCommand(FilterCreatures));
+				return this.m_FilterCreaturesCommand ??
+				  (this.m_FilterCreaturesCommand = new RelayCommand(this.FilterCreatures));
 			}
 			set
 			{
-				if (value != m_FilterCreaturesCommand)
+				if (value != this.m_FilterCreaturesCommand)
 				{
-					m_FilterCreaturesCommand = value;
-					OnPropertyChanged(nameof(FilterCreaturesCommand));
+					this.m_FilterCreaturesCommand = value;
+					this.OnPropertyChanged(nameof(this.FilterCreaturesCommand));
 				}
 			}
 		}
 		private void FilterCreatures(object obj)
 		{
-			m_CreatureDataVM.CreaturesView.Filter = CreatureFilter;
+			this.m_CreatureDataVM.CreaturesView.Filter = this.CreatureFilter;
 		}
 
 		public bool CreatureFilter(object obj)
 		{
-			if (ChosenFilters.Count == 0)
+			if (this.ChosenFilters.Count == 0)
 			{
 				return true;
 			}
@@ -246,7 +253,7 @@ namespace Combiner
 			if (creature != null)
 			{
 				bool result = true;
-				foreach (CreatureFilter filter in ChosenFilters)
+				foreach (CreatureFilter filter in this.ChosenFilters)
 				{
 					result = result && filter.Filter(creature);
 				}

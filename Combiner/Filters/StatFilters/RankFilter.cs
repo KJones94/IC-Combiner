@@ -1,5 +1,7 @@
-﻿namespace Combiner
+﻿namespace Combiner.Filters.StatFilters
 {
+	using Combiner.Models;
+
 	public class RankFilter : StatFilter
 	{
 		public RankFilter()
@@ -7,8 +9,8 @@
 
 		public override bool Filter(Creature creature)
 		{
-			return creature.Rank >= MinValue
-				&& creature.Rank <= MaxValue;
+			return creature.Rank >= this.MinValue
+				&& creature.Rank <= this.MaxValue;
 		}
 
 		public override string ToString()

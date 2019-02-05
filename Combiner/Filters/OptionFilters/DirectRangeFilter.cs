@@ -1,5 +1,8 @@
-﻿namespace Combiner
+﻿namespace Combiner.Filters.OptionFilters
 {
+	using Combiner.Enums;
+	using Combiner.Models;
+
 	public class DirectRangeFilter : OptionFilter
 	{
 		public DirectRangeFilter()

@@ -1,7 +1,9 @@
-﻿using System;
-
-namespace Combiner
+﻿namespace Combiner.Filters
 {
+	using System;
+
+	using Combiner.Models;
+
 	public abstract class OptionFilter : CreatureFilter
 	{
 		public event EventHandler IsOptionCheckChanged;
@@ -12,13 +14,13 @@ namespace Combiner
 		private bool m_IsOptionChecked;
 		public bool IsOptionChecked
 		{
-			get { return m_IsOptionChecked; }
+			get { return this.m_IsOptionChecked; }
 			set
 			{
-				if (m_IsOptionChecked != value)
+				if (this.m_IsOptionChecked != value)
 				{
-					m_IsOptionChecked = value;
-					OnPropertyChanged(nameof(IsOptionChecked));
+					this.m_IsOptionChecked = value;
+					this.OnPropertyChanged(nameof(this.IsOptionChecked));
 				}
 			}
 		}
@@ -27,16 +29,16 @@ namespace Combiner
 
 		public override bool Filter(Creature creature)
 		{
-			if (IsOptionChecked)
+			if (this.IsOptionChecked)
 			{
-				return OnOptionChecked(creature);
+				return this.OnOptionChecked(creature);
 			}
 			return true;
 		}
 
 		public override void ResetFilter()
 		{
-			IsOptionChecked = false;
+			this.IsOptionChecked = false;
 		}
 	}
 }

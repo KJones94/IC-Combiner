@@ -1,7 +1,7 @@
-﻿using System.Windows;
-
-namespace Combiner
+﻿namespace Combiner.Views
 {
+	using System.Windows;
+
 	/// <summary>
 	/// Interaction logic for GuideWindow.xaml
 	/// </summary>
@@ -9,7 +9,7 @@ namespace Combiner
 	{
 		public GuideWindow()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 	}
 }

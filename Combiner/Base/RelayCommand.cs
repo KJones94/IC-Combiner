@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Input;
-
-namespace Combiner
+﻿namespace Combiner.Base
 {
+	using System;
+	using System.Windows.Input;
+
 	// TODO: should generics be used over object?
 	public class RelayCommand : ICommand
 	{
@@ -35,8 +35,8 @@ namespace Combiner
 			if (execute == null)
 				throw new ArgumentNullException("execute");
 
-			_execute = execute;
-			_canExecute = canExecute;
+			this._execute = execute;
+			this._canExecute = canExecute;
 		}
 
 		#endregion
@@ -52,7 +52,7 @@ namespace Combiner
 		///</returns>
 		public bool CanExecute(object parameter)
 		{
-			return _canExecute == null ? true : _canExecute((object)parameter);
+			return this._canExecute == null ? true : this._canExecute((object)parameter);
 		}
 
 		///<summary>
@@ -70,7 +70,7 @@ namespace Combiner
 		///<param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to <see langword="null" />.</param>
 		public void Execute(object parameter)
 		{
-			_execute((object)parameter);
+			this._execute((object)parameter);
 		}
 
 		#endregion

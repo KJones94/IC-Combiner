@@ -1,7 +1,7 @@
-﻿using System.Windows.Controls;
-
-namespace Combiner
+﻿namespace Combiner.Views
 {
+	using System.Windows.Controls;
+
 	/// <summary>
 	/// Interaction logic for NewCreatureView.xaml
 	/// </summary>
@@ -9,7 +9,7 @@ namespace Combiner
 	{
 		public CreatureDataView()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 	}
 }

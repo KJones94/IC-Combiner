@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace Combiner
+﻿namespace Combiner.Engine
 {
+	using System.Collections.Generic;
+
+	using Combiner.Enums;
+	using Combiner.Models;
+
 	public class CreatureFactory
 	{
 		public CreatureBuilder CreateCreature(Stock left, Stock right, Dictionary<Limb, Side> chosenBodyParts)

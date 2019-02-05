@@ -1,5 +1,7 @@
-﻿namespace Combiner
+﻿namespace Combiner.Filters.StatFilters
 {
+	using Combiner.Models;
+
 	public class MeleeDamageFilter : StatFilter
 	{
 		public MeleeDamageFilter()
@@ -7,8 +9,8 @@
 
 		public override bool Filter(Creature creature)
 		{
-			return creature.MeleeDamage >= MinValue
-				&& creature.MeleeDamage <= MaxValue;
+			return creature.MeleeDamage >= this.MinValue
+				&& creature.MeleeDamage <= this.MaxValue;
 		}
 
 		public override string ToString()

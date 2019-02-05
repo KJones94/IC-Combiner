@@ -1,9 +1,13 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
-
-namespace Combiner
+﻿namespace Combiner.Viewmodels
 {
+	using System.Collections.ObjectModel;
+	using System.Windows;
+	using System.Windows.Input;
+
+	using Combiner.Base;
+	using Combiner.Models;
+	using Combiner.Utility;
+
 	public class DatabaseVM : BaseViewModel
 	{
 		private FiltersVM m_FiltersVM;
@@ -19,11 +23,11 @@ namespace Combiner
 			ImportExportHandler importExportHandler,
 			CreatureCsvWriter creatureCsvWriter)
 		{
-			m_NewCreatureVM = newCreatureVM;
-			m_FiltersVM = filtersVM;
-			m_Database = database;
-			m_ImportExportHandler = importExportHandler;
-			m_CreatureCsvWriter = creatureCsvWriter;
+			this.m_NewCreatureVM = newCreatureVM;
+			this.m_FiltersVM = filtersVM;
+			this.m_Database = database;
+			this.m_ImportExportHandler = importExportHandler;
+			this.m_CreatureCsvWriter = creatureCsvWriter;
 		}
 
 		private ICommand m_CreateDatabaseCommand;
@@ -31,22 +35,22 @@ namespace Combiner
 		{
 			get
 			{
-				return m_CreateDatabaseCommand ??
-				  (m_CreateDatabaseCommand = new RelayCommand(CreateDatabase));
+				return this.m_CreateDatabaseCommand ??
+				  (this.m_CreateDatabaseCommand = new RelayCommand(this.CreateDatabase));
 			}
 			set
 			{
-				if (value != m_CreateDatabaseCommand)
+				if (value != this.m_CreateDatabaseCommand)
 				{
-					m_CreateDatabaseCommand = value;
-					OnPropertyChanged(nameof(CreateDatabaseCommand));
+					this.m_CreateDatabaseCommand = value;
+					this.OnPropertyChanged(nameof(this.CreateDatabaseCommand));
 				}
 			}
 		}
 		private void CreateDatabase(object obj)
 		{
 			string text = string.Empty;
-			if (m_Database.Exists())
+			if (this.m_Database.Exists())
 			{
 				text = "The database has already been created. If you continue the database will be over written, including saved creatures. Would you like to continue?";
 			}
@@ -58,7 +62,7 @@ namespace Combiner
 			MessageBoxResult result = MessageBox.Show(text, "Database Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 			if (result == MessageBoxResult.Yes)
 			{
-				m_Database.CreateDB();
+				this.m_Database.CreateDB();
 				MessageBox.Show("Finished creating the database.");
 			}
 		}
@@ -68,22 +72,22 @@ namespace Combiner
 		{
 			get
 			{
-				return m_LoadCreaturesCommand ??
-				  (m_LoadCreaturesCommand = new RelayCommand(LoadCreatures));
+				return this.m_LoadCreaturesCommand ??
+				  (this.m_LoadCreaturesCommand = new RelayCommand(this.LoadCreatures));
 			}
 			set
 			{
-				if (value != m_LoadCreaturesCommand)
+				if (value != this.m_LoadCreaturesCommand)
 				{
-					m_LoadCreaturesCommand = value;
-					OnPropertyChanged(nameof(LoadCreaturesCommand));
+					this.m_LoadCreaturesCommand = value;
+					this.OnPropertyChanged(nameof(this.LoadCreaturesCommand));
 				}
 			}
 		}
 		private void LoadCreatures(object obj)
 		{
-			m_NewCreatureVM.Creatures = new ObservableCollection<Creature>(m_Database.GetAllCreatures());
-			m_NewCreatureVM.CreaturesView.Filter = m_FiltersVM.CreatureFilter;
+			this.m_NewCreatureVM.Creatures = new ObservableCollection<Creature>(this.m_Database.GetAllCreatures());
+			this.m_NewCreatureVM.CreaturesView.Filter = this.m_FiltersVM.CreatureFilter;
 		}
 
 		private ICommand m_LoadSavedCreaturesCommand;
@@ -91,22 +95,22 @@ namespace Combiner
 		{
 			get
 			{
-				return m_LoadSavedCreaturesCommand ??
-				  (m_LoadSavedCreaturesCommand = new RelayCommand(LoadSavedCreatures));
+				return this.m_LoadSavedCreaturesCommand ??
+				  (this.m_LoadSavedCreaturesCommand = new RelayCommand(this.LoadSavedCreatures));
 			}
 			set
 			{
-				if (value != m_LoadSavedCreaturesCommand)
+				if (value != this.m_LoadSavedCreaturesCommand)
 				{
-					m_LoadSavedCreaturesCommand = value;
-					OnPropertyChanged(nameof(LoadSavedCreaturesCommand));
+					this.m_LoadSavedCreaturesCommand = value;
+					this.OnPropertyChanged(nameof(this.LoadSavedCreaturesCommand));
 				}
 			}
 		}
 		private void LoadSavedCreatures(object obj)
 		{
-			m_NewCreatureVM.Creatures = new ObservableCollection<Creature>(m_Database.GetSavedCreatures());
-			m_NewCreatureVM.CreaturesView.Filter = m_FiltersVM.CreatureFilter;
+			this.m_NewCreatureVM.Creatures = new ObservableCollection<Creature>(this.m_Database.GetSavedCreatures());
+			this.m_NewCreatureVM.CreaturesView.Filter = this.m_FiltersVM.CreatureFilter;
 		}
 
 
@@ -115,21 +119,21 @@ namespace Combiner
 		{
 			get
 			{
-				return m_DeleteSavedCreaturesCommand ??
-				  (m_DeleteSavedCreaturesCommand = new RelayCommand(DeleteSavedCreatures));
+				return this.m_DeleteSavedCreaturesCommand ??
+				  (this.m_DeleteSavedCreaturesCommand = new RelayCommand(this.DeleteSavedCreatures));
 			}
 			set
 			{
-				if (value != m_DeleteSavedCreaturesCommand)
+				if (value != this.m_DeleteSavedCreaturesCommand)
 				{
-					m_DeleteSavedCreaturesCommand = value;
-					OnPropertyChanged(nameof(DeleteSavedCreaturesCommand));
+					this.m_DeleteSavedCreaturesCommand = value;
+					this.OnPropertyChanged(nameof(this.DeleteSavedCreaturesCommand));
 				}
 			}
 		}
 		private void DeleteSavedCreatures(object obj)
 		{
-			m_Database.DeleteSavedCreatures();
+			this.m_Database.DeleteSavedCreatures();
 		}
 
 		private ICommand m_ExportSavedCreaturesCommand;
@@ -137,21 +141,21 @@ namespace Combiner
 		{
 			get
 			{
-				return m_ExportSavedCreaturesCommand ??
-					(m_ExportSavedCreaturesCommand = new RelayCommand(ExportSavedCreature));
+				return this.m_ExportSavedCreaturesCommand ??
+					(this.m_ExportSavedCreaturesCommand = new RelayCommand(this.ExportSavedCreature));
 			}
 			set
 			{
-				if (value != m_ExportSavedCreaturesCommand)
+				if (value != this.m_ExportSavedCreaturesCommand)
 				{
-					m_ExportSavedCreaturesCommand = value;
-					OnPropertyChanged(nameof(ExportSavedCreaturesCommand));
+					this.m_ExportSavedCreaturesCommand = value;
+					this.OnPropertyChanged(nameof(this.ExportSavedCreaturesCommand));
 				}
 			}
 		}
 		public void ExportSavedCreature(object obj)
 		{
-			m_ImportExportHandler.Export();
+			this.m_ImportExportHandler.Export();
 		}
 
 		private ICommand m_ImportSavedCreaturesCommand;
@@ -159,21 +163,21 @@ namespace Combiner
 		{
 			get
 			{
-				return m_ImportSavedCreaturesCommand ??
-					(m_ImportSavedCreaturesCommand = new RelayCommand(ImportSavedCreature));
+				return this.m_ImportSavedCreaturesCommand ??
+					(this.m_ImportSavedCreaturesCommand = new RelayCommand(this.ImportSavedCreature));
 			}
 			set
 			{
-				if (value != m_ImportSavedCreaturesCommand)
+				if (value != this.m_ImportSavedCreaturesCommand)
 				{
-					m_ImportSavedCreaturesCommand = value;
-					OnPropertyChanged(nameof(ImportSavedCreaturesCommand));
+					this.m_ImportSavedCreaturesCommand = value;
+					this.OnPropertyChanged(nameof(this.ImportSavedCreaturesCommand));
 				}
 			}
 		}
 		public void ImportSavedCreature(object obj)
 		{
-			m_ImportExportHandler.Import();
+			this.m_ImportExportHandler.Import();
 		}
 
 		private ICommand m_ExportToCsvCommand;
@@ -181,23 +185,23 @@ namespace Combiner
 		{
 			get
 			{
-				return m_ExportToCsvCommand ??
-					(m_ExportToCsvCommand = new RelayCommand(ExportToCsv));
+				return this.m_ExportToCsvCommand ??
+					(this.m_ExportToCsvCommand = new RelayCommand(this.ExportToCsv));
 			}
 			set
 			{
-				if (value != m_ExportToCsvCommand)
+				if (value != this.m_ExportToCsvCommand)
 				{
-					m_ExportToCsvCommand = value;
-					OnPropertyChanged(nameof(ExportToCsvCommand));
+					this.m_ExportToCsvCommand = value;
+					this.OnPropertyChanged(nameof(this.ExportToCsvCommand));
 				}
 			}
 		}
 		public void ExportToCsv(object obj)
 		{
-			if (m_NewCreatureVM.Creatures.Count > 0)
+			if (this.m_NewCreatureVM.Creatures.Count > 0)
 			{
-				m_CreatureCsvWriter.WriteFile(m_NewCreatureVM.Creatures);
+				this.m_CreatureCsvWriter.WriteFile(this.m_NewCreatureVM.Creatures);
 			}
 		}
 	}

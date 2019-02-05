@@ -1,8 +1,11 @@
-﻿using System;
-using System.IO;
-
-namespace Combiner
+﻿namespace Combiner.Engine
 {
+	using System;
+	using System.IO;
+
+	using Combiner.Models;
+	using Combiner.Utility;
+
 	public class StockFactory
 	{
 		public Stock CreateStock(string animalName, LuaStockProxy lua)

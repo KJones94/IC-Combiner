@@ -1,13 +1,16 @@
-﻿<UserControl x:Class="Combiner.FiltersView"
+﻿<UserControl x:Class="Combiner.Views.FiltersView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Combiner"
+             xmlns:converters="clr-namespace:Combiner.Converters"
+             xmlns:filters="clr-namespace:Combiner.Filters"
+             xmlns:filterViews="clr-namespace:Combiner.Views.FilterViews"
              mc:Ignorable="d">
 	<UserControl.Resources>
-		<local:AbilityNameConverter x:Key="abilityNameConverter"/>
-		<local:BoolComplimentConverter x:Key="boolComplimentConverter"/>
+		<converters:AbilityNameConverter x:Key="abilityNameConverter"/>
+		<converters:BoolComplimentConverter x:Key="boolComplimentConverter"/>
 	</UserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -32,17 +35,17 @@
 						</ItemsPanelTemplate>
 					</ItemsControl.ItemsPanel>
 					<ItemsControl.Resources>
-						<DataTemplate DataType="{x:Type local:StatFilter}">
-							<local:StatFilterView/>
+						<DataTemplate DataType="{x:Type filters:StatFilter}">
+							<filterViews:StatFilterView/>
 						</DataTemplate>
-						<DataTemplate DataType="{x:Type local:SelectionFilter}">
-							<local:SelectionFilterView/>
+						<DataTemplate DataType="{x:Type filters:SelectionFilter}">
+							<filterViews:SelectionFilterView/>
 						</DataTemplate>
-						<DataTemplate DataType="{x:Type local:OptionFilter}">
-							<local:OptionFilterView/>
+						<DataTemplate DataType="{x:Type filters:OptionFilter}">
+							<filterViews:OptionFilterView/>
 						</DataTemplate>
-						<DataTemplate DataType="{x:Type local:RangeOptionsFilter}">
-							<local:RangeOptionsFilterView/>
+						<DataTemplate DataType="{x:Type filters:RangeOptionsFilter}">
+							<filterViews:RangeOptionsFilterView/>
 						</DataTemplate>
 					</ItemsControl.Resources>
 				</ItemsControl>

@@ -1,5 +1,7 @@
-﻿namespace Combiner
+﻿namespace Combiner.Filters.StatFilters
 {
+	using Combiner.Models;
+
 	public class SightRadiusFilter : StatFilter
 	{
 		public SightRadiusFilter()
@@ -7,8 +9,8 @@
 
 		public override bool Filter(Creature creature)
 		{
-			return creature.SightRadius >= MinValue
-				&& creature.SightRadius <= MaxValue;
+			return creature.SightRadius >= this.MinValue
+				&& creature.SightRadius <= this.MaxValue;
 		}
 
 		public override string ToString()

@@ -1,5 +1,8 @@
-﻿namespace Combiner
+﻿namespace Combiner.Filters
 {
+	using Combiner.Base;
+	using Combiner.Models;
+
 	public abstract class CreatureFilter : BaseViewModel
 	{
 		public abstract bool Filter(Creature creature);
@@ -10,7 +13,7 @@
 
 		public CreatureFilter(string name)
 		{
-			Name = name;
+			this.Name = name;
 		}
 
 	}

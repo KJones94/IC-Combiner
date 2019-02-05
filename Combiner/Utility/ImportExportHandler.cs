@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
-
-
-namespace Combiner
+﻿namespace Combiner.Utility
 {
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Windows.Forms;
+
+	using Combiner.Models;
+	using Combiner.XML;
+
 	public class ImportExportHandler
 	{
 		private string m_XMLDirectory = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) , "..\\..\\XML"));
@@ -14,8 +16,8 @@ namespace Combiner
 
 		public ImportExportHandler(Database database)
 		{
-			m_Database = database;
-			m_CreatureXMLHandler = new CreatureXMLHandler();
+			this.m_Database = database;
+			this.m_CreatureXMLHandler = new CreatureXMLHandler();
 		}
 
 		public void Import()
@@ -24,7 +26,7 @@ namespace Combiner
 			string filePath = string.Empty;
 			using (OpenFileDialog openFileDialog = new OpenFileDialog())
 			{
-				openFileDialog.InitialDirectory = m_XMLDirectory;
+				openFileDialog.InitialDirectory = this.m_XMLDirectory;
 				openFileDialog.Filter = "XML files (*.xml)|*.xml";
 				openFileDialog.RestoreDirectory = true;
 
@@ -41,16 +43,16 @@ namespace Combiner
 
 			// Read XML and all that
 
-			IEnumerable<CreatureQueryData> importedCreatureData = m_CreatureXMLHandler.GetCreatureDataFromXML(filePath);
+			IEnumerable<CreatureQueryData> importedCreatureData = this.m_CreatureXMLHandler.GetCreatureDataFromXML(filePath);
 
 			// Save creatures to database
 
 			List<Creature> creatures = new List<Creature>();
 			foreach (var data in importedCreatureData)
 			{
-				creatures.Add(m_Database.GetCreature(data.left, data.right, data.bodyParts));
+				creatures.Add(this.m_Database.GetCreature(data.left, data.right, data.bodyParts));
 			}
-			m_Database.SaveCreatures(creatures);
+			this.m_Database.SaveCreatures(creatures);
 		}
 
 		public void Export()
@@ -60,7 +62,7 @@ namespace Combiner
 			string filePath = string.Empty;
 			using (SaveFileDialog saveFileDialog = new SaveFileDialog())
 			{
-				saveFileDialog.InitialDirectory = m_XMLDirectory;
+				saveFileDialog.InitialDirectory = this.m_XMLDirectory;
 				saveFileDialog.Filter = "XML files (*.xml)|*.xml";
 				saveFileDialog.RestoreDirectory = true;
 
@@ -77,11 +79,11 @@ namespace Combiner
 
 			// Get creature data from database
 
-			List<Creature> savedCreatures = m_Database.GetSavedCreatures();
+			List<Creature> savedCreatures = this.m_Database.GetSavedCreatures();
 
 			// Write to XML
 
-			m_CreatureXMLHandler.AddCreaturesToXML(savedCreatures, filePath);
+			this.m_CreatureXMLHandler.AddCreaturesToXML(savedCreatures, filePath);
 
 		}
 	}

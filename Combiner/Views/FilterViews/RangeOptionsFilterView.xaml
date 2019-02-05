@@ -1,21 +1,22 @@
-﻿<UserControl x:Class="Combiner.RangeOptionsFilterView"
+﻿<UserControl x:Class="Combiner.Views.FilterViews.RangeOptionsFilterView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Combiner"
+             xmlns:filterViews="clr-namespace:Combiner.Views.FilterViews"
              mc:Ignorable="d">
     <StackPanel>
 		<StackPanel Orientation="Horizontal">
-			<local:OptionFilterView DataContext="{Binding RangeOnlyFilter}"/>
-			<local:OptionFilterView DataContext="{Binding DirectRangeFilter}"/>
-			<local:OptionFilterView DataContext="{Binding SonicRangeFilter}"/>
+			<filterViews:OptionFilterView DataContext="{Binding RangeOnlyFilter}"/>
+			<filterViews:OptionFilterView DataContext="{Binding DirectRangeFilter}"/>
+			<filterViews:OptionFilterView DataContext="{Binding SonicRangeFilter}"/>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal">
-			<local:OptionFilterView DataContext="{Binding ArtilleryOnlyFilter}"/>
-			<local:OptionFilterView DataContext="{Binding RockArtilleryFilter}"/>
-			<local:OptionFilterView DataContext="{Binding WaterArtilleryFilter}"/>
-			<local:OptionFilterView DataContext="{Binding ChemicalArtilleryFilter}"/>
+			<filterViews:OptionFilterView DataContext="{Binding ArtilleryOnlyFilter}"/>
+			<filterViews:OptionFilterView DataContext="{Binding RockArtilleryFilter}"/>
+			<filterViews:OptionFilterView DataContext="{Binding WaterArtilleryFilter}"/>
+			<filterViews:OptionFilterView DataContext="{Binding ChemicalArtilleryFilter}"/>
 		</StackPanel>
     </StackPanel>
 </UserControl>

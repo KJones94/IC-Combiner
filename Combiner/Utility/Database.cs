@@ -1,11 +1,16 @@
-﻿using LiteDB;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-namespace Combiner
+﻿namespace Combiner.Utility
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+
+	using Combiner.Engine;
+	using Combiner.Enums;
+	using Combiner.Models;
+
+	using LiteDB;
+
 	public class Database
 	{
 		private readonly string m_CreaturesCollectionName = "creatures";
@@ -19,12 +24,12 @@ namespace Combiner
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (!db.CollectionExists(m_CreaturesCollectionName))
+				if (!db.CollectionExists(this.m_CreaturesCollectionName))
 				{
 					return new List<Creature>();
 				}
 
-				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
+				var collection = db.GetCollection<Creature>(this.m_CreaturesCollectionName);
 				List<Creature> creatures = collection.FindAll().ToList();
 				return creatures;
 			}
@@ -42,13 +47,13 @@ namespace Combiner
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (!db.CollectionExists(m_CreaturesCollectionName))
+				if (!db.CollectionExists(this.m_CreaturesCollectionName))
 				{
 					return null;
 				}
 
-				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
-				var result = collection.Find(FindCreatureQuery(left, right, bodyParts));
+				var collection = db.GetCollection<Creature>(this.m_CreaturesCollectionName);
+				var result = collection.Find(this.FindCreatureQuery(left, right, bodyParts));
 				return result.First();
 			}
 		}
@@ -61,9 +66,9 @@ namespace Combiner
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (db.CollectionExists(m_SavedCreaturesCollectionName))
+				if (db.CollectionExists(this.m_SavedCreaturesCollectionName))
 				{
-					db.DropCollection(m_SavedCreaturesCollectionName);
+					db.DropCollection(this.m_SavedCreaturesCollectionName);
 				}
 			}
 		}
@@ -76,12 +81,12 @@ namespace Combiner
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (!db.CollectionExists(m_SavedCreaturesCollectionName))
+				if (!db.CollectionExists(this.m_SavedCreaturesCollectionName))
 				{
 					return new List<Creature>();
 				}
 
-				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
+				var collection = db.GetCollection<Creature>(this.m_SavedCreaturesCollectionName);
 				List<Creature> savedCreatures = collection.FindAll().ToList();
 				return savedCreatures;
 			}
@@ -96,7 +101,7 @@ namespace Combiner
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				// Creates collection if necessary
-				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
+				var collection = db.GetCollection<Creature>(this.m_SavedCreaturesCollectionName);
 				collection.InsertBulk(creatures);
 			}
 		}
@@ -110,8 +115,8 @@ namespace Combiner
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				// Creates collection if necessary
-				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
-				bool creatureExists = collection.Exists(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
+				var collection = db.GetCollection<Creature>(this.m_SavedCreaturesCollectionName);
+				bool creatureExists = collection.Exists(this.FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
 				if (!creatureExists)
 				{
 					collection.Insert(creature);
@@ -128,13 +133,13 @@ namespace Combiner
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				// No need to unsave if there aren't any saved creatures
-				if (!db.CollectionExists(m_SavedCreaturesCollectionName))
+				if (!db.CollectionExists(this.m_SavedCreaturesCollectionName))
 				{
 					return;
 				}
 
-				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
-				collection.Delete(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
+				var collection = db.GetCollection<Creature>(this.m_SavedCreaturesCollectionName);
+				collection.Delete(this.FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
 			}
 		}
 
@@ -149,7 +154,7 @@ namespace Combiner
 						Query.Or(
 							Query.EQ("Left", right),
 							Query.EQ("Right", left))),
-					Query.Where("BodyParts", (x => HasSameBodyParts(x, bodyParts))));
+					Query.Where("BodyParts", (x => this.HasSameBodyParts(x, bodyParts))));
 		}
 
 		private bool HasSameBodyParts(BsonValue x, Dictionary<string, string> bodyParts)
@@ -178,9 +183,9 @@ namespace Combiner
 			{
 				using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 				{
-					var collectionExists = db.CollectionExists(m_CreaturesCollectionName);
+					var collectionExists = db.CollectionExists(this.m_CreaturesCollectionName);
 					return collectionExists
-						? db.GetCollection<Creature>(m_CreaturesCollectionName).Count() > 0
+						? db.GetCollection<Creature>(this.m_CreaturesCollectionName).Count() > 0
 						: false;
 				}
 			}
@@ -193,17 +198,17 @@ namespace Combiner
 
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (db.CollectionExists(m_CreaturesCollectionName))
+				if (db.CollectionExists(this.m_CreaturesCollectionName))
 				{
-					db.DropCollection(m_CreaturesCollectionName);
+					db.DropCollection(this.m_CreaturesCollectionName);
 				}
-				if (db.CollectionExists(m_SavedCreaturesCollectionName))
+				if (db.CollectionExists(this.m_SavedCreaturesCollectionName))
 				{
-					db.DropCollection(m_SavedCreaturesCollectionName);
+					db.DropCollection(this.m_SavedCreaturesCollectionName);
 				}
 
-				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
-				CreateCreatures(collection);
+				var collection = db.GetCollection<Creature>(this.m_CreaturesCollectionName);
+				this.CreateCreatures(collection);
 
 				// Setup indexes
 				// May not need if not querying to filter

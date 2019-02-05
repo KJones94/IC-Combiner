@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Combiner
+﻿namespace Combiner.Models
 {
+	using System.Collections.Generic;
+
 	public class Creature
 	{
 		public int Id { get; set; }

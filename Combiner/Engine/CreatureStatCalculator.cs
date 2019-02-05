@@ -1,8 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Combiner
+﻿namespace Combiner.Engine
 {
+	using System;
+	using System.Collections.Generic;
+
+	using Combiner.Enums;
+	using Combiner.Utility;
+
 	public class CreatureStatCalculator
 	{
 		public StockStatCalculator Left { get; set; }
@@ -16,9 +19,9 @@ namespace Combiner
 			StockStatCalculator right,
 			Dictionary<Limb, Side> chosenBodyParts)
 		{
-			ChosenLimbs = InitChosenLimbs(left, right, chosenBodyParts);
-			Left = left;
-			Right = right;
+			this.ChosenLimbs = this.InitChosenLimbs(left, right, chosenBodyParts);
+			this.Left = left;
+			this.Right = right;
 		}
 
 		private Dictionary<Limb, StockStatCalculator> InitChosenLimbs(
@@ -48,13 +51,13 @@ namespace Combiner
 
 		private double OtherSideSize(StockStatCalculator stock)
 		{
-			if (stock.Name == Left.Name)
+			if (stock.Name == this.Left.Name)
 			{
-				return Right.GetLimbAttributeValue(Attributes.Size);
+				return this.Right.GetLimbAttributeValue(Attributes.Size);
 			}
 			else
 			{
-				return Left.GetLimbAttributeValue(Attributes.Size);
+				return this.Left.GetLimbAttributeValue(Attributes.Size);
 			}
 		}
 
@@ -64,20 +67,20 @@ namespace Combiner
 			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = ChosenLimbs[limb];
+				side = this.ChosenLimbs[limb];
 				if (side == null)
 				{
 					continue;
 				}
-				hitpoints += side.CalcLimbHitpoints(OtherSideSize(side), limb);
+				hitpoints += side.CalcLimbHitpoints(this.OtherSideSize(side), limb);
 			}
 			return hitpoints;
 		}
 
 		public double CalcSize()
 		{
-			double leftSize = Left.GetLimbAttributeValue(Attributes.Size);
-			double rightSize = Right.GetLimbAttributeValue(Attributes.Size);
+			double leftSize = this.Left.GetLimbAttributeValue(Attributes.Size);
+			double rightSize = this.Right.GetLimbAttributeValue(Attributes.Size);
 			if (leftSize >= rightSize)
 			{
 				return leftSize;
@@ -94,19 +97,19 @@ namespace Combiner
 			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = ChosenLimbs[limb];
+				side = this.ChosenLimbs[limb];
 				if (side == null)
 				{
 					continue;
 				}
-				armour += side.CalcLimbArmour(OtherSideSize(side), limb);
+				armour += side.CalcLimbArmour(this.OtherSideSize(side), limb);
 			}
 			return armour;
 		}
 
 		public double CalcSightRadius()
 		{
-			return ChosenLimbs[Limb.Head].CalcLimbSightRadius();
+			return this.ChosenLimbs[Limb.Head].CalcLimbSightRadius();
 		}
 
 		public double CalcLandSpeed()
@@ -115,12 +118,12 @@ namespace Combiner
 			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = ChosenLimbs[limb];
+				side = this.ChosenLimbs[limb];
 				if (side == null)
 				{
 					continue;
 				}
-				landSpeed += side.CalcLimbLandSpeed(OtherSideSize(side), limb);
+				landSpeed += side.CalcLimbLandSpeed(this.OtherSideSize(side), limb);
 			}
 			return landSpeed;
 		}
@@ -131,12 +134,12 @@ namespace Combiner
 			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = ChosenLimbs[limb];
+				side = this.ChosenLimbs[limb];
 				if (side == null)
 				{
 					continue;
 				}
-				airSpeed += side.CalcLimbAirSpeed(OtherSideSize(side), limb);
+				airSpeed += side.CalcLimbAirSpeed(this.OtherSideSize(side), limb);
 			}
 			return airSpeed;
 		}
@@ -147,12 +150,12 @@ namespace Combiner
 			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = ChosenLimbs[limb];
+				side = this.ChosenLimbs[limb];
 				if (side == null)
 				{
 					continue;
 				}
-				waterSpeed += side.CalcLimbWaterSpeed(OtherSideSize(side), limb);
+				waterSpeed += side.CalcLimbWaterSpeed(this.OtherSideSize(side), limb);
 			}
 			return waterSpeed;
 		}
@@ -163,39 +166,39 @@ namespace Combiner
 			StockStatCalculator side;
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				side = ChosenLimbs[limb];
+				side = this.ChosenLimbs[limb];
 				if (side == null)
 				{
 					continue;
 				}
-				meleeDamage += side.CalcLimbMeleeDamage(OtherSideSize(side), limb);
+				meleeDamage += side.CalcLimbMeleeDamage(this.OtherSideSize(side), limb);
 			}
 			return meleeDamage;
 		}
 
 		public double CalcRangeDamage(Limb limb)
 		{
-			StockStatCalculator side = ChosenLimbs[limb];
+			StockStatCalculator side = this.ChosenLimbs[limb];
 			if (side == null)
 			{
 				return 0;
 			}
-			return side.CalcLimbRangeDamage(OtherSideSize(side), limb);
+			return side.CalcLimbRangeDamage(this.OtherSideSize(side), limb);
 		}
 
 		public double CalcRangeMax(Limb limb)
 		{
-			StockStatCalculator side = ChosenLimbs[limb];
+			StockStatCalculator side = this.ChosenLimbs[limb];
 			if (side == null)
 			{
 				return 0;
 			}
-			return side.GetLimbRangeMax(OtherSideSize(side), limb);
+			return side.GetLimbRangeMax(this.OtherSideSize(side), limb);
 		}
 
 		public double GetRangeType(Limb limb)
 		{
-			StockStatCalculator side = ChosenLimbs[limb];
+			StockStatCalculator side = this.ChosenLimbs[limb];
 			if (side == null)
 			{
 				return 0;
@@ -205,7 +208,7 @@ namespace Combiner
 
 		public double GetRangeSpecial(Limb limb)
 		{
-			StockStatCalculator side = ChosenLimbs[limb];
+			StockStatCalculator side = this.ChosenLimbs[limb];
 			if (side == null)
 			{
 				return 0;
@@ -215,7 +218,7 @@ namespace Combiner
 
 		public double GetMeleeType(Limb limb)
 		{
-			StockStatCalculator side = ChosenLimbs[limb];
+			StockStatCalculator side = this.ChosenLimbs[limb];
 			if (side == null)
 			{
 				return 0;

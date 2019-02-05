@@ -1,5 +1,7 @@
-﻿namespace Combiner
+﻿namespace Combiner.Filters.StatFilters
 {
+	using Combiner.Models;
+
 	public class PowerFilter : StatFilter
 	{
 		public PowerFilter()
@@ -7,8 +9,8 @@
 
 		public override bool Filter(Creature creature)
 		{
-			return creature.Power >= MinValue
-				&& creature.Power <= MaxValue;
+			return creature.Power >= this.MinValue
+				&& creature.Power <= this.MaxValue;
 		}
 
 		public override string ToString()

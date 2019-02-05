@@ -1,9 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Combiner
+﻿namespace Combiner.Engine
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+
+	using Combiner.Enums;
+	using Combiner.Models;
+	using Combiner.Utility;
+
 	// UNTESTED BE CAREFUL
 	public class CreatureCombiner
 	{
@@ -11,7 +15,7 @@ namespace Combiner
 
 		public CreatureCombiner(List<string> stockNames)
 		{
-			m_StockPool = InitStockPool(stockNames);
+			this.m_StockPool = this.InitStockPool(stockNames);
 		}
 
 		private Dictionary<string, Stock> InitStockPool(List<string> stockNames)
@@ -29,7 +33,7 @@ namespace Combiner
 		public List<Creature> CreateAllPossibleCreatures(string leftName, string rightName)
 		{
 			List<Creature> creatures = new List<Creature>();
-			List<CreatureBuilder> builders = Combine(m_StockPool[leftName], m_StockPool[rightName]);
+			List<CreatureBuilder> builders = this.Combine(this.m_StockPool[leftName], this.m_StockPool[rightName]);
 			LuaCreatureProxy lua = new LuaCreatureProxy();
 			foreach (var creature in builders)
 			{
@@ -42,8 +46,8 @@ namespace Combiner
 
 		public List<CreatureBuilder> Combine(Stock left, Stock right)
 		{
-			List<Dictionary<Limb, Side>> unprunedBodyParts = CreateUnprunedBodyParts(left, right);
-			List<Dictionary<Limb, Side>> prunedBodyParts = PruneBodyParts(left, right, unprunedBodyParts);
+			List<Dictionary<Limb, Side>> unprunedBodyParts = this.CreateUnprunedBodyParts(left, right);
+			List<Dictionary<Limb, Side>> prunedBodyParts = this.PruneBodyParts(left, right, unprunedBodyParts);
 
 			CreatureFactory creatureFactory = new CreatureFactory();
 			List<CreatureBuilder> creatures = new List<CreatureBuilder>();
@@ -96,7 +100,7 @@ namespace Combiner
 			{
 				possibleBodyParts[limb] = Side.Empty;
 			}
-			bodyPartsList.AddRange(GenerateBodyParts(left, right, CopyBodyParts(possibleBodyParts), limb + 1));
+			bodyPartsList.AddRange(this.GenerateBodyParts(left, right, this.CopyBodyParts(possibleBodyParts), limb + 1));
 
 			// Build right side possible body parts
 			if (right.BodyParts[limb])
@@ -107,7 +111,7 @@ namespace Combiner
 			{
 				possibleBodyParts[limb] = Side.Empty;
 			}
-			bodyPartsList.AddRange(GenerateBodyParts(left, right, CopyBodyParts(possibleBodyParts), limb + 1));
+			bodyPartsList.AddRange(this.GenerateBodyParts(left, right, this.CopyBodyParts(possibleBodyParts), limb + 1));
 
 			return bodyPartsList;
 		}
@@ -158,8 +162,8 @@ namespace Combiner
 				possibleBodyParts.Add(limb, Side.Null);
 			}
 
-			List<Dictionary<Limb, Side>> unprunedBodyParts = GenerateBodyParts(left, right, possibleBodyParts, Limb.FrontLegs);
-			return RemoveDuplicates(unprunedBodyParts);
+			List<Dictionary<Limb, Side>> unprunedBodyParts = this.GenerateBodyParts(left, right, possibleBodyParts, Limb.FrontLegs);
+			return this.RemoveDuplicates(unprunedBodyParts);
 		}
 
 		/// <summary>
@@ -185,13 +189,13 @@ namespace Combiner
 			List<Dictionary<Limb, Side>> prunedBodyParts = new List<Dictionary<Limb, Side>>();
 			foreach (Dictionary<Limb, Side> dict in bodyParts)
 			{
-				if (!CheckSpecialCases(left, right, dict))
+				if (!this.CheckSpecialCases(left, right, dict))
 				{
 					continue; //bad body parts
 				}
 
 				// check front legs edge case
-				if (!IsQuadrupedBirdFrontLegsCorrect(left, right, dict))
+				if (!this.IsQuadrupedBirdFrontLegsCorrect(left, right, dict))
 				{
 					continue; // bad body parts
 				}
@@ -199,14 +203,14 @@ namespace Combiner
 				// Torso can't be empty or null
 				if (dict[Limb.Torso] == Side.Left)
 				{
-					if (IsTorsoRelatedPartsCorrect(left, dict))
+					if (this.IsTorsoRelatedPartsCorrect(left, dict))
 					{
 						prunedBodyParts.Add(dict);
 					}
 				}
 				else if (dict[Limb.Torso] == Side.Right)
 				{
-					if (IsTorsoRelatedPartsCorrect(right, dict))
+					if (this.IsTorsoRelatedPartsCorrect(right, dict))
 					{
 						prunedBodyParts.Add(dict);
 					}
@@ -317,15 +321,15 @@ namespace Combiner
 		{
 			if (left.Name == StockNames.HumpbackWhale || right.Name == StockNames.HumpbackWhale)
 			{
-				return IsHumpbackCorrect(left, right, dict);
+				return this.IsHumpbackCorrect(left, right, dict);
 			}
 			if (left.Name == StockNames.BlueRingedOctopus || right.Name == StockNames.BlueRingedOctopus)
 			{
-				return IsBlueRingedOctopusCorrect(left, right, dict);
+				return this.IsBlueRingedOctopusCorrect(left, right, dict);
 			}
 			if (left.Name == StockNames.Walrus || right.Name == StockNames.Walrus)
 			{
-				return IsWalrusCorrect(left, right, dict);
+				return this.IsWalrusCorrect(left, right, dict);
 			}
 
 			return true;

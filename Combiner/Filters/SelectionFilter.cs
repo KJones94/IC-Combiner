@@ -1,15 +1,18 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Input;
-
-namespace Combiner
+﻿namespace Combiner.Filters
 {
+	using System.Collections.ObjectModel;
+	using System.Linq;
+	using System.Windows.Input;
+
+	using Combiner.Base;
+	using Combiner.Models;
+
 	public abstract class SelectionFilter : CreatureFilter
 	{
 		public SelectionFilter(string name)
 			: base(name)
 		{
-			Choices = InitChoices();
+			this.Choices = this.InitChoices();
 		}
 
 		protected abstract ObservableCollection<string> InitChoices();
@@ -18,22 +21,22 @@ namespace Combiner
 
 		public override bool Filter(Creature creature)
 		{
-			if (Selected.Count == 0)
+			if (this.Selected.Count == 0)
 			{
 				return true;
 			}
 
-			if (IsOnlySelectedFiltered)
+			if (this.IsOnlySelectedFiltered)
 			{
-				return FilterOnlySelected(creature);
+				return this.FilterOnlySelected(creature);
 			}
-			return FilterAnySelected(creature);
+			return this.FilterAnySelected(creature);
 		}
 
 		public override void ResetFilter()
 		{
-			RemoveAllSelected(null);
-			IsOnlySelectedFiltered = false;
+			this.RemoveAllSelected(null);
+			this.IsOnlySelectedFiltered = false;
 		}
 
 		private ObservableCollection<string> m_Choices;
@@ -41,15 +44,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_Choices
-					?? (m_Choices = new ObservableCollection<string>());
+				return this.m_Choices
+					?? (this.m_Choices = new ObservableCollection<string>());
 			}
 			set
 			{
-				if (m_Choices != value)
+				if (this.m_Choices != value)
 				{
-					m_Choices = value;
-					OnPropertyChanged(nameof(Choices));
+					this.m_Choices = value;
+					this.OnPropertyChanged(nameof(this.Choices));
 				}
 			}
 		}
@@ -61,15 +64,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_Selected
-					?? (m_Selected = new ObservableCollection<string>());
+				return this.m_Selected
+					?? (this.m_Selected = new ObservableCollection<string>());
 			}
 			set
 			{
-				if (m_Selected != value)
+				if (this.m_Selected != value)
 				{
-					m_Selected = value;
-					OnPropertyChanged(nameof(Selected));
+					this.m_Selected = value;
+					this.OnPropertyChanged(nameof(this.Selected));
 				}
 			}
 		}
@@ -81,25 +84,25 @@ namespace Combiner
 		{
 			get
 			{
-				return m_AddChoiceCommand ??
-				  (m_AddChoiceCommand = new RelayCommand(AddChoice));
+				return this.m_AddChoiceCommand ??
+				  (this.m_AddChoiceCommand = new RelayCommand(this.AddChoice));
 			}
 			set
 			{
-				if (value != m_AddChoiceCommand)
+				if (value != this.m_AddChoiceCommand)
 				{
-					m_AddChoiceCommand = value;
-					OnPropertyChanged(nameof(AddChoiceCommand));
+					this.m_AddChoiceCommand = value;
+					this.OnPropertyChanged(nameof(this.AddChoiceCommand));
 				}
 			}
 		}
 		private void AddChoice(object obj)
 		{
-			if (!string.IsNullOrEmpty(ChoiceItem) && !Selected.Contains(ChoiceItem))
+			if (!string.IsNullOrEmpty(this.ChoiceItem) && !this.Selected.Contains(this.ChoiceItem))
 			{
-				Selected.Add(ChoiceItem);
-				Selected = new ObservableCollection<string>(Selected.OrderBy(s => s));
-				Choices.Remove(ChoiceItem);
+				this.Selected.Add(this.ChoiceItem);
+				this.Selected = new ObservableCollection<string>(this.Selected.OrderBy(s => s));
+				this.Choices.Remove(this.ChoiceItem);
 			}
 		}
 
@@ -108,25 +111,25 @@ namespace Combiner
 		{
 			get
 			{
-				return m_RemovedSelectedCommand ??
-				  (m_RemovedSelectedCommand = new RelayCommand(RemoveSelected));
+				return this.m_RemovedSelectedCommand ??
+				  (this.m_RemovedSelectedCommand = new RelayCommand(this.RemoveSelected));
 			}
 			set
 			{
-				if (value != m_RemovedSelectedCommand)
+				if (value != this.m_RemovedSelectedCommand)
 				{
-					m_RemovedSelectedCommand = value;
-					OnPropertyChanged(nameof(RemoveSelectedCommand));
+					this.m_RemovedSelectedCommand = value;
+					this.OnPropertyChanged(nameof(this.RemoveSelectedCommand));
 				}
 			}
 		}
 		private void RemoveSelected(object obj)
 		{
-			if (!string.IsNullOrEmpty(SelectedItem))
+			if (!string.IsNullOrEmpty(this.SelectedItem))
 			{
-				Choices.Add(SelectedItem);
-				Choices = new ObservableCollection<string>(Choices.OrderBy(s => s));
-				Selected.Remove(SelectedItem);
+				this.Choices.Add(this.SelectedItem);
+				this.Choices = new ObservableCollection<string>(this.Choices.OrderBy(s => s));
+				this.Selected.Remove(this.SelectedItem);
 			}
 		}
 
@@ -135,38 +138,38 @@ namespace Combiner
 		{
 			get
 			{
-				return m_RemoveAllSelectedCommand ??
-				  (m_RemoveAllSelectedCommand = new RelayCommand(RemoveAllSelected));
+				return this.m_RemoveAllSelectedCommand ??
+				  (this.m_RemoveAllSelectedCommand = new RelayCommand(this.RemoveAllSelected));
 			}
 			set
 			{
-				if (value != m_RemoveAllSelectedCommand)
+				if (value != this.m_RemoveAllSelectedCommand)
 				{
-					m_RemoveAllSelectedCommand = value;
-					OnPropertyChanged(nameof(RemoveAllSelectedCommand));
+					this.m_RemoveAllSelectedCommand = value;
+					this.OnPropertyChanged(nameof(this.RemoveAllSelectedCommand));
 				}
 			}
 		}
 		private void RemoveAllSelected(object obj)
 		{
-			foreach (string ability in Selected)
+			foreach (string ability in this.Selected)
 			{
-				Choices.Add(ability);
+				this.Choices.Add(ability);
 			}
-			Selected = new ObservableCollection<string>();
-			Choices = new ObservableCollection<string>(Choices.OrderBy(s => s));
+			this.Selected = new ObservableCollection<string>();
+			this.Choices = new ObservableCollection<string>(this.Choices.OrderBy(s => s));
 		}
 
 		private bool m_IsOnlySelectedFiltered;
 		public bool IsOnlySelectedFiltered
 		{
-			get { return m_IsOnlySelectedFiltered; }
+			get { return this.m_IsOnlySelectedFiltered; }
 			set
 			{
-				if (m_IsOnlySelectedFiltered != value)
+				if (this.m_IsOnlySelectedFiltered != value)
 				{
-					m_IsOnlySelectedFiltered = value;
-					OnPropertyChanged(nameof(IsOnlySelectedFiltered));
+					this.m_IsOnlySelectedFiltered = value;
+					this.OnPropertyChanged(nameof(this.IsOnlySelectedFiltered));
 				}
 			}
 		}

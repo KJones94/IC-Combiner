@@ -1,20 +1,23 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-
-namespace Combiner
+﻿namespace Combiner.Filters
 {
+	using System.Collections.ObjectModel;
+	using System.ComponentModel;
+
+	using Combiner.Filters.OptionFilters;
+	using Combiner.Models;
+
 	public class RangeOptionsFilter : CreatureFilter
 	{
 		public RangeOptionsFilter()
 			: base("Range Options")
 		{
-			RangeOnlyFilter.PropertyChanged += OnIsOptionCheckChanged;
-			DirectRangeFilter.PropertyChanged += OnIsOptionCheckChanged;
-			SonicRangeFilter.PropertyChanged += OnIsOptionCheckChanged;
-			ArtilleryOnlyFilter.PropertyChanged += OnIsOptionCheckChanged;
-			RockArtilleryFilter.PropertyChanged += OnIsOptionCheckChanged;
-			WaterArtilleryFilter.PropertyChanged += OnIsOptionCheckChanged;
-			ChemicalArtilleryFilter.PropertyChanged += OnIsOptionCheckChanged;
+			this.RangeOnlyFilter.PropertyChanged += this.OnIsOptionCheckChanged;
+			this.DirectRangeFilter.PropertyChanged += this.OnIsOptionCheckChanged;
+			this.SonicRangeFilter.PropertyChanged += this.OnIsOptionCheckChanged;
+			this.ArtilleryOnlyFilter.PropertyChanged += this.OnIsOptionCheckChanged;
+			this.RockArtilleryFilter.PropertyChanged += this.OnIsOptionCheckChanged;
+			this.WaterArtilleryFilter.PropertyChanged += this.OnIsOptionCheckChanged;
+			this.ChemicalArtilleryFilter.PropertyChanged += this.OnIsOptionCheckChanged;
 		}
 
 		private RangeOnlyFilter m_RangeOnlyFilter;
@@ -22,15 +25,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_RangeOnlyFilter
-					?? (m_RangeOnlyFilter = new RangeOnlyFilter());
+				return this.m_RangeOnlyFilter
+					?? (this.m_RangeOnlyFilter = new RangeOnlyFilter());
 			}
 			set
 			{
-				if (m_RangeOnlyFilter != value)
+				if (this.m_RangeOnlyFilter != value)
 				{
-					m_RangeOnlyFilter = value;
-					OnPropertyChanged(nameof(RangeOnlyFilter));
+					this.m_RangeOnlyFilter = value;
+					this.OnPropertyChanged(nameof(this.RangeOnlyFilter));
 				}
 			}
 		}
@@ -40,15 +43,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_DirectRangeFilter
-					?? (m_DirectRangeFilter = new DirectRangeFilter());
+				return this.m_DirectRangeFilter
+					?? (this.m_DirectRangeFilter = new DirectRangeFilter());
 			}
 			set
 			{
-				if (m_DirectRangeFilter != value)
+				if (this.m_DirectRangeFilter != value)
 				{
-					m_DirectRangeFilter = value;
-					OnPropertyChanged(nameof(DirectRangeFilter));
+					this.m_DirectRangeFilter = value;
+					this.OnPropertyChanged(nameof(this.DirectRangeFilter));
 				}
 			}
 		}
@@ -58,15 +61,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_SonicRangeFilter
-					?? (m_SonicRangeFilter = new SonicRangeFilter());
+				return this.m_SonicRangeFilter
+					?? (this.m_SonicRangeFilter = new SonicRangeFilter());
 			}
 			set
 			{
-				if (m_SonicRangeFilter != value)
+				if (this.m_SonicRangeFilter != value)
 				{
-					m_SonicRangeFilter = value;
-					OnPropertyChanged(nameof(SonicRangeFilter));
+					this.m_SonicRangeFilter = value;
+					this.OnPropertyChanged(nameof(this.SonicRangeFilter));
 				}
 			}
 		}
@@ -76,15 +79,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_ArtilleryOnlyFilter
-					?? (m_ArtilleryOnlyFilter = new ArtilleryOnlyFilter());
+				return this.m_ArtilleryOnlyFilter
+					?? (this.m_ArtilleryOnlyFilter = new ArtilleryOnlyFilter());
 			}
 			set
 			{
-				if (m_ArtilleryOnlyFilter != value)
+				if (this.m_ArtilleryOnlyFilter != value)
 				{
-					m_ArtilleryOnlyFilter = value;
-					OnPropertyChanged(nameof(ArtilleryOnlyFilter));
+					this.m_ArtilleryOnlyFilter = value;
+					this.OnPropertyChanged(nameof(this.ArtilleryOnlyFilter));
 				}
 			}
 		}
@@ -94,15 +97,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_RockArtilleryFilter
-					?? (m_RockArtilleryFilter = new RockArtilleryFilter());
+				return this.m_RockArtilleryFilter
+					?? (this.m_RockArtilleryFilter = new RockArtilleryFilter());
 			}
 			set
 			{
-				if (m_RockArtilleryFilter != value)
+				if (this.m_RockArtilleryFilter != value)
 				{
-					m_RockArtilleryFilter = value;
-					OnPropertyChanged(nameof(RockArtilleryFilter));
+					this.m_RockArtilleryFilter = value;
+					this.OnPropertyChanged(nameof(this.RockArtilleryFilter));
 				}
 			}
 		}
@@ -112,15 +115,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_WaterArtilleryFilter
-					?? (m_WaterArtilleryFilter = new WaterArtilleryFilter());
+				return this.m_WaterArtilleryFilter
+					?? (this.m_WaterArtilleryFilter = new WaterArtilleryFilter());
 			}
 			set
 			{
-				if (m_WaterArtilleryFilter != value)
+				if (this.m_WaterArtilleryFilter != value)
 				{
-					m_WaterArtilleryFilter = value;
-					OnPropertyChanged(nameof(WaterArtilleryFilter));
+					this.m_WaterArtilleryFilter = value;
+					this.OnPropertyChanged(nameof(this.WaterArtilleryFilter));
 				}
 			}
 		}
@@ -130,15 +133,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_ChemicalArtilleryFilter
-					?? (m_ChemicalArtilleryFilter = new ChemicalArtilleryFilter());
+				return this.m_ChemicalArtilleryFilter
+					?? (this.m_ChemicalArtilleryFilter = new ChemicalArtilleryFilter());
 			}
 			set
 			{
-				if (m_ChemicalArtilleryFilter != value)
+				if (this.m_ChemicalArtilleryFilter != value)
 				{
-					m_ChemicalArtilleryFilter = value;
-					OnPropertyChanged(nameof(ChemicalArtilleryFilter));
+					this.m_ChemicalArtilleryFilter = value;
+					this.OnPropertyChanged(nameof(this.ChemicalArtilleryFilter));
 				}
 			}
 		}
@@ -146,13 +149,13 @@ namespace Combiner
 		private ObservableCollection<OptionFilter> m_OptionFilters;
 		public ObservableCollection<OptionFilter> OptionFilters
 		{
-			get { return m_OptionFilters; }
+			get { return this.m_OptionFilters; }
 			set
 			{
-				if (m_OptionFilters != value)
+				if (this.m_OptionFilters != value)
 				{
-					m_OptionFilters = value;
-					OnPropertyChanged(nameof(OptionFilters));
+					this.m_OptionFilters = value;
+					this.OnPropertyChanged(nameof(this.OptionFilters));
 				}
 			}
 		}
@@ -163,12 +166,12 @@ namespace Combiner
 		{
 			if (filter.IsOptionChecked)
 			{
-				m_ActiveFilter = filter;
-				RemoveOtherRangeOptions(filter);
+				this.m_ActiveFilter = filter;
+				this.RemoveOtherRangeOptions(filter);
 			}
-			else if (filter == m_ActiveFilter)
+			else if (filter == this.m_ActiveFilter)
 			{
-				m_ActiveFilter = null;
+				this.m_ActiveFilter = null;
 			}
 		}
 
@@ -176,54 +179,54 @@ namespace Combiner
 		{
 			if (!(filter is RangeOnlyFilter))
 			{
-				RangeOnlyFilter.IsOptionChecked = false;
+				this.RangeOnlyFilter.IsOptionChecked = false;
 			}
 			if (!(filter is DirectRangeFilter))
 			{
-				DirectRangeFilter.IsOptionChecked = false;
+				this.DirectRangeFilter.IsOptionChecked = false;
 			}
 			if (!(filter is SonicRangeFilter))
 			{
-				SonicRangeFilter.IsOptionChecked = false;
+				this.SonicRangeFilter.IsOptionChecked = false;
 			}
 			if (!(filter is ArtilleryOnlyFilter))
 			{
-				ArtilleryOnlyFilter.IsOptionChecked = false;
+				this.ArtilleryOnlyFilter.IsOptionChecked = false;
 			}
 			if (!(filter is RockArtilleryFilter))
 			{
-				RockArtilleryFilter.IsOptionChecked = false;
+				this.RockArtilleryFilter.IsOptionChecked = false;
 			}
 			if (!(filter is WaterArtilleryFilter))
 			{
-				WaterArtilleryFilter.IsOptionChecked = false;
+				this.WaterArtilleryFilter.IsOptionChecked = false;
 			}
 			if (!(filter is ChemicalArtilleryFilter))
 			{
-				ChemicalArtilleryFilter.IsOptionChecked = false;
+				this.ChemicalArtilleryFilter.IsOptionChecked = false;
 			}
 		}
 
 		public override bool Filter(Creature creature)
 		{
-			if (m_ActiveFilter != null)
+			if (this.m_ActiveFilter != null)
 			{
-				return m_ActiveFilter.Filter(creature);
+				return this.m_ActiveFilter.Filter(creature);
 			}
 			return true;
 		}
 
 		public override void ResetFilter()
 		{
-			RangeOnlyFilter.IsOptionChecked = false;
-			DirectRangeFilter.IsOptionChecked = false;
-			SonicRangeFilter.IsOptionChecked = false;
-			ArtilleryOnlyFilter.IsOptionChecked = false;
-			RockArtilleryFilter.IsOptionChecked = false;
-			WaterArtilleryFilter.IsOptionChecked = false;
-			ChemicalArtilleryFilter.IsOptionChecked = false;
+			this.RangeOnlyFilter.IsOptionChecked = false;
+			this.DirectRangeFilter.IsOptionChecked = false;
+			this.SonicRangeFilter.IsOptionChecked = false;
+			this.ArtilleryOnlyFilter.IsOptionChecked = false;
+			this.RockArtilleryFilter.IsOptionChecked = false;
+			this.WaterArtilleryFilter.IsOptionChecked = false;
+			this.ChemicalArtilleryFilter.IsOptionChecked = false;
 
-			m_ActiveFilter = null;
+			this.m_ActiveFilter = null;
 		}
 
 		private void OnIsOptionCheckChanged(object sender, PropertyChangedEventArgs args)
@@ -233,7 +236,7 @@ namespace Combiner
 				OptionFilter filter = sender as OptionFilter;
 				if (filter != null)
 				{
-					SetActiveFilter(filter);
+					this.SetActiveFilter(filter);
 				}
 			}
 		}

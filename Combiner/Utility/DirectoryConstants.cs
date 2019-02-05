@@ -1,4 +1,4 @@
-﻿namespace Combiner
+﻿namespace Combiner.Utility
 {
 	public static class DirectoryConstants
 	{

@@ -1,16 +1,20 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Data;
-using System.Windows.Input;
-
-namespace Combiner
+﻿namespace Combiner.Viewmodels
 {
+	using System.Collections.ObjectModel;
+	using System.Windows.Data;
+	using System.Windows.Input;
+
+	using Combiner.Base;
+	using Combiner.Models;
+	using Combiner.Utility;
+
 	public class CreatureDataVM : BaseViewModel
 	{
 		private Database m_Database;
 
 		public CreatureDataVM(Database database)
 		{
-			m_Database = database;
+			this.m_Database = database;
 		}
 
 		private ObservableCollection<Creature> m_Creatures;
@@ -18,15 +22,15 @@ namespace Combiner
 		{
 			get
 			{
-				return m_Creatures ?? (m_Creatures = new ObservableCollection<Creature>());
+				return this.m_Creatures ?? (this.m_Creatures = new ObservableCollection<Creature>());
 			}
 			set
 			{
-				if (value != m_Creatures)
+				if (value != this.m_Creatures)
 				{
-					m_Creatures = value;
-					CreaturesView = (ListCollectionView)CollectionViewSource.GetDefaultView(m_Creatures);
-					OnPropertyChanged(nameof(Creatures));
+					this.m_Creatures = value;
+					this.CreaturesView = (ListCollectionView)CollectionViewSource.GetDefaultView(this.m_Creatures);
+					this.OnPropertyChanged(nameof(this.Creatures));
 				}
 			}
 		}
@@ -36,14 +40,14 @@ namespace Combiner
 		{
 			get
 			{
-				return m_CreaturesView ?? (m_CreaturesView = (ListCollectionView)CollectionViewSource.GetDefaultView(Creatures));
+				return this.m_CreaturesView ?? (this.m_CreaturesView = (ListCollectionView)CollectionViewSource.GetDefaultView(this.Creatures));
 			}
 			set
 			{
-				if (value != m_CreaturesView)
+				if (value != this.m_CreaturesView)
 				{
-					m_CreaturesView = value;
-					OnPropertyChanged(nameof(CreaturesView));
+					this.m_CreaturesView = value;
+					this.OnPropertyChanged(nameof(this.CreaturesView));
 				}
 			}
 		}
@@ -53,14 +57,14 @@ namespace Combiner
 		{
 			get
 			{
-				return m_SelectedCreature;
+				return this.m_SelectedCreature;
 			}
 			set
 			{
-				if (value != m_SelectedCreature)
+				if (value != this.m_SelectedCreature)
 				{
-					m_SelectedCreature = value;
-					OnPropertyChanged(nameof(SelectedCreature));
+					this.m_SelectedCreature = value;
+					this.OnPropertyChanged(nameof(this.SelectedCreature));
 				}
 			}
 		}
@@ -70,23 +74,23 @@ namespace Combiner
 		{
 			get
 			{
-				return m_SaveCreatureCommand ??
-					(m_SaveCreatureCommand = new RelayCommand(SaveCreature));
+				return this.m_SaveCreatureCommand ??
+					(this.m_SaveCreatureCommand = new RelayCommand(this.SaveCreature));
 			}
 			set
 			{
-				if (value != m_SaveCreatureCommand)
+				if (value != this.m_SaveCreatureCommand)
 				{
-					m_SaveCreatureCommand = value;
-					OnPropertyChanged(nameof(SaveCreatureCommand));
+					this.m_SaveCreatureCommand = value;
+					this.OnPropertyChanged(nameof(this.SaveCreatureCommand));
 				}
 			}
 		}
 		public void SaveCreature(object obj)
 		{
-			if (SelectedCreature != null)
+			if (this.SelectedCreature != null)
 			{
-				m_Database.SaveCreature(SelectedCreature);
+				this.m_Database.SaveCreature(this.SelectedCreature);
 			}
 		}
 
@@ -95,23 +99,23 @@ namespace Combiner
 		{
 			get
 			{
-				return m_UnsaveCreatureCommand ??
-					(m_UnsaveCreatureCommand = new RelayCommand(UnSaveCreature));
+				return this.m_UnsaveCreatureCommand ??
+					(this.m_UnsaveCreatureCommand = new RelayCommand(this.UnSaveCreature));
 			}
 			set
 			{
-				if (value != m_UnsaveCreatureCommand)
+				if (value != this.m_UnsaveCreatureCommand)
 				{
-					m_UnsaveCreatureCommand = value;
-					OnPropertyChanged(nameof(UnsaveCreatureCommand));
+					this.m_UnsaveCreatureCommand = value;
+					this.OnPropertyChanged(nameof(this.UnsaveCreatureCommand));
 				}
 			}
 		}
 		public void UnSaveCreature(object obj)
 		{
-			if (SelectedCreature != null)
+			if (this.SelectedCreature != null)
 			{
-				m_Database.UnsaveCreature(SelectedCreature);
+				this.m_Database.UnsaveCreature(this.SelectedCreature);
 			}
 		}
 

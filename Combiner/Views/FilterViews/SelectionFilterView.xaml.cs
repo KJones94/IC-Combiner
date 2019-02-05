@@ -1,7 +1,7 @@
-﻿using System.Windows.Controls;
-
-namespace Combiner
+﻿namespace Combiner.Views.FilterViews
 {
+	using System.Windows.Controls;
+
 	/// <summary>
 	/// Interaction logic for SelectionFilterView.xaml
 	/// </summary>
@@ -9,7 +9,7 @@ namespace Combiner
 	{
 		public SelectionFilterView()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 	}
 }

@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Combiner"
+        xmlns:viewmodels="clr-namespace:Combiner.Viewmodels"
+        xmlns:views="clr-namespace:Combiner.Views"
         mc:Ignorable="d"
         Title="Combiner" 
 		Height="1000" 
@@ -11,7 +13,7 @@
 		WindowState="Maximized"
 		SizeToContent="Manual">
 	<Window.DataContext>
-		<local:MainVM/>
+		<viewmodels:MainVM/>
 	</Window.DataContext>
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
@@ -53,10 +55,10 @@
 					<ColumnDefinition Width="2*"/>
 					<ColumnDefinition Width="1*"/>
 				</Grid.ColumnDefinitions>
-				<local:FiltersView Grid.Column="0" DataContext="{Binding FiltersVM}"/>
-				<local:DatabaseView Grid.Column="1" DataContext="{Binding DatabaseVM}"/>
+				<views:FiltersView Grid.Column="0" DataContext="{Binding FiltersVM}"/>
+				<views:DatabaseView Grid.Column="1" DataContext="{Binding DatabaseVM}"/>
 			</Grid>
-			<local:CreatureDataView Grid.Row="1" DataContext="{Binding CreatureDataVM}"/>
+			<views:CreatureDataView Grid.Row="1" DataContext="{Binding CreatureDataVM}"/>
 		</Grid>
 	</DockPanel>
 </Window>

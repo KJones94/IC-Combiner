@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Combiner
+﻿namespace Combiner.Utility
 {
+	using System.Collections.Generic;
+
 	public static class AbilityNames
 	{
 		public static string Assassinate = "assassinate";

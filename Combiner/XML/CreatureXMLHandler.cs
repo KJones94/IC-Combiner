@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-using System.Xml.Schema;
-
-namespace Combiner
+﻿namespace Combiner.XML
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+	using System.Xml.Linq;
+	using System.Xml.Schema;
+
+	using Combiner.Models;
+
 	public class CreatureXMLHandler
 	{
 		private static readonly XNamespace ns = "IC";
@@ -18,12 +20,12 @@ namespace Combiner
 		/// </summary>
 		public IEnumerable<CreatureQueryData> GetCreatureDataFromXML(string filePath)
 		{
-			XElement xml = GetXML(filePath);
+			XElement xml = this.GetXML(filePath);
 			if (xml == null)
 			{
 				return new List<CreatureQueryData>();
 			}
-			if (!ValidateWithSchema(xml, GetSchema()))
+			if (!this.ValidateWithSchema(xml, this.GetSchema()))
 			{
 				return new List<CreatureQueryData>();
 			}
@@ -35,7 +37,7 @@ namespace Combiner
 				{
 					left = creature.Element(ns + "left").Value,
 					right = creature.Element(ns + "right").Value,
-					bodyParts = BuildBodyParts(creature.Element(ns + "bodyParts"))
+					bodyParts = this.BuildBodyParts(creature.Element(ns + "bodyParts"))
 				};
 
 			return allCreatureData;
@@ -65,11 +67,11 @@ namespace Combiner
 			XElement xmlSavedCreatures;
 			if (!File.Exists(filePath))
 			{
-				xmlSavedCreatures = CreateXML(filePath);
+				xmlSavedCreatures = this.CreateXML(filePath);
 			}
 			else
 			{
-				xmlSavedCreatures = GetXML(filePath);
+				xmlSavedCreatures = this.GetXML(filePath);
 			}
 
 			if (xmlSavedCreatures == null)
@@ -95,7 +97,7 @@ namespace Combiner
 				xmlSavedCreatures.Add(xmlCreature);
 			}
 
-			SaveXML(xmlSavedCreatures, filePath);
+			this.SaveXML(xmlSavedCreatures, filePath);
 		}
 
 		/// <summary>
@@ -109,7 +111,7 @@ namespace Combiner
 				return;
 			}
 
-			if (ValidateWithSchema(xml, GetSchema()))
+			if (this.ValidateWithSchema(xml, this.GetSchema()))
 			{
 				XDocument doc = new XDocument(xml);
 				doc.Save(filePath);
@@ -124,8 +126,8 @@ namespace Combiner
 		private XElement CreateXML(string filePath)
 		{
 			XElement newXML = new XElement(ns + "SavedCreatures");
-			SaveXML(newXML, filePath);
-			return GetXML(filePath);
+			this.SaveXML(newXML, filePath);
+			return this.GetXML(filePath);
 		}
 
 		/// <summary>

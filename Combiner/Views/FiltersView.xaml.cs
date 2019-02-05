@@ -1,7 +1,7 @@
-﻿using System.Windows.Controls;
-
-namespace Combiner
+﻿namespace Combiner.Views
 {
+	using System.Windows.Controls;
+
 	/// <summary>
 	/// Interaction logic for FiltersView.xaml
 	/// </summary>
@@ -9,7 +9,7 @@ namespace Combiner
 	{
 		public FiltersView()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 	}
 }

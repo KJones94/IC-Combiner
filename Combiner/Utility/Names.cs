@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Combiner
+﻿namespace Combiner.Utility
 {
+	using System.Collections.Generic;
+
 	public static class StockNames
 	{
 

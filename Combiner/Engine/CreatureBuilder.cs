@@ -1,8 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Combiner
+﻿namespace Combiner.Engine
 {
+	using System;
+	using System.Collections.Generic;
+
+	using Combiner.Enums;
+	using Combiner.Models;
+	using Combiner.Utility;
+
 	public class CreatureBuilder
 	{
 		public StockStatCalculator Left { get; set; }
@@ -16,60 +20,60 @@ namespace Combiner
 
 		public double Size
 		{
-			get { return GameAttributes[Attributes.Size]; }
-			set { GameAttributes[Attributes.Size] = value; }
+			get { return this.GameAttributes[Attributes.Size]; }
+			set { this.GameAttributes[Attributes.Size] = value; }
 		}
 		public double SightRadius
 		{
-			get { return GameAttributes[Attributes.SightRadius]; }
-			set { GameAttributes[Attributes.SightRadius] = value; }
+			get { return this.GameAttributes[Attributes.SightRadius]; }
+			set { this.GameAttributes[Attributes.SightRadius] = value; }
 		}
 		public double Armour
 		{
-			get { return GameAttributes[Attributes.Armour]; }
-			set { GameAttributes[Attributes.Armour] = value; }
+			get { return this.GameAttributes[Attributes.Armour]; }
+			set { this.GameAttributes[Attributes.Armour] = value; }
 		}
 		public double Hitpoints
 		{
-			get { return GameAttributes[Attributes.Hitpoints]; }
-			set { GameAttributes[Attributes.Hitpoints] = value; }
+			get { return this.GameAttributes[Attributes.Hitpoints]; }
+			set { this.GameAttributes[Attributes.Hitpoints] = value; }
 		}
 
 		public double EffectiveHealth
 		{
-			get { return Hitpoints / (1 - Armour); }
+			get { return this.Hitpoints / (1 - this.Armour); }
 		}
 
 		public double LandSpeed
 		{
-			get { return GameAttributes[Attributes.LandSpeed]; }
-			set { GameAttributes[Attributes.LandSpeed] = value; }
+			get { return this.GameAttributes[Attributes.LandSpeed]; }
+			set { this.GameAttributes[Attributes.LandSpeed] = value; }
 		}
 		public double AirSpeed
 		{
-			get { return GameAttributes[Attributes.AirSpeed]; }
-			set { GameAttributes[Attributes.AirSpeed] = value; }
+			get { return this.GameAttributes[Attributes.AirSpeed]; }
+			set { this.GameAttributes[Attributes.AirSpeed] = value; }
 		}
 		public double WaterSpeed
 		{
-			get { return GameAttributes[Attributes.WaterSpeed]; }
-			set { GameAttributes[Attributes.WaterSpeed] = value; }
+			get { return this.GameAttributes[Attributes.WaterSpeed]; }
+			set { this.GameAttributes[Attributes.WaterSpeed] = value; }
 		}
 		public double MeleeDamage
 		{
-			get { return GameAttributes[Attributes.MeleeDamage]; }
-			set { GameAttributes[Attributes.MeleeDamage] = value; }
+			get { return this.GameAttributes[Attributes.MeleeDamage]; }
+			set { this.GameAttributes[Attributes.MeleeDamage] = value; }
 		}
 
 		public double RangeDamage
 		{
 			get
 			{
-				double greatestRange = Range2Damage;
-				greatestRange = (Range3Damage > greatestRange) ? Range3Damage : greatestRange;
-				greatestRange = (Range4Damage > greatestRange) ? Range4Damage : greatestRange;
-				greatestRange = (Range5Damage > greatestRange) ? Range5Damage : greatestRange;
-				greatestRange = (Range8Damage > greatestRange) ? Range8Damage : greatestRange;
+				double greatestRange = this.Range2Damage;
+				greatestRange = (this.Range3Damage > greatestRange) ? this.Range3Damage : greatestRange;
+				greatestRange = (this.Range4Damage > greatestRange) ? this.Range4Damage : greatestRange;
+				greatestRange = (this.Range5Damage > greatestRange) ? this.Range5Damage : greatestRange;
+				greatestRange = (this.Range8Damage > greatestRange) ? this.Range8Damage : greatestRange;
 				return greatestRange;
 			}
 		}
@@ -78,195 +82,195 @@ namespace Combiner
 		{
 			get
 			{
-				double rangeSpecial = Range2Special;
-				rangeSpecial = (Range3Special > rangeSpecial) ? Range3Special : rangeSpecial;
-				rangeSpecial = (Range4Special > rangeSpecial) ? Range4Special : rangeSpecial;
-				rangeSpecial = (Range5Special > rangeSpecial) ? Range5Special : rangeSpecial;
-				rangeSpecial = (Range8Special > rangeSpecial) ? Range8Special : rangeSpecial;
+				double rangeSpecial = this.Range2Special;
+				rangeSpecial = (this.Range3Special > rangeSpecial) ? this.Range3Special : rangeSpecial;
+				rangeSpecial = (this.Range4Special > rangeSpecial) ? this.Range4Special : rangeSpecial;
+				rangeSpecial = (this.Range5Special > rangeSpecial) ? this.Range5Special : rangeSpecial;
+				rangeSpecial = (this.Range8Special > rangeSpecial) ? this.Range8Special : rangeSpecial;
 				return rangeSpecial;
 			}
 		}
 
 		public double Range2Damage
 		{
-			get { return GameAttributes[Attributes.Range2Damage]; }
-			set { GameAttributes[Attributes.Range2Damage] = value; }
+			get { return this.GameAttributes[Attributes.Range2Damage]; }
+			set { this.GameAttributes[Attributes.Range2Damage] = value; }
 		}
 		public double Range3Damage
 		{
-			get { return GameAttributes[Attributes.Range3Damage]; }
-			set { GameAttributes[Attributes.Range3Damage] = value; }
+			get { return this.GameAttributes[Attributes.Range3Damage]; }
+			set { this.GameAttributes[Attributes.Range3Damage] = value; }
 		}
 		public double Range4Damage
 		{
-			get { return GameAttributes[Attributes.Range4Damage]; }
-			set { GameAttributes[Attributes.Range4Damage] = value; }
+			get { return this.GameAttributes[Attributes.Range4Damage]; }
+			set { this.GameAttributes[Attributes.Range4Damage] = value; }
 		}
 		public double Range5Damage
 		{
-			get { return GameAttributes[Attributes.Range5Damage]; }
-			set { GameAttributes[Attributes.Range5Damage] = value; }
+			get { return this.GameAttributes[Attributes.Range5Damage]; }
+			set { this.GameAttributes[Attributes.Range5Damage] = value; }
 		}
 		public double Range8Damage
 		{
-			get { return GameAttributes[Attributes.Range8Damage]; }
-			set { GameAttributes[Attributes.Range8Damage] = value; }
+			get { return this.GameAttributes[Attributes.Range8Damage]; }
+			set { this.GameAttributes[Attributes.Range8Damage] = value; }
 		}
 
 		public double Range2Type
 		{
-			get { return GameAttributes[Attributes.Range2Type]; }
-			set { GameAttributes[Attributes.Range2Type] = value; }
+			get { return this.GameAttributes[Attributes.Range2Type]; }
+			set { this.GameAttributes[Attributes.Range2Type] = value; }
 		}
 		public double Range3Type
 		{
-			get { return GameAttributes[Attributes.Range3Type]; }
-			set { GameAttributes[Attributes.Range3Type] = value; }
+			get { return this.GameAttributes[Attributes.Range3Type]; }
+			set { this.GameAttributes[Attributes.Range3Type] = value; }
 		}
 		public double Range4Type
 		{
-			get { return GameAttributes[Attributes.Range4Type]; }
-			set { GameAttributes[Attributes.Range4Type] = value; }
+			get { return this.GameAttributes[Attributes.Range4Type]; }
+			set { this.GameAttributes[Attributes.Range4Type] = value; }
 		}
 		public double Range5Type
 		{
-			get { return GameAttributes[Attributes.Range5Type]; }
-			set { GameAttributes[Attributes.Range5Type] = value; }
+			get { return this.GameAttributes[Attributes.Range5Type]; }
+			set { this.GameAttributes[Attributes.Range5Type] = value; }
 		}
 		public double Range8Type
 		{
-			get { return GameAttributes[Attributes.Range8Type]; }
-			set { GameAttributes[Attributes.Range8Type] = value; }
+			get { return this.GameAttributes[Attributes.Range8Type]; }
+			set { this.GameAttributes[Attributes.Range8Type] = value; }
 		}
 
 		public double Range2Special
 		{
-			get { return GameAttributes[Attributes.Range2Special]; }
-			set { GameAttributes[Attributes.Range2Special] = value; }
+			get { return this.GameAttributes[Attributes.Range2Special]; }
+			set { this.GameAttributes[Attributes.Range2Special] = value; }
 		}
 		public double Range3Special
 		{
-			get { return GameAttributes[Attributes.Range3Special]; }
-			set { GameAttributes[Attributes.Range3Special] = value; }
+			get { return this.GameAttributes[Attributes.Range3Special]; }
+			set { this.GameAttributes[Attributes.Range3Special] = value; }
 		}
 		public double Range4Special
 		{
-			get { return GameAttributes[Attributes.Range4Special]; }
-			set { GameAttributes[Attributes.Range4Special] = value; }
+			get { return this.GameAttributes[Attributes.Range4Special]; }
+			set { this.GameAttributes[Attributes.Range4Special] = value; }
 		}
 		public double Range5Special
 		{
-			get { return GameAttributes[Attributes.Range5Special]; }
-			set { GameAttributes[Attributes.Range5Special] = value; }
+			get { return this.GameAttributes[Attributes.Range5Special]; }
+			set { this.GameAttributes[Attributes.Range5Special] = value; }
 		}
 		public double Range8Special
 		{
-			get { return GameAttributes[Attributes.Range8Special]; }
-			set { GameAttributes[Attributes.Range8Special] = value; }
+			get { return this.GameAttributes[Attributes.Range8Special]; }
+			set { this.GameAttributes[Attributes.Range8Special] = value; }
 		}
 
 		public double Melee2Type
 		{
-			get { return GameAttributes[Attributes.Melee2Type]; }
-			set { GameAttributes[Attributes.Melee2Type] = value; }
+			get { return this.GameAttributes[Attributes.Melee2Type]; }
+			set { this.GameAttributes[Attributes.Melee2Type] = value; }
 		}
 		public double Melee3Type
 		{
-			get { return GameAttributes[Attributes.Melee3Type]; }
-			set { GameAttributes[Attributes.Melee3Type] = value; }
+			get { return this.GameAttributes[Attributes.Melee3Type]; }
+			set { this.GameAttributes[Attributes.Melee3Type] = value; }
 		}
 		public double Melee4Type
 		{
-			get { return GameAttributes[Attributes.Melee4Type]; }
-			set { GameAttributes[Attributes.Melee4Type] = value; }
+			get { return this.GameAttributes[Attributes.Melee4Type]; }
+			set { this.GameAttributes[Attributes.Melee4Type] = value; }
 		}
 		public double Melee5Type
 		{
-			get { return GameAttributes[Attributes.Melee5Type]; }
-			set { GameAttributes[Attributes.Melee5Type] = value; }
+			get { return this.GameAttributes[Attributes.Melee5Type]; }
+			set { this.GameAttributes[Attributes.Melee5Type] = value; }
 		}
 		public double Melee8Type
 		{
-			get { return GameAttributes[Attributes.Melee8Type]; }
-			set { GameAttributes[Attributes.Melee8Type] = value; }
+			get { return this.GameAttributes[Attributes.Melee8Type]; }
+			set { this.GameAttributes[Attributes.Melee8Type] = value; }
 		}
 
 		public double IsLand
 		{
-			get { return GameAttributes[Attributes.IsLand]; }
-			set { GameAttributes[Attributes.IsLand] = value; }
+			get { return this.GameAttributes[Attributes.IsLand]; }
+			set { this.GameAttributes[Attributes.IsLand] = value; }
 		}
 		public double IsSwimmer
 		{
-			get { return GameAttributes[Attributes.IsSwimmer]; }
-			set { GameAttributes[Attributes.IsSwimmer] = value; }
+			get { return this.GameAttributes[Attributes.IsSwimmer]; }
+			set { this.GameAttributes[Attributes.IsSwimmer] = value; }
 		}
 		public double IsFlyer
 		{
-			get { return GameAttributes[Attributes.IsFlyer]; }
-			set { GameAttributes[Attributes.IsFlyer] = value; }
+			get { return this.GameAttributes[Attributes.IsFlyer]; }
+			set { this.GameAttributes[Attributes.IsFlyer] = value; }
 		}
 
 		public double Ticks
 		{
-			get { return GameAttributes[Attributes.Ticks]; }
-			set { GameAttributes[Attributes.Ticks] = value; }
+			get { return this.GameAttributes[Attributes.Ticks]; }
+			set { this.GameAttributes[Attributes.Ticks] = value; }
 		}
 
 		public double Rank
 		{
-			get { return GameAttributes[Attributes.Rank]; }
-			set { GameAttributes[Attributes.Rank] = value; }
+			get { return this.GameAttributes[Attributes.Rank]; }
+			set { this.GameAttributes[Attributes.Rank] = value; }
 		}
 
 		public double Coal
 		{
-			get { return GameAttributes[Attributes.Coal]; }
-			set { GameAttributes[Attributes.Coal] = value; }
+			get { return this.GameAttributes[Attributes.Coal]; }
+			set { this.GameAttributes[Attributes.Coal] = value; }
 		}
 
 		public double Electricity
 		{
-			get { return GameAttributes[Attributes.Electricity]; }
-			set { GameAttributes[Attributes.Electricity] = value; }
+			get { return this.GameAttributes[Attributes.Electricity]; }
+			set { this.GameAttributes[Attributes.Electricity] = value; }
 		}
 
 		public double PopSize
 		{
-			get { return GameAttributes[Attributes.PopSize]; }
-			set { GameAttributes[Attributes.PopSize] = value; }
+			get { return this.GameAttributes[Attributes.PopSize]; }
+			set { this.GameAttributes[Attributes.PopSize] = value; }
 		}
 
 		public double Power
 		{
-			get { return GameAttributes[Attributes.Power]; }
-			set { GameAttributes[Attributes.Power] = value; }
+			get { return this.GameAttributes[Attributes.Power]; }
+			set { this.GameAttributes[Attributes.Power] = value; }
 		}
 
 		#endregion
 
 		public CreatureBuilder(Stock left, Stock right, Dictionary<Limb, Side> chosenBodyParts)
 		{
-			Left =  new StockStatCalculator(left);
-			Right = new StockStatCalculator(right);
-			ChosenBodyParts = chosenBodyParts;
-			Calculator = new CreatureStatCalculator(Left, Right, ChosenBodyParts);
-			InitGameAttributes();
-			InitStats();
-			InitAbilities();
-			FixTunaLeapAttack();
-			FixNarwhalChargeAttack();
+			this.Left =  new StockStatCalculator(left);
+			this.Right = new StockStatCalculator(right);
+			this.ChosenBodyParts = chosenBodyParts;
+			this.Calculator = new CreatureStatCalculator(this.Left, this.Right, this.ChosenBodyParts);
+			this.InitGameAttributes();
+			this.InitStats();
+			this.InitAbilities();
+			this.FixTunaLeapAttack();
+			this.FixNarwhalChargeAttack();
 		}
 
 		private StockStatCalculator GetStockSide(Limb limb)
 		{
-			if (ChosenBodyParts[limb] == Side.Left)
+			if (this.ChosenBodyParts[limb] == Side.Left)
 			{
-				return Left;
+				return this.Left;
 			}
-			else if (ChosenBodyParts[limb] == Side.Right)
+			else if (this.ChosenBodyParts[limb] == Side.Right)
 			{
-				return Right;
+				return this.Right;
 			}
 			else
 			{
@@ -276,130 +280,130 @@ namespace Combiner
 
 		private Stock OtherSide(StockStatCalculator stock)
 		{
-			if (stock.Name == Left.Name)
+			if (stock.Name == this.Left.Name)
 			{
-				return Right.Stock;
+				return this.Right.Stock;
 			}
 			else
 			{
-				return Left.Stock;
+				return this.Left.Stock;
 			}
 		}
 
 		private void InitGameAttributes()
 		{
-			GameAttributes.Add(Attributes.Ticks, 0);
-			GameAttributes.Add(Attributes.Rank, 0);
-			GameAttributes.Add(Attributes.Coal, 0);
-			GameAttributes.Add(Attributes.Electricity, 0);
-			GameAttributes.Add(Attributes.PopSize, 0);
+			this.GameAttributes.Add(Attributes.Ticks, 0);
+			this.GameAttributes.Add(Attributes.Rank, 0);
+			this.GameAttributes.Add(Attributes.Coal, 0);
+			this.GameAttributes.Add(Attributes.Electricity, 0);
+			this.GameAttributes.Add(Attributes.PopSize, 0);
 
-			GameAttributes.Add(Attributes.Power, 0);
+			this.GameAttributes.Add(Attributes.Power, 0);
 
-			GameAttributes.Add(Attributes.Size, 0);
-			GameAttributes.Add(Attributes.SightRadius, 0);
-			GameAttributes.Add(Attributes.Armour, 0);
-			GameAttributes.Add(Attributes.Hitpoints, 0);
-			GameAttributes.Add(Attributes.LandSpeed, 0);
-			GameAttributes.Add(Attributes.WaterSpeed, 0);
-			GameAttributes.Add(Attributes.AirSpeed, 0);
-			GameAttributes.Add(Attributes.MeleeDamage, 0);
+			this.GameAttributes.Add(Attributes.Size, 0);
+			this.GameAttributes.Add(Attributes.SightRadius, 0);
+			this.GameAttributes.Add(Attributes.Armour, 0);
+			this.GameAttributes.Add(Attributes.Hitpoints, 0);
+			this.GameAttributes.Add(Attributes.LandSpeed, 0);
+			this.GameAttributes.Add(Attributes.WaterSpeed, 0);
+			this.GameAttributes.Add(Attributes.AirSpeed, 0);
+			this.GameAttributes.Add(Attributes.MeleeDamage, 0);
 
-			GameAttributes.Add(Attributes.Range2Damage, 0);
-			GameAttributes.Add(Attributes.Range2Max, 0);
-			GameAttributes.Add(Attributes.Range2Type, 0);
-			GameAttributes.Add(Attributes.Range2Special, 0);
-			GameAttributes.Add(Attributes.Melee2Type, 0);
+			this.GameAttributes.Add(Attributes.Range2Damage, 0);
+			this.GameAttributes.Add(Attributes.Range2Max, 0);
+			this.GameAttributes.Add(Attributes.Range2Type, 0);
+			this.GameAttributes.Add(Attributes.Range2Special, 0);
+			this.GameAttributes.Add(Attributes.Melee2Type, 0);
 
-			GameAttributes.Add(Attributes.Range3Damage, 0);
-			GameAttributes.Add(Attributes.Range3Max, 0);
-			GameAttributes.Add(Attributes.Range3Type, 0);
-			GameAttributes.Add(Attributes.Range3Special, 0);
-			GameAttributes.Add(Attributes.Melee3Type, 0);
+			this.GameAttributes.Add(Attributes.Range3Damage, 0);
+			this.GameAttributes.Add(Attributes.Range3Max, 0);
+			this.GameAttributes.Add(Attributes.Range3Type, 0);
+			this.GameAttributes.Add(Attributes.Range3Special, 0);
+			this.GameAttributes.Add(Attributes.Melee3Type, 0);
 
-			GameAttributes.Add(Attributes.Range4Damage, 0);
-			GameAttributes.Add(Attributes.Range4Max, 0);
-			GameAttributes.Add(Attributes.Range4Type, 0);
-			GameAttributes.Add(Attributes.Range4Special, 0);
-			GameAttributes.Add(Attributes.Melee4Type, 0);
+			this.GameAttributes.Add(Attributes.Range4Damage, 0);
+			this.GameAttributes.Add(Attributes.Range4Max, 0);
+			this.GameAttributes.Add(Attributes.Range4Type, 0);
+			this.GameAttributes.Add(Attributes.Range4Special, 0);
+			this.GameAttributes.Add(Attributes.Melee4Type, 0);
 
-			GameAttributes.Add(Attributes.Range5Damage, 0);
-			GameAttributes.Add(Attributes.Range5Max, 0);
-			GameAttributes.Add(Attributes.Range5Type, 0);
-			GameAttributes.Add(Attributes.Range5Special, 0);
-			GameAttributes.Add(Attributes.Melee5Type, 0);
+			this.GameAttributes.Add(Attributes.Range5Damage, 0);
+			this.GameAttributes.Add(Attributes.Range5Max, 0);
+			this.GameAttributes.Add(Attributes.Range5Type, 0);
+			this.GameAttributes.Add(Attributes.Range5Special, 0);
+			this.GameAttributes.Add(Attributes.Melee5Type, 0);
 
-			GameAttributes.Add(Attributes.Range8Damage, 0);
-			GameAttributes.Add(Attributes.Range8Max, 0);
-			GameAttributes.Add(Attributes.Range8Type, 0);
-			GameAttributes.Add(Attributes.Range8Special, 0);
-			GameAttributes.Add(Attributes.Melee8Type, 0);
+			this.GameAttributes.Add(Attributes.Range8Damage, 0);
+			this.GameAttributes.Add(Attributes.Range8Max, 0);
+			this.GameAttributes.Add(Attributes.Range8Type, 0);
+			this.GameAttributes.Add(Attributes.Range8Special, 0);
+			this.GameAttributes.Add(Attributes.Melee8Type, 0);
 
-			GameAttributes.Add(Attributes.IsLand, 0);
-			GameAttributes.Add(Attributes.IsSwimmer, 0);
-			GameAttributes.Add(Attributes.IsFlyer, 0);
+			this.GameAttributes.Add(Attributes.IsLand, 0);
+			this.GameAttributes.Add(Attributes.IsSwimmer, 0);
+			this.GameAttributes.Add(Attributes.IsFlyer, 0);
 
 			foreach (string ability in AbilityNames.Abilities)
 			{
-				GameAttributes.Add(ability, 0);
+				this.GameAttributes.Add(ability, 0);
 			}
 
-			GameAttributes.Add("damage", 0);
+			this.GameAttributes.Add("damage", 0);
 		}
 
 		private void InitStats()
 		{
 			// Calculate total for all limbs
-			Hitpoints = Calculator.CalcHitpoints();
-			Size = Calculator.CalcSize();
-			Armour = Calculator.CalcArmour();
-			SightRadius = Calculator.CalcSightRadius();
-			LandSpeed = Calculator.CalcLandSpeed();
-			WaterSpeed = Calculator.CalcWaterSpeed();
-			AirSpeed = Calculator.CalcAirSpeed();
-			MeleeDamage = Calculator.CalcMeleeDamage();
+			this.Hitpoints = this.Calculator.CalcHitpoints();
+			this.Size = this.Calculator.CalcSize();
+			this.Armour = this.Calculator.CalcArmour();
+			this.SightRadius = this.Calculator.CalcSightRadius();
+			this.LandSpeed = this.Calculator.CalcLandSpeed();
+			this.WaterSpeed = this.Calculator.CalcWaterSpeed();
+			this.AirSpeed = this.Calculator.CalcAirSpeed();
+			this.MeleeDamage = this.Calculator.CalcMeleeDamage();
 
 			// Independent limb values
-			CalcRangeDamage();
-			CalcRangeMax();
-			SetRangeType();
-			SetRangeSpecial();
-			SetMeleeType();
+			this.CalcRangeDamage();
+			this.CalcRangeMax();
+			this.SetRangeType();
+			this.SetRangeSpecial();
+			this.SetMeleeType();
 
 			// Ensure speed values set properly
-			if (HasLandSpeed())
+			if (this.HasLandSpeed())
 			{
-				IsLand = 1;
+				this.IsLand = 1;
 			}
 			else
 			{
-				LandSpeed = 0;
+				this.LandSpeed = 0;
 			}
-			if (HasWaterSpeed())
+			if (this.HasWaterSpeed())
 			{
-				IsSwimmer = 1;
-			}
-			else
-			{
-				WaterSpeed = 0;
-			}
-			if (HasAirSpeed())
-			{
-				IsFlyer = 1;
+				this.IsSwimmer = 1;
 			}
 			else
 			{
-				AirSpeed = 0;
+				this.WaterSpeed = 0;
+			}
+			if (this.HasAirSpeed())
+			{
+				this.IsFlyer = 1;
+			}
+			else
+			{
+				this.AirSpeed = 0;
 			}
 		}
 
 		private void InitAbilities()
 		{
-			InitPassiveAbilities();
+			this.InitPassiveAbilities();
 			// TODO: Could hardcode or cache the limbs for abilities to reduce inner loop
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				StockStatCalculator side = GetStockSide(limb);
+				StockStatCalculator side = this.GetStockSide(limb);
 				if (side == null)
 					continue;
 				foreach (string ability in AbilityNames.Abilities)
@@ -409,7 +413,7 @@ namespace Combiner
 						&& (Limb)bodyPart == limb
 						&& side.GetLimbAttributeValue(ability) > 0)
 					{
-						GameAttributes[ability] = 1;
+						this.GameAttributes[ability] = 1;
 					}
 				}
 			}
@@ -419,17 +423,17 @@ namespace Combiner
 		{
 			foreach (string ability in AbilityNames.Abilities)
 			{
-				if (Left.GetLimbAttributeBodyPart(ability) == 0
-					&& Left.GetLimbAttributeValue(ability) > 0)
+				if (this.Left.GetLimbAttributeBodyPart(ability) == 0
+					&& this.Left.GetLimbAttributeValue(ability) > 0)
 				{
-					GameAttributes[ability] = 1;
+					this.GameAttributes[ability] = 1;
 					continue;
 				}
 
-				if (Right.GetLimbAttributeBodyPart(ability) == 0
-					&& Right.GetLimbAttributeValue(ability) > 0)
+				if (this.Right.GetLimbAttributeBodyPart(ability) == 0
+					&& this.Right.GetLimbAttributeValue(ability) > 0)
 				{
-					GameAttributes[ability] = 1;
+					this.GameAttributes[ability] = 1;
 					continue;
 				}
 			}
@@ -437,12 +441,12 @@ namespace Combiner
 
 		private void FixTunaLeapAttack()
 		{
-			if (Left.Stock.Name == StockNames.BluefinTuna || Right.Stock.Name == StockNames.BluefinTuna)
+			if (this.Left.Stock.Name == StockNames.BluefinTuna || this.Right.Stock.Name == StockNames.BluefinTuna)
 			{
-				StockStatCalculator backLegsSide = GetStockSide(Limb.BackLegs);
+				StockStatCalculator backLegsSide = this.GetStockSide(Limb.BackLegs);
 
 				// Check if using back legs for leap attack
-				if (GameAttributes[AbilityNames.LeapAttack] > 0
+				if (this.GameAttributes[AbilityNames.LeapAttack] > 0
 					&& backLegsSide != null
 					&& backLegsSide.GetLimbAttributeValue(AbilityNames.LeapAttack) > 0)
 				{
@@ -450,30 +454,30 @@ namespace Combiner
 				}
 
 				// Check if tuna leap is good
-				StockStatCalculator tailSide = GetStockSide(Limb.Tail);
+				StockStatCalculator tailSide = this.GetStockSide(Limb.Tail);
 				if (tailSide.Name == StockNames.BluefinTuna
-					&& ChosenBodyParts[Limb.BackLegs] == Side.Empty
-					&& !HasLandSpeed()
-					&& !HasAirSpeed()
-					&& GetStockSide(Limb.Torso).Name != StockNames.GiantSquid) // Special case idk why
+					&& this.ChosenBodyParts[Limb.BackLegs] == Side.Empty
+					&& !this.HasLandSpeed()
+					&& !this.HasAirSpeed()
+					&& this.GetStockSide(Limb.Torso).Name != StockNames.GiantSquid) // Special case idk why
 				{
-					GameAttributes[AbilityNames.LeapAttack] = 1; // Leap attack is good
+					this.GameAttributes[AbilityNames.LeapAttack] = 1; // Leap attack is good
 				}
 				else
 				{
-					GameAttributes[AbilityNames.LeapAttack] = 0; // Bad leap attack from tuna
+					this.GameAttributes[AbilityNames.LeapAttack] = 0; // Bad leap attack from tuna
 				}
 			}
 		}
 
 		private void FixNarwhalChargeAttack()
 		{
-			if (Left.Stock.Name == StockNames.Narwhal || Right.Stock.Name == StockNames.Narwhal)
+			if (this.Left.Stock.Name == StockNames.Narwhal || this.Right.Stock.Name == StockNames.Narwhal)
 			{
-				StockStatCalculator backLegsSide = GetStockSide(Limb.BackLegs);
+				StockStatCalculator backLegsSide = this.GetStockSide(Limb.BackLegs);
 
 				// Check if using back legs for charge attack
-				if (GameAttributes[AbilityNames.ChargeAttack] > 0
+				if (this.GameAttributes[AbilityNames.ChargeAttack] > 0
 					&& backLegsSide != null
 					&& backLegsSide.GetLimbAttributeValue(AbilityNames.ChargeAttack) > 0)
 				{
@@ -481,18 +485,18 @@ namespace Combiner
 				}
 
 				// Check if narwhal charge is good
-				StockStatCalculator tailSide = GetStockSide(Limb.Tail);
+				StockStatCalculator tailSide = this.GetStockSide(Limb.Tail);
 				if (tailSide.Name == StockNames.Narwhal
-					&& ChosenBodyParts[Limb.BackLegs] == Side.Empty
-					&& !HasLandSpeed()
-					&& !HasAirSpeed()
-					&& GetStockSide(Limb.Torso).Name != StockNames.GiantSquid) // Special case idk why
+					&& this.ChosenBodyParts[Limb.BackLegs] == Side.Empty
+					&& !this.HasLandSpeed()
+					&& !this.HasAirSpeed()
+					&& this.GetStockSide(Limb.Torso).Name != StockNames.GiantSquid) // Special case idk why
 				{
-					GameAttributes[AbilityNames.ChargeAttack] = 1; // Charge attack is good
+					this.GameAttributes[AbilityNames.ChargeAttack] = 1; // Charge attack is good
 				}
 				else
 				{
-					GameAttributes[AbilityNames.ChargeAttack] = 0; // Bad charge attack from tuna
+					this.GameAttributes[AbilityNames.ChargeAttack] = 0; // Bad charge attack from tuna
 				}
 			}
 		}
@@ -500,26 +504,26 @@ namespace Combiner
 		private bool HasLandSpeed()
 		{
 			// If wings then no land
-			if (ChosenBodyParts[Limb.Wings] == Side.Left
-				|| ChosenBodyParts[Limb.Wings] == Side.Right)
+			if (this.ChosenBodyParts[Limb.Wings] == Side.Left
+				|| this.ChosenBodyParts[Limb.Wings] == Side.Right)
 			{
 				return false;
 			}
 			// If both legs (but not from fish) then land
-			else if ((ChosenBodyParts[Limb.FrontLegs] == Side.Left
-				|| ChosenBodyParts[Limb.FrontLegs] == Side.Right)
-				&& (ChosenBodyParts[Limb.BackLegs] == Side.Left
-				|| ChosenBodyParts[Limb.BackLegs] == Side.Right)
-				&& GetStockSide(Limb.FrontLegs).Type != StockType.Fish
-				&& GetStockSide(Limb.BackLegs).Type != StockType.Fish)
+			else if ((this.ChosenBodyParts[Limb.FrontLegs] == Side.Left
+				|| this.ChosenBodyParts[Limb.FrontLegs] == Side.Right)
+				&& (this.ChosenBodyParts[Limb.BackLegs] == Side.Left
+				|| this.ChosenBodyParts[Limb.BackLegs] == Side.Right)
+				&& this.GetStockSide(Limb.FrontLegs).Type != StockType.Fish
+				&& this.GetStockSide(Limb.BackLegs).Type != StockType.Fish)
 			{
 				return true;
 			}
 			// If snake torso then land
 			// Except for eel
-			else if (GetStockSide(Limb.Torso).Type == StockType.Snake
-				&& Right.Stock.Name != StockNames.ElectricEel
-				&& Left.Stock.Name != StockNames.ElectricEel) 
+			else if (this.GetStockSide(Limb.Torso).Type == StockType.Snake
+				&& this.Right.Stock.Name != StockNames.ElectricEel
+				&& this.Left.Stock.Name != StockNames.ElectricEel) 
 			{
 				return true;
 			}
@@ -529,19 +533,19 @@ namespace Combiner
 		private bool HasWaterSpeed()
 		{
 			// If wings then no water
-			if (ChosenBodyParts[Limb.Wings] == Side.Left
-				|| ChosenBodyParts[Limb.Wings] == Side.Right)
+			if (this.ChosenBodyParts[Limb.Wings] == Side.Left
+				|| this.ChosenBodyParts[Limb.Wings] == Side.Right)
 			{
 				return false;
 			}
-			return WaterSpeed > 0;
+			return this.WaterSpeed > 0;
 		}
 
 		private bool HasAirSpeed()
 		{
 			// If wings then flying
-			if (ChosenBodyParts[Limb.Wings] == Side.Left
-				|| ChosenBodyParts[Limb.Wings] == Side.Right)
+			if (this.ChosenBodyParts[Limb.Wings] == Side.Left
+				|| this.ChosenBodyParts[Limb.Wings] == Side.Right)
 			{
 				return true;
 			}
@@ -554,9 +558,9 @@ namespace Combiner
 		{
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				if (GameAttributes.ContainsKey(Attributes.RangeDamage[(int)limb]))
+				if (this.GameAttributes.ContainsKey(Attributes.RangeDamage[(int)limb]))
 				{
-					GameAttributes[Attributes.RangeDamage[(int)limb]] = Calculator.CalcRangeDamage(limb);
+					this.GameAttributes[Attributes.RangeDamage[(int)limb]] = this.Calculator.CalcRangeDamage(limb);
 				}
 			}
 		}
@@ -566,9 +570,9 @@ namespace Combiner
 		{
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				if (GameAttributes.ContainsKey(Attributes.RangeMax[(int)limb]))
+				if (this.GameAttributes.ContainsKey(Attributes.RangeMax[(int)limb]))
 				{
-					GameAttributes[Attributes.RangeMax[(int)limb]] = Calculator.CalcRangeMax(limb);
+					this.GameAttributes[Attributes.RangeMax[(int)limb]] = this.Calculator.CalcRangeMax(limb);
 				}
 			}
 		}
@@ -577,9 +581,9 @@ namespace Combiner
 		{
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				if (GameAttributes.ContainsKey(Attributes.RangeType[(int)limb]))
+				if (this.GameAttributes.ContainsKey(Attributes.RangeType[(int)limb]))
 				{
-					GameAttributes[Attributes.RangeType[(int)limb]] = Calculator.GetRangeType(limb);
+					this.GameAttributes[Attributes.RangeType[(int)limb]] = this.Calculator.GetRangeType(limb);
 				}
 			}
 		}
@@ -588,9 +592,9 @@ namespace Combiner
 		{
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				if (GameAttributes.ContainsKey(Attributes.RangeSpecial[(int)limb]))
+				if (this.GameAttributes.ContainsKey(Attributes.RangeSpecial[(int)limb]))
 				{
-					GameAttributes[Attributes.RangeSpecial[(int)limb]] = Calculator.GetRangeSpecial(limb);
+					this.GameAttributes[Attributes.RangeSpecial[(int)limb]] = this.Calculator.GetRangeSpecial(limb);
 				}
 			}
 		}
@@ -599,9 +603,9 @@ namespace Combiner
 		{
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
 			{
-				if (GameAttributes.ContainsKey(Attributes.MeleeType[(int)limb]))
+				if (this.GameAttributes.ContainsKey(Attributes.MeleeType[(int)limb]))
 				{
-					GameAttributes[Attributes.MeleeType[(int)limb]] = Calculator.GetMeleeType(limb);
+					this.GameAttributes[Attributes.MeleeType[(int)limb]] = this.Calculator.GetMeleeType(limb);
 				}
 			}
 		}
@@ -614,7 +618,7 @@ namespace Combiner
 			{
 				Left = this.Left.ToString(),
 				Right = this.Right.ToString(),
-				BodyParts = BuildBodyParts(),
+				BodyParts = this.BuildBodyParts(),
 				Rank = (int)this.Rank,
 				Coal = this.Coal,
 				Electricity = this.Electricity,
@@ -629,9 +633,9 @@ namespace Combiner
 				AirSpeed = this.AirSpeed,
 				MeleeDamage = this.MeleeDamage,
 			};
-			AddRangeDamageToCreature(creature);
-			AddMeleeDamageTypes(creature);
-			AddAbiltiies(creature);
+			this.AddRangeDamageToCreature(creature);
+			this.AddMeleeDamageTypes(creature);
+			this.AddAbiltiies(creature);
 
 			return creature;
 		}
@@ -639,9 +643,9 @@ namespace Combiner
 		private Dictionary<string, string> BuildBodyParts()
 		{
 			Dictionary<string, string> bodyParts = new Dictionary<string, string>();
-			foreach (Limb limb in ChosenBodyParts.Keys)
+			foreach (Limb limb in this.ChosenBodyParts.Keys)
 			{
-				Side side = ChosenBodyParts[limb];
+				Side side = this.ChosenBodyParts[limb];
 				if (side == Side.Left)
 				{
 					bodyParts.Add(limb.ToString(), "L");
@@ -660,11 +664,11 @@ namespace Combiner
 
 		private void AddRangeDamageToCreature(Creature creature)
 		{
-			Tuple<double, double, double> range2 = new Tuple<double, double, double>(Range2Damage, Range2Type, Range2Special);
-			Tuple<double, double, double> range3 = new Tuple<double, double, double>(Range3Damage, Range3Type, Range3Special);
-			Tuple<double, double, double> range4 = new Tuple<double, double, double>(Range4Damage, Range4Type, Range4Special);
-			Tuple<double, double, double> range5 = new Tuple<double, double, double>(Range5Damage, Range5Type, Range5Special);
-			Tuple<double, double, double> range8 = new Tuple<double, double, double>(Range8Damage, Range8Type, Range8Special);
+			Tuple<double, double, double> range2 = new Tuple<double, double, double>(this.Range2Damage, this.Range2Type, this.Range2Special);
+			Tuple<double, double, double> range3 = new Tuple<double, double, double>(this.Range3Damage, this.Range3Type, this.Range3Special);
+			Tuple<double, double, double> range4 = new Tuple<double, double, double>(this.Range4Damage, this.Range4Type, this.Range4Special);
+			Tuple<double, double, double> range5 = new Tuple<double, double, double>(this.Range5Damage, this.Range5Type, this.Range5Special);
+			Tuple<double, double, double> range8 = new Tuple<double, double, double>(this.Range8Damage, this.Range8Type, this.Range8Special);
 
 			Tuple<double, double, double> first = range2;
 			Tuple<double, double, double> second = range3;
@@ -721,11 +725,11 @@ namespace Combiner
 
 		private void AddMeleeDamageTypes(Creature creature)
 		{
-			AddMeleeDamageType(creature, (DamageType)Melee2Type);
-			AddMeleeDamageType(creature, (DamageType)Melee3Type);
-			AddMeleeDamageType(creature, (DamageType)Melee4Type);
-			AddMeleeDamageType(creature, (DamageType)Melee5Type);
-			AddMeleeDamageType(creature, (DamageType)Melee8Type);
+			this.AddMeleeDamageType(creature, (DamageType)this.Melee2Type);
+			this.AddMeleeDamageType(creature, (DamageType)this.Melee3Type);
+			this.AddMeleeDamageType(creature, (DamageType)this.Melee4Type);
+			this.AddMeleeDamageType(creature, (DamageType)this.Melee5Type);
+			this.AddMeleeDamageType(creature, (DamageType)this.Melee8Type);
 		}
 
 		private void AddMeleeDamageType(Creature creature, DamageType type)
@@ -750,7 +754,7 @@ namespace Combiner
 			Dictionary<string, bool> abilities = new Dictionary<string, bool>();
 			foreach (string ability in AbilityNames.Abilities)
 			{
-				abilities.Add(AbilityNames.ProperAbilityNames[ability], (GameAttributes[ability] > 0));
+				abilities.Add(AbilityNames.ProperAbilityNames[ability], (this.GameAttributes[ability] > 0));
 			}
 			creature.Abilities = abilities;
 		}

@@ -1,12 +1,14 @@
-﻿<UserControl x:Class="Combiner.SelectionFilterView"
+﻿<UserControl x:Class="Combiner.Views.FilterViews.SelectionFilterView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Combiner"
+             xmlns:converters="clr-namespace:Combiner.Converters"
+             xmlns:views="clr-namespace:Combiner.Views"
              mc:Ignorable="d">
 	<UserControl.Resources>
-		<local:BoolComplimentConverter x:Key="boolComplimentConverter"/>
+		<converters:BoolComplimentConverter x:Key="boolComplimentConverter"/>
 	</UserControl.Resources>
 	<StackPanel>
 		<StackPanel Orientation="Horizontal">
@@ -24,7 +26,7 @@
 			<Label Content="{Binding Selected.Count, Mode=OneWay}"/>
 			<Button Content="Remove"
 				Width="50"
-				Command="{Binding DataContext.DropFilterCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:FiltersView}}}"
+				Command="{Binding DataContext.DropFilterCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:FiltersView}}}"
 				CommandParameter="{Binding .}"/>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal">

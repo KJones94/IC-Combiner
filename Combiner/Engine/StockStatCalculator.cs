@@ -1,28 +1,33 @@
-﻿using MoonSharp.Interpreter;
-using System;
-
-namespace Combiner
+﻿namespace Combiner.Engine
 {
+	using System;
+
+	using Combiner.Enums;
+	using Combiner.Models;
+	using Combiner.Utility;
+
+	using MoonSharp.Interpreter;
+
 	public class StockStatCalculator
 	{
 		public Stock Stock;
 		public string Name
 		{
-			get { return Stock.Name; }
+			get { return this.Stock.Name; }
 		}
 		public StockType Type
 		{
-			get { return Stock.Type; }
+			get { return this.Stock.Type; }
 		}
 
 		public StockStatCalculator(Stock stock)
 		{
-			Stock = stock;
+			this.Stock = stock;
 		}
 
 		public int GetLimbAttributeBodyPart(string key)
 		{
-			var bodyPart = Stock.LimbAttritbutes[key] as Table;
+			var bodyPart = this.Stock.LimbAttritbutes[key] as Table;
 			if (bodyPart != null)
 			{
 				return (int)(double)bodyPart[1];
@@ -32,7 +37,7 @@ namespace Combiner
 
 		public double GetLimbAttributeValue(string key)
 		{
-			var value = Stock.LimbAttritbutes[key] as Table;
+			var value = this.Stock.LimbAttritbutes[key] as Table;
 			if (value != null)
 			{
 				return (double)value[2];
@@ -42,7 +47,7 @@ namespace Combiner
 
 		public bool IsGreaterSize(double stockSize)
 		{
-			return GetLimbAttributeValue("size") >= stockSize;
+			return this.GetLimbAttributeValue("size") >= stockSize;
 		}
 
 		/// <summary>
@@ -55,13 +60,13 @@ namespace Combiner
 		/// <returns></returns>
 		private double SizeRatio(double stockSize)
 		{
-			if (IsGreaterSize(stockSize))
+			if (this.IsGreaterSize(stockSize))
 			{
 				return 1.0;
 			}
 			else
 			{
-				return stockSize / GetLimbAttributeValue("size");
+				return stockSize / this.GetLimbAttributeValue("size");
 			}
 		}
 
@@ -71,25 +76,25 @@ namespace Combiner
 			switch (limb)
 			{
 				case Limb.FrontLegs:
-					limbStats = GetLimbAttributeValue(stat + "-front");
+					limbStats = this.GetLimbAttributeValue(stat + "-front");
 					break;
 				case Limb.BackLegs:
-					limbStats = GetLimbAttributeValue(stat + "-back");
+					limbStats = this.GetLimbAttributeValue(stat + "-back");
 					break;
 				case Limb.Head:
-					limbStats = GetLimbAttributeValue(stat + "-head");
+					limbStats = this.GetLimbAttributeValue(stat + "-head");
 					break;
 				case Limb.Torso:
-					limbStats = GetLimbAttributeValue(stat + "-torso");
+					limbStats = this.GetLimbAttributeValue(stat + "-torso");
 					break;
 				case Limb.Tail:
-					limbStats = GetLimbAttributeValue(stat + "-tail");
+					limbStats = this.GetLimbAttributeValue(stat + "-tail");
 					break;
 				case Limb.Wings:
-					limbStats = GetLimbAttributeValue(stat + "-wings");
+					limbStats = this.GetLimbAttributeValue(stat + "-wings");
 					break;
 				case Limb.Claws:
-					limbStats = GetLimbAttributeValue(stat + "-claws");
+					limbStats = this.GetLimbAttributeValue(stat + "-claws");
 					break;
 				default:
 					// throw exception
@@ -100,8 +105,8 @@ namespace Combiner
 
 		public double CalcLimbHitpoints(double stockSize, Limb limb)
 		{
-			double limbHitpoints = CalcLimbStats(limb, Attributes.Hitpoints);
-			double health = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_hitpoints")) * limbHitpoints;
+			double limbHitpoints = this.CalcLimbStats(limb, Attributes.Hitpoints);
+			double health = Math.Pow(this.SizeRatio(stockSize), this.GetLimbAttributeValue("exp_hitpoints")) * limbHitpoints;
 			if (health < 0)
 			{
 				return 0;
@@ -111,8 +116,8 @@ namespace Combiner
 
 		public double CalcLimbArmour(double stockSize, Limb limb)
 		{
-			double limbArmour = CalcLimbStats(limb, Attributes.Armour);
-			double armour = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_armour")) * limbArmour;
+			double limbArmour = this.CalcLimbStats(limb, Attributes.Armour);
+			double armour = Math.Pow(this.SizeRatio(stockSize), this.GetLimbAttributeValue("exp_armour")) * limbArmour;
 			if (armour < 0)
 			{
 				return 0;
@@ -122,7 +127,7 @@ namespace Combiner
 
 		public double CalcLimbSightRadius()
 		{
-			double sightRadius = GetLimbAttributeValue(Attributes.SightRadius);
+			double sightRadius = this.GetLimbAttributeValue(Attributes.SightRadius);
 			if (sightRadius < 0)
 			{
 				return 0;
@@ -132,8 +137,8 @@ namespace Combiner
 
 		public double CalcLimbLandSpeed(double stockSize, Limb limb)
 		{
-			double limbLandSpeed = CalcLimbStats(limb, Attributes.LandSpeed);
-			double speed = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_speed_max")) * limbLandSpeed;
+			double limbLandSpeed = this.CalcLimbStats(limb, Attributes.LandSpeed);
+			double speed = Math.Pow(this.SizeRatio(stockSize), this.GetLimbAttributeValue("exp_speed_max")) * limbLandSpeed;
 			if (speed < 0)
 			{
 				return 0;
@@ -143,11 +148,11 @@ namespace Combiner
 
 		public double CalcLimbWaterSpeed(double stockSize, Limb limb)
 		{
-			double limbWaterSpeed = CalcLimbStats(limb, Attributes.WaterSpeed);
+			double limbWaterSpeed = this.CalcLimbStats(limb, Attributes.WaterSpeed);
 			// Not right
-			double speed = Math.Pow(SizeRatio(stockSize),
-				GetLimbAttributeValue("exp_waterspeed_max")
-				+ GetLimbAttributeValue("exp_speed_max"))
+			double speed = Math.Pow(this.SizeRatio(stockSize),
+				this.GetLimbAttributeValue("exp_waterspeed_max")
+				+ this.GetLimbAttributeValue("exp_speed_max"))
 				* limbWaterSpeed;
 			if (speed < 0)
 			{
@@ -158,8 +163,8 @@ namespace Combiner
 
 		public double CalcLimbAirSpeed(double stockSize, Limb limb)
 		{
-			double limbAirSpeed = CalcLimbStats(limb, Attributes.AirSpeed);
-			double speed = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_airspeed_max")) * limbAirSpeed;
+			double limbAirSpeed = this.CalcLimbStats(limb, Attributes.AirSpeed);
+			double speed = Math.Pow(this.SizeRatio(stockSize), this.GetLimbAttributeValue("exp_airspeed_max")) * limbAirSpeed;
 			if (speed < 0)
 			{
 				return 0;
@@ -171,7 +176,7 @@ namespace Combiner
 		{
 			string damageName = "melee" + (int)limb + "_damage";
 			string damageExp = "exp_" + damageName;
-			double damage = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(damageName);
+			double damage = Math.Pow(this.SizeRatio(stockSize), this.GetLimbAttributeValue(damageExp)) * this.GetLimbAttributeValue(damageName);
 			if (damage < 0)
 			{
 				return 0;
@@ -183,7 +188,7 @@ namespace Combiner
 		{
 			string damageName = "range" + (int)limb + "_damage";
 			string damageExp = "exp_" + damageName;
-			double damage = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(damageName);
+			double damage = Math.Pow(this.SizeRatio(stockSize), this.GetLimbAttributeValue(damageExp)) * this.GetLimbAttributeValue(damageName);
 			if (damage < 0)
 			{
 				return 0;
@@ -195,7 +200,7 @@ namespace Combiner
 		{
 			string rangeMax = "range" + (int)limb + "_max";
 			string rangeExp = "exp_range" + (int)limb + "_max";
-			double value = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue(rangeExp)) * GetLimbAttributeValue(rangeMax);
+			double value = Math.Pow(this.SizeRatio(stockSize), this.GetLimbAttributeValue(rangeExp)) * this.GetLimbAttributeValue(rangeMax);
 			if (value < 0)
 			{
 				return 0;
@@ -206,7 +211,7 @@ namespace Combiner
 		public double GetLimbRangeType(Limb limb)
 		{
 			string rangeType = "range" + (int)limb + "_dmgtype";
-			double value = GetLimbAttributeValue(rangeType);
+			double value = this.GetLimbAttributeValue(rangeType);
 			if (value < 0)
 			{
 				return 0;
@@ -217,7 +222,7 @@ namespace Combiner
 		public double GetLimbRangeSpecial(Limb limb)
 		{
 			string rangeSpecial = "range" + (int)limb + "_special";
-			double value = GetLimbAttributeValue(rangeSpecial);
+			double value = this.GetLimbAttributeValue(rangeSpecial);
 			if (value < 0)
 			{
 				return 0;
@@ -228,7 +233,7 @@ namespace Combiner
 		public double GetLimbMeleeType(Limb limb)
 		{
 			string meleeType = "melee" + (int)limb + "_dmgtype";
-			double value = GetLimbAttributeValue(meleeType);
+			double value = this.GetLimbAttributeValue(meleeType);
 			if (value < 0)
 			{
 				return 0;
@@ -238,7 +243,7 @@ namespace Combiner
 
 		public override string ToString()
 		{
-			return Name;
+			return this.Name;
 		}
 	}
 }
