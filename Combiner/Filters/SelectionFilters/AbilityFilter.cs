@@ -46,6 +46,7 @@ namespace Combiner
 			{
 				choices.Add(AbilityNames.ProperAbilityNames[ability]);
 			}
+			choices = new ObservableCollection<string>(choices.OrderBy(s => s));
 			return choices;
 		}
 

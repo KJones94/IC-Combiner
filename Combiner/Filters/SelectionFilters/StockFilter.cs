@@ -33,6 +33,7 @@ namespace Combiner
 			{
 				choices.Add(StockNames.ProperStockNames[stock]);
 			}
+			choices = new ObservableCollection<string>(choices.OrderBy(s => s));
 			return choices;
 		}
 

@@ -19,6 +19,8 @@ namespace Combiner
 			RockArtilleryFilter.PropertyChanged += OnIsOptionCheckChanged;
 			WaterArtilleryFilter.PropertyChanged += OnIsOptionCheckChanged;
 			ChemicalArtilleryFilter.PropertyChanged += OnIsOptionCheckChanged;
+
+
 		}
 
 		private RangeOnlyFilter m_RangeOnlyFilter;
@@ -219,13 +221,13 @@ namespace Combiner
 
 		public override void ResetFilter()
 		{
-			RangeOnlyFilter.IsOptionChecked = false;
-			DirectRangeFilter.IsOptionChecked = false;
-			SonicRangeFilter.IsOptionChecked = false;
-			ArtilleryOnlyFilter.IsOptionChecked = false;
-			RockArtilleryFilter.IsOptionChecked = false;
-			WaterArtilleryFilter.IsOptionChecked = false;
-			ChemicalArtilleryFilter.IsOptionChecked = false;
+			RangeOnlyFilter.ResetFilter();
+			DirectRangeFilter.ResetFilter();
+			SonicRangeFilter.ResetFilter();
+			ArtilleryOnlyFilter.ResetFilter();
+			RockArtilleryFilter.ResetFilter();
+			WaterArtilleryFilter.ResetFilter();
+			ChemicalArtilleryFilter.ResetFilter();
 
 			m_ActiveFilter = null;
 		}

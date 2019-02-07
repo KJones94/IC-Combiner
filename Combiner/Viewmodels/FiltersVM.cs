@@ -12,183 +12,95 @@ namespace Combiner
 	public class FiltersVM : BaseViewModel
 	{
 		private CreatureDataVM m_CreatureDataVM;
+		private List<CreatureFilter> m_ActiveFilters;
+
+		private ObservableCollection<CreatureFilter> m_ChosenStatFilters;
+		public ObservableCollection<CreatureFilter> ChosenStatFilters
+		{
+			get
+			{
+				return m_ChosenStatFilters ??
+					(m_ChosenStatFilters = new ObservableCollection<CreatureFilter>());
+			}
+			set
+			{
+				if (m_ChosenStatFilters != value)
+				{
+					m_ChosenStatFilters = value;
+					OnPropertyChanged(nameof(ChosenStatFilters));
+				}
+			}
+		}
 
 		public FiltersVM(CreatureDataVM creatureDataVM)
 		{
 			m_CreatureDataVM = creatureDataVM;
+			m_ActiveFilters = InitActiveFilters();
+			InitIsActiveHandlers();
 		}
 
-
-		private ObservableCollection<CreatureFilter> m_FilterChoices;
-		public ObservableCollection<CreatureFilter> FilterChoices
+		private void InitIsActiveHandlers()
 		{
-			get
+			AirSpeedFilter.IsActiveChanged += OnFilterIsActive;
+			ArmourFilter.IsActiveChanged += OnFilterIsActive;
+			CoalFilter.IsActiveChanged += OnFilterIsActive;
+			EffectiveHitpointsFilter.IsActiveChanged += OnFilterIsActive;
+			ElectricityFilter.IsActiveChanged += OnFilterIsActive;
+			HitpointsFilter.IsActiveChanged += OnFilterIsActive;
+			LandSpeedFilter.IsActiveChanged += OnFilterIsActive;
+			MeleeDamageFilter.IsActiveChanged += OnFilterIsActive;
+			PowerFilter.IsActiveChanged += OnFilterIsActive;
+			RangeDamageFilter.IsActiveChanged += OnFilterIsActive;
+			RankFilter.IsActiveChanged += OnFilterIsActive;
+			SightRadiusFilter.IsActiveChanged += OnFilterIsActive;
+			SizeFilter.IsActiveChanged += OnFilterIsActive;
+			WaterSpeedFilter.IsActiveChanged += OnFilterIsActive;
+
+			SingleRangedFilter.IsActiveChanged += OnFilterIsActive;
+			HornsFilter.IsActiveChanged += OnFilterIsActive;
+			PoisonFilter.IsActiveChanged += OnFilterIsActive;
+			BarrierDestroyFilter.IsActiveChanged += OnFilterIsActive;
+
+			// TODO: Can these be handled in a different way?
+			RangeOptionsFilter.RangeOnlyFilter.IsActiveChanged += OnFilterIsActive;
+			RangeOptionsFilter.DirectRangeFilter.IsActiveChanged += OnFilterIsActive;
+			RangeOptionsFilter.SonicRangeFilter.IsActiveChanged += OnFilterIsActive;
+			RangeOptionsFilter.ArtilleryOnlyFilter.IsActiveChanged += OnFilterIsActive;
+			RangeOptionsFilter.RockArtilleryFilter.IsActiveChanged += OnFilterIsActive;
+			RangeOptionsFilter.WaterArtilleryFilter.IsActiveChanged += OnFilterIsActive;
+			RangeOptionsFilter.ChemicalArtilleryFilter.IsActiveChanged += OnFilterIsActive;
+
+			StockFilter.IsActiveChanged += OnFilterIsActive;
+			AbilityFilter.IsActiveChanged += OnFilterIsActive;
+		}
+
+		private List<CreatureFilter> InitActiveFilters()
+		{
+			List<CreatureFilter> activeFilters = new List<CreatureFilter>();
+
+
+
+			return activeFilters;
+		}
+
+		private void OnFilterIsActive(CreatureFilter filter, IsActiveArgs args)
+		{
+			if (args.IsActive)
 			{
-				return m_FilterChoices ??
-					(m_FilterChoices = InitFilterChoices());
-			}
-			set
-			{
-				if (m_FilterChoices != value)
+				m_ActiveFilters.Add(filter);
+				if (filter is StatFilter)
 				{
-					m_FilterChoices = value;
-					OnPropertyChanged(nameof(FilterChoices));
+					ChosenStatFilters.Add(filter);
 				}
 			}
-		}
-
-		private ObservableCollection<CreatureFilter> m_ChosenFilters;
-		public ObservableCollection<CreatureFilter> ChosenFilters
-		{
-			get
+			else
 			{
-				return m_ChosenFilters ??
-					(m_ChosenFilters = new ObservableCollection<CreatureFilter>());
-			}
-			set
-			{
-				if (m_ChosenFilters != value)
+				m_ActiveFilters.Remove(filter);
+				if (filter is StatFilter)
 				{
-					m_ChosenFilters = value;
-					OnPropertyChanged(nameof(ChosenFilters));
+					ChosenStatFilters.Remove(filter);
 				}
 			}
-		}
-
-		private ObservableCollection<CreatureFilter> InitFilterChoices()
-		{
-			ObservableCollection<CreatureFilter> filterChoices = new ObservableCollection<CreatureFilter>();
-			filterChoices.Add(new RankFilter());
-			filterChoices.Add(new CoalFilter());
-			filterChoices.Add(new ElectricityFilter());
-			filterChoices.Add(new PowerFilter());
-			filterChoices.Add(new HitpointsFilter());
-			filterChoices.Add(new ArmourFilter());
-			filterChoices.Add(new SightRadiusFilter());
-			filterChoices.Add(new SizeFilter());
-			filterChoices.Add(new EffectiveHitpointsFilter());
-			filterChoices.Add(new LandSpeedFilter());
-			filterChoices.Add(new WaterSpeedFilter());
-			filterChoices.Add(new AirSpeedFilter());
-			filterChoices.Add(new MeleeDamageFilter());
-			filterChoices.Add(new RangeDamageFilter());
-			filterChoices.Add(new AbilityFilter());
-			filterChoices.Add(new StockFilter());
-			filterChoices.Add(new SingleRangedFilter());
-			filterChoices.Add(new HornsFilter());
-			filterChoices.Add(new BarrierDestroyFilter());
-			filterChoices.Add(new PoisonFilter());
-			filterChoices.Add(new RangeOptionsFilter());
-			return new ObservableCollection<CreatureFilter>(filterChoices.OrderBy(s => s.Name));
-		}
-
-		public CreatureFilter SelectedFilter { get; set; }
-
-		private RelayCommand m_AddFilterCommand;
-		public RelayCommand AddFilterCommand
-		{
-			get
-			{
-				return m_AddFilterCommand ??
-					  (m_AddFilterCommand = new RelayCommand(AddFilter));
-			}
-			set
-			{
-				if (m_AddFilterCommand != value)
-				{
-					m_AddFilterCommand = value;
-					OnPropertyChanged(nameof(AddFilter));
-				}
-			}
-		}
-
-		private void AddFilter(object o)
-		{
-			if (SelectedFilter != null)
-			{
-				ChosenFilters.Add(SelectedFilter);
-				ChosenFilters = new ObservableCollection<CreatureFilter>(ChosenFilters.OrderBy(s => s.Name));
-				FilterChoices.Remove(SelectedFilter);
-			}
-		}
-
-		private RelayCommand m_DropFilterCommand;
-		public RelayCommand DropFilterCommand
-		{
-			get
-			{
-				return m_DropFilterCommand ??
-					(m_DropFilterCommand = new RelayCommand(DropFilter));
-			}
-			set
-			{
-				if (m_DropFilterCommand != value)
-				{
-					m_DropFilterCommand = value;
-					OnPropertyChanged(nameof(DropFilterCommand));
-				}
-			}
-		}
-
-		private void DropFilter(object o)
-		{
-			CreatureFilter filter = o as CreatureFilter;
-			if (filter != null)
-			{
-				FilterChoices.Add(filter);
-				FilterChoices = new ObservableCollection<CreatureFilter>(FilterChoices.OrderBy(s => s.Name));
-				ChosenFilters.Remove(filter);
-			}
-		}
-
-		private RelayCommand m_DropAllFiltersCommand;
-		public RelayCommand DropAllFiltersCommand
-		{
-			get
-			{
-				return m_DropAllFiltersCommand ??
-					(m_DropAllFiltersCommand = new RelayCommand(DropAllFilters));
-			}
-			set
-			{
-				if (m_DropAllFiltersCommand != value)
-				{
-					m_DropAllFiltersCommand = value;
-					OnPropertyChanged(nameof(DropAllFiltersCommand));
-				}
-			}
-		}
-
-		private void DropAllFilters(object o)
-		{
-			ChosenFilters.ToList().ForEach(FilterChoices.Add);
-			FilterChoices = new ObservableCollection<Combiner.CreatureFilter>(FilterChoices.OrderBy(s => s.Name));
-			ChosenFilters = new ObservableCollection<Combiner.CreatureFilter>();
-		}
-
-		private RelayCommand m_AddAllFiltersCommand;
-		public RelayCommand AddAllFiltersCommand
-		{
-			get
-			{
-				return m_AddAllFiltersCommand ??
-					(m_AddAllFiltersCommand = new RelayCommand(AddAllFilters));
-			}
-			set
-			{
-				if (m_AddAllFiltersCommand != value)
-				{
-					m_AddAllFiltersCommand = value;
-					OnPropertyChanged(nameof(AddAllFiltersCommand));
-				}
-			}
-		}
-
-		private void AddAllFilters(object o)
-		{
-			FilterChoices.ToList().ForEach(ChosenFilters.Add);
-			ChosenFilters = new ObservableCollection<Combiner.CreatureFilter>(ChosenFilters.OrderBy(s => s.Name));
-			FilterChoices = new ObservableCollection<Combiner.CreatureFilter>();
 		}
 
 		private RelayCommand m_ResetFiltersCommand;
@@ -209,10 +121,11 @@ namespace Combiner
 			}
 		}
 
+		// TODO: Should this reset all filters or only active filters?
+		// Should the resets go back to their defaults or just go inactive?
 		private void ResetFilters(object o)
 		{
-			DropAllFilters(o);
-			foreach (CreatureFilter filter in FilterChoices)
+			foreach (CreatureFilter filter in m_ActiveFilters)
 			{
 				filter.ResetFilter();
 			}
@@ -242,7 +155,7 @@ namespace Combiner
 
 		public bool CreatureFilter(object obj)
 		{
-			if (ChosenFilters.Count == 0)
+			if (m_ActiveFilters.Count == 0)
 			{
 				return true;
 			}
@@ -251,7 +164,7 @@ namespace Combiner
 			if (creature != null)
 			{
 				bool result = true;
-				foreach (CreatureFilter filter in ChosenFilters)
+				foreach (CreatureFilter filter in m_ActiveFilters)
 				{
 					result = result && filter.Filter(creature);
 				}
@@ -259,5 +172,387 @@ namespace Combiner
 			}
 			return false;
 		}
+
+		#region Filters
+
+		private CreatureFilter m_RankFilter;
+		public CreatureFilter RankFilter
+		{
+			get
+			{
+				return m_RankFilter
+					?? (m_RankFilter = new RankFilter());
+			}
+			set
+			{
+				if (m_RankFilter != value)
+				{
+					m_RankFilter = value;
+					OnPropertyChanged(nameof(RankFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_CoalFilter;
+		public CreatureFilter CoalFilter
+		{
+			get
+			{
+				return m_CoalFilter
+					?? (m_CoalFilter = new CoalFilter());
+			}
+			set
+			{
+				if (m_CoalFilter != value)
+				{
+					m_CoalFilter = value;
+					OnPropertyChanged(nameof(CoalFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_ElectricityFilter;
+		public CreatureFilter ElectricityFilter
+		{
+			get
+			{
+				return m_ElectricityFilter
+					?? (m_ElectricityFilter = new ElectricityFilter());
+			}
+			set
+			{
+				if (m_ElectricityFilter != value)
+				{
+					m_ElectricityFilter = value;
+					OnPropertyChanged(nameof(ElectricityFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_PowerFilter;
+		public CreatureFilter PowerFilter
+		{
+			get
+			{
+				return m_PowerFilter
+					?? (m_PowerFilter = new PowerFilter());
+			}
+			set
+			{
+				if (m_PowerFilter != value)
+				{
+					m_PowerFilter = value;
+					OnPropertyChanged(nameof(PowerFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_ArmourFilter;
+		public CreatureFilter ArmourFilter
+		{
+			get
+			{
+				return m_ArmourFilter
+					?? (m_ArmourFilter = new ArmourFilter());
+			}
+			set
+			{
+				if (m_ArmourFilter != value)
+				{
+					m_ArmourFilter = value;
+					OnPropertyChanged(nameof(ArmourFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_HitpointsFilter;
+		public CreatureFilter HitpointsFilter
+		{
+			get
+			{
+				return m_HitpointsFilter
+					?? (m_HitpointsFilter = new HitpointsFilter());
+			}
+			set
+			{
+				if (m_HitpointsFilter != value)
+				{
+					m_HitpointsFilter = value;
+					OnPropertyChanged(nameof(HitpointsFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_EffectiveHitpointsFilter;
+		public CreatureFilter EffectiveHitpointsFilter
+		{
+			get
+			{
+				return m_EffectiveHitpointsFilter
+					?? (m_EffectiveHitpointsFilter = new EffectiveHitpointsFilter());
+			}
+			set
+			{
+				if (m_EffectiveHitpointsFilter != value)
+				{
+					m_EffectiveHitpointsFilter = value;
+					OnPropertyChanged(nameof(EffectiveHitpointsFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_MeleeDamageFilter;
+		public CreatureFilter MeleeDamageFilter
+		{
+			get
+			{
+				return m_MeleeDamageFilter
+					?? (m_MeleeDamageFilter = new MeleeDamageFilter());
+			}
+			set
+			{
+				if (m_MeleeDamageFilter != value)
+				{
+					m_MeleeDamageFilter = value;
+					OnPropertyChanged(nameof(MeleeDamageFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_RangeDamageFilter;
+		public CreatureFilter RangeDamageFilter
+		{
+			get
+			{
+				return m_RangeDamageFilter
+					?? (m_RangeDamageFilter = new RangeDamageFilter());
+			}
+			set
+			{
+				if (m_RangeDamageFilter != value)
+				{
+					m_RangeDamageFilter = value;
+					OnPropertyChanged(nameof(RangeDamageFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_SightRadiusFilter;
+		public CreatureFilter SightRadiusFilter
+		{
+			get
+			{
+				return m_SightRadiusFilter
+					?? (m_SightRadiusFilter = new SightRadiusFilter());
+			}
+			set
+			{
+				if (m_SightRadiusFilter != value)
+				{
+					m_SightRadiusFilter = value;
+					OnPropertyChanged(nameof(SightRadiusFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_SizeFilter;
+		public CreatureFilter SizeFilter
+		{
+			get
+			{
+				return m_SizeFilter
+					?? (m_SizeFilter = new SizeFilter());
+			}
+			set
+			{
+				if (m_SizeFilter != value)
+				{
+					m_SizeFilter = value;
+					OnPropertyChanged(nameof(SizeFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_LandSpeedFilter;
+		public CreatureFilter LandSpeedFilter
+		{
+			get
+			{
+				return m_LandSpeedFilter
+					?? (m_LandSpeedFilter = new LandSpeedFilter());
+			}
+			set
+			{
+				if (m_LandSpeedFilter != value)
+				{
+					m_LandSpeedFilter = value;
+					OnPropertyChanged(nameof(LandSpeedFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_WaterSpeedFilter;
+		public CreatureFilter WaterSpeedFilter
+		{
+			get
+			{
+				return m_WaterSpeedFilter
+					?? (m_WaterSpeedFilter = new WaterSpeedFilter());
+			}
+			set
+			{
+				if (m_WaterSpeedFilter != value)
+				{
+					m_WaterSpeedFilter = value;
+					OnPropertyChanged(nameof(WaterSpeedFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_AirSpeedFilter;
+		public CreatureFilter AirSpeedFilter
+		{
+			get
+			{
+				return m_AirSpeedFilter
+					?? (m_AirSpeedFilter = new AirSpeedFilter());
+			}
+			set
+			{
+				if (m_AirSpeedFilter != value)
+				{
+					m_AirSpeedFilter = value;
+					OnPropertyChanged(nameof(AirSpeedFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_StockFilter;
+		public CreatureFilter StockFilter
+		{
+			get
+			{
+				return m_StockFilter
+					?? (m_StockFilter = new StockFilter());
+			}
+			set
+			{
+				if (m_StockFilter != value)
+				{
+					m_StockFilter = value;
+					OnPropertyChanged(nameof(StockFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_AbilityFilter;
+		public CreatureFilter AbilityFilter
+		{
+			get
+			{
+				return m_AbilityFilter
+					?? (m_AbilityFilter = new AbilityFilter());
+			}
+			set
+			{
+				if (m_AbilityFilter != value)
+				{
+					m_AbilityFilter = value;
+					OnPropertyChanged(nameof(AbilityFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_SingleRangedFilter;
+		public CreatureFilter SingleRangedFilter
+		{
+			get
+			{
+				return m_SingleRangedFilter
+					?? (m_SingleRangedFilter = new SingleRangedFilter());
+			}
+			set
+			{
+				if (m_SingleRangedFilter != value)
+				{
+					m_SingleRangedFilter = value;
+					OnPropertyChanged(nameof(SingleRangedFilter));
+				}
+			}
+		}
+
+		private RangeOptionsFilter m_RangeOptionsFilter;
+		public RangeOptionsFilter RangeOptionsFilter
+		{
+			get
+			{
+				return m_RangeOptionsFilter
+					?? (m_RangeOptionsFilter = new RangeOptionsFilter());
+			}
+			set
+			{
+				if (m_RangeOptionsFilter != value)
+				{
+					m_SingleRangedFilter = value;
+					OnPropertyChanged(nameof(RangeOptionsFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_HornsFilter;
+		public CreatureFilter HornsFilter
+		{
+			get
+			{
+				return m_HornsFilter
+					?? (m_HornsFilter = new HornsFilter());
+			}
+			set
+			{
+				if (m_HornsFilter != value)
+				{
+					m_HornsFilter = value;
+					OnPropertyChanged(nameof(HornsFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_PoisonFilter;
+		public CreatureFilter PoisonFilter
+		{
+			get
+			{
+				return m_PoisonFilter
+					?? (m_PoisonFilter = new PoisonFilter());
+			}
+			set
+			{
+				if (m_PoisonFilter != value)
+				{
+					m_PoisonFilter = value;
+					OnPropertyChanged(nameof(PoisonFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_BarrierDestroyFilter;
+		public CreatureFilter BarrierDestroyFilter
+		{
+			get
+			{
+				return m_BarrierDestroyFilter
+					?? (m_BarrierDestroyFilter = new BarrierDestroyFilter());
+			}
+			set
+			{
+				if (m_BarrierDestroyFilter != value)
+				{
+					m_BarrierDestroyFilter = value;
+					OnPropertyChanged(nameof(BarrierDestroyFilter));
+				}
+			}
+		}
+
+		#endregion
 	}
 }

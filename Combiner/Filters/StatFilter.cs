@@ -51,6 +51,53 @@ namespace Combiner
 		{
 			MinValue = m_MinDefaultValue;
 			MaxValue = m_MaxDefaultValue;
+			IsActive = false;
+		}
+
+		private RelayCommand m_ActivateCommand;
+		public RelayCommand ActivateCommand
+		{
+			get
+			{
+				return m_ActivateCommand ??
+					  (m_ActivateCommand = new RelayCommand(Activate));
+			}
+			set
+			{
+				if (m_ActivateCommand != value)
+				{
+					m_ActivateCommand = value;
+					OnPropertyChanged(nameof(ActivateCommand));
+				}
+			}
+		}
+
+		private void Activate(object o)
+		{
+			IsActive = true;
+		}
+
+		private RelayCommand m_DeactivateCommand;
+		public RelayCommand DeactivateCommand
+		{
+			get
+			{
+				return m_DeactivateCommand ??
+					  (m_DeactivateCommand = new RelayCommand(Deactivate));
+			}
+			set
+			{
+				if (m_DeactivateCommand != value)
+				{
+					m_DeactivateCommand = value;
+					OnPropertyChanged(nameof(DeactivateCommand));
+				}
+			}
+		}
+
+		private void Deactivate(object o)
+		{
+			IsActive = false;
 		}
 	}
 }

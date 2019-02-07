@@ -6,26 +6,66 @@
              xmlns:local="clr-namespace:Combiner"
              mc:Ignorable="d">
 	<UserControl.Resources>
-		<local:AbilityNameConverter x:Key="abilityNameConverter"/>
-		<local:BoolComplimentConverter x:Key="boolComplimentConverter"/>
+		<Style TargetType="Button" x:Key="ButtonStyle">
+			<Setter Property="Width" Value="120"/>
+			<Setter Property="Height" Value="40"/>
+			<Setter Property="Margin" Value="1,1,1,1"/>
+			<Setter Property="FontSize" Value="16"/>
+		</Style>
 	</UserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="2*"/>
+			<ColumnDefinition Width="4*"/>
+			<ColumnDefinition Width="2*"/>
 			<ColumnDefinition Width="1*"/>
 		</Grid.ColumnDefinitions>
-		<ScrollViewer VerticalScrollBarVisibility="Auto">
-			<StackPanel Grid.Column="0">
-				<StackPanel Orientation="Horizontal">
-					<ComboBox ItemsSource="{Binding FilterChoices}"
-					  Width="150"
-					  IsEditable="False"
-					  SelectedItem="{Binding SelectedFilter}"/>
-					<Button Content="Add" Width="30" Command="{Binding AddFilterCommand}"/>
-					<Button Content="Drop All" Width="50" Command="{Binding DropAllFiltersCommand}"/>
-					<Button Content="Add All" Width="50" Command="{Binding AddAllFiltersCommand}"/>
-				</StackPanel>
-				<ItemsControl ItemsSource="{Binding ChosenFilters}">
+		<Grid Grid.Column="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+
+			<StackPanel Grid.Column="0" Grid.Row="0">
+				<local:FilterButton DataContext="{Binding CoalFilter}"/>
+				<local:FilterButton DataContext="{Binding ElectricityFilter}"/>
+				<local:FilterButton DataContext="{Binding RankFilter}"/>
+				<local:FilterButton DataContext="{Binding PowerFilter}"/>
+				<local:FilterButton DataContext="{Binding EffectiveHitpointsFilter}"/>
+				<local:FilterButton DataContext="{Binding MeleeDamageFilter}"/>
+				<local:FilterButton DataContext="{Binding RangeDamageFilter}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="1" Grid.Row="0">
+				<local:FilterButton DataContext="{Binding HitpointsFilter}"/>
+				<local:FilterButton DataContext="{Binding ArmourFilter}"/>
+				<local:FilterButton DataContext="{Binding LandSpeedFilter}"/>
+				<local:FilterButton DataContext="{Binding WaterSpeedFilter}"/>
+				<local:FilterButton DataContext="{Binding AirSpeedFilter}"/>
+				<local:FilterButton DataContext="{Binding SightRadiusFilter}"/>
+				<local:FilterButton DataContext="{Binding SizeFilter}"/>
+			</StackPanel>
+
+		</Grid>
+
+		<StackPanel Grid.Column="1">
+			<local:SelectionFilterView DataContext="{Binding StockFilter}"/>
+			<local:SelectionFilterView DataContext="{Binding AbilityFilter}"/>
+			<local:OptionFilterView DataContext="{Binding SingleRangedFilter}"/>
+			<local:RangeOptionsFilterView DataContext="{Binding RangeOptionsFilter}"/>
+			<StackPanel Orientation="Horizontal">
+				<local:OptionFilterView DataContext="{Binding HornsFilter}"/>
+				<local:OptionFilterView DataContext="{Binding PoisonFilter}"/>
+				<local:OptionFilterView DataContext="{Binding BarrierDestroyFilter}"/>
+			</StackPanel>
+		</StackPanel>
+
+		<ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+			<StackPanel>
+				<ItemsControl ItemsSource="{Binding ChosenStatFilters}">
 					<ItemsControl.ItemsPanel>
 						<ItemsPanelTemplate>
 							<StackPanel/>
@@ -35,22 +75,15 @@
 						<DataTemplate DataType="{x:Type local:StatFilter}">
 							<local:StatFilterView/>
 						</DataTemplate>
-						<DataTemplate DataType="{x:Type local:SelectionFilter}">
-							<local:SelectionFilterView/>
-						</DataTemplate>
-						<DataTemplate DataType="{x:Type local:OptionFilter}">
-							<local:OptionFilterView/>
-						</DataTemplate>
-						<DataTemplate DataType="{x:Type local:RangeOptionsFilter}">
-							<local:RangeOptionsFilterView/>
-						</DataTemplate>
 					</ItemsControl.Resources>
 				</ItemsControl>
 			</StackPanel>
+
 		</ScrollViewer>
-		<StackPanel Grid.Column="1">
-			<Button Content="Reset Filters" Command="{Binding ResetFiltersCommand}"/>
-			<Button Content="Filter" Command="{Binding FilterCreaturesCommand}"/>
+		<StackPanel Grid.Column="3">
+			<Button Content="Reset Filters" Style="{StaticResource ButtonStyle}" Command="{Binding ResetFiltersCommand}"/>
+			<Button Content="Drop All" Style="{StaticResource ButtonStyle}" Command="{Binding DropAllFiltersCommand}"/>
+			<Button Content="Filter" Style="{StaticResource ButtonStyle}" Command="{Binding FilterCreaturesCommand}"/>
 		</StackPanel>
 	</Grid>
 </UserControl>

@@ -158,8 +158,8 @@
     <Compile Include="Views\DatabaseView.xaml.cs">
       <DependentUpon>DatabaseView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FiltersView.xaml.cs">
-      <DependentUpon>FiltersView.xaml</DependentUpon>
+    <Compile Include="Views\FilterViews\FilterButton.xaml.cs">
+      <DependentUpon>FilterButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FilterViews\OptionFilterView.xaml.cs">
       <DependentUpon>OptionFilterView.xaml</DependentUpon>
@@ -185,6 +185,9 @@
     <Compile Include="Views\CreatureDataView.xaml.cs">
       <DependentUpon>CreatureDataView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FiltersView.xaml.cs">
+      <DependentUpon>FiltersView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReportWindow.xaml.cs">
       <DependentUpon>ReportWindow.xaml</DependentUpon>
     </Compile>
@@ -202,7 +205,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FiltersView.xaml">
+    <Page Include="Views\FilterViews\FilterButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -236,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreatureDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FiltersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -578,8 +585,6 @@
     <None Include="Stock\2.5\wolverine.lua" />
     <None Include="Stock\2.5\woolly_mammoth.lua" />
     <None Include="Stock\2.5\zebra.lua" />
-    <None Include="Stock\Test\rat.lua" />
-    <None Include="Stock\Test\snail.lua" />
     <None Include="XML\Schemas\SavedCreatures.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -605,7 +610,9 @@
   <ItemGroup>
     <Resource Include="Notes\Features.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Stock\Test\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -37,6 +37,7 @@ namespace Combiner
 		{
 			RemoveAllSelected(null);
 			IsOnlySelectedFiltered = false;
+			IsActive = false;
 		}
 
 		private ObservableCollection<string> m_Choices;
@@ -104,6 +105,7 @@ namespace Combiner
 				Selected = new ObservableCollection<string>(Selected.OrderBy(s => s));
 				Choices.Remove(ChoiceItem);
 			}
+			ToggleActivatation();
 		}
 
 		private ICommand m_RemovedSelectedCommand;
@@ -131,6 +133,7 @@ namespace Combiner
 				Choices = new ObservableCollection<string>(Choices.OrderBy(s => s));
 				Selected.Remove(SelectedItem);
 			}
+			ToggleActivatation();
 		}
 
 		private ICommand m_RemoveAllSelectedCommand;
@@ -158,6 +161,7 @@ namespace Combiner
 			}
 			Selected = new ObservableCollection<string>();
 			Choices = new ObservableCollection<string>(Choices.OrderBy(s => s));
+			ToggleActivatation();
 		}
 
 		private bool m_IsOnlySelectedFiltered;
@@ -174,5 +178,16 @@ namespace Combiner
 			}
 		}
 
+		private void ToggleActivatation()
+		{
+			if (Selected.Count > 0)
+			{
+				IsActive = true;
+			}
+			else
+			{
+				IsActive = false;
+			}
+		}
 	}
 }

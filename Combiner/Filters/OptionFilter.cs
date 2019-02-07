@@ -21,6 +21,7 @@ namespace Combiner
 				if (m_IsOptionChecked != value)
 				{
 					m_IsOptionChecked = value;
+					IsActive = value;
 					OnPropertyChanged(nameof(IsOptionChecked));
 				}
 			}
@@ -40,6 +41,7 @@ namespace Combiner
 		public override void ResetFilter()
 		{
 			IsOptionChecked = false;
+			IsActive = false;
 		}
 	}
 }
