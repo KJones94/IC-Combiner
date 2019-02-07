@@ -82,7 +82,6 @@
 		</ScrollViewer>
 		<StackPanel Grid.Column="3">
 			<Button Content="Reset Filters" Style="{StaticResource ButtonStyle}" Command="{Binding ResetFiltersCommand}"/>
-			<Button Content="Drop All" Style="{StaticResource ButtonStyle}" Command="{Binding DropAllFiltersCommand}"/>
 			<Button Content="Filter" Style="{StaticResource ButtonStyle}" Command="{Binding FilterCreaturesCommand}"/>
 		</StackPanel>
 	</Grid>

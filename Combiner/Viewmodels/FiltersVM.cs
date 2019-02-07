@@ -121,14 +121,29 @@ namespace Combiner
 			}
 		}
 
-		// TODO: Should this reset all filters or only active filters?
-		// Should the resets go back to their defaults or just go inactive?
 		private void ResetFilters(object o)
 		{
-			foreach (CreatureFilter filter in m_ActiveFilters)
-			{
-				filter.ResetFilter();
-			}
+			AirSpeedFilter.ResetFilter();
+			ArmourFilter.ResetFilter();
+			CoalFilter.ResetFilter();
+			EffectiveHitpointsFilter.ResetFilter();
+			ElectricityFilter.ResetFilter();
+			HitpointsFilter.ResetFilter();
+			LandSpeedFilter.ResetFilter();
+			MeleeDamageFilter.ResetFilter();
+			PowerFilter.ResetFilter();
+			RangeDamageFilter.ResetFilter();
+			RankFilter.ResetFilter();
+			SightRadiusFilter.ResetFilter();
+			SizeFilter.ResetFilter();
+			WaterSpeedFilter.ResetFilter();
+			SingleRangedFilter.ResetFilter();
+			HornsFilter.ResetFilter();
+			PoisonFilter.ResetFilter();
+			BarrierDestroyFilter.ResetFilter();
+			RangeOptionsFilter.ResetFilter();
+			StockFilter.ResetFilter();
+			AbilityFilter.ResetFilter();
 		}
 
 		private ICommand m_FilterCreaturesCommand;
