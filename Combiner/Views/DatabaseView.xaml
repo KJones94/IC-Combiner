@@ -10,13 +10,5 @@
 		<Button Content="Load Creatures" Command="{Binding LoadCreaturesCommand}"/>
 		<Button Content="Load Saved Creatures" Command="{Binding LoadSavedCreaturesCommand}"/>
 		<Button Content="Delete Saved Creatures" Command="{Binding DeleteSavedCreaturesCommand}"/>
-		<TextBlock>Body parts order (left to right):</TextBlock>
-		<TextBlock>Front Legs</TextBlock>
-		<TextBlock>Back Legs</TextBlock>
-		<TextBlock>Head</TextBlock>
-		<TextBlock>Tail</TextBlock>
-		<TextBlock>Torso</TextBlock>
-		<TextBlock>Wings</TextBlock>
-		<TextBlock>Claws</TextBlock>
 	</StackPanel>
 </UserControl>

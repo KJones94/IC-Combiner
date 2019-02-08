@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:Combiner"
              mc:Ignorable="d">
 	<UserControl.Resources>
-		<local:BodyPartsConverter x:Key="bodyPartsConverter"/>
 		<local:BoolToStringConverter x:Key="boolConverter"/>
 		<local:ContainsAbilitiesConverter x:Key="abilityConverter"/>
 		<local:DoubleToStringConverter x:Key="doubleConverter"/>
@@ -30,7 +29,6 @@
 		<DataGrid.Columns>
 			<DataGridTextColumn Header="Left" Binding="{Binding Left}"/>
 			<DataGridTextColumn Header="Right" Binding="{Binding Right}"/>
-			<DataGridTextColumn Header="Body Parts" Binding="{Binding BodyParts, Converter={StaticResource bodyPartsConverter}}"/>
 			<DataGridTextColumn Header="Rank" Binding="{Binding Rank}"/>
 			<DataGridTextColumn Header="Coal" Binding="{Binding Coal, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Elec" Binding="{Binding Electricity, Converter={StaticResource doubleConverter}}"/>
