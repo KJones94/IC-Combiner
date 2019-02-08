@@ -53,7 +53,6 @@ namespace Combiner
 			RangeDamageFilter.IsActiveChanged += OnFilterIsActive;
 			RankFilter.IsActiveChanged += OnFilterIsActive;
 			SightRadiusFilter.IsActiveChanged += OnFilterIsActive;
-			SizeFilter.IsActiveChanged += OnFilterIsActive;
 			WaterSpeedFilter.IsActiveChanged += OnFilterIsActive;
 
 			SingleRangedFilter.IsActiveChanged += OnFilterIsActive;
@@ -138,7 +137,6 @@ namespace Combiner
 			RangeDamageFilter.ResetFilter();
 			RankFilter.ResetFilter();
 			SightRadiusFilter.ResetFilter();
-			SizeFilter.ResetFilter();
 			WaterSpeedFilter.ResetFilter();
 			SingleRangedFilter.ResetFilter();
 			HornsFilter.ResetFilter();
@@ -369,24 +367,6 @@ namespace Combiner
 				{
 					m_SightRadiusFilter = value;
 					OnPropertyChanged(nameof(SightRadiusFilter));
-				}
-			}
-		}
-
-		private CreatureFilter m_SizeFilter;
-		public CreatureFilter SizeFilter
-		{
-			get
-			{
-				return m_SizeFilter
-					?? (m_SizeFilter = new SizeFilter());
-			}
-			set
-			{
-				if (m_SizeFilter != value)
-				{
-					m_SizeFilter = value;
-					OnPropertyChanged(nameof(SizeFilter));
 				}
 			}
 		}

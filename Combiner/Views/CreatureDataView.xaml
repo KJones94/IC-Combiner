@@ -37,7 +37,6 @@
 			<DataGridTextColumn Header="Hitpoints" Binding="{Binding Hitpoints, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Armour" Binding="{Binding Armour, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Sight Radius" Binding="{Binding SightRadius, Converter={StaticResource doubleConverter}}"/>
-			<DataGridTextColumn Header="Size" Binding="{Binding Size, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Land Speed" Binding="{Binding LandSpeed, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Water Speed" Binding="{Binding WaterSpeed, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Air Speed" Binding="{Binding AirSpeed, Converter={StaticResource doubleConverter}}"/>

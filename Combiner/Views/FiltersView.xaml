@@ -46,7 +46,6 @@
 				<local:FilterButton DataContext="{Binding WaterSpeedFilter}"/>
 				<local:FilterButton DataContext="{Binding AirSpeedFilter}"/>
 				<local:FilterButton DataContext="{Binding SightRadiusFilter}"/>
-				<local:FilterButton DataContext="{Binding SizeFilter}"/>
 			</StackPanel>
 
 		</Grid>
