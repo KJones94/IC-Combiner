@@ -15,10 +15,10 @@
 	</UserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="2*"/>
 			<ColumnDefinition Width="4*"/>
+			<ColumnDefinition Width="4*"/>
+			<ColumnDefinition Width="6*"/>
 			<ColumnDefinition Width="2*"/>
-			<ColumnDefinition Width="1*"/>
 		</Grid.ColumnDefinitions>
 		<Grid Grid.Column="0">
 			<Grid.ColumnDefinitions>
@@ -50,7 +50,7 @@
 
 		</Grid>
 
-		<StackPanel Grid.Column="1">
+		<StackPanel Grid.Column="2">
 			<local:SelectionFilterView DataContext="{Binding StockFilter}"/>
 			<local:SelectionFilterView DataContext="{Binding AbilityFilter}"/>
 			<local:OptionFilterView DataContext="{Binding SingleRangedFilter}"/>
@@ -62,7 +62,7 @@
 			</StackPanel>
 		</StackPanel>
 
-		<ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+		<ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
 			<StackPanel>
 				<ItemsControl ItemsSource="{Binding ChosenStatFilters}">
 					<ItemsControl.ItemsPanel>
@@ -79,7 +79,7 @@
 			</StackPanel>
 
 		</ScrollViewer>
-		<StackPanel Grid.Column="3">
+		<StackPanel Grid.Column="3" HorizontalAlignment="Center">
 			<Button Content="Reset Filters" Style="{StaticResource ButtonStyle}" Command="{Binding ResetFiltersCommand}"/>
 			<Button Content="Filter" Style="{StaticResource ButtonStyle}" Command="{Binding FilterCreaturesCommand}"/>
 		</StackPanel>
