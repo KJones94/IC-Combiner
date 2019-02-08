@@ -50,11 +50,13 @@
 			</Grid.RowDefinitions>
 			<Grid Grid.Row="0">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="3*"/>
+					<ColumnDefinition Width="1*"/>
 					<ColumnDefinition Width="1*"/>
 				</Grid.ColumnDefinitions>
 				<local:FiltersView Grid.Column="0" DataContext="{Binding FiltersVM}"/>
 				<local:DatabaseView Grid.Column="1" DataContext="{Binding DatabaseVM}"/>
+				<local:SelectedCreatureView Grid.Column="2" DataContext="{Binding SelectedCreatureVM}"/>
 			</Grid>
 			<local:CreatureDataView Grid.Row="1" DataContext="{Binding CreatureDataVM}"/>
 		</Grid>

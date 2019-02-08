@@ -60,6 +60,23 @@ namespace Combiner
 			}
 		}
 
+		private SelectedCreatureVM m_SelectedCreatureVM;
+		public SelectedCreatureVM SelectedCreatureVM
+		{
+			get
+			{
+				return m_SelectedCreatureVM;
+			}
+			set
+			{
+				if (value != m_SelectedCreatureVM)
+				{
+					m_SelectedCreatureVM = value;
+					OnPropertyChanged(nameof(SelectedCreatureVM));
+				}
+			}
+		}
+
 		public MainVM()
 		{
 			Database database = new Database();
@@ -69,6 +86,7 @@ namespace Combiner
 			CreatureDataVM = new CreatureDataVM(database);
 			FiltersVM = new FiltersVM(CreatureDataVM);
 			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, database, importExportHandler, creatureCsvWriter);
+			SelectedCreatureVM = new SelectedCreatureVM(CreatureDataVM);
 		}
 
 	}

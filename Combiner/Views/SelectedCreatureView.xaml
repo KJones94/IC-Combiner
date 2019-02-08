@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Combiner.SelectedCreatureView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Combiner"
+             mc:Ignorable="d">
+	<StackPanel>
+		<Grid>
+			<Label HorizontalAlignment="Left" Content="{Binding Left}"/>
+			<Label HorizontalAlignment="Right" Content="{Binding Right}"/>
+		</Grid>
+		<local:CreatureBodyPartView ChosenSide="{Binding Path=BodyParts[(local:Limb)Head]}" LimbText="Head" />
+		<local:CreatureBodyPartView ChosenSide="{Binding Path=BodyParts[(local:Limb)FrontLegs]}" LimbText="Front Legs" />
+		<local:CreatureBodyPartView ChosenSide="{Binding Path=BodyParts[(local:Limb)Torso]}" LimbText="Torso" />
+		<local:CreatureBodyPartView ChosenSide="{Binding Path=BodyParts[(local:Limb)BackLegs]}" LimbText="BackLegs" />
+		<local:CreatureBodyPartView ChosenSide="{Binding Path=BodyParts[(local:Limb)Tail]}" LimbText="Tail" />
+		<local:CreatureBodyPartView ChosenSide="{Binding Path=BodyParts[(local:Limb)Wings]}" LimbText="Wings" />
+		<local:CreatureBodyPartView ChosenSide="{Binding Path=BodyParts[(local:Limb)Claws]}" LimbText="Claws" />
+	</StackPanel>
+</UserControl>

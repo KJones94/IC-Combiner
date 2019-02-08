@@ -139,6 +139,7 @@
     <Compile Include="Utility\Names.cs" />
     <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />
+    <Compile Include="Viewmodels\SelectedCreatureVM.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -155,6 +156,9 @@
     <Compile Include="Models\Creature.cs" />
     <Compile Include="Utility\Database.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />
+    <Compile Include="Views\CreatureBodyPartView.xaml.cs">
+      <DependentUpon>CreatureBodyPartView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DatabaseView.xaml.cs">
       <DependentUpon>DatabaseView.xaml</DependentUpon>
     </Compile>
@@ -196,8 +200,15 @@
     <Compile Include="Tests\CreatureTest.cs" />
     <Compile Include="Tests\StockTest.cs" />
     <Compile Include="Utility\DirectoryConstants.cs" />
+    <Compile Include="Views\SelectedCreatureView.xaml.cs">
+      <DependentUpon>SelectedCreatureView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="XML\CreatureXMLHandler.cs" />
     <Page Include="Views\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreatureBodyPartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -247,6 +258,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelectedCreatureView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
