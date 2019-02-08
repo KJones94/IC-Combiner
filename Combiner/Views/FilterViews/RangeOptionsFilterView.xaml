@@ -7,9 +7,14 @@
              mc:Ignorable="d">
     <StackPanel>
 		<StackPanel Orientation="Horizontal">
+			<local:OptionFilterView DataContext="{Binding MeleeOnlyFilter}"/>
 			<local:OptionFilterView DataContext="{Binding RangeOnlyFilter}"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal">
 			<local:OptionFilterView DataContext="{Binding DirectRangeFilter}"/>
 			<local:OptionFilterView DataContext="{Binding SonicRangeFilter}"/>
+			<local:OptionFilterView DataContext="{Binding PoisonRangeFilter}"/>
+			<local:OptionFilterView DataContext="{Binding QuillRangeFilter}"/>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal">
 			<local:OptionFilterView DataContext="{Binding ArtilleryOnlyFilter}"/>

@@ -105,7 +105,10 @@
     <Compile Include="Filters\OptionFilters\ChemicalArtilleryFilter.cs" />
     <Compile Include="Filters\OptionFilters\DirectRangeFilter.cs" />
     <Compile Include="Filters\OptionFilters\HornsFilter.cs" />
+    <Compile Include="Filters\OptionFilters\MeleeOnlyFilter.cs" />
     <Compile Include="Filters\OptionFilters\PoisonFilter.cs" />
+    <Compile Include="Filters\OptionFilters\PoisonRangeFilter.cs" />
+    <Compile Include="Filters\OptionFilters\QuillRangeFilter.cs" />
     <Compile Include="Filters\OptionFilters\RangeOnlyFilter.cs" />
     <Compile Include="Filters\OptionFilters\RockArtilleryFilter.cs" />
     <Compile Include="Filters\OptionFilters\SingleRangedFilter.cs" />

@@ -62,9 +62,12 @@ namespace Combiner
 			BarrierDestroyFilter.IsActiveChanged += OnFilterIsActive;
 
 			// TODO: Can these be handled in a different way?
+			RangeOptionsFilter.MeleeOnlyFilter.IsActiveChanged += OnFilterIsActive;
 			RangeOptionsFilter.RangeOnlyFilter.IsActiveChanged += OnFilterIsActive;
 			RangeOptionsFilter.DirectRangeFilter.IsActiveChanged += OnFilterIsActive;
 			RangeOptionsFilter.SonicRangeFilter.IsActiveChanged += OnFilterIsActive;
+			RangeOptionsFilter.PoisonRangeFilter.IsActiveChanged += OnFilterIsActive;
+			RangeOptionsFilter.QuillRangeFilter.IsActiveChanged += OnFilterIsActive;
 			RangeOptionsFilter.ArtilleryOnlyFilter.IsActiveChanged += OnFilterIsActive;
 			RangeOptionsFilter.RockArtilleryFilter.IsActiveChanged += OnFilterIsActive;
 			RangeOptionsFilter.WaterArtilleryFilter.IsActiveChanged += OnFilterIsActive;

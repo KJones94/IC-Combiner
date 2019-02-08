@@ -12,15 +12,34 @@ namespace Combiner
 		public RangeOptionsFilter()
 			: base("Range Options")
 		{
+			MeleeOnlyFilter.PropertyChanged += OnIsOptionCheckChanged;
 			RangeOnlyFilter.PropertyChanged += OnIsOptionCheckChanged;
 			DirectRangeFilter.PropertyChanged += OnIsOptionCheckChanged;
 			SonicRangeFilter.PropertyChanged += OnIsOptionCheckChanged;
+			PoisonRangeFilter.PropertyChanged += OnIsOptionCheckChanged;
+			QuillRangeFilter.PropertyChanged += OnIsOptionCheckChanged;
 			ArtilleryOnlyFilter.PropertyChanged += OnIsOptionCheckChanged;
 			RockArtilleryFilter.PropertyChanged += OnIsOptionCheckChanged;
 			WaterArtilleryFilter.PropertyChanged += OnIsOptionCheckChanged;
 			ChemicalArtilleryFilter.PropertyChanged += OnIsOptionCheckChanged;
+		}
 
-
+		private MeleeOnlyFilter m_MeleeOnlyFilter;
+		public MeleeOnlyFilter MeleeOnlyFilter
+		{
+			get
+			{
+				return m_MeleeOnlyFilter
+					?? (m_MeleeOnlyFilter = new MeleeOnlyFilter());
+			}
+			set
+			{
+				if (m_MeleeOnlyFilter != value)
+				{
+					m_MeleeOnlyFilter = value;
+					OnPropertyChanged(nameof(MeleeOnlyFilter));
+				}
+			}
 		}
 
 		private RangeOnlyFilter m_RangeOnlyFilter;
@@ -73,6 +92,42 @@ namespace Combiner
 				{
 					m_SonicRangeFilter = value;
 					OnPropertyChanged(nameof(SonicRangeFilter));
+				}
+			}
+		}
+
+		private PoisonRangeFilter m_PoisonRangeFilter;
+		public PoisonRangeFilter PoisonRangeFilter
+		{
+			get
+			{
+				return m_PoisonRangeFilter
+					?? (m_PoisonRangeFilter = new PoisonRangeFilter());
+			}
+			set
+			{
+				if (m_PoisonRangeFilter != value)
+				{
+					m_PoisonRangeFilter = value;
+					OnPropertyChanged(nameof(PoisonRangeFilter));
+				}
+			}
+		}
+
+		private QuillRangeFilter m_QuillRangeFilter;
+		public QuillRangeFilter QuillRangeFilter
+		{
+			get
+			{
+				return m_QuillRangeFilter
+					?? (m_QuillRangeFilter = new QuillRangeFilter());
+			}
+			set
+			{
+				if (m_QuillRangeFilter != value)
+				{
+					m_QuillRangeFilter = value;
+					OnPropertyChanged(nameof(QuillRangeFilter));
 				}
 			}
 		}
@@ -180,6 +235,10 @@ namespace Combiner
 
 		private void RemoveOtherRangeOptions(OptionFilter filter)
 		{
+			if (!(filter is MeleeOnlyFilter))
+			{
+				MeleeOnlyFilter.IsOptionChecked = false;
+			}
 			if (!(filter is RangeOnlyFilter))
 			{
 				RangeOnlyFilter.IsOptionChecked = false;
@@ -191,6 +250,14 @@ namespace Combiner
 			if (!(filter is SonicRangeFilter))
 			{
 				SonicRangeFilter.IsOptionChecked = false;
+			}
+			if (!(filter is PoisonRangeFilter))
+			{
+				PoisonRangeFilter.IsOptionChecked = false;
+			}
+			if (!(filter is QuillRangeFilter))
+			{
+				QuillRangeFilter.IsOptionChecked = false;
 			}
 			if (!(filter is ArtilleryOnlyFilter))
 			{
@@ -221,9 +288,12 @@ namespace Combiner
 
 		public override void ResetFilter()
 		{
+			MeleeOnlyFilter.ResetFilter();
 			RangeOnlyFilter.ResetFilter();
 			DirectRangeFilter.ResetFilter();
 			SonicRangeFilter.ResetFilter();
+			PoisonRangeFilter.ResetFilter();
+			QuillRangeFilter.ResetFilter();
 			ArtilleryOnlyFilter.ResetFilter();
 			RockArtilleryFilter.ResetFilter();
 			WaterArtilleryFilter.ResetFilter();
