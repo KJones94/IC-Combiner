@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Combiner
+{
+	public class RangeDistanceFilter : StatFilter
+	{
+		public RangeDistanceFilter()
+			: base("Range Distance", 0, 100) { }
+
+		public override bool Filter(Creature creature)
+		{
+			bool isBothUnderMax = creature.RangeMax1 <= MaxValue
+				&& creature.RangeMax2 <= MaxValue;
+
+			bool isOneOverMin = creature.RangeMax1 >= MinValue
+				|| creature.RangeMax2 >= MinValue;
+
+			return isBothUnderMax && isOneOverMin;
+		}
+
+		public override string ToString()
+		{
+			return nameof(RangeDistanceFilter);
+		}
+	}
+}

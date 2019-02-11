@@ -129,6 +129,7 @@
     <Compile Include="Filters\StatFilters\MeleeDamageFilter.cs" />
     <Compile Include="Filters\StatFilters\PowerFilter.cs" />
     <Compile Include="Filters\StatFilters\RangeDamageFilter.cs" />
+    <Compile Include="Filters\StatFilters\RangeDistanceFilter.cs" />
     <Compile Include="Filters\StatFilters\RankFilter.cs" />
     <Compile Include="Filters\StatFilters\SightRadiusFilter.cs" />
     <Compile Include="Filters\StatFilters\SizeFilter.cs" />

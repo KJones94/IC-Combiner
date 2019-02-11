@@ -37,11 +37,9 @@ namespace Combiner
 		public double RangeSpecial2 { get; set; }
 		public double RangeType1 { get; set; }
 		public double RangeType2 { get; set; }
-		// Attack Range?
+		public double RangeMax1 { get; set; }
+		public double RangeMax2 { get; set; }
 
-		// Abilities
 		public Dictionary<string, bool> Abilities { get; set; }
-
-
 	}
 }

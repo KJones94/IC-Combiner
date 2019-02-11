@@ -14,5 +14,10 @@ namespace Combiner
 		{
 			return creature.RangeDamage1 == 0;
 		}
+
+		public override string ToString()
+		{
+			return nameof(MeleeOnlyFilter);
+		}
 	}
 }

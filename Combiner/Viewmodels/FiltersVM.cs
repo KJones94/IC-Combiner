@@ -54,6 +54,8 @@ namespace Combiner
 			RankFilter.IsActiveChanged += OnFilterIsActive;
 			SightRadiusFilter.IsActiveChanged += OnFilterIsActive;
 			WaterSpeedFilter.IsActiveChanged += OnFilterIsActive;
+			RangeDistanceFilter.IsActiveChanged += OnFilterIsActive;
+			SizeFilter.IsActiveChanged += OnFilterIsActive;
 
 			SingleRangedFilter.IsActiveChanged += OnFilterIsActive;
 			HornsFilter.IsActiveChanged += OnFilterIsActive;
@@ -135,8 +137,10 @@ namespace Combiner
 			MeleeDamageFilter.ResetFilter();
 			PowerFilter.ResetFilter();
 			RangeDamageFilter.ResetFilter();
+			RangeDistanceFilter.ResetFilter();
 			RankFilter.ResetFilter();
 			SightRadiusFilter.ResetFilter();
+			SizeFilter.ResetFilter();
 			WaterSpeedFilter.ResetFilter();
 			SingleRangedFilter.ResetFilter();
 			HornsFilter.ResetFilter();
@@ -353,6 +357,24 @@ namespace Combiner
 			}
 		}
 
+		private CreatureFilter m_RangeDistanceFilter;
+		public CreatureFilter RangeDistanceFilter
+		{
+			get
+			{
+				return m_RangeDistanceFilter
+					?? (m_RangeDistanceFilter = new RangeDistanceFilter());
+			}
+			set
+			{
+				if (m_RangeDistanceFilter != value)
+				{
+					m_RangeDistanceFilter = value;
+					OnPropertyChanged(nameof(RangeDistanceFilter));
+				}
+			}
+		}
+
 		private CreatureFilter m_SightRadiusFilter;
 		public CreatureFilter SightRadiusFilter
 		{
@@ -367,6 +389,24 @@ namespace Combiner
 				{
 					m_SightRadiusFilter = value;
 					OnPropertyChanged(nameof(SightRadiusFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_SizeFilter;
+		public CreatureFilter SizeFilter
+		{
+			get
+			{
+				return m_SizeFilter
+					?? (m_SizeFilter = new SizeFilter());
+			}
+			set
+			{
+				if (m_SizeFilter != value)
+				{
+					m_SizeFilter = value;
+					OnPropertyChanged(nameof(SizeFilter));
 				}
 			}
 		}

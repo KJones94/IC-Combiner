@@ -19,5 +19,10 @@ namespace Combiner
 
 			return range1HasPoison || range2HasPoison;
 		}
+
+		public override string ToString()
+		{
+			return nameof(PoisonRangeFilter);
+		}
 	}
 }

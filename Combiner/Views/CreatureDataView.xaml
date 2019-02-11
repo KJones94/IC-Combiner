@@ -37,6 +37,7 @@
 			<DataGridTextColumn Header="Hitpoints" Binding="{Binding Hitpoints, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Armour" Binding="{Binding Armour, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Sight Radius" Binding="{Binding SightRadius, Converter={StaticResource doubleConverter}}"/>
+			<DataGridTextColumn Header="Size" Binding="{Binding Size, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Land Speed" Binding="{Binding LandSpeed, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Water Speed" Binding="{Binding WaterSpeed, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Air Speed" Binding="{Binding AirSpeed, Converter={StaticResource doubleConverter}}"/>
@@ -44,9 +45,11 @@
 			<DataGridTextColumn Header="Range Damage 1" Binding="{Binding RangeDamage1, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Artillery Type 1" Binding="{Binding RangeSpecial1, Converter={StaticResource rangeSpecialConverter}}"/>
 			<DataGridTextColumn Header="Range Type 1" Binding="{Binding RangeType1, Converter={StaticResource rangeTypeConverter}}"/>
+			<DataGridTextColumn Header="Range Dist 1" Binding="{Binding RangeMax1, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Range Damage 2" Binding="{Binding RangeDamage2, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Artillery Type 2" Binding="{Binding RangeSpecial2, Converter={StaticResource rangeSpecialConverter}}"/>
 			<DataGridTextColumn Header="Range Type 2" Binding="{Binding RangeType2, Converter={StaticResource rangeTypeConverter}}"/>
+			<DataGridTextColumn Header="Range Dist 2" Binding="{Binding RangeMax2, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Horns" Binding="{Binding HasHorns, Converter={StaticResource boolConverter}}"/>
 			<DataGridTextColumn Header="Barrier Destroy" Binding="{Binding HasBarrierDestroy, Converter={StaticResource boolConverter}}"/>
 			<DataGridTextColumn Header="Poison" Binding="{Binding HasBarrierDestroy, Converter={StaticResource boolConverter}}"/>

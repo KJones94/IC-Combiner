@@ -19,5 +19,10 @@ namespace Combiner
 
 			return range1HasQuill || range2HasQuill;
 		}
+
+		public override string ToString()
+		{
+			return nameof(QuillRangeFilter);
+		}
 	}
 }

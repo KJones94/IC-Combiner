@@ -115,6 +115,32 @@ namespace Combiner
 			set { GameAttributes[Attributes.Range8Damage] = value; }
 		}
 
+		public double Range2Max
+		{
+			get { return GameAttributes[Attributes.Range2Max]; }
+			set { GameAttributes[Attributes.Range2Max] = value; }
+		}
+		public double Range3Max
+		{
+			get { return GameAttributes[Attributes.Range3Max]; }
+			set { GameAttributes[Attributes.Range3Max] = value; }
+		}
+		public double Range4Max
+		{
+			get { return GameAttributes[Attributes.Range4Max]; }
+			set { GameAttributes[Attributes.Range4Max] = value; }
+		}
+		public double Range5Max
+		{
+			get { return GameAttributes[Attributes.Range5Max]; }
+			set { GameAttributes[Attributes.Range5Max] = value; }
+		}
+		public double Range8Max
+		{
+			get { return GameAttributes[Attributes.Range8Max]; }
+			set { GameAttributes[Attributes.Range8Max] = value; }
+		}
+
 		public double Range2Type
 		{
 			get { return GameAttributes[Attributes.Range2Type]; }
@@ -563,7 +589,6 @@ namespace Combiner
 			}
 		}
 
-		// TODO: Is this used for anything?
 		private void CalcRangeMax()
 		{
 			foreach (Limb limb in Enum.GetValues(typeof(Limb)))
@@ -662,16 +687,16 @@ namespace Combiner
 
 		private void AddRangeDamageToCreature(Creature creature)
 		{
-			Tuple<double, double, double> range2 = new Tuple<double, double, double>(Range2Damage, Range2Type, Range2Special);
-			Tuple<double, double, double> range3 = new Tuple<double, double, double>(Range3Damage, Range3Type, Range3Special);
-			Tuple<double, double, double> range4 = new Tuple<double, double, double>(Range4Damage, Range4Type, Range4Special);
-			Tuple<double, double, double> range5 = new Tuple<double, double, double>(Range5Damage, Range5Type, Range5Special);
-			Tuple<double, double, double> range8 = new Tuple<double, double, double>(Range8Damage, Range8Type, Range8Special);
+			Tuple<double, double, double, double> range2 = new Tuple<double, double, double, double>(Range2Damage, Range2Type, Range2Special, Range2Max);
+			Tuple<double, double, double, double> range3 = new Tuple<double, double, double, double>(Range3Damage, Range3Type, Range3Special, Range3Max);
+			Tuple<double, double, double, double> range4 = new Tuple<double, double, double, double>(Range4Damage, Range4Type, Range4Special, Range4Max);
+			Tuple<double, double, double, double> range5 = new Tuple<double, double, double, double>(Range5Damage, Range5Type, Range5Special, Range5Max);
+			Tuple<double, double, double, double> range8 = new Tuple<double, double, double, double>(Range8Damage, Range8Type, Range8Special, Range8Max);
 
-			Tuple<double, double, double> first = range2;
-			Tuple<double, double, double> second = range3;
+			Tuple<double, double, double, double> first = range2;
+			Tuple<double, double, double, double> second = range3;
 
-			Tuple<double, double, double> temp;
+			Tuple<double, double, double, double> temp;
 			if (second.Item1 > first.Item1)
 			{
 				temp = first;
@@ -715,10 +740,12 @@ namespace Combiner
 			creature.RangeDamage1 = first.Item1;
 			creature.RangeType1 = first.Item2;
 			creature.RangeSpecial1 = first.Item3;
+			creature.RangeMax1 = first.Item4;
 
 			creature.RangeDamage2 = second.Item1;
 			creature.RangeType2 = second.Item2;
 			creature.RangeSpecial2 = second.Item3;
+			creature.RangeMax2 = second.Item4;
 		}
 
 		private void AddMeleeDamageTypes(Creature creature)
