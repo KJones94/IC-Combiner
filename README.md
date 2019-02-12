@@ -1,7 +1,7 @@
 # IC-Combiner
 Combine and filter creatures for the Tellurian IC mod
 
-## Setup
+### Setup
 
 1. Download the zip folder from the Release page
 2. Unzip the folder wherever you like
@@ -12,14 +12,14 @@ Combine and filter creatures for the Tellurian IC mod
 5. Once the database is created, press the "Load Creatures" buttons
 6. Get started on filtering!
 
-## Filtering Capabilites
+### Filtering Capabilites
 
 - Stat filters for Coal, Hitpoints, Damage, etc.
 - Stock filter for choosing specific stock if desired
 - Ability filter for chosing specific abilities if desired
 - Checkbox filters for Melee/Range, Damage type, Range type, etc.
 
-## Saving Creatures
+### Saving Creatures
 
 1. Right-click a creature you want to save
 2. Select the "Save Creature" option
@@ -28,13 +28,13 @@ Combine and filter creatures for the Tellurian IC mod
 4. View your saved creatures
 5. Unsave your creatures with a right-click and choosing the "Unsave Creature" option
 
-## Export Saved Creatures
+### Export Saved Creatures
 
 1. Go to the "File" menu
 2. Select "Export Saved Creatures"
 3. Choose your save location and select OK
 
-## Import Saved Creatures
+### Import Saved Creatures
 
 1. Go to the "File" menu
 2. Select "Import Saved Creatures"
