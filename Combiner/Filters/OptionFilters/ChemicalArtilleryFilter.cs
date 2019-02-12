@@ -8,7 +8,7 @@ namespace Combiner
 	public class ChemicalArtilleryFilter : OptionFilter
 	{
 		public ChemicalArtilleryFilter()
-			: base("ChemicalArtillery") { }
+			: base("Chemical Artillery") { }
 
 		protected override bool OnOptionChecked(Creature creature)
 		{
