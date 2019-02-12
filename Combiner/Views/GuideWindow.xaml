@@ -5,13 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Combiner"
         mc:Ignorable="d"
-        Title="GuideWindow" Height="300" Width="800">
+        Title="GuideWindow" Height="300" Width="400">
 	<StackPanel>
-		<TextBlock>How to operate:</TextBlock>
-		<TextBlock>Create a database if you have not done so yet. This only needs to be done once.</TextBlock>
-		<TextBlock>Load the creatures to have them appear in the bottom section. This can take a minute to load all creatures into the view.</TextBlock>
-		<TextBlock>Set the filters to the desired values. Press the Filter button to view only creatures that fit the values.</TextBlock>
-		<TextBlock>All values are applied to all creatures.</TextBlock>
-		<TextBlock>The filter values can be reset to the original values the program started with.</TextBlock>
+		<TextBlock>Reference information can be found one the main Github page:</TextBlock>
+		<TextBlock>https://github.com/KJones94/IC-Combiner</TextBlock>
 	</StackPanel>
 </Window>

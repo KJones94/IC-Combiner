@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Combiner"
         mc:Ignorable="d"
-        Title="AboutWindow" Height="300" Width="300">
+        Title="AboutWindow" Height="300" Width="400">
 	<StackPanel>
-		<TextBlock>Version: 0.2.3-Beta</TextBlock>
+		<TextBlock>Version: 0.4.0-Beta</TextBlock>
+		<TextBlock>Created by Blother</TextBlock>
+		<TextBlock>Github page: https://github.com/KJones94/IC-Combiner</TextBlock>
 	</StackPanel>
 </Window>

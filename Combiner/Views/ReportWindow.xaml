@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         Title="ReportWindow" Height="300" Width="800">
 	<StackPanel>
-		<TextBlock>Send reports and suggestions to Kevin/Blother on Discord.</TextBlock>
-		<TextBlock>Please report any problems that occur (i.e. database not created, creatures not loading, filters not working, incorrect stats, etc.).</TextBlock>
-		<TextBlock>Feel free to send any suggestions as I am looking for input from the community.</TextBlock>
+		<TextBlock>Report any issues/suggestions to the Github issues page:</TextBlock>
+		<TextBlock>https://github.com/KJones94/IC-Combiner/issues</TextBlock>
+		<TextBlock></TextBlock>
+		<TextBlock>You can also contact Kevin/Blother on Discord.</TextBlock>
 	</StackPanel>
 </Window>
