@@ -2,6 +2,7 @@
 Combine and filter creatures for the Tellurian IC mod
 
 ## Setup
+
 1. Download the zip folder from the Release page
 2. Unzip the folder wherever you like
 3. Run Combiner.exe found in /bin/Release (make a shortcut if you like)
@@ -10,3 +11,10 @@ Combine and filter creatures for the Tellurian IC mod
    - You only have to do this once, unless there is an update to the creature data
 5. Once the database is created, press the "Load Creatures" buttons
 6. Get started on filtering!
+
+## Filtering Capabilites
+
+- Stat filters for Coal, Hitpoints, Damage, etc.
+- Stock filter for choosing specific stock if desired
+- Ability filter for chosing specific abilities if desired
+- Checkbox filters for Melee/Range, Damage type, Range type, etc.
