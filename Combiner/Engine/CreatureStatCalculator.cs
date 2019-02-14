@@ -170,7 +170,7 @@ namespace Combiner
 				{
 					continue;
 				}
-				meleeDamage += side.CalcLimbMeleeDamage(OtherSideSize(side), limb);
+				meleeDamage += Math.Floor(side.CalcLimbMeleeDamage(OtherSideSize(side), limb));
 			}
 			return meleeDamage;
 		}
