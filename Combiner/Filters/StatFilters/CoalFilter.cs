@@ -13,7 +13,7 @@ namespace Combiner
 		public override bool Filter(Creature creature)
 		{
 			return creature.Coal >= MinValue
-				&& creature.Coal <= MaxValue;
+				&& creature.Coal < (MaxValue + 1);
 		}
 
 		public override string ToString()

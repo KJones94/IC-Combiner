@@ -12,8 +12,8 @@ namespace Combiner
 
 		public override bool Filter(Creature creature)
 		{
-			bool isBothUnderMax = creature.RangeMax1 <= MaxValue
-				&& creature.RangeMax2 <= MaxValue;
+			bool isBothUnderMax = creature.RangeMax1 < (MaxValue + 1)
+				&& creature.RangeMax2 < (MaxValue + 1);
 
 			bool isOneOverMin = creature.RangeMax1 >= MinValue
 				|| creature.RangeMax2 >= MinValue;

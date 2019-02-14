@@ -13,7 +13,7 @@ namespace Combiner
 		public override bool Filter(Creature creature)
 		{
 			return creature.SightRadius >= MinValue
-				&& creature.SightRadius <= MaxValue;
+				&& creature.SightRadius < (MaxValue + 1);
 		}
 
 		public override string ToString()

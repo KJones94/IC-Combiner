@@ -13,7 +13,7 @@ namespace Combiner
 		public override bool Filter(Creature creature)
 		{
 			return creature.Hitpoints >= MinValue
-				&& creature.Hitpoints <= MaxValue;
+				&& creature.Hitpoints < (MaxValue + 1);
 		}
 
 		public override string ToString()

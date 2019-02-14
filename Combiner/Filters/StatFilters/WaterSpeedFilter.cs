@@ -13,7 +13,7 @@ namespace Combiner
 		public override bool Filter(Creature creature)
 		{
 			return creature.WaterSpeed >= MinValue
-				&& creature.WaterSpeed <= MaxValue;
+				&& creature.WaterSpeed < (MaxValue + 1);
 		}
 
 		public override string ToString()
