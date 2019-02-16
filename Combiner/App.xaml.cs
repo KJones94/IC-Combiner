@@ -11,8 +11,7 @@ namespace Combiner
 	{
 		private void App_OnStartup(object sender, StartupEventArgs e)
 		{
-			var dependencyResolver = DependencyResolver.Instance;
-			var mainWindow = dependencyResolver.Get<MainWindow>();
+			var mainWindow = DependencyResolver.Instance.Get<MainWindow>();
 			mainWindow.Show();
 		}
 	}

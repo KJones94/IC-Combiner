@@ -14,7 +14,7 @@
 			SelectedCreatureVM = selectedCreatureVM;
 		}
 
-        public CreatureDataVM CreatureDataVM { get; }
+		public CreatureDataVM CreatureDataVM { get; }
 
 		public DatabaseVM DatabaseVM { get; }
 
