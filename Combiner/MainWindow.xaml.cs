@@ -7,9 +7,10 @@ namespace Combiner
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		public MainWindow()
+		public MainWindow(MainVM mainVM)
 		{
 			InitializeComponent();
+			DataContext = mainVM;
 		}
 
 		private void MenuItem_GuideClick(object sender, RoutedEventArgs e)

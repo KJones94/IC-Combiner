@@ -2,85 +2,24 @@
 {
 	public class MainVM : BaseViewModel
 	{
-		private CreatureDataVM m_CreatureDataVM;
-		public CreatureDataVM CreatureDataVM
+		public MainVM(
+			CreatureDataVM creatureDataVM,
+			FiltersVM filtersVM,
+			DatabaseVM databaseVM,
+			SelectedCreatureVM selectedCreatureVM)
 		{
-			get
-			{
-				return m_CreatureDataVM;
-			}
-			set
-			{
-				if (value != m_CreatureDataVM)
-				{
-					m_CreatureDataVM = value;
-					OnPropertyChanged(nameof(CreatureDataVM));
-				}
-			}
+			CreatureDataVM = creatureDataVM;
+			FiltersVM = filtersVM;
+			DatabaseVM = databaseVM;
+			SelectedCreatureVM = selectedCreatureVM;
 		}
 
-		private DatabaseVM m_DatabaseVM;
-		public DatabaseVM DatabaseVM
-		{
-			get
-			{
-				return m_DatabaseVM;
-			}
-			set
-			{
-				if (value != m_DatabaseVM)
-				{
-					m_DatabaseVM = value;
-					OnPropertyChanged(nameof(DatabaseVM));
-				}
-			}
-		}
+        public CreatureDataVM CreatureDataVM { get; }
 
-		private FiltersVM m_FiltersVM;
-		public FiltersVM FiltersVM
-		{
-			get
-			{
-				return m_FiltersVM;
-			}
-			set
-			{
-				if (value != m_FiltersVM)
-				{
-					m_FiltersVM = value;
-					OnPropertyChanged(nameof(FiltersVM));
-				}
-			}
-		}
+		public DatabaseVM DatabaseVM { get; }
 
-		private SelectedCreatureVM m_SelectedCreatureVM;
-		public SelectedCreatureVM SelectedCreatureVM
-		{
-			get
-			{
-				return m_SelectedCreatureVM;
-			}
-			set
-			{
-				if (value != m_SelectedCreatureVM)
-				{
-					m_SelectedCreatureVM = value;
-					OnPropertyChanged(nameof(SelectedCreatureVM));
-				}
-			}
-		}
+		public FiltersVM FiltersVM { get; }
 
-		public MainVM()
-		{
-			Database database = new Database();
-			ImportExportHandler importExportHandler = new ImportExportHandler(database);
-			CreatureCsvWriter creatureCsvWriter = new CreatureCsvWriter();
-
-			CreatureDataVM = new CreatureDataVM(database);
-			FiltersVM = new FiltersVM(CreatureDataVM);
-			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, database, importExportHandler, creatureCsvWriter);
-			SelectedCreatureVM = new SelectedCreatureVM(CreatureDataVM);
-		}
-
+		public SelectedCreatureVM SelectedCreatureVM { get; }
 	}
 }
