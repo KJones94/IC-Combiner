@@ -61,32 +61,6 @@ namespace Combiner
 			set { GameAttributes[Attributes.MeleeDamage] = value; }
 		}
 
-		public double RangeDamage
-		{
-			get
-			{
-				double greatestRange = Range2Damage;
-				greatestRange = (Range3Damage > greatestRange) ? Range3Damage : greatestRange;
-				greatestRange = (Range4Damage > greatestRange) ? Range4Damage : greatestRange;
-				greatestRange = (Range5Damage > greatestRange) ? Range5Damage : greatestRange;
-				greatestRange = (Range8Damage > greatestRange) ? Range8Damage : greatestRange;
-				return greatestRange;
-			}
-		}
-
-		public double RangeSpecial
-		{
-			get
-			{
-				double rangeSpecial = Range2Special;
-				rangeSpecial = (Range3Special > rangeSpecial) ? Range3Special : rangeSpecial;
-				rangeSpecial = (Range4Special > rangeSpecial) ? Range4Special : rangeSpecial;
-				rangeSpecial = (Range5Special > rangeSpecial) ? Range5Special : rangeSpecial;
-				rangeSpecial = (Range8Special > rangeSpecial) ? Range8Special : rangeSpecial;
-				return rangeSpecial;
-			}
-		}
-
 		public double Range2Damage
 		{
 			get { return GameAttributes[Attributes.Range2Damage]; }

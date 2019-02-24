@@ -6,10 +6,13 @@ namespace Combiner
 {
 	public abstract class SelectionFilter : CreatureFilter
 	{
-		public SelectionFilter(string name)
+		protected SelectionFilter(string name)
 			: base(name)
 		{
 			Choices = InitChoices();
+			AddChoiceCommand = new RelayCommand(AddChoice);
+			RemoveSelectedCommand = new RelayCommand(RemoveSelected);
+
 		}
 
 		protected abstract ObservableCollection<string> InitChoices();
@@ -77,23 +80,8 @@ namespace Combiner
 
 		public string SelectedItem { get; set; }
 
-		private ICommand m_AddChoiceCommand;
-		public ICommand AddChoiceCommand
-		{
-			get
-			{
-				return m_AddChoiceCommand ??
-				  (m_AddChoiceCommand = new RelayCommand(AddChoice));
-			}
-			set
-			{
-				if (value != m_AddChoiceCommand)
-				{
-					m_AddChoiceCommand = value;
-					OnPropertyChanged(nameof(AddChoiceCommand));
-				}
-			}
-		}
+		public ICommand AddChoiceCommand { get; }
+
 		private void AddChoice(object obj)
 		{
 			if (!string.IsNullOrEmpty(ChoiceItem) && !Selected.Contains(ChoiceItem))
@@ -105,23 +93,8 @@ namespace Combiner
 			ToggleActivatation();
 		}
 
-		private ICommand m_RemovedSelectedCommand;
-		public ICommand RemoveSelectedCommand
-		{
-			get
-			{
-				return m_RemovedSelectedCommand ??
-				  (m_RemovedSelectedCommand = new RelayCommand(RemoveSelected));
-			}
-			set
-			{
-				if (value != m_RemovedSelectedCommand)
-				{
-					m_RemovedSelectedCommand = value;
-					OnPropertyChanged(nameof(RemoveSelectedCommand));
-				}
-			}
-		}
+		public ICommand RemoveSelectedCommand { get; }
+
 		private void RemoveSelected(object obj)
 		{
 			if (!string.IsNullOrEmpty(SelectedItem))

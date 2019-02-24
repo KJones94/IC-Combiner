@@ -169,8 +169,8 @@ namespace Combiner
 
 		public double CalcLimbMeleeDamage(double stockSize, Limb limb)
 		{
-			string damageName = "melee" + (int)limb + "_damage";
-			string damageExp = "exp_" + damageName;
+			string damageName = $"melee{(int)limb}_damage";
+			string damageExp = $"exp_melee{(int)limb}_damage";
 			double damage = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(damageName);
 			if (damage < 0)
 			{
@@ -181,9 +181,9 @@ namespace Combiner
 
 		public double CalcLimbRangeDamage(double stockSize, Limb limb)
 		{
-			string damageName = "range" + (int)limb + "_damage";
-			string damageExp = "exp_" + damageName;
-			double damage = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(damageName);
+			string rangeDamageName = $"range{(int)limb}_damage";
+			string damageExp = $"exp_range{(int)limb}_damage";
+			double damage = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue(damageExp)) * GetLimbAttributeValue(rangeDamageName);
 			if (damage < 0)
 			{
 				return 0;
@@ -193,8 +193,8 @@ namespace Combiner
 
 		public double GetLimbRangeMax(double stockSize, Limb limb)
 		{
-			string rangeMax = "range" + (int)limb + "_max";
-			string rangeExp = "exp_range" + (int)limb + "_max";
+			string rangeMax = $"range{(int)limb}_max";
+			string rangeExp = $"exp_range{(int)limb}_max";
 			double value = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue(rangeExp)) * GetLimbAttributeValue(rangeMax);
 			if (value < 0)
 			{
@@ -205,7 +205,7 @@ namespace Combiner
 
 		public double GetLimbRangeType(Limb limb)
 		{
-			string rangeType = "range" + (int)limb + "_dmgtype";
+			string rangeType = $"range{(int)limb}_dmgtype";
 			double value = GetLimbAttributeValue(rangeType);
 			if (value < 0)
 			{
@@ -216,7 +216,7 @@ namespace Combiner
 
 		public double GetLimbRangeSpecial(Limb limb)
 		{
-			string rangeSpecial = "range" + (int)limb + "_special";
+			string rangeSpecial = $"range{(int)limb}_special";
 			double value = GetLimbAttributeValue(rangeSpecial);
 			if (value < 0)
 			{
@@ -227,7 +227,7 @@ namespace Combiner
 
 		public double GetLimbMeleeType(Limb limb)
 		{
-			string meleeType = "melee" + (int)limb + "_dmgtype";
+			string meleeType = $"melee{(int)limb}_dmgtype";
 			double value = GetLimbAttributeValue(meleeType);
 			if (value < 0)
 			{

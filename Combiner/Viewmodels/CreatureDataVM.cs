@@ -6,11 +6,13 @@ namespace Combiner
 {
 	public class CreatureDataVM : BaseViewModel
 	{
-		private Database m_Database;
+		private readonly Database m_Database;
 
 		public CreatureDataVM(Database database)
 		{
 			m_Database = database;
+			SaveCreatureCommand = new RelayCommand(SaveCreature);
+			UnsaveCreatureCommand = new RelayCommand(UnSaveCreature);
 		}
 
 		private ObservableCollection<Creature> m_Creatures;
@@ -65,24 +67,11 @@ namespace Combiner
 			}
 		}
 
-		private ICommand m_SaveCreatureCommand;
-		public ICommand SaveCreatureCommand
-		{
-			get
-			{
-				return m_SaveCreatureCommand ??
-					(m_SaveCreatureCommand = new RelayCommand(SaveCreature));
-			}
-			set
-			{
-				if (value != m_SaveCreatureCommand)
-				{
-					m_SaveCreatureCommand = value;
-					OnPropertyChanged(nameof(SaveCreatureCommand));
-				}
-			}
-		}
-		public void SaveCreature(object obj)
+		public ICommand SaveCreatureCommand { get; }
+
+		public ICommand UnsaveCreatureCommand { get; }
+
+		private void SaveCreature(object obj)
 		{
 			if (SelectedCreature != null)
 			{
@@ -90,30 +79,12 @@ namespace Combiner
 			}
 		}
 
-		private ICommand m_UnsaveCreatureCommand;
-		public ICommand UnsaveCreatureCommand
-		{
-			get
-			{
-				return m_UnsaveCreatureCommand ??
-					(m_UnsaveCreatureCommand = new RelayCommand(UnSaveCreature));
-			}
-			set
-			{
-				if (value != m_UnsaveCreatureCommand)
-				{
-					m_UnsaveCreatureCommand = value;
-					OnPropertyChanged(nameof(UnsaveCreatureCommand));
-				}
-			}
-		}
-		public void UnSaveCreature(object obj)
+		private void UnSaveCreature(object obj)
 		{
 			if (SelectedCreature != null)
 			{
 				m_Database.UnsaveCreature(SelectedCreature);
 			}
 		}
-
 	}
 }
