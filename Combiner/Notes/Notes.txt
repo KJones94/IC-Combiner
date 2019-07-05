@@ -1,10 +1,4 @@
-﻿TODO:
-	Creature model for easy access and storage
-	Creature factory for building
-
-
-
-Notes...
+﻿Notes...
 	Stats round down
 		not pop size
 	for..in over a table needs to use pairs() funciton
