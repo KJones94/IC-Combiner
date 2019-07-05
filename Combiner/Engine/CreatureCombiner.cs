@@ -11,6 +11,7 @@ namespace Combiner
 	// UNTESTED BE CAREFUL
 	public class CreatureCombiner
 	{
+		// This is the only shared object
 		private Dictionary<string, Stock> m_StockPool;
 
 		public CreatureCombiner(List<string> stockNames)

@@ -9,8 +9,10 @@ namespace Combiner
 	{
 		public static string StockDirectory = "../../Stock/2.5/";
 		//public static string StockDirectory = "../../Stock/Test/";
+		//public static string StockDirectory = "../../Stock/Test2/";
 		//public static string Attrcombiner = "../../Scripts/2.4/attrcombiner.lua";
-		public static string Testcombiner = "../../Scripts/2.5/testcombiner.lua";
+		//public static string Testcombiner = "../../Scripts/2.5/testcombiner.lua";
+		public static string Testcombiner = "../../Scripts/2.5/testcombiner-modified.lua";
 		public static string DatabaseDirectory = "../../Database";
 		public static string DatabaseName = "Creatures.db";
 		public static string DatabaseString =  $"{DatabaseDirectory}/{DatabaseName}";

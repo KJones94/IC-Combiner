@@ -296,6 +296,7 @@
     <AppDesigner Include="Properties\" />
     <None Include="Scripts\2.4\attrcombiner.lua" />
     <None Include="Scripts\2.4\testcombiner.lua" />
+    <None Include="Scripts\2.5\testcombiner-modified.lua" />
     <None Include="Scripts\2.5\testcombiner.lua" />
     <None Include="Scripts\attrcombiner.lua" />
     <None Include="Scripts\CreatureAttributeTemplateNotes.lua" />
@@ -604,6 +605,77 @@
     <None Include="Stock\2.5\wolverine.lua" />
     <None Include="Stock\2.5\woolly_mammoth.lua" />
     <None Include="Stock\2.5\zebra.lua" />
+    <None Include="Stock\Test2\albatross.lua" />
+    <None Include="Stock\Test2\anaconda.lua" />
+    <None Include="Stock\Test2\anglerfish.lua" />
+    <None Include="Stock\Test2\ant.lua" />
+    <None Include="Stock\Test2\archerfish.lua" />
+    <None Include="Stock\Test2\armadillo.lua" />
+    <None Include="Stock\Test2\baboon.lua" />
+    <None Include="Stock\Test2\behemoth.lua" />
+    <None Include="Stock\Test2\beluga.lua" />
+    <None Include="Stock\Test2\black_widow.lua" />
+    <None Include="Stock\Test2\blue whale.lua" />
+    <None Include="Stock\Test2\bob.lua" />
+    <None Include="Stock\Test2\bolas_spider.lua" />
+    <None Include="Stock\Test2\bombardier_beetle.lua" />
+    <None Include="Stock\Test2\bull.lua" />
+    <None Include="Stock\Test2\camel.lua" />
+    <None Include="Stock\Test2\chameleon.lua" />
+    <None Include="Stock\Test2\cheetah.lua" />
+    <None Include="Stock\Test2\chimpanzee.lua" />
+    <None Include="Stock\Test2\cockroach.lua" />
+    <None Include="Stock\Test2\condor.lua" />
+    <None Include="Stock\Test2\coyote.lua" />
+    <None Include="Stock\Test2\crocodile.lua" />
+    <None Include="Stock\Test2\cuttlefish.lua" />
+    <None Include="Stock\Test2\diamond_python.lua" />
+    <None Include="Stock\Test2\dolphin.lua" />
+    <None Include="Stock\Test2\dragonfly.lua" />
+    <None Include="Stock\Test2\eagle.lua" />
+    <None Include="Stock\Test2\electric_eel.lua" />
+    <None Include="Stock\Test2\elephant.lua" />
+    <None Include="Stock\Test2\finished naked mole rat.lua" />
+    <None Include="Stock\Test2\fire_fly.lua" />
+    <None Include="Stock\Test2\garden_spider.lua" />
+    <None Include="Stock\Test2\garfish.lua" />
+    <None Include="Stock\Test2\giant_anteater.lua" />
+    <None Include="Stock\Test2\giraffe.lua" />
+    <None Include="Stock\Test2\gorilla.lua" />
+    <None Include="Stock\Test2\great_white_shark.lua" />
+    <None Include="Stock\Test2\grizzly_bear.lua" />
+    <None Include="Stock\Test2\hammerhead_shark.lua" />
+    <None Include="Stock\Test2\hatchetfish.lua" />
+    <None Include="Stock\Test2\hercules_beetle.lua" />
+    <None Include="Stock\Test2\hippopotamus.lua" />
+    <None Include="Stock\Test2\hornbill.lua" />
+    <None Include="Stock\Test2\hornet.lua" />
+    <None Include="Stock\Test2\horse.lua" />
+    <None Include="Stock\Test2\humpback.lua" />
+    <None Include="Stock\Test2\hyena.lua" />
+    <None Include="Stock\Test2\kangaroo.lua" />
+    <None Include="Stock\Test2\killer_whale.lua" />
+    <None Include="Stock\Test2\komodo_dragon.lua" />
+    <None Include="Stock\Test2\lammergeier.lua" />
+    <None Include="Stock\Test2\lemming.lua" />
+    <None Include="Stock\Test\albatross.lua" />
+    <None Include="Stock\Test\anaconda.lua" />
+    <None Include="Stock\Test\anglerfish.lua" />
+    <None Include="Stock\Test\ant.lua" />
+    <None Include="Stock\Test\archerfish.lua" />
+    <None Include="Stock\Test\armadillo.lua" />
+    <None Include="Stock\Test\baboon.lua" />
+    <None Include="Stock\Test\behemoth.lua" />
+    <None Include="Stock\Test\beluga.lua" />
+    <None Include="Stock\Test\black_widow.lua" />
+    <None Include="Stock\Test\blue whale.lua" />
+    <None Include="Stock\Test\bob.lua" />
+    <None Include="Stock\Test\bolas_spider.lua" />
+    <None Include="Stock\Test\bombardier_beetle.lua" />
+    <None Include="Stock\Test\bull.lua" />
+    <None Include="Stock\Test\camel.lua" />
+    <None Include="Stock\Test\chameleon.lua" />
+    <None Include="Stock\Test\cheetah.lua" />
     <None Include="XML\Schemas\SavedCreatures.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -629,9 +701,7 @@
   <ItemGroup>
     <Resource Include="Notes\Features.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Stock\Test\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
