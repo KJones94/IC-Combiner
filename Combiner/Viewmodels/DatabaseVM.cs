@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -48,7 +49,7 @@ namespace Combiner
 				}
 			}
 		}
-		private void CreateDatabase(object obj)
+		private async void CreateDatabase(object obj)
 		{
 			string text = string.Empty;
 			if (m_Database.Exists())
@@ -63,7 +64,8 @@ namespace Combiner
 			MessageBoxResult result = MessageBox.Show(text, "Database Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 			if (result == MessageBoxResult.Yes)
 			{
-				m_Database.CreateDB();
+				await Task.Run(() => m_Database.CreateDB());
+
 				MessageBox.Show("Finished creating the database.");
 			}
 		}
