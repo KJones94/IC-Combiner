@@ -294,6 +294,8 @@
     <None Include="Scripts\2.4\testcombiner.lua" />
     <None Include="Scripts\2.5\testcombiner-modified.lua" />
     <None Include="Scripts\2.5\testcombiner.lua" />
+    <None Include="Scripts\2.6\testcombiner-refactored.lua" />
+    <None Include="Scripts\2.6\testcombiner.lua" />
     <None Include="Scripts\2.6\attrcombiner.lua" />
     <None Include="Scripts\attrcombiner.lua" />
     <None Include="Scripts\CreatureAttributeTemplateNotes.lua" />

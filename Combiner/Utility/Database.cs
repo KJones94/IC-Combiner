@@ -207,8 +207,8 @@ namespace Combiner
 				}
 
 				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
-				//CreateCreatures(collection);
-				CreateCreaturesParallelInner(collection);
+				CreateCreatures(collection);
+				//CreateCreaturesParallelInner(collection);
 				//CreateCreaturesParallelOuter(collection);
 				//CreateCreaturesParallelAll(collection);
 

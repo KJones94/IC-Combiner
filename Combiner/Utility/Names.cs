@@ -74,6 +74,7 @@ namespace Combiner
 		public static string NakedMoleRat = "Naked Mole Rat";
 		public static string Narwhal = "Narwhal";
 		public static string Oogpister = "Oogpister";
+		public static string Ostrich = "Ostrich";
 		public static string Panther = "Panther";
 		public static string Piranha = "Piranha";
 		public static string PistolShrimp = "Pistol Shrimp";

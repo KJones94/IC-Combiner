@@ -1,5 +1,6 @@
 ﻿using MoonSharp.Interpreter;
 using MoonSharp.Interpreter.Loaders;
+using MoonSharp.Interpreter.Debugging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +12,22 @@ namespace Combiner
 	{
 		private Script Attrcombiner { get; set; }
 		private CreatureBuilder Creature { get; set; }
+		private DynValue Func { get; set; }
 
 		public LuaCreatureProxy()
 		{
 			Attrcombiner = new Script();
 			Attrcombiner.Options.ScriptLoader = new FileSystemScriptLoader();
 			SetupGlobals();
+			Func = Attrcombiner.LoadFile(DirectoryConstants.Testcombiner);
 		}
 
 		public void LoadScript(CreatureBuilder creature)
-		{
+		{ 
 			Creature = creature;
-			//Attrcombiner.DoFile(Attributes.Attrcombiner);
-			Attrcombiner.DoFile(DirectoryConstants.Testcombiner);
+			//var loaded = Attrcombiner.LoadFile(DirectoryConstants.Testcombiner);
+			//Attrcombiner.DoFile(DirectoryConstants.Testcombiner);
+			Attrcombiner.Call(Func);
 		}
 
 		private void SetupGlobals()
