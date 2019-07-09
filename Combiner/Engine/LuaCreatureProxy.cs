@@ -10,46 +10,44 @@ namespace Combiner
 {
 	public class LuaCreatureProxy
 	{
-		private Script Attrcombiner { get; set; }
+		private Script AttrcombinerScript { get; set; }
 		private CreatureBuilder Creature { get; set; }
-		private DynValue Func { get; set; }
+		private DynValue AttrcombinerFunc { get; set; }
 
 		public LuaCreatureProxy()
 		{
-			Attrcombiner = new Script();
-			Attrcombiner.Options.ScriptLoader = new FileSystemScriptLoader();
+			AttrcombinerScript = new Script();
+			AttrcombinerScript.Options.ScriptLoader = new FileSystemScriptLoader();
 			SetupGlobals();
-			Func = Attrcombiner.LoadFile(DirectoryConstants.Testcombiner);
+			AttrcombinerFunc = AttrcombinerScript.LoadFile(DirectoryConstants.Testcombiner);
 		}
 
 		public void LoadScript(CreatureBuilder creature)
 		{ 
 			Creature = creature;
-			//var loaded = Attrcombiner.LoadFile(DirectoryConstants.Testcombiner);
-			//Attrcombiner.DoFile(DirectoryConstants.Testcombiner);
-			Attrcombiner.Call(Func);
+			AttrcombinerScript.Call(AttrcombinerFunc);
 		}
 
 		private void SetupGlobals()
 		{
 			// TODO: should I use DynValue or regular types
-			Attrcombiner.Globals["getgameattribute"] = (Func<string, double>)GetGameAttribute;
-			Attrcombiner.Globals["checkgameattribute"] = (Func<string, double>)CheckGameAttribute;
-			Attrcombiner.Globals["setgameattribute"] = (Action<string, double>)SetGameAttribute;
-			Attrcombiner.Globals["setuiattribute"] = (Action<string, double>)SetUIAttribute;
-			Attrcombiner.Globals["max"] = (Func<double, double, double>)Max;
-			Attrcombiner.Globals["min"] = (Func<double, double, double>)Min;
-			Attrcombiner.Globals["hasmeleedmgtype"] = (Func<double, double>)HasMeleeDmgType;
-			Attrcombiner.Globals["hasrangedmgtype"] = (Func<double, double>)HasRangeDmgType;
+			AttrcombinerScript.Globals["getgameattribute"] = (Func<string, double>)GetGameAttribute;
+			AttrcombinerScript.Globals["checkgameattribute"] = (Func<string, double>)CheckGameAttribute;
+			AttrcombinerScript.Globals["setgameattribute"] = (Action<string, double>)SetGameAttribute;
+			AttrcombinerScript.Globals["setuiattribute"] = (Action<string, double>)SetUIAttribute;
+			AttrcombinerScript.Globals["max"] = (Func<double, double, double>)Max;
+			AttrcombinerScript.Globals["min"] = (Func<double, double, double>)Min;
+			AttrcombinerScript.Globals["hasmeleedmgtype"] = (Func<double, double>)HasMeleeDmgType;
+			AttrcombinerScript.Globals["hasrangedmgtype"] = (Func<double, double>)HasRangeDmgType;
 
-			Attrcombiner.Globals["DT_BarrierDestroy"] = 4;
-			Attrcombiner.Globals["DT_HornNegateFull"] = 2;
-			Attrcombiner.Globals["DT_HornNegateArmour"] = 2;
-			Attrcombiner.Globals["DT_Poison"] = 1; // Should this be 256?
+			AttrcombinerScript.Globals["DT_BarrierDestroy"] = 4;
+			AttrcombinerScript.Globals["DT_HornNegateFull"] = 2;
+			AttrcombinerScript.Globals["DT_HornNegateArmour"] = 2;
+			AttrcombinerScript.Globals["DT_Poison"] = 1; // Should this be 256?
 
-			Attrcombiner.Globals["DT_Electric"] = 8;
-			Attrcombiner.Globals["DT_Sonic"] = 16;
-			Attrcombiner.Globals["DT_VenomSpray"] = 256; // Should this be 1?
+			AttrcombinerScript.Globals["DT_Electric"] = 8;
+			AttrcombinerScript.Globals["DT_Sonic"] = 16;
+			AttrcombinerScript.Globals["DT_VenomSpray"] = 256; // Should this be 1?
 		}
 
 		private double GetGameAttribute(string key)

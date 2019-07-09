@@ -208,9 +208,6 @@ namespace Combiner
 
 				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
 				CreateCreatures(collection);
-				//CreateCreaturesParallelInner(collection);
-				//CreateCreaturesParallelOuter(collection);
-				//CreateCreaturesParallelAll(collection);
 
 				// Setup indexes
 				// May not need if not querying to filter
@@ -227,136 +224,20 @@ namespace Combiner
 				.Replace(DirectoryConstants.StockDirectory, ""))
 				.ToList();
 
-			// Put a lock on using the creatureCombiner
 			CreatureCombiner creatureCombiner = new CreatureCombiner(stockNames);
 
-			Stopwatch sw = new Stopwatch();
-
-			sw.Start();
-
-			// Make outer loop parallel, or does it not matter?
 			for (int i = 0; i < stockNames.Count(); i++)
 			{
 				for (int j = i + 1; j < stockNames.Count(); j++)
 				{
-					// Lock creating the creatures
 					List<Creature> creatures = creatureCombiner
 						.CreateAllPossibleCreatures(
 							StockNames.ProperStockNames[stockNames[i]],
 							StockNames.ProperStockNames[stockNames[j]]);
-
-					// Does this need a lock?
-					// Do threads need separate connection?
 					collection.InsertBulk(creatures);
 				}
 			}
-
-			sw.Stop();
-			Console.WriteLine("Elapsed={0}", sw.Elapsed);
 		}
 
-		private void CreateCreaturesParallelInner(LiteCollection<Creature> collection)
-		{
-			var stockNames = Directory.GetFiles(DirectoryConstants.StockDirectory)
-				.Select(s => s.Replace(".lua", "")
-				.Replace(DirectoryConstants.StockDirectory, ""))
-				.ToList();
-
-			// Put a lock on using the creatureCombiner
-			CreatureCombiner creatureCombiner = new CreatureCombiner(stockNames);
-
-			Stopwatch sw = new Stopwatch();
-
-			sw.Start();
-
-			// Make outer loop parallel, or does it not matter?
-			for (int i = 0; i < stockNames.Count(); i++)
-			{
-				Parallel.For(i + 1, stockNames.Count(), (j, state) =>
-				{
-					// Lock creating the creatures
-					List<Creature> creatures = creatureCombiner
-						.CreateAllPossibleCreatures(
-							StockNames.ProperStockNames[stockNames[i]],
-							StockNames.ProperStockNames[stockNames[j]]);
-
-					// Does this need a lock?
-					// Do threads need separate connection?
-					collection.InsertBulk(creatures);
-				});
-
-			}
-
-			sw.Stop();
-			Console.WriteLine("Elapsed={0}", sw.Elapsed);
-		}
-
-		private void CreateCreaturesParallelOuter(LiteCollection<Creature> collection)
-		{
-			var stockNames = Directory.GetFiles(DirectoryConstants.StockDirectory)
-				.Select(s => s.Replace(".lua", "")
-				.Replace(DirectoryConstants.StockDirectory, ""))
-				.ToList();
-
-			// Put a lock on using the creatureCombiner
-			CreatureCombiner creatureCombiner = new CreatureCombiner(stockNames);
-
-			Stopwatch sw = new Stopwatch();
-
-			sw.Start();
-
-			Parallel.For(0, stockNames.Count(), (i, state) =>
-			{
-				for (int j = i + 1; j < stockNames.Count(); j++)
-				{
-					// Lock creating the creatures
-					List<Creature> creatures = creatureCombiner
-						.CreateAllPossibleCreatures(
-							StockNames.ProperStockNames[stockNames[i]],
-							StockNames.ProperStockNames[stockNames[j]]);
-
-					// Does this need a lock?
-					// Do threads need separate connection?
-					collection.InsertBulk(creatures);
-				}
-			});
-
-			sw.Stop();
-			Console.WriteLine("Elapsed={0}", sw.Elapsed);
-		}
-
-		private void CreateCreaturesParallelAll(LiteCollection<Creature> collection)
-		{
-			var stockNames = Directory.GetFiles(DirectoryConstants.StockDirectory)
-				.Select(s => s.Replace(".lua", "")
-				.Replace(DirectoryConstants.StockDirectory, ""))
-				.ToList();
-
-			// Put a lock on using the creatureCombiner
-			CreatureCombiner creatureCombiner = new CreatureCombiner(stockNames);
-
-			Stopwatch sw = new Stopwatch();
-
-			sw.Start();
-
-			Parallel.For(0, stockNames.Count(), (i, outerState) =>
-			{
-				Parallel.For(i + 1, stockNames.Count(), (j, innerState) =>
-				{
-					// Lock creating the creatures
-					List<Creature> creatures = creatureCombiner
-						.CreateAllPossibleCreatures(
-							StockNames.ProperStockNames[stockNames[i]],
-							StockNames.ProperStockNames[stockNames[j]]);
-
-					// Does this need a lock?
-					// Do threads need separate connection?
-					collection.InsertBulk(creatures);
-				});
-			});
-
-			sw.Stop();
-			Console.WriteLine("Elapsed={0}", sw.Elapsed);
-		}
 	}
 }

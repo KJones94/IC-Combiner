@@ -14,7 +14,7 @@ namespace Combiner
 		// This is the only shared object
 		private Dictionary<string, Stock> m_StockPool;
 
-		private LuaCreatureProxy m_LuaCreature;
+		private LuaCreatureProxy m_LuaCreatureProxy;
 
 		public CreatureCombiner(List<string> stockNames)
 		{
@@ -37,12 +37,11 @@ namespace Combiner
 		{
 			List<Creature> creatures = new List<Creature>();
 			List<CreatureBuilder> builders = Combine(m_StockPool[leftName], m_StockPool[rightName]);
-			//LuaCreatureProxy lua = new LuaCreatureProxy();
-			m_LuaCreature = new LuaCreatureProxy();
+			m_LuaCreatureProxy = new LuaCreatureProxy();
 			foreach (var creature in builders)
 			{
 				// Use same LuaCreatureProxy to reduce time, but increases memory usage spikes
-				m_LuaCreature.LoadScript(creature);
+				m_LuaCreatureProxy.LoadScript(creature);
 				creatures.Add(creature.BuildCreature());
 			}
 			return creatures;
