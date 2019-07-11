@@ -135,8 +135,11 @@
     <Compile Include="Utility\AbilityNames.cs" />
     <Compile Include="Utility\Attributes.cs" />
     <Compile Include="Utility\CreatureCsvWriter.cs" />
+    <Compile Include="Utility\CurrentPageChangedEventArgs.cs" />
     <Compile Include="Utility\ImportExportHandler.cs" />
     <Compile Include="Utility\Names.cs" />
+    <Compile Include="Utility\PagingCollectionView.cs" />
+    <Compile Include="Utility\PagingController.cs" />
     <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />
     <Compile Include="Viewmodels\SelectedCreatureVM.cs" />
