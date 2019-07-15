@@ -13,6 +13,7 @@ namespace Combiner
 {
 	public class CreatureDataVM : BaseViewModel
 	{
+		private const int m_PageSize = 1000;
 		private Database m_Database;
 
 		public CreatureDataVM(Database database)
@@ -32,7 +33,12 @@ namespace Combiner
 				if (value != m_Creatures)
 				{
 					m_Creatures = value;
-					CreaturesView = (ListCollectionView)CollectionViewSource.GetDefaultView(m_Creatures);
+					//CreaturesView = (ListCollectionView)CollectionViewSource.GetDefaultView(m_Creatures);
+
+					Pager = new PagingController(m_Creatures.Count, m_PageSize);
+					Pager.CurrentPageChanged += (s, e) => UpdateData();
+					UpdateData();
+
 					OnPropertyChanged(nameof(Creatures));
 				}
 			}
@@ -53,6 +59,30 @@ namespace Combiner
 					OnPropertyChanged(nameof(CreaturesView));
 				}
 			}
+		}
+
+		private PagingController m_Pager;
+		public PagingController Pager
+		{
+			get
+			{
+				return m_Pager ?? (m_Pager = new PagingController(0, m_PageSize));
+			}
+			private set
+			{
+				m_Pager = value;
+				OnPropertyChanged(nameof(Pager));
+			}
+		}
+
+		private void UpdateData()
+		{
+			ObservableCollection<Creature> data = new ObservableCollection<Creature>();
+			foreach (var creature in m_Creatures.Skip(Pager.CurrentPageStartIndex).Take(Pager.PageSize))
+			{
+				data.Add(creature);
+			}
+			CreaturesView = (ListCollectionView)CollectionViewSource.GetDefaultView(data);
 		}
 
 		private Creature m_SelectedCreature;

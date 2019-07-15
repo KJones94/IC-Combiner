@@ -180,6 +180,7 @@ namespace Combiner
 			{"finished naked mole rat", NakedMoleRat },
 			{"narwhal", Narwhal },
 			{"oogpister", Oogpister },
+			{"ostrich", Ostrich },
 			{"panther", Panther },
 			{"piranha", Piranha },
 			{"shrimp", PistolShrimp },

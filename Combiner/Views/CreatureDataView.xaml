@@ -56,4 +56,5 @@
 			<DataGridTextColumn Header="Abilties" Binding="{Binding Abilities, Converter={StaticResource abilityConverter}}"/>
 		</DataGrid.Columns>
 	</DataGrid>
+
 </UserControl>

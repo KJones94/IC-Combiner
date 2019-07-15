@@ -43,6 +43,7 @@
 				<TextBlock>creatures</TextBlock>
 			</StatusBarItem>
 		</StatusBar>
+		<local:PagerView DataContext="{Binding CreatureDataVM.Pager}" DockPanel.Dock="Bottom"/>
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="1*"/>
@@ -59,6 +60,7 @@
 				<local:SelectedCreatureView Grid.Column="2" DataContext="{Binding SelectedCreatureVM}"/>
 			</Grid>
 			<local:CreatureDataView Grid.Row="1" DataContext="{Binding CreatureDataVM}"/>
+			
 		</Grid>
 	</DockPanel>
 </Window>
