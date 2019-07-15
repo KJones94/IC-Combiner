@@ -43,7 +43,7 @@
 				<TextBlock>creatures</TextBlock>
 			</StatusBarItem>
 		</StatusBar>
-		<local:PagerView DataContext="{Binding CreatureDataVM.Pager}" DockPanel.Dock="Bottom"/>
+		<!--<local:PagerView DataContext="{Binding CreatureDataVM.Pager}" DockPanel.Dock="Bottom"/>-->
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="1*"/>

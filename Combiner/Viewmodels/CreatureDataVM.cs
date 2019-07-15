@@ -33,11 +33,11 @@ namespace Combiner
 				if (value != m_Creatures)
 				{
 					m_Creatures = value;
-					//CreaturesView = (ListCollectionView)CollectionViewSource.GetDefaultView(m_Creatures);
+					CreaturesView = (ListCollectionView)CollectionViewSource.GetDefaultView(m_Creatures);
 
-					Pager = new PagingController(m_Creatures.Count, m_PageSize);
-					Pager.CurrentPageChanged += (s, e) => UpdateData();
-					UpdateData();
+					//Pager = new PagingController(m_Creatures.Count, m_PageSize);
+					//Pager.CurrentPageChanged += (s, e) => UpdateData();
+					//UpdateData();
 
 					OnPropertyChanged(nameof(Creatures));
 				}
