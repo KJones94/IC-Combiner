@@ -84,7 +84,7 @@ namespace Combiner
 			CreatureCsvWriter creatureCsvWriter = new CreatureCsvWriter();
 
 			CreatureDataVM = new CreatureDataVM(database);
-			FiltersVM = new FiltersVM(CreatureDataVM);
+			FiltersVM = new FiltersVM(CreatureDataVM, database);
 			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, database, importExportHandler, creatureCsvWriter);
 			SelectedCreatureVM = new SelectedCreatureVM(CreatureDataVM);
 		}

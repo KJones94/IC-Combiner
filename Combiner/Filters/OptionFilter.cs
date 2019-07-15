@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Combiner
 {
+	/// <summary>
+	/// Filter that utilizes a checkbox to determine activity.
+	/// </summary>
 	public abstract class OptionFilter : CreatureFilter
 	{
 		public event EventHandler IsOptionCheckChanged;

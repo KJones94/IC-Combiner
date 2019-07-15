@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ namespace Combiner
 	public class FiltersVM : BaseViewModel
 	{
 		private CreatureDataVM m_CreatureDataVM;
+		private Database m_Database;
 		private List<CreatureFilter> m_ActiveFilters;
 
 		private ObservableCollection<CreatureFilter> m_ChosenStatFilters;
@@ -32,9 +34,10 @@ namespace Combiner
 			}
 		}
 
-		public FiltersVM(CreatureDataVM creatureDataVM)
+		public FiltersVM(CreatureDataVM creatureDataVM, Database database)
 		{
 			m_CreatureDataVM = creatureDataVM;
+			m_Database = database;
 			m_ActiveFilters = InitActiveFilters();
 			InitIsActiveHandlers();
 		}
@@ -170,9 +173,31 @@ namespace Combiner
 		}
 		private void FilterCreatures(object obj)
 		{
-			m_CreatureDataVM.CreaturesView.Filter = CreatureFilter;
+			//m_CreatureDataVM.CreaturesView.Filter = CreatureFilter;
+			m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetCreatureQuery(BuildFilterQuery()));
 		}
 
+		private Query BuildFilterQuery()
+		{
+			if (m_ActiveFilters.Count == 0)
+			{
+				return Query.All();
+			}
+
+			if (m_ActiveFilters.Count == 1)
+			{
+				return m_ActiveFilters.First().BuildQuery();
+			}
+
+			IEnumerable<Query> queries = m_ActiveFilters.Select(x => x.BuildQuery());
+			return Query.And(queries.ToArray());
+		}
+
+		/// <summary>
+		/// Builds the Predicate for all filters that are being applied
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
 		public bool CreatureFilter(object obj)
 		{
 			if (m_ActiveFilters.Count == 0)

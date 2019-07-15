@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Combiner
 {
+	/// <summary>
+	/// Filter that applies to specific stat values with a given range.
+	/// </summary>
 	public abstract class StatFilter : CreatureFilter
 	{
 		public StatFilter(string name, double minDefaultValue, double maxDefaultValue)

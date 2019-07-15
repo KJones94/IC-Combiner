@@ -7,6 +7,10 @@ using System.Text;
 
 namespace Combiner
 {
+	/// <summary>
+	/// Filter that encompasses OptionFilters that apply specifically to range combat styles.
+	/// Checking OptionFilters contained here will influence related OptionFilters.
+	/// </summary>
 	public class RangeOptionsFilter : CreatureFilter
 	{
 		public RangeOptionsFilter()

@@ -7,6 +7,9 @@ using System.Windows.Input;
 
 namespace Combiner
 {
+	/// <summary>
+	/// Filter that allows selection of multiples items to search for.
+	/// </summary>
 	public abstract class SelectionFilter : CreatureFilter
 	{
 		public SelectionFilter(string name)

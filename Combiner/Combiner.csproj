@@ -699,7 +699,6 @@
     <None Include="Stock\2.6\spider.lua" />
     <None Include="Stock\2.6\spider_wasp.lua" />
     <None Include="Stock\2.6\spitting_cobra.lua" />
-    <None Include="Stock\2.6\spitting_spider.lua" />
     <None Include="Stock\2.6\squid.lua" />
     <None Include="Stock\2.6\stick_bug.lua" />
     <None Include="Stock\2.6\stink_bug.lua" />

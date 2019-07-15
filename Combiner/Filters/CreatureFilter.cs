@@ -1,21 +1,33 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Combiner
 {
+	/// <summary>
+	/// Base class for all filters
+	/// </summary>
 	public abstract class CreatureFilter : BaseViewModel
 	{
 		public abstract bool Filter(Creature creature);
 
 		public abstract void ResetFilter();
 
+		public virtual Query BuildQuery()
+		{
+			return Query.All();
+		}
+
 		public string Name { get; private set; }
 
 		public event IsActiveChangedEventHandler IsActiveChanged;
 
 		private bool m_IsActive;
+		/// <summary>
+		/// The filter's active state. Invokes the IsActiveChanged event.
+		/// </summary>
 		public bool IsActive
 		{
 			get { return m_IsActive; }

@@ -16,10 +16,10 @@ namespace Combiner
 		private readonly string m_SavedCreaturesCollectionName = "saved_creatures";
 
 		/// <summary>
-		/// Gets all creatures from the creatures collection
+		/// Gets all creatures from the creatures collection.
 		/// </summary>
 		/// <returns></returns>
-		public List<Creature> GetAllCreatures()
+		public IEnumerable<Creature> GetAllCreatures()
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
@@ -29,14 +29,33 @@ namespace Combiner
 				}
 
 				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
-				List<Creature> creatures = collection.FindAll().ToList();
+				var creatures = collection.FindAll();
+				return creatures.ToList();
+			}
+		}
+
+		/// <summary>
+		/// Gets a list of creatures given a query.
+		/// </summary>
+		/// <returns></returns>
+		public List<Creature> GetCreatureQuery(Query query)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (!db.CollectionExists(m_CreaturesCollectionName))
+				{
+					return new List<Creature>();
+				}
+
+				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
+				List<Creature> creatures = collection.Find(query).ToList();
 				return creatures;
 			}
 		}
 
 		/// <summary>
-		/// Gets a specific creature from the creatures colleciton
-		/// using the given stock and body parts
+		/// Gets a specific creature from the creatures collection
+		/// using the given stock and body parts.
 		/// </summary>
 		/// <param name="left"></param>
 		/// <param name="right"></param>
