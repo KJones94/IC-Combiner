@@ -52,7 +52,7 @@
 			<DataGridTextColumn Header="Range Dist 2" Binding="{Binding RangeMax2, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Horns" Binding="{Binding HasHorns, Converter={StaticResource boolConverter}}"/>
 			<DataGridTextColumn Header="Barrier Destroy" Binding="{Binding HasBarrierDestroy, Converter={StaticResource boolConverter}}"/>
-			<DataGridTextColumn Header="Poison" Binding="{Binding HasBarrierDestroy, Converter={StaticResource boolConverter}}"/>
+			<DataGridTextColumn Header="Poison" Binding="{Binding HasPoison, Converter={StaticResource boolConverter}}"/>
 			<DataGridTextColumn Header="Abilties" Binding="{Binding Abilities, Converter={StaticResource abilityConverter}}"/>
 		</DataGrid.Columns>
 	</DataGrid>

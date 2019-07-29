@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,13 @@ namespace Combiner
 		protected override bool OnOptionChecked(Creature creature)
 		{
 			return creature.RangeSpecial1 > 0 || creature.RangeSpecial2 > 0;
+		}
+
+		public override Query BuildQuery()
+		{
+			return Query.Or(
+				Query.GT("RangeSpecial1", 0),
+				Query.GT("RangeSpecial2", 0));
 		}
 
 		public override string ToString()

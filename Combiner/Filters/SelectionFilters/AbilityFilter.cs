@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -38,6 +39,12 @@ namespace Combiner
 			}
 			return hasAbilities;
 		}
+
+		//public override Query BuildQuery()
+		//{
+		//	var anyQuery = Query.EQ("Abilities")
+		//	return Query.;
+		//}
 
 		protected override ObservableCollection<string> InitChoices()
 		{
