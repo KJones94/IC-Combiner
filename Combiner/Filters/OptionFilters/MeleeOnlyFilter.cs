@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,11 @@ namespace Combiner
 		protected override bool OnOptionChecked(Creature creature)
 		{
 			return creature.RangeDamage1 == 0;
+		}
+
+		public override Query BuildQuery()
+		{
+			return Query.EQ("RangeDamage1", 0);
 		}
 
 		public override string ToString()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,21 @@ namespace Combiner
 				&& (int)creature.RangeType2 != (int)DamageType.Sonic;
 
 			return range1HasDirect || range2HasDirect;
+		}
+
+		public override Query BuildQuery()
+		{
+			var range1HasDirectQuery = Query.And(
+				Query.GT("RangeDamage1", 0),
+				Query.EQ("RangeSpecial1", 0),
+				Query.Not("RangeType1", (int)DamageType.Sonic));
+
+			var range2HasDirectQuery = Query.And(
+				Query.GT("RangeDamage2", 0),
+				Query.EQ("RangeSpecial2", 0),
+				Query.Not("RangeType2", (int)DamageType.Sonic));
+
+			return Query.Or(range1HasDirectQuery, range2HasDirectQuery);
 		}
 
 		public override string ToString()
