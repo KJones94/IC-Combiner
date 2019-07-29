@@ -542,6 +542,8 @@ setgameattribute("constructionticks", build_time);
 setattribute( "creature_rank", CreatureRank );
 setattribute( "costrenew", CostRenew );
 setattribute( "cost", CostGather );
-setattribute( "popsize", Pop )
+setattribute( "popsize", Pop );
+
+setgameattribute("Power", power);
 
 --end

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,11 @@ namespace Combiner
 		{
 			return creature.Electricity >= MinValue
 				&& creature.Electricity < (MaxValue + 1);
+		}
+
+		public override Query BuildQuery()
+		{
+			return Query.Between("Electricity", MinValue, MaxValue);
 		}
 
 		public override string ToString()

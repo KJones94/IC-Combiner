@@ -8,8 +8,8 @@ namespace Combiner
 	public static class DirectoryConstants
 	{
 		//public static string StockDirectory = "../../Stock/2.5/";
-		//public static string StockDirectory = "../../Stock/2.6/";
-		public static string StockDirectory = "../../Stock/Test/";
+		public static string StockDirectory = "../../Stock/2.6/";
+		//public static string StockDirectory = "../../Stock/Test/";
 		//public static string StockDirectory = "../../Stock/Test2/";
 		//public static string Attrcombiner = "../../Scripts/2.4/attrcombiner.lua";w
 		//public static string Testcombiner = "../../Scripts/2.5/testcombiner.lua";

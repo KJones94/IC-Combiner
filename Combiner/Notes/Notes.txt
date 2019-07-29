@@ -13,6 +13,7 @@ Attrcombiner.lua changes:
 	"Autodefense" -> "AutoDefense"
 	Removed "function combine_creature()" and the "end" at the bottom of the file
 	Using the pairs() function in for loops
+	setgameattribute("Power", power)
 
 Other .lua changes:
 	Removed spitting_spider.lua since Tellurian uses the spider.lua file for Spitting Spider
