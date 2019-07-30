@@ -19,7 +19,9 @@ namespace Combiner
 
 		public override Query BuildQuery()
 		{
-			return Query.Between("EffectiveHitpoints", MinValue, MaxValue);
+			return Query.And(
+				Query.GTE("EffectiveHitpoints", MinValue),
+				Query.LT("EffectiveHitpoints", MaxValue + 1));
 		}
 
 		public override string ToString()

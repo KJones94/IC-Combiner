@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace Combiner
 		protected abstract ObservableCollection<string> InitChoices();
 		protected abstract bool FilterOnlySelected(Creature creature);
 		protected abstract bool FilterAnySelected(Creature creature);
+		protected abstract Query QueryOnlySelected();
+		protected abstract Query QueryAnySelected();
 
 		public override bool Filter(Creature creature)
 		{
@@ -41,6 +44,15 @@ namespace Combiner
 			RemoveAllSelected(null);
 			IsOnlySelectedFiltered = false;
 			IsActive = false;
+		}
+
+		public override Query BuildQuery()
+		{
+			if (IsOnlySelectedFiltered)
+			{
+				return QueryOnlySelected();
+			}
+			return QueryAnySelected();
 		}
 
 		private ObservableCollection<string> m_Choices;

@@ -25,41 +25,46 @@ namespace Combiner
 				&& Selected.Contains(creature.Right);
 		}
 
-		public override Query BuildQuery()
+		protected override Query QueryAnySelected()
 		{
 			List<Query> queries = new List<Query>();
-			
 
-			if (IsOnlySelectedFiltered)
+			foreach (string stock in Selected)
 			{
-				if (Selected.Count == 1)
-				{
-					return Query.Or(
-						Query.EQ("Left", Selected.First()),
-						Query.EQ("Right", Selected.First()));
-				}
-
-				for (int i = 0; i < Selected.Count; i++)
-				{
-					for (int j = i + 1; j < Selected.Count; j++)
-					{
-						queries.Add(Query.Or(
-							Query.And(
-								Query.EQ("Left", Selected[i]),
-								Query.EQ("Right", Selected[j])),
-							Query.And(
-								Query.EQ("Left", Selected[j]),
-								Query.EQ("Right", Selected[i]))));
-					}
-				}
+				queries.Add(Query.Or(
+					Query.EQ("Left", stock),
+					Query.EQ("Right", stock)));
 			}
-			else
+
+			if (queries.Count == 1)
 			{
-				foreach (string stock in Selected)
+				return queries.First();
+			}
+			return Query.Or(queries.ToArray());
+		}
+
+		protected override Query QueryOnlySelected()
+		{
+			List<Query> queries = new List<Query>();
+
+			if (Selected.Count == 1)
+			{
+				return Query.Or(
+					Query.EQ("Left", Selected.First()),
+					Query.EQ("Right", Selected.First()));
+			}
+
+			for (int i = 0; i < Selected.Count; i++)
+			{
+				for (int j = i + 1; j < Selected.Count; j++)
 				{
 					queries.Add(Query.Or(
-						Query.EQ("Left", stock),
-						Query.EQ("Right", stock)));
+						Query.And(
+							Query.EQ("Left", Selected[i]),
+							Query.EQ("Right", Selected[j])),
+						Query.And(
+							Query.EQ("Left", Selected[j]),
+							Query.EQ("Right", Selected[i]))));
 				}
 			}
 
@@ -69,6 +74,51 @@ namespace Combiner
 			}
 			return Query.Or(queries.ToArray());
 		}
+
+		//public override Query BuildQuery()
+		//{
+		//	List<Query> queries = new List<Query>();
+			
+
+		//	if (IsOnlySelectedFiltered)
+		//	{
+		//		if (Selected.Count == 1)
+		//		{
+		//			return Query.Or(
+		//				Query.EQ("Left", Selected.First()),
+		//				Query.EQ("Right", Selected.First()));
+		//		}
+
+		//		for (int i = 0; i < Selected.Count; i++)
+		//		{
+		//			for (int j = i + 1; j < Selected.Count; j++)
+		//			{
+		//				queries.Add(Query.Or(
+		//					Query.And(
+		//						Query.EQ("Left", Selected[i]),
+		//						Query.EQ("Right", Selected[j])),
+		//					Query.And(
+		//						Query.EQ("Left", Selected[j]),
+		//						Query.EQ("Right", Selected[i]))));
+		//			}
+		//		}
+		//	}
+		//	else
+		//	{
+		//		foreach (string stock in Selected)
+		//		{
+		//			queries.Add(Query.Or(
+		//				Query.EQ("Left", stock),
+		//				Query.EQ("Right", stock)));
+		//		}
+		//	}
+
+		//	if (queries.Count == 1)
+		//	{
+		//		return queries.First();
+		//	}
+		//	return Query.Or(queries.ToArray());
+		//}
 
 		protected override ObservableCollection<string> InitChoices()
 		{

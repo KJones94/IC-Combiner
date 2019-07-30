@@ -19,7 +19,9 @@ namespace Combiner
 
 		public override Query BuildQuery()
 		{
-			return Query.Between("MeleeDamage", MinValue, MaxValue);
+			return Query.And(
+				Query.GTE("MeleeDamage", MinValue),
+				Query.LT("MeleeDamage", MaxValue + 1));
 		}
 
 		public override string ToString()

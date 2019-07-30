@@ -19,7 +19,9 @@ namespace Combiner
 
 		public override Query BuildQuery()
 		{
-			return Query.Between("SightRadius", MinValue, MaxValue);
+			return Query.And(
+				Query.GTE("SightRadius", MinValue),
+				Query.LT("SightRadius", MaxValue + 1));
 		}
 
 		public override string ToString()

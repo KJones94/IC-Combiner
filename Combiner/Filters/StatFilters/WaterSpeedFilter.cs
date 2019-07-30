@@ -19,7 +19,9 @@ namespace Combiner
 
 		public override Query BuildQuery()
 		{
-			return Query.Between("WaterSpeed", MinValue, MaxValue);
+			return Query.And(
+				Query.GTE("WaterSpeed", MinValue),
+				Query.LT("WaterSpeed", MaxValue + 1));
 		}
 
 		public override string ToString()

@@ -40,24 +40,37 @@ namespace Combiner
 			return hasAbilities;
 		}
 
-		public override Query BuildQuery()
+		protected override Query QueryAnySelected()
+		{
+			List<Query> queries = BuildQueryList();
+			if (queries.Count == 1)
+			{
+				return queries.First();
+			}
+			return Query.Or(queries.ToArray());
+		}
+
+		protected override Query QueryOnlySelected()
+		{
+			List<Query> queries = BuildQueryList();
+			if (queries.Count == 1)
+			{
+				return queries.First();
+			}
+			return Query.And(queries.ToArray());
+		}
+
+		private List<Query> BuildQueryList()
 		{
 			List<Query> queries = new List<Query>();
 			foreach (string ability in Selected)
 			{
 				queries.Add(Query.EQ("Abilities." + ability, true));
 			}
-
-			if (queries.Count == 1)
-			{
-				return queries.First();
-			}
-			if (IsOnlySelectedFiltered)
-			{
-				return Query.And(queries.ToArray());
-			}
-			return Query.Or(queries.ToArray());
+			return queries;
 		}
+
+		
 
 		protected override ObservableCollection<string> InitChoices()
 		{
