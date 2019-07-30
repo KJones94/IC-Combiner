@@ -29,7 +29,7 @@ namespace Combiner
 				}
 
 				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
-				var creatures = collection.FindAll();
+				var creatures = collection.FindAll(); // Can use Skip/Take to do paging...
 				return creatures.ToList();
 			}
 		}
@@ -73,6 +73,24 @@ namespace Combiner
 				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
 				var result = collection.Find(FindCreatureQuery(left, right, bodyParts));
 				return result.First();
+			}
+		}
+
+		/// <summary>
+		/// Gets the total number of creatures in the database
+		/// </summary>
+		/// <returns></returns>
+		public int GetTotalCreatureCount()
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (!db.CollectionExists(m_CreaturesCollectionName))
+				{
+					return 0;
+				}
+
+				var collection = db.GetCollection <Creature>(m_CreaturesCollectionName);
+				return collection.Count();
 			}
 		}
 

@@ -19,6 +19,7 @@ namespace Combiner
 		public CreatureDataVM(Database database)
 		{
 			m_Database = database;
+			UpdateTotalCreatureCount();
 		}
 
 		private ObservableCollection<Creature> m_Creatures;
@@ -59,6 +60,25 @@ namespace Combiner
 					OnPropertyChanged(nameof(CreaturesView));
 				}
 			}
+		}
+
+		private int m_TotalCreatureCount;
+		public int TotalCreatureCount
+		{
+			get { return m_TotalCreatureCount; }
+			set
+			{
+				if (m_TotalCreatureCount != value)
+				{
+					m_TotalCreatureCount = value;
+					OnPropertyChanged(nameof(TotalCreatureCount));
+				}
+			}
+		}
+
+		public void UpdateTotalCreatureCount()
+		{
+			TotalCreatureCount = m_Database.GetTotalCreatureCount();
 		}
 
 		private PagingController m_Pager;

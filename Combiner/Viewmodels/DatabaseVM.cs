@@ -13,7 +13,7 @@ namespace Combiner
 	public class DatabaseVM : BaseViewModel
 	{
 		private FiltersVM m_FiltersVM;
-		private CreatureDataVM m_NewCreatureVM;
+		private CreatureDataVM m_CreatureVM;
 		private Database m_Database;
 		private ImportExportHandler m_ImportExportHandler;
 		private CreatureCsvWriter m_CreatureCsvWriter;
@@ -25,7 +25,7 @@ namespace Combiner
 			ImportExportHandler importExportHandler,
 			CreatureCsvWriter creatureCsvWriter)
 		{
-			m_NewCreatureVM = newCreatureVM;
+			m_CreatureVM = newCreatureVM;
 			m_FiltersVM = filtersVM;
 			m_Database = database;
 			m_ImportExportHandler = importExportHandler;
@@ -67,6 +67,7 @@ namespace Combiner
 				await Task.Run(() => m_Database.CreateDB());
 
 				MessageBox.Show("Finished creating the database.");
+				m_CreatureVM.UpdateTotalCreatureCount();
 			}
 		}
 
@@ -89,8 +90,8 @@ namespace Combiner
 		}
 		private void LoadCreatures(object obj)
 		{
-			m_NewCreatureVM.Creatures = new ObservableCollection<Creature>(m_Database.GetAllCreatures());
-			m_NewCreatureVM.CreaturesView.Filter = m_FiltersVM.CreatureFilter;
+			m_CreatureVM.Creatures = new ObservableCollection<Creature>(m_Database.GetAllCreatures());
+			m_CreatureVM.CreaturesView.Filter = m_FiltersVM.CreatureFilter;
 		}
 
 		private ICommand m_LoadSavedCreaturesCommand;
@@ -112,8 +113,8 @@ namespace Combiner
 		}
 		private void LoadSavedCreatures(object obj)
 		{
-			m_NewCreatureVM.Creatures = new ObservableCollection<Creature>(m_Database.GetSavedCreatures());
-			m_NewCreatureVM.CreaturesView.Filter = m_FiltersVM.CreatureFilter;
+			m_CreatureVM.Creatures = new ObservableCollection<Creature>(m_Database.GetSavedCreatures());
+			m_CreatureVM.CreaturesView.Filter = m_FiltersVM.CreatureFilter;
 		}
 
 
@@ -202,9 +203,9 @@ namespace Combiner
 		}
 		public void ExportToCsv(object obj)
 		{
-			if (m_NewCreatureVM.Creatures.Count > 0)
+			if (m_CreatureVM.Creatures.Count > 0)
 			{
-				m_CreatureCsvWriter.WriteFile(m_NewCreatureVM.Creatures);
+				m_CreatureCsvWriter.WriteFile(m_CreatureVM.Creatures);
 			}
 		}
 	}

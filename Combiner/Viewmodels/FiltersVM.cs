@@ -38,7 +38,8 @@ namespace Combiner
 		{
 			m_CreatureDataVM = creatureDataVM;
 			m_Database = database;
-			m_ActiveFilters = InitActiveFilters();
+			m_ActiveFilters = new List<CreatureFilter>();
+			IsQueryFilteringSelected = true;
 			InitIsActiveHandlers();
 		}
 
@@ -79,15 +80,6 @@ namespace Combiner
 
 			StockFilter.IsActiveChanged += OnFilterIsActive;
 			AbilityFilter.IsActiveChanged += OnFilterIsActive;
-		}
-
-		private List<CreatureFilter> InitActiveFilters()
-		{
-			List<CreatureFilter> activeFilters = new List<CreatureFilter>();
-
-
-
-			return activeFilters;
 		}
 
 		private void OnFilterIsActive(CreatureFilter filter, IsActiveArgs args)
@@ -173,24 +165,20 @@ namespace Combiner
 		}
 		private void FilterCreatures(object obj)
 		{
-			//m_CreatureDataVM.CreaturesView.Filter = CreatureFilter;
-			m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetCreatureQuery(BuildFilterQuery()));
-		}
-
-		private Query BuildFilterQuery()
-		{
-			if (m_ActiveFilters.Count == 0)
+			if (IsQueryFilteringSelected)
 			{
-				return Query.All();
+				m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetCreatureQuery(BuildFilterQuery()));
 			}
-
-			if (m_ActiveFilters.Count == 1)
+			else
 			{
-				return m_ActiveFilters.First().BuildQuery();
+				if (m_CreatureDataVM.Creatures.Count != m_CreatureDataVM.TotalCreatureCount)
+				{
+					m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetAllCreatures());
+				}
+				m_CreatureDataVM.CreaturesView.Filter = CreatureFilter;
 			}
-
-			IEnumerable<Query> queries = m_ActiveFilters.Select(x => x.BuildQuery());
-			return Query.And(queries.ToArray());
+			
+			
 		}
 
 		/// <summary>
@@ -216,6 +204,36 @@ namespace Combiner
 				return result;
 			}
 			return false;
+		}
+
+		private bool m_IsQueryFilteringSelected;
+		public bool IsQueryFilteringSelected
+		{
+			get { return m_IsQueryFilteringSelected; }
+			set
+			{
+				if (m_IsQueryFilteringSelected != value)
+				{
+					m_IsQueryFilteringSelected = value;
+					OnPropertyChanged(nameof(IsQueryFilteringSelected));
+				}
+			}
+		}
+
+		private Query BuildFilterQuery()
+		{
+			if (m_ActiveFilters.Count == 0)
+			{
+				return Query.All();
+			}
+
+			if (m_ActiveFilters.Count == 1)
+			{
+				return m_ActiveFilters.First().BuildQuery();
+			}
+
+			IEnumerable<Query> queries = m_ActiveFilters.Select(x => x.BuildQuery());
+			return Query.And(queries.ToArray());
 		}
 
 		#region Filters
