@@ -32,6 +32,20 @@ namespace Combiner
 			m_CreatureCsvWriter = creatureCsvWriter;
 		}
 
+		private string m_CurrentCollection;
+		public string CurrentCollection
+		{
+			get { return m_CurrentCollection; }
+			set
+			{
+				if (m_CurrentCollection != value)
+				{
+					m_CurrentCollection = value;
+					OnPropertyChanged(nameof(CurrentCollection));
+				}
+			}
+		}
+
 		private ICommand m_CreateDatabaseCommand;
 		public ICommand CreateDatabaseCommand
 		{
@@ -116,7 +130,6 @@ namespace Combiner
 			m_CreatureVM.Creatures = new ObservableCollection<Creature>(m_Database.GetSavedCreatures());
 			m_CreatureVM.CreaturesView.Filter = m_FiltersVM.CreatureFilter;
 		}
-
 
 		private ICommand m_DeleteSavedCreaturesCommand;
 		public ICommand DeleteSavedCreaturesCommand

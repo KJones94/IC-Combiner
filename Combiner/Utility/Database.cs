@@ -16,6 +16,18 @@ namespace Combiner
 		private readonly string m_SavedCreaturesCollectionName = "saved_creatures";
 
 		/// <summary>
+		/// Gets the name of all collections in the database
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<string> GetCollectionNames()
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				return db.GetCollectionNames();
+			}
+		}
+
+		/// <summary>
 		/// Gets all creatures from the creatures collection.
 		/// </summary>
 		/// <returns></returns>
@@ -228,6 +240,10 @@ namespace Combiner
 			return false;
 		}
 
+		/// <summary>
+		/// Creates the main creature database and saved database. This will delete whatever
+		/// is currently in both databases.
+		/// </summary>
 		public void CreateDB()
 		{
 			Directory.CreateDirectory(DirectoryConstants.DatabaseDirectory);
@@ -251,6 +267,33 @@ namespace Combiner
 				// These caused a 3GB spike in memory usage
 				//collection.EnsureIndex(x => x.Rank);
 				//collection.EnsureIndex(x => x.Abilities);
+			}
+		}
+
+		/// <summary>
+		/// Creates a collection with the given name.
+		/// </summary>
+		/// <param name="name"></param>
+		public void CreateCollection(string name)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				db.GetCollection<Creature>(name); // Does this create a collection if one doesn't exist?
+			}
+		}
+
+		/// <summary>
+		/// Function used for testing import/export.
+		/// Could continue to use in the application
+		/// </summary>
+		public void DeleteCollection(string name)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (db.CollectionExists(name))
+				{
+					db.DropCollection(name);
+				}
 			}
 		}
 

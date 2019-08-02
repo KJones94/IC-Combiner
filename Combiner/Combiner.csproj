@@ -162,6 +162,9 @@
     <Compile Include="Views\CreatureBodyPartView.xaml.cs">
       <DependentUpon>CreatureBodyPartView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DatabaseManagerView.xaml.cs">
+      <DependentUpon>DatabaseManagerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DatabaseView.xaml.cs">
       <DependentUpon>DatabaseView.xaml</DependentUpon>
     </Compile>
@@ -215,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreatureBodyPartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DatabaseManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
