@@ -324,6 +324,7 @@ namespace Combiner
 							StockNames.ProperStockNames[stockNames[j]]);
 					collection.InsertBulk(creatures);
 				}
+
 			}
 		}
 

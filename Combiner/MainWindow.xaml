@@ -35,21 +35,25 @@
 			</MenuItem>
 		</Menu>
 		<StatusBar DockPanel.Dock="Bottom">
-			<StatusBarItem>
+			<StatusBarItem DockPanel.Dock="Right">
+				<ProgressBar Width="200" Height="15" IsIndeterminate="{Binding ProgressVM.IsIndeterminate}"/>
+			</StatusBarItem>
+			<StatusBarItem DockPanel.Dock="Left">
 				<TextBlock>Showing</TextBlock>
 			</StatusBarItem>
-			<StatusBarItem>
+			<StatusBarItem DockPanel.Dock="Left">
 				<TextBlock Text="{Binding CreatureDataVM.CreaturesView.Count}"/>
 			</StatusBarItem>
-			<StatusBarItem>
+			<StatusBarItem DockPanel.Dock="Left">
 				<TextBlock>out of</TextBlock>
 			</StatusBarItem>
-			<StatusBarItem>
+			<StatusBarItem DockPanel.Dock="Left">
 				<TextBlock Text="{Binding CreatureDataVM.TotalCreatureCount}"/>
 			</StatusBarItem>
-			<StatusBarItem>
+			<StatusBarItem DockPanel.Dock="Left">
 				<TextBlock>creatures</TextBlock>
 			</StatusBarItem>
+			
 		</StatusBar>
 		<!--<local:PagerView DataContext="{Binding CreatureDataVM.Pager}" DockPanel.Dock="Bottom"/>-->
 		<Grid>

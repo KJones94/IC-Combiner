@@ -77,15 +77,33 @@ namespace Combiner
 			}
 		}
 
+		private ProgressVM m_ProgressVM;
+		public ProgressVM ProgressVM
+		{
+			get
+			{
+				return m_ProgressVM;
+			}
+			set
+			{
+				if (value != m_ProgressVM)
+				{
+					m_ProgressVM = value;
+					OnPropertyChanged(nameof(ProgressVM));
+				}
+			}
+		}
+
 		public MainVM()
 		{
 			Database database = new Database();
 			ImportExportHandler importExportHandler = new ImportExportHandler(database);
 			CreatureCsvWriter creatureCsvWriter = new CreatureCsvWriter();
 
+			ProgressVM = new ProgressVM();
 			CreatureDataVM = new CreatureDataVM(database);
 			FiltersVM = new FiltersVM(CreatureDataVM, database);
-			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, database, importExportHandler, creatureCsvWriter);
+			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, ProgressVM, database, importExportHandler, creatureCsvWriter);
 			SelectedCreatureVM = new SelectedCreatureVM(CreatureDataVM);
 		}
 

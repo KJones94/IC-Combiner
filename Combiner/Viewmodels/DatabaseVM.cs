@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Combiner
@@ -14,6 +15,7 @@ namespace Combiner
 	{
 		private FiltersVM m_FiltersVM;
 		private CreatureDataVM m_CreatureVM;
+		private ProgressVM m_ProgressVM;
 		private Database m_Database;
 		private ImportExportHandler m_ImportExportHandler;
 		private CreatureCsvWriter m_CreatureCsvWriter;
@@ -21,12 +23,14 @@ namespace Combiner
 		public DatabaseVM(
 			CreatureDataVM newCreatureVM,
 			FiltersVM filtersVM,
+			ProgressVM progressVM,
 			Database database,
 			ImportExportHandler importExportHandler,
 			CreatureCsvWriter creatureCsvWriter)
 		{
 			m_CreatureVM = newCreatureVM;
 			m_FiltersVM = filtersVM;
+			m_ProgressVM = progressVM;
 			m_Database = database;
 			m_ImportExportHandler = importExportHandler;
 			m_CreatureCsvWriter = creatureCsvWriter;
@@ -78,7 +82,11 @@ namespace Combiner
 			MessageBoxResult result = MessageBox.Show(text, "Database Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 			if (result == MessageBoxResult.Yes)
 			{
+				m_ProgressVM.IsIndeterminate = true;
+
 				await Task.Run(() => m_Database.CreateDB());
+
+				m_ProgressVM.IsIndeterminate = false;
 
 				MessageBox.Show("Finished creating the database.");
 				m_CreatureVM.UpdateTotalCreatureCount();

@@ -142,6 +142,7 @@
     <Compile Include="Utility\PagingController.cs" />
     <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />
+    <Compile Include="Viewmodels\ProgressVM.cs" />
     <Compile Include="Viewmodels\SelectedCreatureVM.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
