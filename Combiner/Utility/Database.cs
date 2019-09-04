@@ -15,6 +15,14 @@ namespace Combiner
 		private readonly string m_CreaturesCollectionName = "creatures";
 		private readonly string m_SavedCreaturesCollectionName = "saved_creatures";
 
+		public Database()
+		{
+			if (!Directory.Exists(DirectoryConstants.DatabaseDirectory))
+			{
+				Directory.CreateDirectory(DirectoryConstants.DatabaseDirectory);
+			}
+		}
+
 		/// <summary>
 		/// Gets the name of all collections in the database
 		/// </summary>
