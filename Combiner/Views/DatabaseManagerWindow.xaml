@@ -1,0 +1,47 @@
+﻿<Window x:Class="Combiner.DatabaseManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Combiner"
+        mc:Ignorable="d"
+        Title="DatabaseManagerWindow" Height="450" Width="800">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="2*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0">
+				<StackPanel Orientation="Horizontal">
+					<Label>Active:</Label>
+					<Label>Some Collection</Label>
+				</StackPanel>
+				<ListView Grid.Column="0" Margin="10">
+					<ListView.View>
+						<GridView>
+							<GridViewColumn Header="Name" Width="200"/>
+							<GridViewColumn Header="Version" Width="50"/>
+						</GridView>
+					</ListView.View>
+				</ListView>
+			</StackPanel>
+			<StackPanel Grid.Column="1">
+				<Button Content="Activate" Height="20" Margin="10"/>
+				<Button Content="Delete" Height="20" Margin="10"/>
+				<Button Content="Import" Height="20" Margin="10"/>
+				<Button Content="Export" Height="20" Margin="10"/>
+				<Button Content="Rename" Height="20" Margin="10"/>
+			</StackPanel>
+		</Grid>
+		<StackPanel Grid.Row="1" Orientation="Horizontal">
+			<Label VerticalAlignment="Center">Name:</Label>
+			<TextBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="100"/>
+			<Button Content="Create" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+		</StackPanel>
+	</Grid>
+</Window>

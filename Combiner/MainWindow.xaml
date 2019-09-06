@@ -24,6 +24,7 @@
 				<MenuItem Header="Query Filtering" IsCheckable="True" IsChecked="{Binding FiltersVM.IsQueryFilteringSelected}"/>
 			</MenuItem>
 			<MenuItem Header="Database">
+				<MenuItem Header="DatabaseManager" Command="{Binding OpenDatabaseManagerWindowCommand}"/>
 				<MenuItem Header="Create Database" Command="{Binding DatabaseVM.CreateDatabaseCommand}"/>
 				<MenuItem Header="Load Saved Creatures" Command="{Binding DatabaseVM.LoadSavedCreaturesCommand}"/>
 				<MenuItem Header="Delete Saved Creatures" Command="{Binding DatabaseVM.DeleteSavedCreaturesCommand}"/>

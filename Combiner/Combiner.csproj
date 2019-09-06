@@ -140,6 +140,7 @@
     <Compile Include="Utility\Names.cs" />
     <Compile Include="Utility\PagingCollectionView.cs" />
     <Compile Include="Utility\PagingController.cs" />
+    <Compile Include="Viewmodels\DatabaseManagerVM.cs" />
     <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />
     <Compile Include="Viewmodels\ProgressVM.cs" />
@@ -163,8 +164,8 @@
     <Compile Include="Views\CreatureBodyPartView.xaml.cs">
       <DependentUpon>CreatureBodyPartView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DatabaseManagerView.xaml.cs">
-      <DependentUpon>DatabaseManagerView.xaml</DependentUpon>
+    <Compile Include="Views\DatabaseManagerWindow.xaml.cs">
+      <DependentUpon>DatabaseManagerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DatabaseView.xaml.cs">
       <DependentUpon>DatabaseView.xaml</DependentUpon>
@@ -222,7 +223,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DatabaseManagerView.xaml">
+    <Page Include="Views\DatabaseManagerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -94,6 +94,44 @@ namespace Combiner
 			}
 		}
 
+		private DatabaseManagerVM m_DatabaseManagerVM;
+		public DatabaseManagerVM DatabaseManagerVM
+		{
+			get { return m_DatabaseManagerVM; }
+			set
+			{
+				if (value != m_DatabaseManagerVM)
+				{
+					m_DatabaseManagerVM = value;
+					OnPropertyChanged(nameof(DatabaseManagerVM));
+				}
+			}
+		}
+
+		private ICommand m_OpenDatabaseManagerWindowCommand;
+		public ICommand OpenDatabaseManagerWindowCommand
+		{
+			get
+			{
+				return m_OpenDatabaseManagerWindowCommand ??
+				  (m_OpenDatabaseManagerWindowCommand = new RelayCommand(OpenDatabaseManagerWindow));
+			}
+			set
+			{
+				if (value != m_OpenDatabaseManagerWindowCommand)
+				{
+					m_OpenDatabaseManagerWindowCommand = value;
+					OnPropertyChanged(nameof(OpenDatabaseManagerWindow));
+				}
+			}
+		}
+		private void OpenDatabaseManagerWindow(object o)
+		{
+			DatabaseManagerWindow window = new DatabaseManagerWindow();
+			window.DataContext = DatabaseManagerVM;
+			window.Show();
+		}
+
 		public MainVM()
 		{
 			Database database = new Database();
@@ -105,6 +143,9 @@ namespace Combiner
 			FiltersVM = new FiltersVM(CreatureDataVM, ProgressVM, database);
 			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, ProgressVM, database, importExportHandler, creatureCsvWriter);
 			SelectedCreatureVM = new SelectedCreatureVM(CreatureDataVM);
+
+			DatabaseManagerVM = new DatabaseManagerVM();
+
 		}
 
 	}

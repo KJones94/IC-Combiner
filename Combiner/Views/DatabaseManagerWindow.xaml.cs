@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Combiner
 {
 	/// <summary>
-	/// Interaction logic for DatabaseManagerView.xaml
+	/// Interaction logic for DatabaseManagerWindow.xaml
 	/// </summary>
-	public partial class DatabaseManagerView : Window
+	public partial class DatabaseManagerWindow : Window
 	{
-		public DatabaseManagerView()
+		public DatabaseManagerWindow()
 		{
 			InitializeComponent();
 		}
