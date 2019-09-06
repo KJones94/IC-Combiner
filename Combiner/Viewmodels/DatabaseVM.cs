@@ -82,11 +82,12 @@ namespace Combiner
 			MessageBoxResult result = MessageBox.Show(text, "Database Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 			if (result == MessageBoxResult.Yes)
 			{
-				m_ProgressVM.IsIndeterminate = true;
+				m_ProgressVM.StartWork();
 
+				// TODO: How does this act if some other code tries to use the ProgressVM?
 				await Task.Run(() => m_Database.CreateDB());
 
-				m_ProgressVM.IsIndeterminate = false;
+				m_ProgressVM.EndWork();
 
 				MessageBox.Show("Finished creating the database.");
 				m_CreatureVM.UpdateTotalCreatureCount();

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Combiner
 {
+	// TODO: How does this work with both async database creation and filtering command?
 	public class ProgressVM : BaseViewModel
 	{
 		public ProgressVM()
@@ -25,6 +26,16 @@ namespace Combiner
 					OnPropertyChanged(nameof(IsIndeterminate));
 				}
 			}
+		}
+
+		public void StartWork()
+		{
+			IsIndeterminate = true;
+		}
+
+		public void EndWork()
+		{
+			IsIndeterminate = false;
 		}
 	}
 }

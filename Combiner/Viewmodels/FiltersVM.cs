@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Combiner
@@ -13,6 +14,7 @@ namespace Combiner
 	public class FiltersVM : BaseViewModel
 	{
 		private CreatureDataVM m_CreatureDataVM;
+		private ProgressVM m_ProgressVM;
 		private Database m_Database;
 		private List<CreatureFilter> m_ActiveFilters;
 
@@ -34,9 +36,10 @@ namespace Combiner
 			}
 		}
 
-		public FiltersVM(CreatureDataVM creatureDataVM, Database database)
+		public FiltersVM(CreatureDataVM creatureDataVM, ProgressVM progressVM, Database database)
 		{
 			m_CreatureDataVM = creatureDataVM;
+			m_ProgressVM = progressVM;
 			m_Database = database;
 			m_ActiveFilters = new List<CreatureFilter>();
 			IsQueryFilteringSelected = true;
@@ -163,22 +166,25 @@ namespace Combiner
 				}
 			}
 		}
-		private void FilterCreatures(object obj)
+		private async void FilterCreatures(object obj)
 		{
-			if (IsQueryFilteringSelected)
+			//m_ProgressVM.StartWork();
+			await Task.Run(() =>
 			{
-				m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetCreatureQuery(BuildFilterQuery()));
-			}
-			else
-			{
-				if (m_CreatureDataVM.Creatures.Count != m_CreatureDataVM.TotalCreatureCount)
+				if (IsQueryFilteringSelected)
 				{
-					m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetAllCreatures());
+					m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetCreatureQuery(BuildFilterQuery()));
 				}
-				m_CreatureDataVM.CreaturesView.Filter = CreatureFilter;
-			}
-			
-			
+				else
+				{
+					if (m_CreatureDataVM.Creatures.Count != m_CreatureDataVM.TotalCreatureCount)
+					{
+						m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetAllCreatures());
+					}
+					m_CreatureDataVM.CreaturesView.Filter = CreatureFilter;
+				}
+			});
+			//m_ProgressVM.EndWork();
 		}
 
 		/// <summary>

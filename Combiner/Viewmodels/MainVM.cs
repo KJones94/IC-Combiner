@@ -102,7 +102,7 @@ namespace Combiner
 
 			ProgressVM = new ProgressVM();
 			CreatureDataVM = new CreatureDataVM(database);
-			FiltersVM = new FiltersVM(CreatureDataVM, database);
+			FiltersVM = new FiltersVM(CreatureDataVM, ProgressVM, database);
 			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, ProgressVM, database, importExportHandler, creatureCsvWriter);
 			SelectedCreatureVM = new SelectedCreatureVM(CreatureDataVM);
 		}
