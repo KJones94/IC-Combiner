@@ -13,6 +13,7 @@ namespace Combiner
 {
 	public class FiltersVM : BaseViewModel
 	{
+		private DatabaseManagerVM m_DatabaseManagerVM;
 		private CreatureDataVM m_CreatureDataVM;
 		private ProgressVM m_ProgressVM;
 		private Database m_Database;
@@ -36,11 +37,13 @@ namespace Combiner
 			}
 		}
 
-		public FiltersVM(CreatureDataVM creatureDataVM, ProgressVM progressVM, Database database)
+		public FiltersVM(CreatureDataVM creatureDataVM, ProgressVM progressVM, Database database, DatabaseManagerVM databaseManagerVM)
 		{
 			m_CreatureDataVM = creatureDataVM;
 			m_ProgressVM = progressVM;
 			m_Database = database;
+			m_DatabaseManagerVM = databaseManagerVM;
+			m_DatabaseManagerVM.CollectionActivatedEvent += UpdateCollection;
 			m_ActiveFilters = new List<CreatureFilter>();
 			IsQueryFilteringSelected = true;
 			InitIsActiveHandlers();
@@ -166,25 +169,36 @@ namespace Combiner
 				}
 			}
 		}
-		private async void FilterCreatures(object obj)
+		private void FilterCreatures(object obj)
 		{
 			//m_ProgressVM.StartWork();
 			//await Task.Run(() =>
 			//{
 			if (IsQueryFilteringSelected)
 			{
-				m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetCreatureQuery(BuildFilterQuery()));
+				m_CreatureDataVM.Creatures = 
+					new ObservableCollection<Creature>(
+						m_Database.GetCreatureQuery(
+							BuildFilterQuery(), 
+							m_DatabaseManagerVM.ActiveCollection));
 			}
 			else
 			{
 				if (m_CreatureDataVM.Creatures.Count != m_CreatureDataVM.TotalCreatureCount)
 				{
-					m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetAllCreatures());
+					m_CreatureDataVM.Creatures = 
+						new ObservableCollection<Creature>(
+							m_Database.GetAllCreatures(m_DatabaseManagerVM.ActiveCollection));
 				}
 				m_CreatureDataVM.CreaturesView.Filter = CreatureFilter;
 			}
 			//});
 			//m_ProgressVM.EndWork();
+		}
+
+		private void UpdateCollection(string collectionName)
+		{
+			FilterCreatures(null);
 		}
 
 		/// <summary>

@@ -50,6 +50,16 @@ namespace Combiner
 			}
 		}
 
+		public void SaveCreature(Creature creature)
+		{
+
+		}
+
+		public void UnsaveCreature(Creature creature)
+		{
+
+		}
+
 		private ICommand m_CreateDatabaseCommand;
 		public ICommand CreateDatabaseCommand
 		{

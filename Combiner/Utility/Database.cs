@@ -136,7 +136,7 @@ namespace Combiner
 		/// Query for a list of creates from the given collection.
 		/// </summary>
 		/// <returns></returns>
-		public List<Creature> GetCreatureQuery(string collectionName, Query query)
+		public List<Creature> GetCreatureQuery(Query query, string collectionName)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
@@ -259,6 +259,24 @@ namespace Combiner
 		}
 
 		/// <summary>
+		/// Adds the creature to the given collection
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="collectionName"></param>
+		public void SaveCreature(Creature creature, string collectionName)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				var collection = db.GetCollection<Creature>(collectionName);
+				bool creatureExists = collection.Exists(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
+				if (!creatureExists)
+				{
+					collection.Insert(creature);
+				}
+			}
+		}
+
+		/// <summary>
 		/// Removes the creature from the saved creatures collection
 		/// </summary>
 		/// <param name="creature"></param>
@@ -273,6 +291,26 @@ namespace Combiner
 				}
 
 				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
+				collection.Delete(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
+			}
+		}
+
+		/// <summary>
+		/// Removes the creature from the given collection
+		/// </summary>
+		/// <param name="creature"></param>
+		/// <param name="collectionName"></param>
+		public void UnsaveCreature(Creature creature, string collectionName)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				// No need to unsave if there aren't any saved creatures
+				if (!db.CollectionExists(collectionName))
+				{
+					return;
+				}
+
+				var collection = db.GetCollection<Creature>(collectionName);
 				collection.Delete(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
 			}
 		}

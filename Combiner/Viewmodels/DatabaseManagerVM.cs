@@ -10,11 +10,17 @@ namespace Combiner
 {
 	public class DatabaseManagerVM : BaseViewModel
 	{
+		private readonly string m_CreaturesCollectionName = "creatures";
+
+		public delegate void CollectionActivatedHandler(string collection);
+		public event CollectionActivatedHandler CollectionActivatedEvent;
+
 		Database m_Database;
 
 		public DatabaseManagerVM(Database database)
 		{
 			m_Database = database;
+			ActiveCollection = m_CreaturesCollectionName;
 		}
 
 		private ObservableCollection<string> m_Collections;
@@ -53,6 +59,31 @@ namespace Combiner
 			}
 		}
 
+		private ICommand m_ActivateCollectionCommand;
+		public ICommand ActivateCollectionCommand
+		{
+			get {
+				return m_ActivateCollectionCommand ??
+				  (m_ActivateCollectionCommand = new RelayCommand(ActivateCollection));
+			}
+			set
+			{
+				if (value != m_ActivateCollectionCommand)
+				{
+					m_ActivateCollectionCommand = value;
+					OnPropertyChanged(nameof(ActivateCollection));
+				}
+			}
+		}
+		private void ActivateCollection(object o)
+		{
+			if (!string.IsNullOrEmpty(SelectedCollection))
+			{
+				ActiveCollection = SelectedCollection;
+				CollectionActivatedEvent?.Invoke(ActiveCollection);
+			}
+		}
+
 		private string m_CreateCollectionName;
 		public string CreateCollectionName
 		{
@@ -85,7 +116,11 @@ namespace Combiner
 		}
 		private void CreateCollection(object o)
 		{
-			if (m_Database.CreateCollection(CreateCollectionName))
+			if (string.IsNullOrEmpty(CreateCollectionName))
+			{
+				// do something
+			}
+			else if (m_Database.CreateCollection(CreateCollectionName))
 			{
 				UpdateCollections();
 			}
@@ -128,8 +163,23 @@ namespace Combiner
 		private void DeleteCollection(object o)
 		{
 			// Are you sure window?
-			m_Database.DeleteCollection(SelectedCollection);
-			UpdateCollections();
+			if (!string.IsNullOrEmpty(SelectedCollection))
+			{
+				m_Database.DeleteCollection(SelectedCollection);
+				UpdateCollections();
+			}
+		}
+
+		// This should probably be a property so references will receive any changes..?
+		public List<string> SaveableCollections()
+		{
+			return Collections.Where(s => s != m_CreaturesCollectionName && s != ActiveCollection).ToList();
+		}
+
+		public void SaveCreature(Creature creature, string collectionName)
+		{
+
+			m_Database.SaveCreature(creature, collectionName);
 		}
 
 	}

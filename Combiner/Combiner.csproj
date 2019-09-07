@@ -144,6 +144,7 @@
     <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />
     <Compile Include="Viewmodels\ProgressVM.cs" />
+    <Compile Include="Viewmodels\SaveCollectionVM.cs" />
     <Compile Include="Viewmodels\SelectedCreatureVM.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
@@ -211,6 +212,9 @@
     <Compile Include="Tests\CreatureTest.cs" />
     <Compile Include="Tests\StockTest.cs" />
     <Compile Include="Utility\DirectoryConstants.cs" />
+    <Compile Include="Views\SaveCollectionWindow.xaml.cs">
+      <DependentUpon>SaveCollectionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SelectedCreatureView.xaml.cs">
       <DependentUpon>SelectedCreatureView.xaml</DependentUpon>
     </Compile>
@@ -277,6 +281,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SaveCollectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

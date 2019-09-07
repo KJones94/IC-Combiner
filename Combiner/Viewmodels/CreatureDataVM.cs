@@ -15,10 +15,12 @@ namespace Combiner
 	{
 		private const int m_PageSize = 1000;
 		private Database m_Database;
+		private DatabaseManagerVM m_DatabaseManagerVM;
 
-		public CreatureDataVM(Database database)
+		public CreatureDataVM(Database database, DatabaseManagerVM databaseManagerVM)
 		{
 			m_Database = database;
+			m_DatabaseManagerVM = databaseManagerVM;
 			UpdateTotalCreatureCount();
 		}
 
@@ -143,7 +145,9 @@ namespace Combiner
 		{
 			if (SelectedCreature != null)
 			{
-				m_Database.SaveCreature(SelectedCreature);
+				var window = new SaveCollectionWindow();
+				window.DataContext = new SaveCollectionVM(SelectedCreature, m_DatabaseManagerVM);
+				window.Show();
 			}
 		}
 
@@ -171,6 +175,5 @@ namespace Combiner
 				m_Database.UnsaveCreature(SelectedCreature);
 			}
 		}
-
 	}
 }
