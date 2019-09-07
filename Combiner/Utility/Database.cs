@@ -15,6 +15,8 @@ namespace Combiner
 		private readonly string m_CreaturesCollectionName = "creatures";
 		private readonly string m_SavedCreaturesCollectionName = "saved_creatures";
 
+		public string ActiveCollection { get; private set; }
+
 		public Database()
 		{
 			if (!Directory.Exists(DirectoryConstants.DatabaseDirectory))
@@ -32,6 +34,44 @@ namespace Combiner
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				return db.GetCollectionNames();
+			}
+		}
+
+		/// <summary>
+		/// Creates a collection with the given name.
+		/// The collection will not be created if the name is taken.
+		/// </summary>
+		/// <param name="name"></param>
+		public bool CreateCollection(string name)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (db.CollectionExists(name))
+				{
+					return false;
+				}
+
+				var collection = db.GetCollection<Creature>(name);
+
+				// Need to insert or ensure index for collection to be created
+				collection.EnsureIndex(x => x.Rank);
+
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// Function used for testing import/export.
+		/// Could continue to use in the application
+		/// </summary>
+		public void DeleteCollection(string name)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (db.CollectionExists(name))
+				{
+					db.DropCollection(name);
+				}
 			}
 		}
 
@@ -55,6 +95,25 @@ namespace Combiner
 		}
 
 		/// <summary>
+		/// Gets all creatures from the given creatures collection.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Creature> GetAllCreatures(string collectionName)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (!db.CollectionExists(collectionName))
+				{
+					return new List<Creature>();
+				}
+
+				var collection = db.GetCollection<Creature>(collectionName);
+				var creatures = collection.FindAll(); // Can use Skip/Take to do paging...
+				return creatures.ToList();
+			}
+		}
+
+		/// <summary>
 		/// Gets a list of creatures given a query.
 		/// </summary>
 		/// <returns></returns>
@@ -68,6 +127,25 @@ namespace Combiner
 				}
 
 				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
+				List<Creature> creatures = collection.Find(query).ToList();
+				return creatures;
+			}
+		}
+
+		/// <summary>
+		/// Query for a list of creates from the given collection.
+		/// </summary>
+		/// <returns></returns>
+		public List<Creature> GetCreatureQuery(string collectionName, Query query)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (!db.CollectionExists(collectionName))
+				{
+					return new List<Creature>();
+				}
+
+				var collection = db.GetCollection<Creature>(collectionName);
 				List<Creature> creatures = collection.Find(query).ToList();
 				return creatures;
 			}
@@ -275,33 +353,6 @@ namespace Combiner
 				// These caused a 3GB spike in memory usage
 				//collection.EnsureIndex(x => x.Rank);
 				//collection.EnsureIndex(x => x.Abilities);
-			}
-		}
-
-		/// <summary>
-		/// Creates a collection with the given name.
-		/// </summary>
-		/// <param name="name"></param>
-		public void CreateCollection(string name)
-		{
-			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
-			{
-				db.GetCollection<Creature>(name); // Does this create a collection if one doesn't exist?
-			}
-		}
-
-		/// <summary>
-		/// Function used for testing import/export.
-		/// Could continue to use in the application
-		/// </summary>
-		public void DeleteCollection(string name)
-		{
-			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
-			{
-				if (db.CollectionExists(name))
-				{
-					db.DropCollection(name);
-				}
 			}
 		}
 

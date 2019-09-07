@@ -144,7 +144,7 @@ namespace Combiner
 			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, ProgressVM, database, importExportHandler, creatureCsvWriter);
 			SelectedCreatureVM = new SelectedCreatureVM(CreatureDataVM);
 
-			DatabaseManagerVM = new DatabaseManagerVM();
+			DatabaseManagerVM = new DatabaseManagerVM(database);
 
 		}
 

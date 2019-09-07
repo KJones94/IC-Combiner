@@ -169,21 +169,21 @@ namespace Combiner
 		private async void FilterCreatures(object obj)
 		{
 			//m_ProgressVM.StartWork();
-			await Task.Run(() =>
+			//await Task.Run(() =>
+			//{
+			if (IsQueryFilteringSelected)
 			{
-				if (IsQueryFilteringSelected)
+				m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetCreatureQuery(BuildFilterQuery()));
+			}
+			else
+			{
+				if (m_CreatureDataVM.Creatures.Count != m_CreatureDataVM.TotalCreatureCount)
 				{
-					m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetCreatureQuery(BuildFilterQuery()));
+					m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetAllCreatures());
 				}
-				else
-				{
-					if (m_CreatureDataVM.Creatures.Count != m_CreatureDataVM.TotalCreatureCount)
-					{
-						m_CreatureDataVM.Creatures = new ObservableCollection<Creature>(m_Database.GetAllCreatures());
-					}
-					m_CreatureDataVM.CreaturesView.Filter = CreatureFilter;
-				}
-			});
+				m_CreatureDataVM.CreaturesView.Filter = CreatureFilter;
+			}
+			//});
 			//m_ProgressVM.EndWork();
 		}
 
