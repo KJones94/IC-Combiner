@@ -174,8 +174,24 @@ namespace Combiner
 			// Are you sure window?
 			if (!string.IsNullOrEmpty(SelectedCollection))
 			{
-				m_Database.DeleteCollection(SelectedCollection);
-				UpdateCollections();
+				if (SelectedCollection == m_CreaturesCollectionName)
+				{
+					MessageBox.Show("Cannot delete the main creature collection");
+				}
+				else
+				{
+					MessageBoxResult result = 
+						MessageBox.Show(
+							"Are you sure you want to delete this collection?", 
+							"Database Warning", 
+							MessageBoxButton.YesNo, 
+							MessageBoxImage.Warning);
+					if (result == MessageBoxResult.Yes)
+					{
+						m_Database.DeleteCollection(SelectedCollection);
+						UpdateCollections();
+					}
+				}
 			}
 		}
 
