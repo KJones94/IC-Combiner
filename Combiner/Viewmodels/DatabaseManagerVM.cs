@@ -122,6 +122,7 @@ namespace Combiner
 			}
 			else if (m_Database.CreateCollection(CreateCollectionName))
 			{
+				CreateCollectionName = string.Empty;
 				UpdateCollections();
 			}
 			else

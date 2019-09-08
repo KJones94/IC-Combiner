@@ -42,7 +42,12 @@
 		</Grid>
 		<StackPanel Grid.Row="1" Orientation="Horizontal">
 			<Label VerticalAlignment="Center">Name:</Label>
-			<TextBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Text="{Binding CreateCollectionName}"/>
+			<TextBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" 
+					 Text="{Binding CreateCollectionName, UpdateSourceTrigger=PropertyChanged}">
+				<TextBox.InputBindings>
+					<KeyBinding Key="Return" Command="{Binding CreateCollectionCommand}"/>
+				</TextBox.InputBindings>
+			</TextBox>
 			<Button Content="Create" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding CreateCollectionCommand}"/>
 		</StackPanel>
 	</Grid>

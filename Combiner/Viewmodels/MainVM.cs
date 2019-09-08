@@ -129,7 +129,8 @@ namespace Combiner
 		{
 			DatabaseManagerWindow window = new DatabaseManagerWindow();
 			window.DataContext = DatabaseManagerVM;
-			window.Show();
+			//window.Show();
+			window.ShowDialog();
 		}
 
 		public MainVM()
