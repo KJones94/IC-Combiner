@@ -12,8 +12,8 @@ namespace Combiner
 	{
 		private readonly string m_CreaturesCollectionName = "creatures";
 
-		public delegate void CollectionActivatedHandler(string collection);
-		public event CollectionActivatedHandler CollectionActivatedEvent;
+		public delegate void CollectionChangeHandler(string collection);
+		public event CollectionChangeHandler CollectionChangedEvent;
 
 		Database m_Database;
 
@@ -80,7 +80,7 @@ namespace Combiner
 			if (!string.IsNullOrEmpty(SelectedCollection))
 			{
 				ActiveCollection = SelectedCollection;
-				CollectionActivatedEvent?.Invoke(ActiveCollection);
+				CollectionChangedEvent?.Invoke(ActiveCollection);
 			}
 		}
 
@@ -180,6 +180,15 @@ namespace Combiner
 		{
 
 			m_Database.SaveCreature(creature, collectionName);
+		}
+
+		public void UnsaveCreature(Creature creature)
+		{
+			if (ActiveCollection != m_CreaturesCollectionName)
+			{
+				m_Database.UnsaveCreature(creature, ActiveCollection);
+				CollectionChangedEvent?.Invoke(ActiveCollection);
+			}
 		}
 
 	}

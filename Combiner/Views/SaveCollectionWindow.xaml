@@ -11,8 +11,8 @@
 
 
 		<StackPanel Orientation="Horizontal">
-			<Button Width="50" HorizontalAlignment="Left" Command="{Binding SaveCreatureCommand}">Save</Button>
-			<Button Width="50" HorizontalAlignment="Right">Cancel</Button>
+			<Button Width="50" HorizontalAlignment="Left" Command="{Binding SaveCreatureCommand}" Click="Save_Click">Save</Button>
+			<Button Width="50" HorizontalAlignment="Right" IsCancel="True">Cancel</Button>
 		</StackPanel>
     </StackPanel>
 </Window>

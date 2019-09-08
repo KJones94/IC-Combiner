@@ -43,7 +43,7 @@ namespace Combiner
 			m_ProgressVM = progressVM;
 			m_Database = database;
 			m_DatabaseManagerVM = databaseManagerVM;
-			m_DatabaseManagerVM.CollectionActivatedEvent += UpdateCollection;
+			m_DatabaseManagerVM.CollectionChangedEvent += UpdateCollection;
 			m_ActiveFilters = new List<CreatureFilter>();
 			IsQueryFilteringSelected = true;
 			InitIsActiveHandlers();

@@ -147,7 +147,7 @@ namespace Combiner
 			{
 				var window = new SaveCollectionWindow();
 				window.DataContext = new SaveCollectionVM(SelectedCreature, m_DatabaseManagerVM);
-				window.Show();
+				window.ShowDialog();
 			}
 		}
 
@@ -172,7 +172,7 @@ namespace Combiner
 		{
 			if (SelectedCreature != null)
 			{
-				m_Database.UnsaveCreature(SelectedCreature);
+				m_DatabaseManagerVM.UnsaveCreature(SelectedCreature);
 			}
 		}
 	}
