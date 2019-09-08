@@ -73,6 +73,23 @@ namespace Combiner
 			}
 		}
 
+		public bool RenameCollection(string currentName, string newName)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (db.CollectionExists(newName))
+				{
+					return false;
+				}
+				if (db.CollectionExists(currentName))
+				{
+					db.RenameCollection(currentName, newName);
+					return true;
+				}
+				return false;
+			}
+		}
+
 		/// <summary>
 		/// Gets all creatures from the creatures collection.
 		/// </summary>

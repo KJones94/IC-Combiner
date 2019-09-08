@@ -37,18 +37,29 @@
 				<Button Content="Delete" Height="20" Margin="10" Command="{Binding DeleteCollectionCommand}"/>
 				<Button Content="Import" Height="20" Margin="10"/>
 				<Button Content="Export" Height="20" Margin="10"/>
-				<Button Content="Rename" Height="20" Margin="10"/>
 			</StackPanel>
 		</Grid>
-		<StackPanel Grid.Row="1" Orientation="Horizontal">
-			<Label VerticalAlignment="Center">Name:</Label>
-			<TextBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" 
+		<StackPanel Grid.Row="1">
+			<StackPanel Orientation="Horizontal">
+				<Label VerticalAlignment="Center">Name:</Label>
+				<TextBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" 
 					 Text="{Binding CreateCollectionName, UpdateSourceTrigger=PropertyChanged}">
-				<TextBox.InputBindings>
-					<KeyBinding Key="Return" Command="{Binding CreateCollectionCommand}"/>
-				</TextBox.InputBindings>
-			</TextBox>
-			<Button Content="Create" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding CreateCollectionCommand}"/>
+					<TextBox.InputBindings>
+						<KeyBinding Key="Return" Command="{Binding CreateCollectionCommand}"/>
+					</TextBox.InputBindings>
+				</TextBox>
+				<Button Content="Create" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding CreateCollectionCommand}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label VerticalAlignment="Center">New name:</Label>
+				<TextBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" 
+					 Text="{Binding RenameCollectionName, UpdateSourceTrigger=PropertyChanged}">
+					<TextBox.InputBindings>
+						<KeyBinding Key="Return" Command="{Binding RenameCollectionCommand}"/>
+					</TextBox.InputBindings>
+				</TextBox>
+				<Button Content="Rename" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding RenameCollectionCommand}"/>
+			</StackPanel>
 		</StackPanel>
 	</Grid>
 </Window>

@@ -119,7 +119,7 @@ namespace Combiner
 		{
 			if (!IsCollectionNameValid(CreateCollectionName))
 			{
-				MessageBox.Show("Name can only contain numbers and letters.");
+				MessageBox.Show("Name must only contain numbers and letters.");
 			}
 			else if (m_Database.CreateCollection(CreateCollectionName))
 			{
@@ -190,6 +190,63 @@ namespace Combiner
 					{
 						m_Database.DeleteCollection(SelectedCollection);
 						UpdateCollections();
+					}
+				}
+			}
+		}
+
+		private string m_RenameCollectionName;
+		public string RenameCollectionName
+		{
+			get { return m_RenameCollectionName; }
+			set
+			{
+				if (value != m_RenameCollectionName)
+				{
+					m_RenameCollectionName = value;
+					OnPropertyChanged(nameof(RenameCollectionName));
+				}
+			}
+		}
+
+		private ICommand m_RenameCollectionCommand;
+		public ICommand RenameCollectionCommand
+		{
+			get {
+				return m_RenameCollectionCommand
+				  ?? (m_RenameCollectionCommand = new RelayCommand(RenameCollection));
+			}
+			set
+			{
+				if (value != m_RenameCollectionCommand)
+				{
+					m_RenameCollectionCommand = value;
+					OnPropertyChanged(nameof(RenameCollectionCommand));
+				}
+			}
+		}
+		private void RenameCollection(object o)
+		{
+			if (!string.IsNullOrEmpty(SelectedCollection))
+			{
+				if (SelectedCollection == m_CreaturesCollectionName)
+				{
+					MessageBox.Show("Cannot rename the main creature collection");
+				}
+				else
+				{
+					if (!IsCollectionNameValid(RenameCollectionName))
+					{
+						MessageBox.Show("Name must contain only numbers and letters.");
+					}
+					else if (m_Database.RenameCollection(SelectedCollection, RenameCollectionName))
+					{
+						RenameCollectionName = string.Empty;
+						UpdateCollections();
+					}
+					else
+					{
+						MessageBox.Show("Name already exists. Keep in mind casing is insensitive.");
 					}
 				}
 			}
