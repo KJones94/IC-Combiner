@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Windows;
 
 namespace Combiner
 {
@@ -116,9 +117,9 @@ namespace Combiner
 		}
 		private void CreateCollection(object o)
 		{
-			if (string.IsNullOrEmpty(CreateCollectionName))
+			if (!IsCollectionNameValid(CreateCollectionName))
 			{
-				// do something
+				MessageBox.Show("Name can only contain numbers and letters.");
 			}
 			else if (m_Database.CreateCollection(CreateCollectionName))
 			{
@@ -127,8 +128,15 @@ namespace Combiner
 			}
 			else
 			{
-				// Failure explanation
+				MessageBox.Show("Name already exists. Keep in mind casing is insensitive.");
 			}
+		}
+
+		private bool IsCollectionNameValid(string collectionName)
+		{
+			// '_' is valid but simpler to not allow unless asked for
+			return !string.IsNullOrEmpty(collectionName) 
+				&& collectionName.All(c => char.IsLetterOrDigit(c));
 		}
 
 		private string m_SelectedCollection;
