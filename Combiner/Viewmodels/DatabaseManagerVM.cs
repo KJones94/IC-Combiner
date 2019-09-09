@@ -17,10 +17,12 @@ namespace Combiner
 		public event CollectionChangeHandler CollectionChangedEvent;
 
 		Database m_Database;
+		private ImportExportHandler m_ImportExportHandler;
 
-		public DatabaseManagerVM(Database database)
+		public DatabaseManagerVM(Database database, ImportExportHandler importExportHandler)
 		{
 			m_Database = database;
+			m_ImportExportHandler = importExportHandler;
 			ActiveCollection = m_CreaturesCollectionName;
 		}
 
@@ -171,7 +173,6 @@ namespace Combiner
 		}
 		private void DeleteCollection(object o)
 		{
-			// Are you sure window?
 			if (!string.IsNullOrEmpty(SelectedCollection))
 			{
 				if (SelectedCollection == m_CreaturesCollectionName)
@@ -248,6 +249,61 @@ namespace Combiner
 					{
 						MessageBox.Show("Name already exists. Keep in mind casing is insensitive.");
 					}
+				}
+			}
+		}
+
+		private ICommand m_ImportCollectionCommand;
+		public ICommand ImportCollectionCommand
+		{
+			get {
+				return m_ImportCollectionCommand
+				  ?? (m_ImportCollectionCommand = new RelayCommand(ImportCollection));
+			}
+		}
+		private void ImportCollection(object o)
+		{
+			if (!string.IsNullOrEmpty(SelectedCollection))
+			{
+				if (SelectedCollection == m_CreaturesCollectionName)
+				{
+					MessageBox.Show("Cannot import into the main creature collection");
+				}
+				else
+				{
+					MessageBoxResult result =
+						MessageBox.Show(
+							"Are you sure you want to import into this collection?",
+							"Database Warning",
+							MessageBoxButton.YesNo,
+							MessageBoxImage.Warning);
+					if (result == MessageBoxResult.Yes)
+					{
+						m_ImportExportHandler.Import(SelectedCollection);
+					}
+				}
+			}
+		}
+
+		private ICommand m_ExportCollectionCommand;
+		public ICommand ExportCollectionCommand
+		{
+			get {
+				return m_ExportCollectionCommand
+				  ?? (m_ExportCollectionCommand = new RelayCommand(ExportCollection));
+			}
+		}
+		private void ExportCollection(object o)
+		{
+			if (!string.IsNullOrEmpty(SelectedCollection))
+			{
+				if (SelectedCollection == m_CreaturesCollectionName)
+				{
+					MessageBox.Show("Cannot export the main creature collection");
+				}
+				else
+				{
+					m_ImportExportHandler.Export(SelectedCollection);
 				}
 			}
 		}

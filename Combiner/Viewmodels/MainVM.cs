@@ -140,7 +140,7 @@ namespace Combiner
 			CreatureCsvWriter creatureCsvWriter = new CreatureCsvWriter();
 
 			ProgressVM = new ProgressVM();
-			DatabaseManagerVM = new DatabaseManagerVM(database);
+			DatabaseManagerVM = new DatabaseManagerVM(database, importExportHandler);
 			CreatureDataVM = new CreatureDataVM(database, DatabaseManagerVM);
 			FiltersVM = new FiltersVM(CreatureDataVM, ProgressVM, database, DatabaseManagerVM);
 			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, ProgressVM, database, importExportHandler, creatureCsvWriter);

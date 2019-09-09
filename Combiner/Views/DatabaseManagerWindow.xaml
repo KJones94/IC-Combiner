@@ -35,8 +35,8 @@
 			<StackPanel Grid.Column="1">
 				<Button Content="Activate" Height="20" Margin="10" Command="{Binding ActivateCollectionCommand}"/>
 				<Button Content="Delete" Height="20" Margin="10" Command="{Binding DeleteCollectionCommand}"/>
-				<Button Content="Import" Height="20" Margin="10"/>
-				<Button Content="Export" Height="20" Margin="10"/>
+				<Button Content="Import" Height="20" Margin="10" Command="{Binding ImportCollectionCommand}"/>
+				<Button Content="Export" Height="20" Margin="10" Command="{Binding ExportCollectionCommand}"/>
 			</StackPanel>
 		</Grid>
 		<StackPanel Grid.Row="1">

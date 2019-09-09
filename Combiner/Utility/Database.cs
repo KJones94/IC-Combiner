@@ -256,6 +256,22 @@ namespace Combiner
 		}
 
 		/// <summary>
+		/// Adds the creatures to the saved creatures collection
+		/// </summary>
+		/// <param name="creatures"></param>
+		public void SaveCreatures(IEnumerable<Creature> creatures, string collectionName)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (db.CollectionExists(collectionName))
+				{
+					var collection = db.GetCollection<Creature>(collectionName);
+					collection.InsertBulk(creatures);
+				}
+			}
+		}
+
+		/// <summary>
 		/// Adds the creature to the saved creatures collection
 		/// </summary>
 		/// <param name="creature"></param>
