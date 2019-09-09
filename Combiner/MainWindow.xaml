@@ -16,8 +16,6 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="File">
-				<MenuItem Header="Export Saved Creatures" Command="{Binding DatabaseVM.ExportSavedCreaturesCommand}"/>
-				<MenuItem Header="Import Saved Creatures" Command="{Binding DatabaseVM.ImportSavedCreaturesCommand}"/>
 				<MenuItem Header="Export to CSV" Command="{Binding DatabaseVM.ExportToCsvCommand}"/>
 			</MenuItem>
 			<MenuItem Header="Filtering">
@@ -26,8 +24,6 @@
 			<MenuItem Header="Database">
 				<MenuItem Header="DatabaseManager" Command="{Binding OpenDatabaseManagerWindowCommand}"/>
 				<MenuItem Header="Create Database" Command="{Binding DatabaseVM.CreateDatabaseCommand}"/>
-				<MenuItem Header="Load Saved Creatures" Command="{Binding DatabaseVM.LoadSavedCreaturesCommand}"/>
-				<MenuItem Header="Delete Saved Creatures" Command="{Binding DatabaseVM.DeleteSavedCreaturesCommand}"/>
 			</MenuItem>
 			<MenuItem Header="Help">
 				<MenuItem Header="Guide" Click="MenuItem_GuideClick"/>

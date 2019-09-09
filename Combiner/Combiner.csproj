@@ -168,9 +168,6 @@
     <Compile Include="Views\DatabaseManagerWindow.xaml.cs">
       <DependentUpon>DatabaseManagerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DatabaseView.xaml.cs">
-      <DependentUpon>DatabaseView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\FilterViews\FilterButton.xaml.cs">
       <DependentUpon>FilterButton.xaml</DependentUpon>
     </Compile>
@@ -228,10 +225,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DatabaseManagerWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\DatabaseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

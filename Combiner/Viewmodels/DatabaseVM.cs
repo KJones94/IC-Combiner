@@ -36,30 +36,6 @@ namespace Combiner
 			m_CreatureCsvWriter = creatureCsvWriter;
 		}
 
-		private string m_CurrentCollection;
-		public string CurrentCollection
-		{
-			get { return m_CurrentCollection; }
-			set
-			{
-				if (m_CurrentCollection != value)
-				{
-					m_CurrentCollection = value;
-					OnPropertyChanged(nameof(CurrentCollection));
-				}
-			}
-		}
-
-		public void SaveCreature(Creature creature)
-		{
-
-		}
-
-		public void UnsaveCreature(Creature creature)
-		{
-
-		}
-
 		private ICommand m_CreateDatabaseCommand;
 		public ICommand CreateDatabaseCommand
 		{
@@ -125,95 +101,6 @@ namespace Combiner
 		{
 			m_CreatureVM.Creatures = new ObservableCollection<Creature>(m_Database.GetAllCreatures());
 			m_CreatureVM.CreaturesView.Filter = m_FiltersVM.CreatureFilter;
-		}
-
-		private ICommand m_LoadSavedCreaturesCommand;
-		public ICommand LoadSavedCreaturesCommand
-		{
-			get
-			{
-				return m_LoadSavedCreaturesCommand ??
-				  (m_LoadSavedCreaturesCommand = new RelayCommand(LoadSavedCreatures));
-			}
-			set
-			{
-				if (value != m_LoadSavedCreaturesCommand)
-				{
-					m_LoadSavedCreaturesCommand = value;
-					OnPropertyChanged(nameof(LoadSavedCreaturesCommand));
-				}
-			}
-		}
-		private void LoadSavedCreatures(object obj)
-		{
-			m_CreatureVM.Creatures = new ObservableCollection<Creature>(m_Database.GetSavedCreatures());
-			m_CreatureVM.CreaturesView.Filter = m_FiltersVM.CreatureFilter;
-		}
-
-		private ICommand m_DeleteSavedCreaturesCommand;
-		public ICommand DeleteSavedCreaturesCommand
-		{
-			get
-			{
-				return m_DeleteSavedCreaturesCommand ??
-				  (m_DeleteSavedCreaturesCommand = new RelayCommand(DeleteSavedCreatures));
-			}
-			set
-			{
-				if (value != m_DeleteSavedCreaturesCommand)
-				{
-					m_DeleteSavedCreaturesCommand = value;
-					OnPropertyChanged(nameof(DeleteSavedCreaturesCommand));
-				}
-			}
-		}
-		private void DeleteSavedCreatures(object obj)
-		{
-			m_Database.DeleteSavedCreatures();
-		}
-
-		private ICommand m_ExportSavedCreaturesCommand;
-		public ICommand ExportSavedCreaturesCommand
-		{
-			get
-			{
-				return m_ExportSavedCreaturesCommand ??
-					(m_ExportSavedCreaturesCommand = new RelayCommand(ExportSavedCreature));
-			}
-			set
-			{
-				if (value != m_ExportSavedCreaturesCommand)
-				{
-					m_ExportSavedCreaturesCommand = value;
-					OnPropertyChanged(nameof(ExportSavedCreaturesCommand));
-				}
-			}
-		}
-		public void ExportSavedCreature(object obj)
-		{
-			m_ImportExportHandler.Export();
-		}
-
-		private ICommand m_ImportSavedCreaturesCommand;
-		public ICommand ImportSavedCreaturesCommand
-		{
-			get
-			{
-				return m_ImportSavedCreaturesCommand ??
-					(m_ImportSavedCreaturesCommand = new RelayCommand(ImportSavedCreature));
-			}
-			set
-			{
-				if (value != m_ImportSavedCreaturesCommand)
-				{
-					m_ImportSavedCreaturesCommand = value;
-					OnPropertyChanged(nameof(ImportSavedCreaturesCommand));
-				}
-			}
-		}
-		public void ImportSavedCreature(object obj)
-		{
-			m_ImportExportHandler.Import();
 		}
 
 		private ICommand m_ExportToCsvCommand;
