@@ -45,6 +45,7 @@ namespace Combiner
 			return StockType.Bird;
 		}
 
+		// TODO1: Change this to special case
 		private void InitBodyParts()
 		{
 			BodyParts = new Dictionary<Limb, bool>();
@@ -57,7 +58,7 @@ namespace Combiner
 			switch (Type)
 			{
 				case StockType.Bird:
-					BodyParts[Limb.FrontLegs] = false;
+					//BodyParts[Limb.FrontLegs] = false;
 					BodyParts[Limb.Claws] = false;
 					break;
 
@@ -67,13 +68,13 @@ namespace Combiner
 					break;
 
 				case StockType.Arachnid:
-					if (Name == StockNames.ManOWar)
-					{
-						BodyParts[Limb.FrontLegs] = false;
-						BodyParts[Limb.BackLegs] = false;
-						BodyParts[Limb.Wings] = false;
-					}
-					else if (StockNames.ClawedArachnids.Contains(Name))
+					//if (Name == StockNames.ManOWar)
+					//{
+					//	BodyParts[Limb.FrontLegs] = false;
+					//	BodyParts[Limb.BackLegs] = false;
+					//	BodyParts[Limb.Wings] = false;
+					//}
+					if (StockNames.ClawedArachnids.Contains(Name))
 					{
 						BodyParts[Limb.Wings] = false;
 					}
@@ -85,8 +86,8 @@ namespace Combiner
 					break;
 
 				case StockType.Snake:
-					BodyParts[Limb.FrontLegs] = false;
-					BodyParts[Limb.BackLegs] = false;
+					//BodyParts[Limb.FrontLegs] = false;
+					//BodyParts[Limb.BackLegs] = false;
 					BodyParts[Limb.Claws] = false;
 					BodyParts[Limb.Wings] = false;
 					break;
@@ -96,30 +97,106 @@ namespace Combiner
 					break;
 
 				case StockType.Fish:
-					if (Name == StockNames.HumpbackWhale)
-					{
-						BodyParts[Limb.BackLegs] = false;
-						BodyParts[Limb.Claws] = false;
-						BodyParts[Limb.Wings] = false;
-					}
-					else if (Name == StockNames.BlueRingedOctopus)
-					{
-						BodyParts[Limb.Claws] = false;
-						BodyParts[Limb.Wings] = false;
-					}
-					else
-					{
-						BodyParts[Limb.FrontLegs] = false;
-						BodyParts[Limb.BackLegs] = false;
-						BodyParts[Limb.Claws] = false;
-						BodyParts[Limb.Wings] = false;
-					}
+					//if (Name == StockNames.HumpbackWhale)
+					//{
+					//	BodyParts[Limb.BackLegs] = false;
+					//	BodyParts[Limb.Claws] = false;
+					//	BodyParts[Limb.Wings] = false;
+					//}
+					//else if (Name == StockNames.BlueRingedOctopus)
+					//{
+					//	BodyParts[Limb.Claws] = false;
+					//	BodyParts[Limb.Wings] = false;
+					//}
+					//else
+					//{
+						//BodyParts[Limb.FrontLegs] = false;
+						//BodyParts[Limb.BackLegs] = false;
+					BodyParts[Limb.Claws] = false;
+					BodyParts[Limb.Wings] = false;
+					//}
 					break;
 
 				default:
 					break;
 			}
 		}
+
+		//private void InitBodyParts()
+		//{
+		//	BodyParts = new Dictionary<Limb, bool>();
+		//	foreach (Limb limb in Enum.GetValues(typeof(Limb)))
+		//	{
+		//		BodyParts.Add(limb, true);
+		//	}
+		//	BodyParts[Limb.Nothing] = false;
+
+		//	switch (Type)
+		//	{
+		//		case StockType.Bird:
+		//			BodyParts[Limb.FrontLegs] = false;
+		//			BodyParts[Limb.Claws] = false;
+		//			break;
+
+		//		case StockType.Quadruped:
+		//			BodyParts[Limb.Claws] = false;
+		//			BodyParts[Limb.Wings] = false;
+		//			break;
+
+		//		case StockType.Arachnid:
+		//			if (Name == StockNames.ManOWar)
+		//			{
+		//				BodyParts[Limb.FrontLegs] = false;
+		//				BodyParts[Limb.BackLegs] = false;
+		//				BodyParts[Limb.Wings] = false;
+		//			}
+		//			else if (StockNames.ClawedArachnids.Contains(Name))
+		//			{
+		//				BodyParts[Limb.Wings] = false;
+		//			}
+		//			else
+		//			{
+		//				BodyParts[Limb.Claws] = false;
+		//				BodyParts[Limb.Wings] = false;
+		//			}
+		//			break;
+
+		//		case StockType.Snake:
+		//			BodyParts[Limb.FrontLegs] = false;
+		//			BodyParts[Limb.BackLegs] = false;
+		//			BodyParts[Limb.Claws] = false;
+		//			BodyParts[Limb.Wings] = false;
+		//			break;
+
+		//		case StockType.Insect:
+		//			BodyParts[Limb.Claws] = false;
+		//			break;
+
+		//		case StockType.Fish:
+		//			if (Name == StockNames.HumpbackWhale)
+		//			{
+		//				BodyParts[Limb.BackLegs] = false;
+		//				BodyParts[Limb.Claws] = false;
+		//				BodyParts[Limb.Wings] = false;
+		//			}
+		//			else if (Name == StockNames.BlueRingedOctopus)
+		//			{
+		//				BodyParts[Limb.Claws] = false;
+		//				BodyParts[Limb.Wings] = false;
+		//			}
+		//			else
+		//			{
+		//				BodyParts[Limb.FrontLegs] = false;
+		//				BodyParts[Limb.BackLegs] = false;
+		//				BodyParts[Limb.Claws] = false;
+		//				BodyParts[Limb.Wings] = false;
+		//			}
+		//			break;
+
+		//		default:
+		//			break;
+		//	}
+		//}
 
 		public override string ToString()
 		{

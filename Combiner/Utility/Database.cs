@@ -12,7 +12,7 @@ namespace Combiner
 {
 	public class Database
 	{
-		private readonly string m_CreaturesCollectionName = "creatures";
+		public readonly string m_CreaturesCollectionName = "creatures";
 		private readonly string m_SavedCreaturesCollectionName = "saved_creatures";
 
 		public Database()
@@ -87,6 +87,20 @@ namespace Combiner
 					return true;
 				}
 				return false;
+			}
+		}
+
+		public int GetCount(string collectionName)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (!db.CollectionExists(collectionName))
+				{
+					return -1;
+				}
+
+				var collection = db.GetCollection<Creature>(collectionName);
+				return collection.Count();
 			}
 		}
 

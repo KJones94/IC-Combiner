@@ -184,7 +184,9 @@ namespace Combiner
 			}
 			else
 			{
-				if (m_CreatureDataVM.Creatures.Count != m_CreatureDataVM.TotalCreatureCount)
+				// TODO: This keeps the user from 
+				if (m_DatabaseManagerVM.ActiveCollection != m_Database.m_CreaturesCollectionName
+					|| m_CreatureDataVM.Creatures.Count != m_CreatureDataVM.TotalCreatureCount)
 				{
 					m_CreatureDataVM.Creatures = 
 						new ObservableCollection<Creature>(

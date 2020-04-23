@@ -1,0 +1,110 @@
+﻿
+
+Limb Values
+
+0 - nothing
+1 - General (chosen or something...)
+2 - front legs
+3 - back legs
+4 - head
+5 - tail
+6 - torso
+7 - wings
+8 - claws
+
+Stocks types
+
+Not always the most consistent but generally fit stock animals
+
+0 - bird (flying with back legs)
+1 - quadruped (4-legged animals)
+2 - arachnid (can have claws)
+3 - snakes
+4 - insects (flying)
+5 - fish
+
+
+
+General stock-to-limb values
+
+all: head, tail, torso
+bird: + back legs, + wings
+quadruped: + front legs, + back legs
+arachnid: + front legs, + back legs, + claws
+snakes: none
+insects: + front legs, + back legs, + wings
+fish: none
+
+Edge case stock at the moment
+
+man o war: arachnid, - front legs, - back legs
+humpback: fish, + front legs (?)
+ant: arachnid, - claws
+behemoth: ^
+spiders: ^
+other non-flying insects: ^
+
+
+Rules for combining body parts
+
+quad + bird: 
+	- if bird torso, then wings
+	- if quad torso, then front legs
+	- if quad front legs, then torso
+
+quad + arachnid:
+	- if arachnid torso, then claws
+
+quad + insect:
+	- if insect torso, then wings
+
+arachnid + snake:
+	- if arachnid torso, then front legs, back legs, and claws
+
+arachnid + fish:
+	- if arachnid torso, then front legs, back legs, and claws
+
+arachnid + bird:
+	- if arachnid torso, then front legs and claws
+
+arachnid + insect:
+	- if arachnid torso, then claws
+	- if insect torso, then wings
+
+insect + snake
+	- if insect torso, then front legs, back legs, and wings
+
+insect + fish:
+	- if insect torso, then front legs, back legs, and wings
+
+insect + bird:
+	- if insect torso, then front legs
+
+bird + snake:
+	- if bird torso, then back legs and wings
+
+bird + fish:
+	- if bird torso, then back legs and wings
+	
+
+Generalizing Rules
+
+all stock actually have front legs and back legs
+limbs are filled in based on the chosen torso, and available limbs between stock
+	- front legs, back legs, wings, and claws are forced based on torso
+	- examples
+		- arachnid + fish, arachnid chest forces all available limbs
+special cases for creatures that use a certain body type with/out swapping specific limbs
+	- arachnid with claw or no claws
+	- walrus can't swap front legs or back legs
+	- man o' war can't swap front legs or back legs
+
+Fish can't have front or back legs without torso
+Snakes can't have front or back legs without torso
+Birds can't have front legs without torso
+Birds must have front legs with torso
+Must have wings with bird torso
+Must have wings with insect torso
+Must have claws with Clawed Arachnid torso
+Man o' war can't have front or back legs without torso
+Walrus can't have front or back legs without torso

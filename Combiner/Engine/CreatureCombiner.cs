@@ -177,6 +177,52 @@ namespace Combiner
 		/// <param name="right"></param>
 		/// <param name="bodyParts"></param>
 		/// <returns></returns>
+		//private List<Dictionary<Limb, Side>> PruneBodyParts(Stock left, Stock right,
+		//	List<Dictionary<Limb, Side>> bodyParts)
+		//{
+		//	// Prune based on stock type and limbs
+
+		//	// Rules:
+		//	// (if with bird) quad front legs -> torso
+		//	// bird torso -> back legs, wings
+		//	// quad torso -> front legs, back legs
+		//	// arachnid torso -> front legs, back legs, claws (if clawed)
+		//	// insect torso -> front legs, back legs, wings
+
+		//	List<Dictionary<Limb, Side>> prunedBodyParts = new List<Dictionary<Limb, Side>>();
+		//	foreach (Dictionary<Limb, Side> dict in bodyParts)
+		//	{
+		//		if (!CheckSpecialCases(left, right, dict))
+		//		{
+		//			continue; //bad body parts
+		//		}
+
+		//		// check front legs edge case
+		//		if (!IsQuadrupedBirdFrontLegsCorrect(left, right, dict))
+		//		{
+		//			continue; // bad body parts
+		//		}
+
+		//		// Torso can't be empty or null
+		//		if (dict[Limb.Torso] == Side.Left)
+		//		{
+		//			if (IsTorsoRelatedPartsCorrect(left, dict))
+		//			{
+		//				prunedBodyParts.Add(dict);
+		//			}
+		//		}
+		//		else if (dict[Limb.Torso] == Side.Right)
+		//		{
+		//			if (IsTorsoRelatedPartsCorrect(right, dict))
+		//			{
+		//				prunedBodyParts.Add(dict);
+		//			}
+		//		}
+		//	}
+
+		//	return prunedBodyParts;
+		//}
+
 		private List<Dictionary<Limb, Side>> PruneBodyParts(Stock left, Stock right,
 			List<Dictionary<Limb, Side>> bodyParts)
 		{
@@ -192,35 +238,176 @@ namespace Combiner
 			List<Dictionary<Limb, Side>> prunedBodyParts = new List<Dictionary<Limb, Side>>();
 			foreach (Dictionary<Limb, Side> dict in bodyParts)
 			{
-				if (!CheckSpecialCases(left, right, dict))
-				{
-					continue; //bad body parts
-				}
+				//if (!CheckSpecialCases(left, right, dict))
+				//{
+				//	continue; //bad body parts
+				//}
 
-				// check front legs edge case
-				if (!IsQuadrupedBirdFrontLegsCorrect(left, right, dict))
-				{
-					continue; // bad body parts
-				}
+				//// check front legs edge case
+				//if (!IsQuadrupedBirdFrontLegsCorrect(left, right, dict))
+				//{
+				//	continue; // bad body parts
+				//}
 
-				// Torso can't be empty or null
-				if (dict[Limb.Torso] == Side.Left)
+				// TODO1: Add manowar, walrus special cases
+
+				if (dict[Limb.Torso] != Side.Empty || dict[Limb.Torso] != Side.Null)
 				{
-					if (IsTorsoRelatedPartsCorrect(left, dict))
+					if (IsTorsoPartsCorrect(left, right, dict))
 					{
 						prunedBodyParts.Add(dict);
 					}
 				}
-				else if (dict[Limb.Torso] == Side.Right)
+
+				
+
+				// Torso can't be empty or null
+				//if (dict[Limb.Torso] == Side.Left)
+				//{
+
+				//	if (IsTorsoRelatedPartsCorrect(left, dict))
+				//	{
+				//		prunedBodyParts.Add(dict);
+				//	}
+				//}
+				//else if (dict[Limb.Torso] == Side.Right)
+				//{
+				//	if (IsTorsoRelatedPartsCorrect(right, dict))
+				//	{
+				//		prunedBodyParts.Add(dict);
+				//	}
+				//}
+				
+			}
+
+			return prunedBodyParts;
+		}
+
+		// this assumes theres a fish
+		private bool IsTorsoPartsCorrect(Stock left, Stock right, Dictionary<Limb, Side> dict)
+		{
+			//Stock primary;
+			//Stock secondary;
+
+			//if (dict[Limb.Torso] == Side.Left)
+			//{
+			//	primary = left;
+			//	secondary = right;
+			//}
+			//else
+			//{
+			//	primary = right;
+			//	secondary = left;
+			//}
+
+			if (dict[Limb.Torso] == Side.Left)
+			{
+				// Fish can't have front or back legs without torso
+				// Snakes can't have front or back legs without torso
+				// Walrus can't have front or back legs without torso
+				// Man o' war can't have front or back legs without torso
+				if (right.Type == StockType.Fish
+					|| right.Type == StockType.Snake
+					|| right.Name == StockNames.Walrus
+					|| right.Name == StockNames.ManOWar)
 				{
-					if (IsTorsoRelatedPartsCorrect(right, dict))
+					if (dict[Limb.FrontLegs] == Side.Right || dict[Limb.BackLegs] == Side.Right)
 					{
-						prunedBodyParts.Add(dict);
+						return false;
+					}
+				}
+				// Birds can't have front legs without torso
+				if (right.Type == StockType.Bird)
+				{
+					if (dict[Limb.FrontLegs] == Side.Right)
+					{
+						return false;
+					}
+				}
+				// Birds must have front legs with torso
+				if (left.Type == StockType.Bird)
+				{
+					if (dict[Limb.FrontLegs] != Side.Left)
+					{
+						return false;
+					}
+				}
+
+				// Must have wings with insect torso
+				// Must have wings with bird torso
+				if (left.Type == StockType.Insect 
+					|| left.Type == StockType.Bird)
+				{
+					if (dict[Limb.Wings] == Side.Empty)
+					{
+						return false;
+					}
+				}
+
+				// Must have claws with Clawed Arachnid torso
+				if (left.Type == StockType.Arachnid)
+				{
+					if (StockNames.ClawedArachnids.Contains(left.Name) && dict[Limb.Claws] == Side.Empty)
+					{
+						return false;
 					}
 				}
 			}
 
-			return prunedBodyParts;
+			else if (dict[Limb.Torso] == Side.Right)
+			{
+				// Fish can't have front or back legs without torso
+				// Snake can't have front or back legs without torso
+				// Walrus can't have front or back legs without torso
+				// Man o' war can't have front or back legs without torso
+				if (left.Type == StockType.Fish
+					|| left.Type == StockType.Snake
+					|| left.Name == StockNames.Walrus
+					|| left.Name == StockNames.ManOWar)
+				{
+					if (dict[Limb.FrontLegs] == Side.Left || dict[Limb.BackLegs] == Side.Left)
+					{
+						return false;
+					}
+				}
+				// Birds can't have front legs without torso
+				if (left.Type == StockType.Bird)
+				{
+					if (dict[Limb.FrontLegs] == Side.Left)
+					{
+						return false;
+					}
+				}
+				// Birds must have front legs with torso
+				if (right.Type == StockType.Bird)
+				{
+					if (dict[Limb.FrontLegs] != Side.Right)
+					{
+						return false;
+					}
+				}
+				// Must have wings with bird torso
+				// Must have wings with insect torso
+				if (right.Type == StockType.Insect 
+					|| right.Type == StockType.Bird)
+				{
+					if (dict[Limb.Wings] == Side.Empty)
+					{
+						return false;
+					}
+				}
+				// Must have claws with Clawed Arachnid torso
+				if (right.Type == StockType.Arachnid)
+				{
+					if (StockNames.ClawedArachnids.Contains(right.Name) && dict[Limb.Claws] == Side.Empty)
+					{
+						return false;
+					}
+				}
+			}
+
+
+			return true;
 		}
 
 		/// <summary>
@@ -262,49 +449,99 @@ namespace Combiner
 		/// <param name="stock"></param>
 		/// <param name="dict"></param>
 		/// <returns></returns>
+		//private bool IsTorsoRelatedPartsCorrect(Stock stock, Dictionary<Limb, Side> dict)
+		//{
+		//	switch (stock.Type)
+		//	{
+		//		case StockType.Bird:
+		//			if (dict[Limb.BackLegs] != Side.Empty && dict[Limb.Wings] != Side.Empty)
+		//			{
+		//				return true;
+		//			}
+		//			break;
+
+		//		case StockType.Quadruped:
+		//			if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
+		//			{
+		//				return true;
+		//			}
+		//			break;
+
+		//		case StockType.Arachnid:
+		//			if (stock.Name == StockNames.ManOWar)
+		//			{
+		//				if (dict[Limb.Claws] != Side.Empty)
+		//				{
+		//					return true;
+		//				}
+		//			}
+		//			else if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
+		//			{
+		//				if (StockNames.ClawedArachnids.Contains(stock.Name) && dict[Limb.Claws] == Side.Empty)
+		//				{
+		//					return false;
+		//				}
+		//				return true;
+		//			}
+		//			break;
+
+		//		case StockType.Insect:
+		//			if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty
+		//				&& dict[Limb.Wings] != Side.Empty)
+		//			{
+		//				return true;
+		//			}
+		//			break;
+
+		//		default:
+		//			return true;
+		//	}
+		//	return false;
+		//}
+
 		private bool IsTorsoRelatedPartsCorrect(Stock stock, Dictionary<Limb, Side> dict)
 		{
 			switch (stock.Type)
 			{
 				case StockType.Bird:
-					if (dict[Limb.BackLegs] != Side.Empty && dict[Limb.Wings] != Side.Empty)
+					if (dict[Limb.Wings] != Side.Empty)
 					{
 						return true;
 					}
 					break;
 
-				case StockType.Quadruped:
-					if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
-					{
-						return true;
-					}
-					break;
+				//case StockType.Quadruped:
+				//	if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
+				//	{
+				//		return true;
+				//	}
+				//	break;
 
 				case StockType.Arachnid:
-					if (stock.Name == StockNames.ManOWar)
+					//if (stock.Name == StockNames.ManOWar)
+					//{
+					//	if (dict[Limb.Claws] != Side.Empty)
+					//	{
+					//		return true;
+					//	}
+					//}
+					//else if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
+					//{
+					if (StockNames.ClawedArachnids.Contains(stock.Name) && dict[Limb.Claws] == Side.Empty)
 					{
-						if (dict[Limb.Claws] != Side.Empty)
-						{
-							return true;
-						}
+						return false;
 					}
-					else if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty)
-					{
-						if (StockNames.ClawedArachnids.Contains(stock.Name) && dict[Limb.Claws] == Side.Empty)
-						{
-							return false;
-						}
-						return true;
-					}
+					return true;
+					//}
 					break;
 
-				case StockType.Insect:
-					if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty
-						&& dict[Limb.Wings] != Side.Empty)
-					{
-						return true;
-					}
-					break;
+				//case StockType.Insect:
+				//	if (dict[Limb.FrontLegs] != Side.Empty && dict[Limb.BackLegs] != Side.Empty
+				//		&& dict[Limb.Wings] != Side.Empty)
+				//	{
+				//		return true;
+				//	}
+				//	break;
 
 				default:
 					return true;

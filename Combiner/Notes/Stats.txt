@@ -1,4 +1,5 @@
-﻿
+﻿Power = (health / (1 - armour)) ^ (.63) * (.19 * damage + 2.56)
+
 armour = armour * .8
 
 take largest size
@@ -6,9 +7,10 @@ take largest size
 size_diff = larger size / smaller size
 health = size_diff ^ exp_hitpoint * hitpoints
 
-water speed = (larger_size - smaller_size) * (-1) * exp_speed * speed + 1
+[Not this...] water speed = (larger_size - smaller_size) * (-1) * exp_speed * speed + 1
 
 or maybe this... water speed = (larger_size / smaller_size) ^ (exp_speed_max + waterspeed_exp) * speed
-
+Airspeed could be the same as ^
+Could it be (larger_size - 1)??
 
 damage and speed_max same as health formula

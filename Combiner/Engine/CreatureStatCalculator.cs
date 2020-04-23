@@ -10,8 +10,9 @@ namespace Combiner
 		public StockStatCalculator Left { get; set; }
 		public StockStatCalculator Right { get; set; }
 		Dictionary<Limb, Side> ChosenBodyParts { get; set; }
-
 		Dictionary<Limb, StockStatCalculator> ChosenLimbs { get; set; }
+
+		
 
 		public CreatureStatCalculator(
 			StockStatCalculator left,

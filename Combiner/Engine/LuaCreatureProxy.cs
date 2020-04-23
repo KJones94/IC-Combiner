@@ -41,7 +41,7 @@ namespace Combiner
 			AttrcombinerScript.Globals["hasrangedmgtype"] = (Func<double, double>)HasRangeDmgType;
 
 			AttrcombinerScript.Globals["DT_BarrierDestroy"] = 4;
-			AttrcombinerScript.Globals["DT_HornNegateFull"] = 2;
+			AttrcombinerScript.Globals["DT_HornNegateFull"] = 4092; // Matt said this
 			AttrcombinerScript.Globals["DT_HornNegateArmour"] = 2;
 			AttrcombinerScript.Globals["DT_Poison"] = 1; // Should this be 256?
 

@@ -1,0 +1,35 @@
+﻿Base
+
+BaseViewModel - holds PropertyChanged code
+RelayCommand - handles commands for the UI
+
+Converters - Specific type conversions for Viewmodel/View
+
+Engine
+
+CreatureBuilder
+CreatureCombiner
+CreatureFactory - Provides a CreatureBuilder
+LuaCreatureProxy - Provides method definitions for Attrcombiner creature creation
+LuaStockProxy - Loads the script for a stock lua file
+StockFactory - Creates new Stock
+
+Filters
+
+
+Models
+
+Creature - All of the important creature data
+CreatureQueryData - Acts as private key for querying and saving creatures
+Stock - Holds attribute data from lua table
+	- Initializes the available body parts
+
+
+Scripts
+
+Stock
+
+Tests? - I think this is old
+
+Utility
+

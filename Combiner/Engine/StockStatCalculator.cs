@@ -147,7 +147,7 @@ namespace Combiner
 		public double CalcLimbWaterSpeed(double stockSize, Limb limb)
 		{
 			double limbWaterSpeed = CalcLimbStats(limb, Attributes.WaterSpeed);
-			// Not right
+			// Not right?
 			double speed = Math.Pow(SizeRatio(stockSize),
 				GetLimbAttributeValue("exp_waterspeed_max")
 				+ GetLimbAttributeValue("exp_speed_max"))
@@ -162,7 +162,10 @@ namespace Combiner
 		public double CalcLimbAirSpeed(double stockSize, Limb limb)
 		{
 			double limbAirSpeed = CalcLimbStats(limb, Attributes.AirSpeed);
-			double speed = Math.Pow(SizeRatio(stockSize), GetLimbAttributeValue("exp_airspeed_max")) * limbAirSpeed;
+			double speed = Math.Pow(SizeRatio(stockSize), 
+				GetLimbAttributeValue("exp_airspeed_max")
+				+ GetLimbAttributeValue("exp_speed_max")) 
+				* limbAirSpeed;
 			if (speed < 0)
 			{
 				return 0;
