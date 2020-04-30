@@ -108,6 +108,20 @@ namespace Combiner
 			}
 		}
 
+		private ModManagerVM m_ModManagerVM;
+		public ModManagerVM ModManagerVM
+		{
+			get { return m_ModManagerVM; }
+			set
+			{
+				if (value != m_ModManagerVM)
+				{
+					m_ModManagerVM = value;
+					OnPropertyChanged(nameof(ModManagerVM));
+				}
+			}
+		}
+		
 		private ICommand m_OpenDatabaseManagerWindowCommand;
 		public ICommand OpenDatabaseManagerWindowCommand
 		{
@@ -133,6 +147,31 @@ namespace Combiner
 			window.ShowDialog();
 		}
 
+		private ICommand m_OpenModManagerWindowCommand;
+		public ICommand OpenModManagerWindowCommand
+		{
+			get
+			{
+				return m_OpenModManagerWindowCommand ??
+				  (m_OpenModManagerWindowCommand = new RelayCommand(OpenModManagerWindow));
+			}
+			set
+			{
+				if (value != m_OpenModManagerWindowCommand)
+				{
+					m_OpenModManagerWindowCommand = value;
+					OnPropertyChanged(nameof(OpenModManagerWindow));
+				}
+			}
+		}
+		private void OpenModManagerWindow(object o)
+		{
+			ModManagerWindow window = new ModManagerWindow();
+			window.DataContext = ModManagerVM;
+			//window.Show();
+			window.ShowDialog();
+		}
+
 		public MainVM()
 		{
 			Database database = new Database();
@@ -141,6 +180,7 @@ namespace Combiner
 
 			ProgressVM = new ProgressVM();
 			DatabaseManagerVM = new DatabaseManagerVM(database, importExportHandler);
+			ModManagerVM = new ModManagerVM();
 			CreatureDataVM = new CreatureDataVM(database, DatabaseManagerVM);
 			FiltersVM = new FiltersVM(CreatureDataVM, ProgressVM, database, DatabaseManagerVM);
 			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, ProgressVM, database, importExportHandler, creatureCsvWriter);

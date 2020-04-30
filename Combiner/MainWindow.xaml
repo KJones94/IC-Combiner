@@ -22,7 +22,8 @@
 				<MenuItem Header="Query Filtering" IsCheckable="True" IsChecked="{Binding FiltersVM.IsQueryFilteringSelected}"/>
 			</MenuItem>
 			<MenuItem Header="Database">
-				<MenuItem Header="DatabaseManager" Command="{Binding OpenDatabaseManagerWindowCommand}"/>
+				<MenuItem Header="Database Manager" Command="{Binding OpenDatabaseManagerWindowCommand}"/>
+				<MenuItem Header="Mod Manager" Command="{Binding OpenModManagerWindowCommand}"/>
 				<MenuItem Header="Create Database" Command="{Binding DatabaseVM.CreateDatabaseCommand}"/>
 			</MenuItem>
 			<MenuItem Header="Help">

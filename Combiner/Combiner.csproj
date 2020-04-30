@@ -54,6 +54,14 @@
       <HintPath>..\packages\LiteDB.4.1.2\lib\net40\LiteDB.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Shell.1.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MoonSharp.Interpreter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=921e73ce94aa17f8, processorArchitecture=MSIL">
       <HintPath>..\packages\MoonSharp.2.0.0.0\lib\net40-client\MoonSharp.Interpreter.dll</HintPath>
     </Reference>
@@ -132,6 +140,7 @@
     <Compile Include="Filters\StatFilter.cs" />
     <Compile Include="Filters\StatFilters\WaterSpeedFilter.cs" />
     <Compile Include="Models\CreatureQueryData.cs" />
+    <Compile Include="Models\Mod.cs" />
     <Compile Include="Utility\AbilityNames.cs" />
     <Compile Include="Utility\Attributes.cs" />
     <Compile Include="Utility\CreatureCsvWriter.cs" />
@@ -143,6 +152,7 @@
     <Compile Include="Viewmodels\DatabaseManagerVM.cs" />
     <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />
+    <Compile Include="Viewmodels\ModManagerVM.cs" />
     <Compile Include="Viewmodels\ProgressVM.cs" />
     <Compile Include="Viewmodels\SaveCollectionVM.cs" />
     <Compile Include="Viewmodels\SelectedCreatureVM.cs" />
@@ -197,6 +207,9 @@
     </Compile>
     <Compile Include="Views\FiltersView.xaml.cs">
       <DependentUpon>FiltersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ModManagerWindow.xaml.cs">
+      <DependentUpon>ModManagerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PagerView.xaml.cs">
       <DependentUpon>PagerView.xaml</DependentUpon>
@@ -266,6 +279,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FiltersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ModManagerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -900,6 +917,7 @@
     <Resource Include="Notes\Body Parts.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Mods\" />
     <Folder Include="Stock\TestStock\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
