@@ -1,6 +1,10 @@
 # IC-Combiner
 Combine and filter creatures for the Tellurian IC mod
 
+### Bugs and Features
+You can put them in the Issues page here, or submit through this Google Form:
+https://forms.gle/C7VY2W9sZpnQh4h46
+
 ### Setup
 
 1. Download the zip folder from the Release page
