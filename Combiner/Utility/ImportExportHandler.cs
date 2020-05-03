@@ -21,7 +21,7 @@ namespace Combiner
 			m_CreatureXMLHandler = new CreatureXMLHandler();
 		}
 
-		public void Import()
+		public void Import(ModCollection modCollection)
 		{
 			// Select file from dialog
 			string filePath = string.Empty;
@@ -48,50 +48,16 @@ namespace Combiner
 
 			// Save creatures to database
 
+			ModCollection mainMod = m_Database.getMainMod(modCollection.ModName);
 			List<Creature> creatures = new List<Creature>();
 			foreach (var data in importedCreatureData)
 			{
-				creatures.Add(m_Database.GetCreature(data.left, data.right, data.bodyParts));
+				creatures.Add(m_Database.GetCreature(data.left, data.right, data.bodyParts, mainMod));
 			}
-			m_Database.SaveCreatures(creatures);
+			m_Database.SaveCreatures(creatures, modCollection);
 		}
 
-		public void Import(string collectionName)
-		{
-			// Select file from dialog
-			string filePath = string.Empty;
-			using (OpenFileDialog openFileDialog = new OpenFileDialog())
-			{
-				openFileDialog.InitialDirectory = m_XMLDirectory;
-				openFileDialog.Filter = "XML files (*.xml)|*.xml";
-				openFileDialog.RestoreDirectory = true;
-
-				if (openFileDialog.ShowDialog() == DialogResult.OK)
-				{
-					filePath = openFileDialog.FileName;
-				}
-			}
-
-			if (string.IsNullOrEmpty(filePath))
-			{
-				return;
-			}
-
-			// Read XML and all that
-
-			IEnumerable<CreatureQueryData> importedCreatureData = m_CreatureXMLHandler.GetCreatureDataFromXML(filePath);
-
-			// Save creatures to database
-
-			List<Creature> creatures = new List<Creature>();
-			foreach (var data in importedCreatureData)
-			{
-				creatures.Add(m_Database.GetCreature(data.left, data.right, data.bodyParts));
-			}
-			m_Database.SaveCreatures(creatures, collectionName);
-		}
-
-		public void Export()
+		public void Export(ModCollection modCollection)
 		{
 			// Select file to save as
 
@@ -115,39 +81,7 @@ namespace Combiner
 
 			// Get creature data from database
 
-			List<Creature> savedCreatures = m_Database.GetSavedCreatures();
-
-			// Write to XML
-
-			m_CreatureXMLHandler.AddCreaturesToXML(savedCreatures, filePath);
-
-		}
-
-		public void Export(string collectionName)
-		{
-			// Select file to save as
-
-			string filePath = string.Empty;
-			using (SaveFileDialog saveFileDialog = new SaveFileDialog())
-			{
-				saveFileDialog.InitialDirectory = m_XMLDirectory;
-				saveFileDialog.Filter = "XML files (*.xml)|*.xml";
-				saveFileDialog.RestoreDirectory = true;
-
-				if (saveFileDialog.ShowDialog() == DialogResult.OK)
-				{
-					filePath = saveFileDialog.FileName;
-				}
-			}
-
-			if (string.IsNullOrEmpty(filePath))
-			{
-				return;
-			}
-
-			// Get creature data from database
-
-			IEnumerable<Creature> savedCreatures = m_Database.GetAllCreatures(collectionName);
+			IEnumerable<Creature> savedCreatures = m_Database.GetAllCreatures(modCollection);
 
 			// Write to XML
 

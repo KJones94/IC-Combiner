@@ -13,7 +13,7 @@ namespace Combiner
 	{
 		private readonly string m_CreaturesCollectionName = "creatures";
 
-		public delegate void CollectionChangeHandler(string collection);
+		public delegate void CollectionChangeHandler(ModCollection collection);
 		public event CollectionChangeHandler CollectionChangedEvent;
 
 		Database m_Database;
@@ -23,15 +23,15 @@ namespace Combiner
 		{
 			m_Database = database;
 			m_ImportExportHandler = importExportHandler;
-			ActiveCollection = m_CreaturesCollectionName;
+			//ActiveCollection = m_CreaturesCollectionName;
 		}
 
-		private ObservableCollection<string> m_Collections;
-		public ObservableCollection<string> Collections
+		private ObservableCollection<ModCollection> m_Collections;
+		public ObservableCollection<ModCollection> Collections
 		{
 			get {
 				return m_Collections ??
-				  (m_Collections = new ObservableCollection<string>(m_Database.GetCollectionNames()));
+				  (m_Collections = new ObservableCollection<ModCollection>(m_Database.GetAllMods()));
 			}
 			set
 			{
@@ -45,11 +45,49 @@ namespace Combiner
 
 		private void UpdateCollections()
 		{
-			Collections = new ObservableCollection<string>(m_Database.GetCollectionNames());
+			Collections = new ObservableCollection<ModCollection>(m_Database.GetAllMods());
 		}
 
-		private string m_ActiveCollection;
-		public string ActiveCollection
+		private ObservableCollection<string> m_Mods;
+		public ObservableCollection<string> Mods
+		{
+			get
+			{
+				return m_Mods ??
+				  (m_Mods = new ObservableCollection<string>(m_Database.GetMainModNames()));
+			}
+			set
+			{
+				if (value != m_Mods)
+				{
+					m_Mods = value;
+					OnPropertyChanged(nameof(Mods));
+				}
+			}
+		}
+
+		private void UpdateMods()
+		{
+			Mods = new ObservableCollection<string>(m_Database.GetMainModNames());
+		}
+
+		private string m_CreateModChoice;
+		public string CreateModChoice
+		{
+			get { return m_CreateModChoice; }
+			set
+			{
+				if (value != m_CreateModChoice)
+				{
+					m_CreateModChoice = value;
+					OnPropertyChanged(nameof(CreateModChoice));
+				}
+			}
+		}
+
+
+		private ModCollection m_ActiveCollection;
+		public ModCollection ActiveCollection
 		{
 			get { return m_ActiveCollection; }
 			set
@@ -80,7 +118,7 @@ namespace Combiner
 		}
 		private void ActivateCollection(object o)
 		{
-			if (!string.IsNullOrEmpty(SelectedCollection))
+			if (SelectedCollection != null)
 			{
 				ActiveCollection = SelectedCollection;
 				CollectionChangedEvent?.Invoke(ActiveCollection);
@@ -119,11 +157,15 @@ namespace Combiner
 		}
 		private void CreateCollection(object o)
 		{
-			if (!IsCollectionNameValid(CreateCollectionName))
+			if (string.IsNullOrEmpty(CreateModChoice))
+			{
+				MessageBox.Show("Please seelect a mod.");
+			}
+			else if (!IsCollectionNameValid(CreateCollectionName))
 			{
 				MessageBox.Show("Name must only contain numbers and letters.");
 			}
-			else if (m_Database.CreateCollection(CreateCollectionName))
+			else if (m_Database.CreateCollection(CreateCollectionName, CreateModChoice))
 			{
 				CreateCollectionName = string.Empty;
 				UpdateCollections();
@@ -141,8 +183,8 @@ namespace Combiner
 				&& collectionName.All(c => char.IsLetterOrDigit(c));
 		}
 
-		private string m_SelectedCollection;
-		public string SelectedCollection
+		private ModCollection m_SelectedCollection;
+		public ModCollection SelectedCollection
 		{
 			get { return m_SelectedCollection; }
 			set
@@ -173,9 +215,9 @@ namespace Combiner
 		}
 		private void DeleteCollection(object o)
 		{
-			if (!string.IsNullOrEmpty(SelectedCollection))
+			if (SelectedCollection != null)
 			{
-				if (SelectedCollection == m_CreaturesCollectionName)
+				if (SelectedCollection.IsMain)
 				{
 					MessageBox.Show("Cannot delete the main creature collection");
 				}
@@ -228,9 +270,9 @@ namespace Combiner
 		}
 		private void RenameCollection(object o)
 		{
-			if (!string.IsNullOrEmpty(SelectedCollection))
+			if (SelectedCollection != null)
 			{
-				if (SelectedCollection == m_CreaturesCollectionName)
+				if (SelectedCollection.IsMain)
 				{
 					MessageBox.Show("Cannot rename the main creature collection");
 				}
@@ -263,9 +305,9 @@ namespace Combiner
 		}
 		private void ImportCollection(object o)
 		{
-			if (!string.IsNullOrEmpty(SelectedCollection))
+			if (SelectedCollection != null)
 			{
-				if (SelectedCollection == m_CreaturesCollectionName)
+				if (SelectedCollection.IsMain)
 				{
 					MessageBox.Show("Cannot import into the main creature collection");
 				}
@@ -295,9 +337,9 @@ namespace Combiner
 		}
 		private void ExportCollection(object o)
 		{
-			if (!string.IsNullOrEmpty(SelectedCollection))
+			if (SelectedCollection != null)
 			{
-				if (SelectedCollection == m_CreaturesCollectionName)
+				if (SelectedCollection.IsMain)
 				{
 					MessageBox.Show("Cannot export the main creature collection");
 				}
@@ -309,20 +351,21 @@ namespace Combiner
 		}
 
 		// This should probably be a property so references will receive any changes..?
-		public List<string> SaveableCollections()
+		public List<ModCollection> SaveableCollections()
 		{
-			return Collections.Where(s => s != m_CreaturesCollectionName && s != ActiveCollection).ToList();
+			return Collections
+				.Where(s => !s.IsMain && s != ActiveCollection)
+				.ToList();
 		}
 
-		public void SaveCreature(Creature creature, string collectionName)
+		public void SaveCreature(Creature creature, ModCollection modCollection)
 		{
-
-			m_Database.SaveCreature(creature, collectionName);
+			m_Database.SaveCreature(creature, modCollection);
 		}
 
 		public void UnsaveCreature(Creature creature)
 		{
-			if (ActiveCollection != m_CreaturesCollectionName)
+			if (!ActiveCollection.IsMain)
 			{
 				m_Database.UnsaveCreature(creature, ActiveCollection);
 				CollectionChangedEvent?.Invoke(ActiveCollection);

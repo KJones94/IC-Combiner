@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace Combiner
 {
@@ -15,6 +16,39 @@ namespace Combiner
 		private readonly string m_ModPath = "../../Mods";
 
 		// C:\Program Files (x86)\Steam\steamapps\common\Impossible Creatures
+
+		private ProgressVM m_ProgressVM;
+		private Database m_Database;
+
+		public ModManagerVM(Database database,
+			ProgressVM progressVM)
+		{
+			m_Database = database;
+			m_ProgressVM = progressVM;
+		}
+
+		private ObservableCollection<string> m_Mods;
+		public ObservableCollection<string> Mods
+		{
+			get
+			{
+				return m_Mods ??
+				  (m_Mods = new ObservableCollection<string>(m_Database.GetMainModNames()));
+			}
+			set
+			{
+				if (value != m_Mods)
+				{
+					m_Mods = value;
+					OnPropertyChanged(nameof(Mods));
+				}
+			}
+		}
+
+		private void UpdateMods()
+		{
+			Mods = new ObservableCollection<string>(m_Database.GetMainModNames());
+		}
 
 		private string m_AttrPath;
 		public string AttrPath
@@ -137,7 +171,7 @@ namespace Combiner
 
 		public void CreateMod(object o)
 		{
-			if (string.IsNullOrEmpty(CreateModName) 
+			if (string.IsNullOrEmpty(CreateModName)
 				|| string.IsNullOrEmpty(AttrPath)
 				|| string.IsNullOrEmpty(StockPath))
 			{
@@ -154,8 +188,8 @@ namespace Combiner
 
 				// Not sure I need to do this testcombiner.lua...
 				// can just use attrcombiner.lua as name
-				string convertedAttrPath = ConvertAttr(AttrPath, newAttrPath);
-				File.Copy(convertedAttrPath, Path.Combine(newAttrPath, Path.GetFileName(AttrPath)), true);
+				string convertedAttrPath = ConvertAttr(AttrPath, Path.Combine(newAttrPath, Path.GetFileName(AttrPath)));
+				//File.Copy(convertedAttrPath, Path.Combine(newAttrPath, Path.GetFileName(AttrPath)), true);
 
 				if (Directory.Exists(StockPath))
 				{
@@ -170,6 +204,11 @@ namespace Combiner
 					}
 				}
 
+				MessageBox.Show("Starting creation of main creature collection for this mod...");
+
+				m_Database.CreateMod(CreateModName, convertedAttrPath, StockPath);
+				UpdateMods();
+
 				MessageBox.Show("Mod Created");
 				CreateModName = string.Empty;
 				AttrPath = string.Empty;
@@ -179,9 +218,101 @@ namespace Combiner
 
 		private string ConvertAttr(string src, string dest)
 		{
+			using (StreamReader reader = new StreamReader(src))
+			using (StreamWriter writer = new StreamWriter(dest))
+			{
+				bool delete = false;
+				bool pairs = false;
+				string line;
+				while ((line = reader.ReadLine()) != null)
+				{
+					if (line.Contains("deleteStart"))
+					{
+						delete = true;
+						continue;
+					}
+					else if (line.Contains("deleteEnd"))
+					{
+						delete = false;
+						continue;
+					}
+					if (delete) continue;
 
-			return src;
+					if (line.Contains("pairsStart"))
+					{
+						pairs = true;
+						continue;
+					}
+					else if (line.Contains("pairsEnd"))
+					{
+						pairs = false;
+						continue;
+					}
+
+					if (pairs)
+					{
+						int start = line.IndexOf(" in ") + 4;
+						line = line.Insert(start, "pairs(");
+						int end = line.IndexOf(" do");
+						line = line.Insert(end, ")");
+						writer.WriteLine(line);
+					}
+					else
+					{
+						writer.WriteLine(line);
+					}
+
+				}
+			}
+
+			return dest;
 		}
 
+		//private ICommand m_CreateDatabaseCommand;
+		//public ICommand CreateDatabaseCommand
+		//{
+		//	get
+		//	{
+		//		return m_CreateDatabaseCommand ??
+		//		  (m_CreateDatabaseCommand = new RelayCommand(CreateDatabase));
+		//	}
+		//	set
+		//	{
+		//		if (value != m_CreateDatabaseCommand)
+		//		{
+		//			m_CreateDatabaseCommand = value;
+		//			OnPropertyChanged(nameof(CreateDatabaseCommand));
+		//		}
+		//	}
+		//}
+		//private async void CreateDatabase(string name)
+		//{
+		//	string text = string.Empty;
+		//	if (m_Database.Exists())
+		//	{
+		//		text = "The database has already been created. If you continue the database will be over written, including saved creatures. Would you like to continue?";
+		//	}
+		//	else
+		//	{
+		//		text = "Creating a new database will delete and replace your current database. This could take a while (around 20-30 minutes), but a dialog box will appear when it is finished. Would you like to continue?";
+		//	}
+
+		//	MessageBoxResult result = MessageBox.Show(text, "Database Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+		//	if (result == MessageBoxResult.Yes)
+		//	{
+		//		m_ProgressVM.StartWork();
+
+		//		// TODO: How does this act if some other code tries to use the ProgressVM?
+		//		await Task.Run(() => m_Database.CreateDB(name));
+
+		//		m_ProgressVM.EndWork();
+
+		//		MessageBox.Show("Finished creating the database.");
+		//		// TODO: Need to update creature count somewhere
+		//		//m_CreatureVM.UpdateTotalCreatureCount();
+
+
+		//	}
+		//}
 	}
 }

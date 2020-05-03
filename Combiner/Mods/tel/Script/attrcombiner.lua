@@ -12,9 +12,6 @@
 
 --Let's go!
 
---deleteStart
-function combine_creature()
---deleteEnd
 
 -----------------
 -----------------
@@ -108,9 +105,7 @@ BodyPartsThatCanHaveRange = { 2, 3, 4, 5, 8 };
 -- determine type of ranged attack and set range damage to be equal to the
 -- highest damage ranged attack, with minRangeDist being the minimum ranged distance.
 
---pairsBelow
-for index, part in BodyPartsThatCanHaveRange do
---endPairs
+for index, part in pairs(BodyPartsThatCanHaveRange) do
 	part_damage = getgameattribute( "range" .. part .. "_damage" );
 	part_range = getgameattribute( "range" .. part .. "_max" );
 	part_dtype = getgameattribute( "range" .. part .. "_dmgtype" );
@@ -299,152 +294,6 @@ CreatureRank = Rank( power, rank_cmp );
 -----------------
 -----------------
 
---deleteStart
-setgameattribute("powerdisplay", Power(damage, hitpoints, armour));
-
--- Attribute data.
-
--- Column ids.
-AT_Name = 1;
-AT_ZeroOK = 2;
-AT_Min = 3;
-AT_Max = 4;
-AT_RankList = 5;
-AT_UIName = 6;
-AT_UIScale = 7;
-
--- Game attribute bound and rank data.
-AttributeData =
-{
--- { attribute name, zero ok, min, max, rank list, ui attribute name, game->ui scale factor }
-
-	{ "hitpoints",  nil, 1, nil, {0.0, 224.0, 349.0, 574.0}, "health", 1 },
-	{ "armour", 1, 0, nil, {0.0, 0.15, 0.30, 0.45}, "armour", 100 },
-	{ "speed_max", 1, 15, nil, {15.0, 21.0, 26.0, 31.0}, "landspeed", 1 },
-	{ "waterspeed_max", 1, 12, nil, {12.0, 20.0, 25.0, 30.0}, "waterspeed", 1 },
-	{ "airspeed_max", 1, 16, nil, {16.0, 20.0, 24.0, 28.0}, "airspeed", 1 },
-	{ "sight_radius1", nil, nil, nil, {20.0, 30.0, 35.0, 45.0}, "sightradius", 1 },
-	{ "size", nil, 1, nil, {0, 3, 6, 9}, "size", 1},
-
-	{ "melee_damage", 1, 0, nil, {1.0, 10.0, 17.0, 26.0}, "damage", 1 },
-	{ "range2_max", 1, 0, nil, {1.0, 8.0, 14.0, 21.0}, "range2_max", 1 },
-	{ "range4_max", 1, 0, nil, {1.0, 8.0, 14.0, 21.0}, "range4_max", 1 },
-	{ "range5_max", 1, 0, nil, {1.0, 8.0, 14.0, 21.0}, "range5_max", 1 },
-	{ "range8_max", 1, 0, nil, {1.0, 8.0, 14.0, 21.0}, "range8_max", 1 },
-	{ "range3_max", 1, 0, nil, {1.0, 8.0, 14.0, 21.0}, "range3_max", 1 },
-};
-
--- Apply boundaries and rank attributes.
-
-for k, at in AttributeData do
-
-	local attribute = at[AT_Name];
-	local val = 0;
-	local rating = 1;
-
-	if checkgameattribute( attribute ) == 1 then
-
-		-- Boundary check and fix.
-		val = getgameattribute( attribute );
-
-		if not ( at[AT_ZeroOK] == 1 and val == 0 ) and at[AT_Min] and ( val < at[AT_Min] ) then
-			setgameattribute( attribute, at[AT_Min] );
-			val = at[AT_Min];
-		end
-
-		if at[AT_Max] and val > at[AT_Max] then
-			setgameattribute( attribute, at[AT_Max] );
-			val = at[AT_Max];
-		end
-
-		-- Ranking.
-		if at[AT_RankList] then
-			rating = Rank( val, at[AT_RankList] );
-		end
-	end
-
-	if at[AT_UIName] then
-		-- Add the rating to the creature's variable list -- rating is in the range [0-4].
-		setattribute( at[AT_UIName].. "_rating", rating - 1 );
-		-- Add the display version to the creature's variable list.
-		setattribute( at[AT_UIName] .. "_val", val * at[AT_UIScale] );
-	end
-
-end
-
-if checkgameattribute( "range2_damage" ) == 1 then
-val = getgameattribute( "range2_damage" );
-if (val and val > -1) then
-rating = Rank( val, {-1.0,12.0,20.0,26.0} );
-setattribute( "range2_damage_rating", rating - 1 );
-setattribute( "range2_damage_val", val );
-end
-end
-
-if checkgameattribute( "range4_damage" ) == 1 then
-val = getgameattribute( "range4_damage" );
-if (val and val > -1) then
-rating = Rank( val, {-1.0,12.0,20.0,26.0} );
-setattribute( "range4_damage_rating", rating - 1 );
-setattribute( "range4_damage_val", val );
-end
-end
-
-if checkgameattribute( "range8_damage" ) >= 0 then
-val = getgameattribute( "range8_damage" );
-if (val and val > 0) then
-rating = Rank( val, {-1,12.0,20.0,26.0} );
-setattribute( "range8_damage_rating", rating - 1 );
-setattribute( "range8_damage_val", val );
-end
-end
-
-if checkgameattribute( "range8_damage" ) >= 0 then
-val = getgameattribute( "range8_damage" );
-if (val and val > 0) then
-rating = Rank( val, {-1,12.0,20.0,26.0} );
-setattribute( "range2_damage_rating", rating - 1 );
-setattribute( "range2_damage_val", val );
-end
-end
-
-if checkgameattribute( "range3_damage" ) == 1 then
-val = getgameattribute( "range3_damage" );
-if (val and val > -1) then
-rating = Rank( val, {-1.0,12.0,20.0,26.0} );
-setattribute( "range3_damage_rating", rating - 1 );
-setattribute( "range3_damage_val", val );
-end
-end
-
-if checkgameattribute( "range3_damage" ) == 1 then
-val = getgameattribute( "range3_damage" );
-if (val and val > -1) then
-rating = Rank( val, {-1.0,12.0,20.0,26.0} );
-setattribute( "range2_damage_rating", rating - 1 );
-setattribute( "range2_damage_val", val );
-end
-end
-
-if checkgameattribute( "range5_damage" ) == 1 then
-val = getgameattribute( "range5_damage" );
-if (val and val > -1) then
-rating = Rank( val, {-1.0,12.0,20.0,26.0} );
-setattribute( "range5_damage_rating", rating - 1 );
-setattribute( "range5_damage_val", val );
-end
-end
-
-if checkgameattribute( "range5_damage" ) == 1 then
-val = getgameattribute( "range5_damage" );
-if (val and val > -1) then
-rating = Rank( val, {-1.0,12.0,20.0,26.0} );
-setattribute( "range2_damage_rating", rating - 1 );
-setattribute( "range2_damage_val", val );
-end
-end
-
---deleteEnd
 
 -----------------
 -----------------
@@ -580,9 +429,7 @@ AbilityRefPoints =
 };
 
 -- Total the costs and find min rank for all abilities.
---pairsStart
-for n, ab in AbilityData do
---pairsEnd
+for n, ab in pairs(AbilityData) do
 	-- If we have this ability...
 	if ABT_CheckFunctions[ab[AB_AbilityType]]( ab[AB_Id] ) == 1 then
 		-- add on the costs.
@@ -599,9 +446,7 @@ end
 
 
 -- Total the costs for reference-point ability costs
---pairsStart
- for n, ab in AbilityRefPoints do
---pairsEnd
+ for n, ab in pairs(AbilityRefPoints) do
 	-- If we have this ability...
 	if ABT_CheckFunctions[ab[AB_AbilityType]]( ab[AB_Id] ) == 1 then
 		
@@ -795,4 +640,3 @@ setattribute( "popsize", Pop )
 
 setgameattribute("Power", power);
 
-end

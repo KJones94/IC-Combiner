@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:Combiner"
         mc:Ignorable="d"
         Title="DatabaseManagerWindow" Height="450" Width="800">
+	<Window.Resources>
+		<local:MainModConverter x:Key="mainModConverter"/>
+	</Window.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="2*"/>
@@ -26,8 +29,9 @@
 						  SelectedItem="{Binding SelectedCollection}">
 					<ListView.View>
 						<GridView>
-							<GridViewColumn Header="Name" Width="200"/>
-							<!--<GridViewColumn Header="Version" Width="50"/>-->
+							<GridViewColumn Header="Main?" DisplayMemberBinding="{Binding IsMain, Converter={StaticResource mainModConverter}}"  Width="50"/>
+							<GridViewColumn Header="Mod" DisplayMemberBinding="{Binding ModName}"  Width="200"/>
+							<GridViewColumn Header="Name" DisplayMemberBinding="{Binding CollectionName}"  Width="200"/>
 						</GridView>
 					</ListView.View>
 				</ListView>
@@ -40,6 +44,12 @@
 			</StackPanel>
 		</Grid>
 		<StackPanel Grid.Row="1">
+			<StackPanel Orientation="Horizontal">
+				<Label VerticalAlignment="Center">Mod:</Label>
+				<ComboBox Width="100"
+				  ItemsSource="{Binding Mods}"
+				  SelectedItem="{Binding CreateModChoice}"/>
+			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<Label VerticalAlignment="Center">Name:</Label>
 				<TextBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" 

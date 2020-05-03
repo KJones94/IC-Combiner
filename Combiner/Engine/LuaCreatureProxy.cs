@@ -14,12 +14,12 @@ namespace Combiner
 		private CreatureBuilder Creature { get; set; }
 		private DynValue AttrcombinerFunc { get; set; }
 
-		public LuaCreatureProxy()
+		public LuaCreatureProxy(string attrPath)
 		{
 			AttrcombinerScript = new Script();
 			AttrcombinerScript.Options.ScriptLoader = new FileSystemScriptLoader();
 			SetupGlobals();
-			AttrcombinerFunc = AttrcombinerScript.LoadFile(DirectoryConstants.Testcombiner);
+			AttrcombinerFunc = AttrcombinerScript.LoadFile(attrPath);
 		}
 
 		public void LoadScript(CreatureBuilder creature)

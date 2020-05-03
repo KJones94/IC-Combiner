@@ -92,6 +92,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BoolComplimentConverter.cs" />
+    <Compile Include="Converters\MainModConverter.cs" />
     <Compile Include="Engine\CreatureStatCalculator.cs" />
     <Compile Include="Engine\LuaCreatureProxy.cs" />
     <Compile Include="Engine\LuaStockProxy.cs" />
@@ -140,17 +141,17 @@
     <Compile Include="Filters\StatFilter.cs" />
     <Compile Include="Filters\StatFilters\WaterSpeedFilter.cs" />
     <Compile Include="Models\CreatureQueryData.cs" />
-    <Compile Include="Models\Mod.cs" />
+    <Compile Include="Models\ModCollection.cs" />
     <Compile Include="Utility\AbilityNames.cs" />
     <Compile Include="Utility\Attributes.cs" />
     <Compile Include="Utility\CreatureCsvWriter.cs" />
     <Compile Include="Utility\CurrentPageChangedEventArgs.cs" />
     <Compile Include="Utility\ImportExportHandler.cs" />
-    <Compile Include="Utility\Names.cs" />
+    <Compile Include="Utility\StockNames.cs" />
     <Compile Include="Utility\PagingCollectionView.cs" />
     <Compile Include="Utility\PagingController.cs" />
+    <Compile Include="Viewmodels\CsvWriterVM.cs" />
     <Compile Include="Viewmodels\DatabaseManagerVM.cs" />
-    <Compile Include="Viewmodels\DatabaseVM.cs" />
     <Compile Include="Viewmodels\FiltersVM.cs" />
     <Compile Include="Viewmodels\ModManagerVM.cs" />
     <Compile Include="Viewmodels\ProgressVM.cs" />

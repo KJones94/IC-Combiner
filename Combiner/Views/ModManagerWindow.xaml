@@ -21,9 +21,9 @@
 					<Label>Active:</Label>
 					<!--<Label Content="{Binding ActiveCollection}"/>--> 
 				</StackPanel>
-				<ListView Grid.Column="0" Margin="10">
-					<!--ItemsSource="{Binding Collections}"-->
-						  <!--SelectedItem="{Binding SelectedCollection}">-->
+				<ListView Grid.Column="0" Margin="10"
+					ItemsSource="{Binding Mods}">
+					<!--SelectedItem="{Binding SelectedCollection}">-->
 						  
 					<ListView.View>
 						<GridView>

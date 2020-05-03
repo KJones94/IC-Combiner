@@ -18,12 +18,12 @@ namespace Combiner
 			m_CreatureToSave = creature;
 			m_DatabaseManagerVM = databaseManagerVM;
 			// Should this reference a property instead of a function?
-			SaveableCollections = new ObservableCollection<string>(m_DatabaseManagerVM.SaveableCollections());
+			SaveableCollections = new ObservableCollection<ModCollection>(m_DatabaseManagerVM.SaveableCollections());
 		}
 
 
-		private string m_SelectedCollection;
-		public string SelectedCollection
+		private ModCollection m_SelectedCollection;
+		public ModCollection SelectedCollection
 		{
 			get { return m_SelectedCollection; }
 			set
@@ -36,12 +36,12 @@ namespace Combiner
 			}
 		}
 
-		private ObservableCollection<string> m_SaveableCollections;
-		public ObservableCollection<string> SaveableCollections
+		private ObservableCollection<ModCollection> m_SaveableCollections;
+		public ObservableCollection<ModCollection> SaveableCollections
 		{
 			get {
 				return m_SaveableCollections ??
-				  (m_SaveableCollections = new ObservableCollection<string>());
+				  (m_SaveableCollections = new ObservableCollection<ModCollection>());
 			}
 			set
 			{

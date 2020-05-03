@@ -16,7 +16,7 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="File">
-				<MenuItem Header="Export to CSV" Command="{Binding DatabaseVM.ExportToCsvCommand}"/>
+				<MenuItem Header="Export to CSV" Command="{Binding CsvWriterVM.ExportToCsvCommand}"/>
 			</MenuItem>
 			<MenuItem Header="Filtering">
 				<MenuItem Header="Query Filtering" IsCheckable="True" IsChecked="{Binding FiltersVM.IsQueryFilteringSelected}"/>
@@ -24,7 +24,6 @@
 			<MenuItem Header="Database">
 				<MenuItem Header="Database Manager" Command="{Binding OpenDatabaseManagerWindowCommand}"/>
 				<MenuItem Header="Mod Manager" Command="{Binding OpenModManagerWindowCommand}"/>
-				<MenuItem Header="Create Database" Command="{Binding DatabaseVM.CreateDatabaseCommand}"/>
 			</MenuItem>
 			<MenuItem Header="Help">
 				<MenuItem Header="Guide" Click="MenuItem_GuideClick"/>

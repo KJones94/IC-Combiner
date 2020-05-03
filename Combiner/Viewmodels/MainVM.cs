@@ -26,23 +26,6 @@ namespace Combiner
 			}
 		}
 
-		private DatabaseVM m_DatabaseVM;
-		public DatabaseVM DatabaseVM
-		{
-			get
-			{
-				return m_DatabaseVM;
-			}
-			set
-			{
-				if (value != m_DatabaseVM)
-				{
-					m_DatabaseVM = value;
-					OnPropertyChanged(nameof(DatabaseVM));
-				}
-			}
-		}
-
 		private FiltersVM m_FiltersVM;
 		public FiltersVM FiltersVM
 		{
@@ -121,7 +104,21 @@ namespace Combiner
 				}
 			}
 		}
-		
+
+		private CsvWriterVM m_CsvWriterVM;
+		public CsvWriterVM CsvWriterVM
+		{
+			get { return m_CsvWriterVM; }
+			set
+			{
+				if (value != m_CsvWriterVM)
+				{
+					m_CsvWriterVM = value;
+					OnPropertyChanged(nameof(CsvWriterVM));
+				}
+			}
+		}
+
 		private ICommand m_OpenDatabaseManagerWindowCommand;
 		public ICommand OpenDatabaseManagerWindowCommand
 		{
@@ -180,10 +177,10 @@ namespace Combiner
 
 			ProgressVM = new ProgressVM();
 			DatabaseManagerVM = new DatabaseManagerVM(database, importExportHandler);
-			ModManagerVM = new ModManagerVM();
+			ModManagerVM = new ModManagerVM(database, ProgressVM);
 			CreatureDataVM = new CreatureDataVM(database, DatabaseManagerVM);
+			CsvWriterVM = new CsvWriterVM(CreatureDataVM, creatureCsvWriter);
 			FiltersVM = new FiltersVM(CreatureDataVM, ProgressVM, database, DatabaseManagerVM);
-			DatabaseVM = new DatabaseVM(CreatureDataVM, FiltersVM, ProgressVM, database, importExportHandler, creatureCsvWriter);
 			SelectedCreatureVM = new SelectedCreatureVM(CreatureDataVM);
 
 

@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="SaveCollectionWindow" Height="300" Width="300">
     <StackPanel>
-		<ListView Height="200" Margin="10" ItemsSource="{Binding SaveableCollections}" SelectedItem="{Binding SelectedCollection}"/>
+		<ListView Height="200" Margin="10" ItemsSource="{Binding SaveableCollections}" SelectedItem="{Binding SelectedCollection}">
+		</ListView>
 
 
 		<StackPanel Orientation="Horizontal">

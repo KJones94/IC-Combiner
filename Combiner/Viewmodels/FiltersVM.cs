@@ -184,8 +184,9 @@ namespace Combiner
 			}
 			else
 			{
-				// TODO: This keeps the user from 
-				if (m_DatabaseManagerVM.ActiveCollection != m_Database.m_CreaturesCollectionName
+				// TODO: I forgot what this is checking...
+				//if (m_DatabaseManagerVM.ActiveCollection != m_Database.m_CreaturesCollectionName
+				if (!m_DatabaseManagerVM.ActiveCollection.IsMain
 					|| m_CreatureDataVM.Creatures.Count != m_CreatureDataVM.TotalCreatureCount)
 				{
 					m_CreatureDataVM.Creatures = 
@@ -198,7 +199,7 @@ namespace Combiner
 			//m_ProgressVM.EndWork();
 		}
 
-		private void UpdateCollection(string collectionName)
+		private void UpdateCollection(ModCollection collectionName)
 		{
 			FilterCreatures(null);
 		}

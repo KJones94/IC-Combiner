@@ -15,11 +15,118 @@ namespace Combiner
 		public readonly string m_CreaturesCollectionName = "creatures";
 		private readonly string m_SavedCreaturesCollectionName = "saved_creatures";
 
+		private readonly string m_ModTableName = "mod_table";
+
 		public Database()
 		{
 			if (!Directory.Exists(DirectoryConstants.DatabaseDirectory))
 			{
 				Directory.CreateDirectory(DirectoryConstants.DatabaseDirectory);
+			}
+		}
+
+		public bool CreateModTable()
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (db.CollectionExists(m_ModTableName))
+				{
+					return false;
+				}
+
+				var collection = db.GetCollection<ModCollection>(m_ModTableName);
+
+				return true;
+			}
+		}
+
+		public IEnumerable<ModCollection> GetAllMods()
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (!db.CollectionExists(m_ModTableName))
+				{
+					return new List<ModCollection>();
+				}
+
+				var collection = db.GetCollection<ModCollection>(m_ModTableName);
+				var mods = collection.FindAll();
+				return mods.ToList();
+			}
+		}
+
+		public ModCollection GetMod(string name)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (!db.CollectionExists(m_ModTableName))
+				{
+					return null;
+				}
+
+				var collection = db.GetCollection<ModCollection>(m_ModTableName);
+				var mod = collection.FindOne(x => x.ModName == name);
+				return mod;
+			}
+		}
+
+		public bool CreateMod(string name, string attrPath, string stockPath)
+		{
+			string tableName = name + "_main";
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (!db.CollectionExists(m_ModTableName))
+				{
+					CreateModTable();
+				}
+				if (db.CollectionExists(tableName))
+				{
+					return false;
+				}
+
+				ModCollection mod = new ModCollection()
+				{
+					ModName = name,
+					IsMain = true,
+					CollectionName = tableName,
+					AttrPath = attrPath,
+					StockPath = stockPath
+				};
+
+				// TODO: Probably need more checks here...
+				var collection = db.GetCollection<ModCollection>(m_ModTableName);
+				collection.Insert(mod);
+				CreateDB(tableName, attrPath, stockPath);
+				return true; 
+			}
+		}
+
+		public ModCollection getMainMod(string modName)
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (!db.CollectionExists(m_ModTableName))
+				{
+					return null;
+				}
+
+				var collection = db.GetCollection<ModCollection>(m_ModTableName);
+				var mainMod = collection.FindOne(x => x.IsMain && x.ModName == modName);
+				return mainMod;
+			}
+		}
+
+		public IEnumerable<string> GetMainModNames()
+		{
+			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+			{
+				if (!db.CollectionExists(m_ModTableName))
+				{
+					return new List<string>();
+				}
+				var collection = db.GetCollection<ModCollection>(m_ModTableName);
+				var mainMods = collection.Find(x => x.IsMain);
+				return mainMods.Select(x => x.ModName).ToList();
 			}
 		}
 
@@ -31,7 +138,9 @@ namespace Combiner
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				return db.GetCollectionNames();
+				var names = db.GetCollectionNames().ToList();
+				names.Remove(m_ModTableName);
+				return names;
 			}
 		}
 
@@ -40,19 +149,37 @@ namespace Combiner
 		/// The collection will not be created if the name is taken.
 		/// </summary>
 		/// <param name="name"></param>
-		public bool CreateCollection(string name)
+		public bool CreateCollection(string collectionName, string modName)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (db.CollectionExists(name))
+				if (db.CollectionExists(collectionName)
+					|| !db.CollectionExists(m_ModTableName))
 				{
 					return false;
 				}
 
-				var collection = db.GetCollection<Creature>(name);
+				
+				var mainMod = getMainMod(modName);
+				if (mainMod == null)
+				{
+					return false;
+				}
 
+				var collection = db.GetCollection<Creature>(collectionName);
 				// Need to insert or ensure index for collection to be created
 				collection.EnsureIndex(x => x.Rank);
+
+				var modTable = db.GetCollection<ModCollection>(m_ModTableName);
+				ModCollection modCollection = new ModCollection()
+				{
+					ModName = modName,
+					IsMain = false,
+					CollectionName = collectionName,
+					StockPath = mainMod.StockPath,
+					AttrPath = mainMod.AttrPath
+				};
+				modTable.Insert(modCollection);
 
 				return true;
 			}
@@ -62,18 +189,18 @@ namespace Combiner
 		/// Function used for testing import/export.
 		/// Could continue to use in the application
 		/// </summary>
-		public void DeleteCollection(string name)
+		public void DeleteCollection(ModCollection modCollection)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (db.CollectionExists(name))
+				if (db.CollectionExists(modCollection.CollectionName))
 				{
-					db.DropCollection(name);
+					db.DropCollection(modCollection.CollectionName);
 				}
 			}
 		}
 
-		public bool RenameCollection(string currentName, string newName)
+		public bool RenameCollection(ModCollection modCollection, string newName)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
@@ -81,62 +208,62 @@ namespace Combiner
 				{
 					return false;
 				}
-				if (db.CollectionExists(currentName))
+				if (db.CollectionExists(modCollection.CollectionName))
 				{
-					db.RenameCollection(currentName, newName);
+					db.RenameCollection(modCollection.CollectionName, newName);
 					return true;
 				}
 				return false;
 			}
 		}
 
-		public int GetCount(string collectionName)
-		{
-			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
-			{
-				if (!db.CollectionExists(collectionName))
-				{
-					return -1;
-				}
+		//public int GetCount(string collectionName)
+		//{
+		//	using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+		//	{
+		//		if (!db.CollectionExists(collectionName))
+		//		{
+		//			return -1;
+		//		}
 
-				var collection = db.GetCollection<Creature>(collectionName);
-				return collection.Count();
-			}
-		}
+		//		var collection = db.GetCollection<Creature>(collectionName);
+		//		return collection.Count();
+		//	}
+		//}
 
 		/// <summary>
 		/// Gets all creatures from the creatures collection.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<Creature> GetAllCreatures()
-		{
-			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
-			{
-				if (!db.CollectionExists(m_CreaturesCollectionName))
-				{
-					return new List<Creature>();
-				}
+		//public IEnumerable<Creature> GetAllCreatures()
+		//{
+		//	using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+		//	{
+		//		if (!db.CollectionExists(m_CreaturesCollectionName))
+		//		{
+		//			return new List<Creature>();
+		//		}
 
-				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
-				var creatures = collection.FindAll(); // Can use Skip/Take to do paging...
-				return creatures.ToList();
-			}
-		}
+		//		var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
+		//		var creatures = collection.FindAll(); // Can use Skip/Take to do paging...
+		//		return creatures.ToList();
+		//	}
+		//}
 
 		/// <summary>
 		/// Gets all creatures from the given creatures collection.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<Creature> GetAllCreatures(string collectionName)
+		public IEnumerable<Creature> GetAllCreatures(ModCollection mod)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (!db.CollectionExists(collectionName))
+				if (!db.CollectionExists(mod.CollectionName))
 				{
 					return new List<Creature>();
 				}
 
-				var collection = db.GetCollection<Creature>(collectionName);
+				var collection = db.GetCollection<Creature>(mod.CollectionName);
 				var creatures = collection.FindAll(); // Can use Skip/Take to do paging...
 				return creatures.ToList();
 			}
@@ -146,35 +273,35 @@ namespace Combiner
 		/// Gets a list of creatures given a query.
 		/// </summary>
 		/// <returns></returns>
-		public List<Creature> GetCreatureQuery(Query query)
-		{
-			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
-			{
-				if (!db.CollectionExists(m_CreaturesCollectionName))
-				{
-					return new List<Creature>();
-				}
+		//public List<Creature> GetCreatureQuery(Query query)
+		//{
+		//	using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+		//	{
+		//		if (!db.CollectionExists(m_CreaturesCollectionName))
+		//		{
+		//			return new List<Creature>();
+		//		}
 
-				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
-				List<Creature> creatures = collection.Find(query).ToList();
-				return creatures;
-			}
-		}
+		//		var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
+		//		List<Creature> creatures = collection.Find(query).ToList();
+		//		return creatures;
+		//	}
+		//}
 
 		/// <summary>
 		/// Query for a list of creates from the given collection.
 		/// </summary>
 		/// <returns></returns>
-		public List<Creature> GetCreatureQuery(Query query, string collectionName)
+		public List<Creature> GetCreatureQuery(Query query, ModCollection mod)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (!db.CollectionExists(collectionName))
+				if (!db.CollectionExists(mod.CollectionName))
 				{
 					return new List<Creature>();
 				}
 
-				var collection = db.GetCollection<Creature>(collectionName);
+				var collection = db.GetCollection<Creature>(mod.CollectionName);
 				List<Creature> creatures = collection.Find(query).ToList();
 				return creatures;
 			}
@@ -188,16 +315,16 @@ namespace Combiner
 		/// <param name="right"></param>
 		/// <param name="bodyParts"></param>
 		/// <returns></returns>
-		public Creature GetCreature(string left, string right, Dictionary<string, string> bodyParts)
+		public Creature GetCreature(string left, string right, Dictionary<string, string> bodyParts, ModCollection modCollection)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (!db.CollectionExists(m_CreaturesCollectionName))
+				if (!db.CollectionExists(modCollection.CollectionName))
 				{
 					return null;
 				}
 
-				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
+				var collection = db.GetCollection<Creature>(modCollection.CollectionName);
 				var result = collection.Find(FindCreatureQuery(left, right, bodyParts));
 				return result.First();
 			}
@@ -225,61 +352,61 @@ namespace Combiner
 		/// Function used for testing import/export.
 		/// Could continue to use in the application
 		/// </summary>
-		public void DeleteSavedCreatures()
-		{
-			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
-			{
-				if (db.CollectionExists(m_SavedCreaturesCollectionName))
-				{
-					db.DropCollection(m_SavedCreaturesCollectionName);
-				}
-			}
-		}
+		//public void DeleteSavedCreatures()
+		//{
+		//	using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+		//	{
+		//		if (db.CollectionExists(m_SavedCreaturesCollectionName))
+		//		{
+		//			db.DropCollection(m_SavedCreaturesCollectionName);
+		//		}
+		//	}
+		//}
 
 		/// <summary>
 		/// Gets the creatures from the saved creatures collection
 		/// </summary>
 		/// <returns></returns>
-		public List<Creature> GetSavedCreatures()
-		{
-			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
-			{
-				if (!db.CollectionExists(m_SavedCreaturesCollectionName))
-				{
-					return new List<Creature>();
-				}
+		//public List<Creature> GetSavedCreatures()
+		//{
+		//	using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+		//	{
+		//		if (!db.CollectionExists(m_SavedCreaturesCollectionName))
+		//		{
+		//			return new List<Creature>();
+		//		}
 
-				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
-				List<Creature> savedCreatures = collection.FindAll().ToList();
-				return savedCreatures;
-			}
-		}
-
-		/// <summary>
-		/// Adds the creatures to the saved creatures collection
-		/// </summary>
-		/// <param name="creatures"></param>
-		public void SaveCreatures(IEnumerable<Creature> creatures)
-		{
-			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
-			{
-				// Creates collection if necessary
-				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
-				collection.InsertBulk(creatures);
-			}
-		}
+		//		var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
+		//		List<Creature> savedCreatures = collection.FindAll().ToList();
+		//		return savedCreatures;
+		//	}
+		//}
 
 		/// <summary>
 		/// Adds the creatures to the saved creatures collection
 		/// </summary>
 		/// <param name="creatures"></param>
-		public void SaveCreatures(IEnumerable<Creature> creatures, string collectionName)
+		//public void SaveCreatures(IEnumerable<Creature> creatures)
+		//{
+		//	using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+		//	{
+		//		// Creates collection if necessary
+		//		var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
+		//		collection.InsertBulk(creatures);
+		//	}
+		//}
+
+		/// <summary>
+		/// Adds the creatures to the saved creatures collection
+		/// </summary>
+		/// <param name="creatures"></param>
+		public void SaveCreatures(IEnumerable<Creature> creatures, ModCollection modCollection)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (db.CollectionExists(collectionName))
+				if (db.CollectionExists(modCollection.CollectionName))
 				{
-					var collection = db.GetCollection<Creature>(collectionName);
+					var collection = db.GetCollection<Creature>(modCollection.CollectionName);
 					collection.InsertBulk(creatures);
 				}
 			}
@@ -289,30 +416,30 @@ namespace Combiner
 		/// Adds the creature to the saved creatures collection
 		/// </summary>
 		/// <param name="creature"></param>
-		public void SaveCreature(Creature creature)
-		{
-			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
-			{
-				// Creates collection if necessary
-				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
-				bool creatureExists = collection.Exists(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
-				if (!creatureExists)
-				{
-					collection.Insert(creature);
-				}
-			}
-		}
+		//public void SaveCreature(Creature creature)
+		//{
+		//	using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+		//	{
+		//		// Creates collection if necessary
+		//		var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
+		//		bool creatureExists = collection.Exists(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
+		//		if (!creatureExists)
+		//		{
+		//			collection.Insert(creature);
+		//		}
+		//	}
+		//}
 
 		/// <summary>
 		/// Adds the creature to the given collection
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="collectionName"></param>
-		public void SaveCreature(Creature creature, string collectionName)
+		public void SaveCreature(Creature creature, ModCollection modCollection)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				var collection = db.GetCollection<Creature>(collectionName);
+				var collection = db.GetCollection<Creature>(modCollection.CollectionName);
 				bool creatureExists = collection.Exists(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
 				if (!creatureExists)
 				{
@@ -325,37 +452,37 @@ namespace Combiner
 		/// Removes the creature from the saved creatures collection
 		/// </summary>
 		/// <param name="creature"></param>
-		public void UnsaveCreature(Creature creature)
-		{
-			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
-			{
-				// No need to unsave if there aren't any saved creatures
-				if (!db.CollectionExists(m_SavedCreaturesCollectionName))
-				{
-					return;
-				}
+		//public void UnsaveCreature(Creature creature)
+		//{
+		//	using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
+		//	{
+		//		// No need to unsave if there aren't any saved creatures
+		//		if (!db.CollectionExists(m_SavedCreaturesCollectionName))
+		//		{
+		//			return;
+		//		}
 
-				var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
-				collection.Delete(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
-			}
-		}
+		//		var collection = db.GetCollection<Creature>(m_SavedCreaturesCollectionName);
+		//		collection.Delete(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
+		//	}
+		//}
 
 		/// <summary>
 		/// Removes the creature from the given collection
 		/// </summary>
 		/// <param name="creature"></param>
 		/// <param name="collectionName"></param>
-		public void UnsaveCreature(Creature creature, string collectionName)
+		public void UnsaveCreature(Creature creature, ModCollection modCollection)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				// No need to unsave if there aren't any saved creatures
-				if (!db.CollectionExists(collectionName))
+				if (!db.CollectionExists(modCollection.CollectionName))
 				{
 					return;
 				}
 
-				var collection = db.GetCollection<Creature>(collectionName);
+				var collection = db.GetCollection<Creature>(modCollection.CollectionName);
 				collection.Delete(FindCreatureQuery(creature.Left, creature.Right, creature.BodyParts));
 			}
 		}
@@ -413,23 +540,19 @@ namespace Combiner
 		/// Creates the main creature database and saved database. This will delete whatever
 		/// is currently in both databases.
 		/// </summary>
-		public void CreateDB()
+		public void CreateDB(string name, string attrPath, string stockPath)
 		{
 			Directory.CreateDirectory(DirectoryConstants.DatabaseDirectory);
 
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (db.CollectionExists(m_CreaturesCollectionName))
+				if (db.CollectionExists(name))
 				{
-					db.DropCollection(m_CreaturesCollectionName);
-				}
-				if (db.CollectionExists(m_SavedCreaturesCollectionName))
-				{
-					db.DropCollection(m_SavedCreaturesCollectionName);
+					db.DropCollection(name);
 				}
 
-				var collection = db.GetCollection<Creature>(m_CreaturesCollectionName);
-				CreateCreatures(collection);
+				var collection = db.GetCollection<Creature>(name);
+				CreateCreatures(collection, attrPath, stockPath);
 
 				// Setup indexes
 				// May not need if not querying to filter
@@ -439,14 +562,13 @@ namespace Combiner
 			}
 		}
 
-		private void CreateCreatures(LiteCollection<Creature> collection)
+		private void CreateCreatures(LiteCollection<Creature> collection, string attrPath, string stockPath)
 		{
-			var stockNames = Directory.GetFiles(DirectoryConstants.StockDirectory)
-				.Select(s => s.Replace(".lua", "")
-				.Replace(DirectoryConstants.StockDirectory, ""))
+			var stockNames = Directory.GetFiles(stockPath)
+				.Select(s => Path.GetFileName(s).Replace(".lua", ""))
 				.ToList();
 
-			CreatureCombiner creatureCombiner = new CreatureCombiner(stockNames);
+			CreatureCombiner creatureCombiner = new CreatureCombiner(stockNames, attrPath, stockPath);
 
 			for (int i = 0; i < stockNames.Count(); i++)
 			{
