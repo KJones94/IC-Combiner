@@ -554,7 +554,24 @@ namespace Combiner
 		{
 			for (int i = 2; i < 9; i++)
 			{
-				AddMeleeDamageType(creature, (DamageType)GameAttributes[Attributes.MeleeType[i]]);
+				AddMeleeDamageType(creature, (int)GameAttributes[Attributes.MeleeType[i]]);
+			}
+		}
+
+		private void AddMeleeDamageType(Creature creature, int type)
+		{
+			if (((int)DamageType.Horns & type) == (int)DamageType.Horns)
+			{
+				creature.HasHorns = true;
+			}
+			if (((int)DamageType.BarrierDestroy & type) == (int)DamageType.BarrierDestroy)
+			{
+				creature.HasBarrierDestroy = true;
+			}
+			if (((int)DamageType.Poison & type) == (int)DamageType.Poison
+				|| ((int)DamageType.VenomSpray & type) == (int)DamageType.VenomSpray)
+			{
+				creature.HasPoison = true;
 			}
 		}
 

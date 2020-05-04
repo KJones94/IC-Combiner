@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace Combiner
@@ -174,7 +175,11 @@ namespace Combiner
 			//m_ProgressVM.StartWork();
 			//await Task.Run(() =>
 			//{
-			if (IsQueryFilteringSelected)
+			if (m_DatabaseManagerVM.ActiveCollection == null)
+			{
+				MessageBox.Show("Please set an active collection before filtering.");
+			}
+			else if (IsQueryFilteringSelected)
 			{
 				m_CreatureDataVM.Creatures = 
 					new ObservableCollection<Creature>(

@@ -119,7 +119,7 @@ namespace Combiner
 			// https://stackoverflow.com/questions/34922735/commonopenfiledialog-put-my-window-behind-all-other-windows
 			var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive);
 			CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-			dialog.InitialDirectory = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Impossible Creatures";
+			//dialog.InitialDirectory = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Impossible Creatures";
 			if (dialog.ShowDialog(window) == CommonFileDialogResult.Ok)
 			{
 				AttrPath = dialog.FileName;
@@ -162,7 +162,7 @@ namespace Combiner
 			// https://stackoverflow.com/questions/34922735/commonopenfiledialog-put-my-window-behind-all-other-windows
 			var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive);
 			CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-			dialog.InitialDirectory = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Impossible Creatures";
+			//dialog.InitialDirectory = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Impossible Creatures";
 			dialog.IsFolderPicker = true;
 			if (dialog.ShowDialog(window) == CommonFileDialogResult.Ok)
 			{
