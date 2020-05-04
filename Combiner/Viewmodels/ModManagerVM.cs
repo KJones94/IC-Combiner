@@ -9,6 +9,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Windows;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using UI = System.Windows.Forms;
 
 namespace Combiner
 {
@@ -26,6 +27,37 @@ namespace Combiner
 		{
 			m_Database = database;
 			m_ProgressVM = progressVM;
+
+			SetupExistingMods();
+		}
+
+		private void SetupExistingMods()
+		{
+			string[] modDirectories = Directory.GetDirectories(DirectoryConstants.ModDirectory);
+			string[] modNames = modDirectories.Select(x => Path.GetFileName(x)).ToArray();
+			string[] modsToAdd = modNames.Where(x => m_Database.getMainMod(x) == null).ToArray();
+			
+			if (modsToAdd.Length > 0)
+			{
+				UI.DialogResult dialogResult = UI.MessageBox.Show("There are mods in your Mods directory without a creature collection. Would you like to create them now?", 
+					"Add Existing Mods", UI.MessageBoxButtons.YesNo);
+				if (dialogResult == UI.DialogResult.Yes)
+				{
+					string modsPath = Path.GetFullPath(DirectoryConstants.ModDirectory);
+					foreach (string mod in modsToAdd)
+					{
+						string attrPath = Path.Combine(modsPath, mod, "Script");
+						string attrFilePath = Directory.GetFiles(attrPath, "*.lua")[0];
+						string stockPath = Path.Combine(modsPath, mod, "Stock");
+
+						CreateMod(mod, attrFilePath, stockPath);
+					}
+				}
+				else if (dialogResult == UI.DialogResult.No)
+				{
+					//do something else
+				}
+			}
 		}
 
 		private ObservableCollection<string> m_Mods;
@@ -175,6 +207,11 @@ namespace Combiner
 			return Regex.IsMatch(modName, "^(?!_)\\w+(?<!_main)$");
 		}
 
+		public void CreateModDirectory()
+		{
+			Directory.CreateDirectory(DirectoryConstants.ModDirectory);
+		}
+
 		public void CreateMod(object o)
 		{
 			if (string.IsNullOrEmpty(CreateModName)
@@ -224,6 +261,12 @@ namespace Combiner
 				AttrPath = string.Empty;
 				StockPath = string.Empty;
 			}
+		}
+
+		public void CreateMod(string modName, string attrPath, string stockPath)
+		{
+			m_Database.CreateMod(modName, attrPath, stockPath);
+			UpdateMods();
 		}
 
 		private string ConvertAttr(string src, string dest)
