@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Windows;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace Combiner
 {
@@ -169,6 +170,11 @@ namespace Combiner
 			}
 		}
 
+		private bool IsModNameValid(string modName)
+		{
+			return Regex.IsMatch(modName, "^(?!_)\\w+(?<!_main)$");
+		}
+
 		public void CreateMod(object o)
 		{
 			if (string.IsNullOrEmpty(CreateModName)
@@ -176,6 +182,10 @@ namespace Combiner
 				|| string.IsNullOrEmpty(StockPath))
 			{
 				MessageBox.Show("Make sure to file out the Name, Attr, and Stock fields.");
+			}
+			else if (!IsModNameValid(CreateModName))
+			{
+				MessageBox.Show("Name must only contain numbers, letters, and _.");
 			}
 			else
 			{
@@ -206,7 +216,7 @@ namespace Combiner
 
 				MessageBox.Show("Starting creation of main creature collection for this mod...");
 
-				m_Database.CreateMod(CreateModName, convertedAttrPath, StockPath);
+				m_Database.CreateMod(CreateModName, convertedAttrPath, newStockPath);
 				UpdateMods();
 
 				MessageBox.Show("Mod Created");

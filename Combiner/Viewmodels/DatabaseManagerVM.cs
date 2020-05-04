@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
+using System.Text.RegularExpressions;
 
 namespace Combiner
 {
@@ -163,7 +164,7 @@ namespace Combiner
 			}
 			else if (!IsCollectionNameValid(CreateCollectionName))
 			{
-				MessageBox.Show("Name must only contain numbers and letters.");
+				MessageBox.Show("Name must only contain numbers, letters, and _.");
 			}
 			else if (m_Database.CreateCollection(CreateCollectionName, CreateModChoice))
 			{
@@ -179,8 +180,7 @@ namespace Combiner
 		private bool IsCollectionNameValid(string collectionName)
 		{
 			// '_' is valid but simpler to not allow unless asked for
-			return !string.IsNullOrEmpty(collectionName) 
-				&& collectionName.All(c => char.IsLetterOrDigit(c));
+			return Regex.IsMatch(collectionName, "^(?!_)\\w+(?<!_main)$");
 		}
 
 		private ModCollection m_SelectedCollection;
