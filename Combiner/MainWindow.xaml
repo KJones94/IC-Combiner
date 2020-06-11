@@ -9,6 +9,7 @@
 		Height="1000" 
 		Width="1500"
 		WindowState="Maximized"
+		Loaded="Window_Loaded"
 		SizeToContent="Manual">
 	<Window.DataContext>
 		<local:MainVM/>

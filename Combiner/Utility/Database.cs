@@ -334,16 +334,16 @@ namespace Combiner
 		/// Gets the total number of creatures in the database
 		/// </summary>
 		/// <returns></returns>
-		public int GetTotalCreatureCount()
+		public int GetTotalCreatureCount(ModCollection modCollection)
 		{
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
-				if (!db.CollectionExists(m_CreaturesCollectionName))
+				if (!db.CollectionExists(modCollection.CollectionName))
 				{
 					return 0;
 				}
 
-				var collection = db.GetCollection <Creature>(m_CreaturesCollectionName);
+				var collection = db.GetCollection <Creature>(modCollection.CollectionName);
 				return collection.Count();
 			}
 		}

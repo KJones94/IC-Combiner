@@ -46,7 +46,7 @@ namespace Combiner
 			m_DatabaseManagerVM = databaseManagerVM;
 			m_DatabaseManagerVM.CollectionChangedEvent += UpdateCollection;
 			m_ActiveFilters = new List<CreatureFilter>();
-			IsQueryFilteringSelected = true;
+			IsQueryFilteringSelected = false;
 			InitIsActiveHandlers();
 		}
 
@@ -189,15 +189,9 @@ namespace Combiner
 			}
 			else
 			{
-				// TODO: I forgot what this is checking...
-				//if (m_DatabaseManagerVM.ActiveCollection != m_Database.m_CreaturesCollectionName
-				if (!m_DatabaseManagerVM.ActiveCollection.IsMain
-					|| m_CreatureDataVM.Creatures.Count != m_CreatureDataVM.TotalCreatureCount)
-				{
-					m_CreatureDataVM.Creatures = 
-						new ObservableCollection<Creature>(
+				m_CreatureDataVM.Creatures =
+					new ObservableCollection<Creature>(
 							m_Database.GetAllCreatures(m_DatabaseManagerVM.ActiveCollection));
-				}
 				m_CreatureDataVM.CreaturesView.Filter = CreatureFilter;
 			}
 			//});

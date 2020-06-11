@@ -169,6 +169,28 @@ namespace Combiner
 			window.ShowDialog();
 		}
 
+		//private ICommand m_WindowLoadedCommand;
+		//public ICommand WindowLoadedCommand
+		//{
+		//	get
+		//	{
+		//		return m_WindowLoadedCommand ??
+		//		  (m_WindowLoadedCommand = new RelayCommand(WindowLoaded));
+		//	}
+		//	set
+		//	{
+		//		if (value != m_WindowLoadedCommand)
+		//		{
+		//			m_WindowLoadedCommand = value;
+		//			OnPropertyChanged(nameof(WindowLoadedCommand));
+		//		}
+		//	}
+		//}
+		public void WindowLoaded()
+		{
+			ModManagerVM.SetupExistingMods();
+		}
+
 		public MainVM()
 		{
 			Database database = new Database();

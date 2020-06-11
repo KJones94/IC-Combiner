@@ -21,7 +21,7 @@ namespace Combiner
 		{
 			m_Database = database;
 			m_DatabaseManagerVM = databaseManagerVM;
-			UpdateTotalCreatureCount();
+			m_DatabaseManagerVM.CollectionChangedEvent += UpdateTotalCreatureCount;
 		}
 
 		private ObservableCollection<Creature> m_Creatures;
@@ -78,9 +78,9 @@ namespace Combiner
 			}
 		}
 
-		public void UpdateTotalCreatureCount()
+		public void UpdateTotalCreatureCount(ModCollection collection)
 		{
-			TotalCreatureCount = m_Database.GetTotalCreatureCount();
+			TotalCreatureCount = m_Database.GetTotalCreatureCount(collection);
 		}
 
 		private PagingController m_Pager;

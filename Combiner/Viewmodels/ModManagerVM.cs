@@ -28,10 +28,10 @@ namespace Combiner
 			m_Database = database;
 			m_ProgressVM = progressVM;
 
-			SetupExistingMods();
+			//SetupExistingMods();
 		}
 
-		private void SetupExistingMods()
+		public void SetupExistingMods()
 		{
 			string[] modDirectories = Directory.GetDirectories(DirectoryConstants.ModDirectory);
 			string[] modNames = modDirectories.Select(x => Path.GetFileName(x)).ToArray();

@@ -40,5 +40,10 @@ namespace Combiner
 			AboutWindow window = new AboutWindow();
 			window.Show();
 		}
+
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			((MainVM)DataContext).WindowLoaded();
+		}
 	}
 }
