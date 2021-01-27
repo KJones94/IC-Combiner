@@ -43,6 +43,7 @@ namespace Combiner
 		public static string Firefly = "Firefly";
 		public static string GardenSpider = "Garden Spider";
 		public static string Garfish = "Garfish";
+		public static string Gazelle = "Gazelle";
 		public static string GiantAnteater = "Giant Anteater";
 		public static string GiantSquid = "Giant Squid";
 		public static string Giraffe = "Giraffe";
@@ -150,6 +151,7 @@ namespace Combiner
 			{"fire_fly", Firefly },
 			{"garden_spider", GardenSpider },
 			{"garfish", Garfish },
+			{"gazelle", Gazelle },
 			{"giant_anteater", GiantAnteater },
 			{"giant_pacific_octopus", GiantPacificOctopus },
 			{"colossal_squid", GiantSquid },
