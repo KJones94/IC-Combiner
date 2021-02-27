@@ -10,6 +10,7 @@ namespace Combiner
 
 
 		public static string Albatross = "Albatross";
+		public static string Alligator = "Alligator";
 		public static string Anaconda = "Anaconda";
 		public static string Anglerfish = "Anglerfish";
 		public static string Ant = "Ant";
@@ -30,6 +31,7 @@ namespace Combiner
 		public static string Cheetah = "Cheetah";
 		public static string Chimpanzee = "Chimpanzee";
 		public static string Cockroach = "Cockroach";
+		public static string ColossalSquid = "Colossal Squid";
 		public static string Condor = "Condor";
 		public static string Coyote = "Coyote";
 		public static string Crocodile = "Crocodile";
@@ -64,6 +66,7 @@ namespace Combiner
 		public static string KomodoDragon = "Komodo Dragon";
 		public static string Lammergeier = "Lammergeier";
 		public static string Lemming = "Lemming";
+		public static string Lion = "Lion";
 		public static string Lioness = "Lioness";
 		public static string Lobster = "Lobster";
 		public static string MalayanTapir = "Malayan Tapir";
@@ -101,7 +104,7 @@ namespace Combiner
 		public static string Tarantula = "Tarantula";
 		public static string Termite = "Termite";
 		public static string Tiger = "Tiger";
-		public static string BluefinTuna = "Bluefin Tuna";
+		public static string Tuna = "Tuna";
 		public static string VelvetWorm = "Velvet Worm";
 		public static string Vulture = "Vulture";
 		public static string WalkingStick = "Walking Stick";
@@ -118,6 +121,7 @@ namespace Combiner
 		public static Dictionary<string, string> ProperStockNames = new Dictionary<string, string>()
 		{
 			{"albatross", Albatross },
+			{"alligator", Alligator },
 			{"anaconda", Anaconda },
 			{"anglerfish", Anglerfish },
 			{"ant", Ant },
@@ -138,6 +142,7 @@ namespace Combiner
 			{"cheetah", Cheetah },
 			{"chimpanzee", Chimpanzee },
 			{"cockroach", Cockroach },
+			{"colossal_squid", ColossalSquid },
 			{"condor", Condor },
 			{"coyote", Coyote },
 			{"crocodile", Crocodile },
@@ -154,7 +159,7 @@ namespace Combiner
 			{"gazelle", Gazelle },
 			{"giant_anteater", GiantAnteater },
 			{"giant_pacific_octopus", GiantPacificOctopus },
-			{"colossal_squid", GiantSquid },
+			{"giant_squid", GiantSquid },
 			{"giraffe", Giraffe },
 			{"gorilla", Gorilla },
 			{"great_white_shark", GreatWhiteShark },
@@ -173,6 +178,7 @@ namespace Combiner
 			{"komodo_dragon", KomodoDragon },
 			{"lammergeier", Lammergeier },
 			{"lemming", Lemming },
+			{"lion", Lion },
 			{"lioness", Lioness },
 			{"lobster", Lobster },
 			{"tapir", MalayanTapir },
@@ -210,7 +216,7 @@ namespace Combiner
 			{"tarantula", Tarantula },
 			{"termite", Termite },
 			{"tiger", Tiger },
-			{"tuna", BluefinTuna },
+			{"tuna", Tuna },
 			{"velvet_worm", VelvetWorm },
 			{"vulture", Vulture },
 			{"stick_bug", WalkingStick },

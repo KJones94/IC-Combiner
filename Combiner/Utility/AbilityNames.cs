@@ -29,6 +29,7 @@ namespace Combiner
 		public static string Loner = "loner";
 		public static string Overpopulation = "overpopulation";
 		public static string PackHunter = "pack_hunter";
+		public static string Perforate = "ranged_piercing";
 		public static string Plague = "plague_attack";
 		public static string PoisonBite = "poison_bite";
 		public static string PoisonPincers = "poison_pincers";
@@ -66,6 +67,7 @@ namespace Combiner
 			Loner,
 			Overpopulation,
 			PackHunter,
+			Perforate,
 			Plague,
 			PoisonBite,
 			PoisonPincers,
@@ -105,6 +107,7 @@ namespace Combiner
 			{ LeapAttack, nameof(LeapAttack) },
 			{ Loner, nameof(Loner) },
 			{ Overpopulation, nameof(Overpopulation) },
+			{ Perforate, nameof(Perforate) },
 			{ PackHunter, nameof(PackHunter) },
 			{ Plague, nameof(Plague) },
 			{ PoisonBite, nameof(PoisonBite) },
