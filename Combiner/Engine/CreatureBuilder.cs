@@ -293,7 +293,7 @@ namespace Combiner
 
 		private void FixTunaLeapAttack()
 		{
-			if (Left.Stock.Name == StockNames.BluefinTuna || Right.Stock.Name == StockNames.BluefinTuna)
+			if (Left.Stock.Name == StockNames.Tuna || Right.Stock.Name == StockNames.Tuna)
 			{
 				StockStatCalculator backLegsSide = GetStockSide(Limb.BackLegs);
 
@@ -307,7 +307,7 @@ namespace Combiner
 
 				// Check if tuna leap is good
 				StockStatCalculator tailSide = GetStockSide(Limb.Tail);
-				if (tailSide.Name == StockNames.BluefinTuna
+				if (tailSide.Name == StockNames.Tuna
 					&& !HasLandSpeed()
 					&& !HasAirSpeed()
 					&& GetStockSide(Limb.Torso).Name != StockNames.GiantSquid) // Special case idk why
