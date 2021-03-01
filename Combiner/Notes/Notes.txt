@@ -78,3 +78,18 @@ Utility
 	Water
 	Rock
 	Chem
+
+	Power Breaks
+	1 - ??
+	2 - 119
+	3 - 229
+	4 - 399
+
+
+	Main Features:
+
+	Abilities and Stock AND OR NOT - need to come up with a flexible UI to build different filter expressions
+	Choose columns to hide
+	Save hidden/visible columns
+	Saving filters
+	General UI improvements
