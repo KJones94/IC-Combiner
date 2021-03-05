@@ -93,3 +93,9 @@ Utility
 	Save hidden/visible columns
 	Saving filters
 	General UI improvements
+
+
+	Tuning.lua:
+
+	Create global variables for the tables in tuning.lua
+	The tables should update in C# when the they are updated in the lua?
