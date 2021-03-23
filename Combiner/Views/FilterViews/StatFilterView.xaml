@@ -11,7 +11,14 @@
 		<Label>-</Label>
 		<TextBox Width="50" Text="{Binding MaxValue, Mode=TwoWay}"/>
 		<Button Content="Remove"
-				Width="50"
+                
+                
+                FontSize="10"
+				Width="60"
 				Command="{Binding DeactivateCommand}"/>
-	</StackPanel>
+        <Button Content="Reset Filter"
+                FontSize="10"
+				Width="60"
+				Command="{Binding ResetOnlyCommand}"/>
+    </StackPanel>
 </UserControl>

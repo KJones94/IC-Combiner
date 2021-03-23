@@ -107,16 +107,16 @@ namespace Combiner
 			set { GameAttributes[Attributes.Electricity] = value; }
 		}
 
-		public double PopSize
-		{
-			get { return GameAttributes[Attributes.PopSize]; }
-			set { GameAttributes[Attributes.PopSize] = value; }
-		}
-
 		public double Power
 		{
 			get { return GameAttributes[Attributes.Power]; }
 			set { GameAttributes[Attributes.Power] = value; }
+		}
+
+		public double PopSize
+		{
+			get { return GameAttributes[Attributes.PopSize]; }
+			set { GameAttributes[Attributes.PopSize] = value; }
 		}
 
 		#endregion
@@ -168,9 +168,10 @@ namespace Combiner
 			GameAttributes.Add(Attributes.Rank, 0);
 			GameAttributes.Add(Attributes.Coal, 0);
 			GameAttributes.Add(Attributes.Electricity, 0);
-			GameAttributes.Add(Attributes.PopSize, 0);
+			
 
 			GameAttributes.Add(Attributes.Power, 0);
+			GameAttributes.Add(Attributes.PopSize, 0);
 
 			GameAttributes.Add(Attributes.Size, 0);
 			GameAttributes.Add(Attributes.SightRadius, 0);
@@ -479,10 +480,16 @@ namespace Combiner
 				WaterSpeed = this.WaterSpeed,
 				AirSpeed = this.AirSpeed,
 				MeleeDamage = this.MeleeDamage,
+				PopSize = Math.Ceiling(this.PopSize),
+				Ticks = this.Ticks,
+		
 			};
 			AddRangeDamageToCreature(creature);
+			AddSuicideCoefficient(creature);
 			AddMeleeDamageTypes(creature);
 			AddAbiltiies(creature);
+			//AddPopCount(creature);
+			AddCoalElecRatio(creature);
 
 			return creature;
 		}
@@ -550,7 +557,43 @@ namespace Combiner
 			}
 		}
 
-		private void AddMeleeDamageTypes(Creature creature)
+
+		private void AddSuicideCoefficient(Creature creature)
+        {
+			if (creature.RangeDamage1 > creature.MeleeDamage)
+			{ 
+				creature.SuicideCoefficient = creature.EffectiveHitpoints / creature.RangeDamage1; 
+			}
+			else
+			{ 
+				creature.SuicideCoefficient = creature.EffectiveHitpoints / creature.MeleeDamage; 
+			}
+        }
+
+		private void AddCoalElecRatio(Creature creature)
+		{
+			if (creature.Coal < 0.001 || Double.IsNegativeInfinity(creature.Coal)) creature.Coal = 0.0;
+			if (creature.Electricity < 0.001 || Double.IsNegativeInfinity(creature.Electricity)) creature.Electricity = 0.0;
+
+			if (Double.IsInfinity(creature.Coal) || Double.IsInfinity(creature.Electricity)) creature.CoalElecRatio = 0.0;
+			else if (creature.Electricity == 0.0) creature.CoalElecRatio = 0.0;
+			else creature.CoalElecRatio = creature.Coal / creature.Electricity;
+		}
+
+        //private void AddPopCount(Creature creature)
+        //{
+        //	if (creature.PopSize < 1)
+        //	{
+        //		creature.PopSize = 1;
+        //	}
+        //	else
+        //	{
+        //		creature.PopSize = Math.Ceiling(creature.PopSize);
+        //	}
+        //}
+
+
+        private void AddMeleeDamageTypes(Creature creature)
 		{
 			for (int i = 2; i < 9; i++)
 			{

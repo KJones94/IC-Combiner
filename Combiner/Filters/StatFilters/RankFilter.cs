@@ -9,7 +9,7 @@ namespace Combiner
 	public class RankFilter : StatFilter
 	{
 		public RankFilter()
-			: base("Rank", 1, 5) { }
+			: base("Level", 1, 5) { }
 
 		public override bool Filter(Creature creature)
 		{
