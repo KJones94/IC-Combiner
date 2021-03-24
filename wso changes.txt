@@ -1,0 +1,32 @@
+hi welcome to "my" branch (aka the branch where i add stuff under kevins strict supervision so as not to break stuff)
+
+what we dun and did:
+
+NEW FILTERS: 
+PopSize
+Coal/Elec Ratio
+SuiCo (Suicide Coefficient - EHP/Damage)
+Build Time
+
+NEW CHECKBOXES:
+Land Only
+Amphib Only
+Water Only
+Air Only
+
+UI:
+Made buttons smaller (so we can fit more filters on easily)
+Added Reset Filter button for active filters
+
+PLANS:
+Add decimal values for damage, distance, suico and popsize.
+Add filters for:
+	Nandidd Efficiency Rating: (Damage*EHP)/(Coal+Elec)
+	Ranged Potential: Ranged Damage * Ranged Distance
+	Ranged Critical Mass Value: Ranged X * Build time (I'm unsure yet if I should use Ranged Potential or Ranged Damage for this value)
+Add Hover-over tool tips for buttons for a description of the filter.
+
+
+If you want any filter added, like the above listed, please hit me up. I might not get to it straight away but I'll add it to my list.
+
+Thank Blother for all the hard work he's put into this app. This app is magnificent.
