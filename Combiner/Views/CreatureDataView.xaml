@@ -33,6 +33,7 @@
 			<DataGridTextColumn Header="Coal" Binding="{Binding Coal, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Elec" Binding="{Binding Electricity, Converter={StaticResource doubleConverter}}"/>
             <DataGridTextColumn Header="CER" Binding="{Binding CoalElecRatio, Converter={StaticResource doubleConverter}}"/>
+            <DataGridTextColumn Header="NERating" Binding="{Binding NERating, Converter={StaticResource doubleConverter}}"/>
             <DataGridTextColumn Header="Power" Binding="{Binding Power, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="E.HP" Binding="{Binding EffectiveHitpoints, Converter={StaticResource doubleConverter}}"/>
             <DataGridTextColumn Header="SuiCo" Binding="{Binding SuicideCoefficient, Converter={StaticResource doubleConverter}}"/>

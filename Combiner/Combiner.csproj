@@ -140,6 +140,7 @@
     <Compile Include="Filters\StatFilters\HitpointsFilter.cs" />
     <Compile Include="Filters\StatFilters\LandSpeedFilter.cs" />
     <Compile Include="Filters\StatFilters\MeleeDamageFilter.cs" />
+    <Compile Include="Filters\StatFilters\NERatingFilter.cs" />
     <Compile Include="Filters\StatFilters\PopSize.cs" />
     <Compile Include="Filters\StatFilters\PowerFilter.cs" />
     <Compile Include="Filters\StatFilters\RangeDamageFilter.cs" />

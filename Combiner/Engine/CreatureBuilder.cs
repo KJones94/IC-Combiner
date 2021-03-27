@@ -490,6 +490,7 @@ namespace Combiner
 			AddAbiltiies(creature);
 			//AddPopCount(creature);
 			AddCoalElecRatio(creature);
+			AddNERating(creature);
 
 			return creature;
 		}
@@ -560,7 +561,7 @@ namespace Combiner
 
 		private void AddSuicideCoefficient(Creature creature)
         {
-			if (creature.RangeDamage1 > creature.MeleeDamage)
+			if (creature.RangeDamage1 > 0)
 			{ 
 				creature.SuicideCoefficient = creature.EffectiveHitpoints / creature.RangeDamage1; 
 			}
@@ -580,20 +581,34 @@ namespace Combiner
 			else creature.CoalElecRatio = creature.Coal / creature.Electricity;
 		}
 
-        //private void AddPopCount(Creature creature)
-        //{
-        //	if (creature.PopSize < 1)
-        //	{
-        //		creature.PopSize = 1;
-        //	}
-        //	else
-        //	{
-        //		creature.PopSize = Math.Ceiling(creature.PopSize);
-        //	}
-        //}
+		private void AddNERating(Creature creature)
+		{
+
+			if (creature.RangeDamage1 > 0)
+			{ 
+				creature.NERating = (creature.EffectiveHitpoints * creature.RangeDamage1) / (creature.Coal + creature.Electricity);
+			}
+				else
+			{ 
+					creature.NERating = (creature.EffectiveHitpoints * creature.MeleeDamage) / (creature.Coal + creature.Electricity); 
+			}
+				
+		}
+
+		//private void AddPopCount(Creature creature)
+		//{
+		//	if (creature.PopSize < 1)
+		//	{
+		//		creature.PopSize = 1;
+		//	}
+		//	else
+		//	{
+		//		creature.PopSize = Math.Ceiling(creature.PopSize);
+		//	}
+		//}
 
 
-        private void AddMeleeDamageTypes(Creature creature)
+		private void AddMeleeDamageTypes(Creature creature)
 		{
 			for (int i = 2; i < 9; i++)
 			{

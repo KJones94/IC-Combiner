@@ -17,6 +17,7 @@ namespace Combiner
 		public double Coal { get; set; }
 		public double Electricity { get; set; }
 		public double CoalElecRatio { get; set; }
+		public double NERating { get; set; }
 		public double Power { get; set; }
 		public double EffectiveHitpoints { get; set; }
 		public double SuicideCoefficient { get; set; }

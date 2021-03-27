@@ -80,6 +80,7 @@ namespace Combiner
 			AirOnlyFilter.IsActiveChanged += OnFilterIsActive;
 			TicksFilter.IsActiveChanged += OnFilterIsActive;
 			CoalElecRatioFilter.IsActiveChanged += OnFilterIsActive;
+			NERatingFilter.IsActiveChanged += OnFilterIsActive;
 
 
 			// TODO: Can these be handled in a different way?
@@ -168,7 +169,7 @@ namespace Combiner
 			PopSizeFilter.ResetFilter();
 			TicksFilter.ResetFilter();
 			CoalElecRatioFilter.ResetFilter();
-
+			NERatingFilter.ResetFilter();
 		}
 
 		private ICommand m_FilterCreaturesCommand;
@@ -796,6 +797,24 @@ namespace Combiner
 				{
 					m_CoalElecRatioFilter = value;
 					OnPropertyChanged(nameof(CoalElecRatioFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_NERatingFilter;
+		public CreatureFilter NERatingFilter
+		{
+			get
+			{
+				return m_NERatingFilter
+					?? (m_NERatingFilter = new NERatingFilter());
+			}
+			set
+			{
+				if (m_NERatingFilter != value)
+				{
+					m_NERatingFilter = value;
+					OnPropertyChanged(nameof(NERatingFilter));
 				}
 			}
 		}
