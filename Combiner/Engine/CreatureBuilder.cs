@@ -494,7 +494,8 @@ namespace Combiner
 
 		private void CalculateNER(Creature creature)
 		{
-			creature.NandiddEfficiencyRating = (EffectiveHealth * (creature.MeleeDamage + creature.RangeDamage1 + creature.RangeDamage2)) / (creature.Coal + creature.Electricity);
+			var primaryDamage = creature.RangeDamage1 > 0 ? creature.RangeDamage1 : creature.MeleeDamage;
+			creature.NandiddEfficiencyRating = (EffectiveHealth * primaryDamage) / (creature.Coal + creature.Electricity);
 		}
 
 		private Dictionary<string, string> BuildBodyParts()
