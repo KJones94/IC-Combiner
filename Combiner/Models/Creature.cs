@@ -41,5 +41,6 @@ namespace Combiner
 		public double RangeMax2 { get; set; }
 
 		public Dictionary<string, bool> Abilities { get; set; }
+		public double NandiddEfficiencyRating { get; internal set; }
 	}
 }

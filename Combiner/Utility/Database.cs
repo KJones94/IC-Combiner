@@ -523,6 +523,7 @@ namespace Combiner
 
 		public bool Exists()
 		{
+			return false;
 			if (File.Exists(DirectoryConstants.DatabaseString))
 			{
 				using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
@@ -565,6 +566,7 @@ namespace Combiner
 		private void CreateCreatures(LiteCollection<Creature> collection, string attrPath, string stockPath)
 		{
 			var stockNames = Directory.GetFiles(stockPath)
+				.Where(s => Path.GetFileName(s).Contains(".lua"))
 				.Select(s => Path.GetFileName(s).Replace(".lua", ""))
 				.ToList();
 

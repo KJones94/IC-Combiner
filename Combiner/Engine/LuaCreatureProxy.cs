@@ -12,6 +12,9 @@ namespace Combiner
 	{
 		private Script AttrcombinerScript { get; set; }
 		private CreatureBuilder Creature { get; set; }
+
+		private string attrPath;
+
 		private DynValue AttrcombinerFunc { get; set; }
 
 		public LuaCreatureProxy(string attrPath)
@@ -19,13 +22,15 @@ namespace Combiner
 			AttrcombinerScript = new Script();
 			AttrcombinerScript.Options.ScriptLoader = new FileSystemScriptLoader();
 			SetupGlobals();
+			this.attrPath = attrPath;
 			AttrcombinerFunc = AttrcombinerScript.LoadFile(attrPath);
 		}
 
 		public void LoadScript(CreatureBuilder creature)
 		{ 
 			Creature = creature;
-			AttrcombinerScript.Call(AttrcombinerFunc);
+			//AttrcombinerFunc = AttrcombinerScript.LoadFile(attrPath);
+			var val = AttrcombinerScript.Call(AttrcombinerFunc);
 		}
 
 		private void SetupGlobals()
@@ -37,6 +42,8 @@ namespace Combiner
 			AttrcombinerScript.Globals["setuiattribute"] = (Action<string, double>)SetUIAttribute;
 			AttrcombinerScript.Globals["max"] = (Func<double, double, double>)Max;
 			AttrcombinerScript.Globals["min"] = (Func<double, double, double>)Min;
+			AttrcombinerScript.Globals["floor"] = (Func<double, double>)Floor;
+			AttrcombinerScript.Globals["ceil"] = (Func<double, double>)Ceil;
 			AttrcombinerScript.Globals["hasmeleedmgtype"] = (Func<double, double>)HasMeleeDmgType;
 			AttrcombinerScript.Globals["hasrangedmgtype"] = (Func<double, double>)HasRangeDmgType;
 
@@ -78,6 +85,10 @@ namespace Combiner
 			if (Creature.GameAttributes.ContainsKey(key))
 			{
 				Creature.GameAttributes[key] = value;
+			}
+			else
+			{
+				Creature.GameAttributes.Add(key, value);
 			}
 		}
 
@@ -158,6 +169,15 @@ namespace Combiner
 			{
 				return y;
 			}
+		}
+
+		private double Floor(double x)
+		{
+			return Math.Floor(x);
+		}
+		private double Ceil(double x)
+		{
+			return Math.Ceiling(x);
 		}
 	}
 }

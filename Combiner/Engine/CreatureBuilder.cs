@@ -119,6 +119,7 @@ namespace Combiner
 			set { GameAttributes[Attributes.Power] = value; }
 		}
 
+
 		#endregion
 
 		public CreatureBuilder(Stock left, Stock right, Dictionary<Limb, Side> chosenBodyParts)
@@ -171,6 +172,9 @@ namespace Combiner
 			GameAttributes.Add(Attributes.PopSize, 0);
 
 			GameAttributes.Add(Attributes.Power, 0);
+			GameAttributes.Add(Attributes.effective_mixed_dps, 0);
+			GameAttributes.Add(Attributes.scaling_size, 0);
+			GameAttributes.Add(Attributes.Mixed_DPS, 0);
 
 			GameAttributes.Add(Attributes.Size, 0);
 			GameAttributes.Add(Attributes.SightRadius, 0);
@@ -483,8 +487,14 @@ namespace Combiner
 			AddRangeDamageToCreature(creature);
 			AddMeleeDamageTypes(creature);
 			AddAbiltiies(creature);
+			CalculateNER(creature);
 
 			return creature;
+		}
+
+		private void CalculateNER(Creature creature)
+		{
+			creature.NandiddEfficiencyRating = (EffectiveHealth * (creature.MeleeDamage + creature.RangeDamage1 + creature.RangeDamage2)) / (creature.Coal + creature.Electricity);
 		}
 
 		private Dictionary<string, string> BuildBodyParts()

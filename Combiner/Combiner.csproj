@@ -322,6 +322,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Mods\attrcombiner.lua" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -918,7 +919,6 @@
     <Resource Include="Notes\Body Parts.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mods\" />
     <Folder Include="Stock\TestStock\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

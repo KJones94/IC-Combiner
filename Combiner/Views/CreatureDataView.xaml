@@ -15,11 +15,11 @@
 	<DataGrid ItemsSource="{Binding CreaturesView}" 
 					  SelectedItem="{Binding SelectedCreature, Mode=TwoWay}"
 					  Grid.Row="1"
-					  AlternatingRowBackground="Gainsboro" 
+					  AlternatingRowBackground="#FFDBD8D8" 
 					  AlternationCount="2"
 					  AutoGenerateColumns="False" 
 					  VirtualizingStackPanel.VirtualizationMode="Standard"
-					  IsReadOnly="True">
+					  IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged">
 		<DataGrid.ContextMenu>
 			<ContextMenu>
 				<MenuItem Header="Save Creature" Command="{Binding SaveCreatureCommand}"/>
@@ -32,7 +32,8 @@
 			<DataGridTextColumn Header="Rank" Binding="{Binding Rank}"/>
 			<DataGridTextColumn Header="Coal" Binding="{Binding Coal, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Elec" Binding="{Binding Electricity, Converter={StaticResource doubleConverter}}"/>
-			<DataGridTextColumn Header="Power" Binding="{Binding Power, Converter={StaticResource doubleConverter}}"/>
+			<DataGridTextColumn Header="Power" Binding="{Binding Power}"/>
+            <DataGridTextColumn Header="NER" Binding="{Binding NandiddEfficiencyRating}"/>
 			<DataGridTextColumn Header="E.HP" Binding="{Binding EffectiveHitpoints, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Hitpoints" Binding="{Binding Hitpoints, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Armour" Binding="{Binding Armour, Converter={StaticResource doubleConverter}}"/>

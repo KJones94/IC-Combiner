@@ -11,10 +11,14 @@ namespace Combiner
 		public static string Ticks = "constructionticks";
 		public static string Rank = "creature_rank";
 		public static string Coal = "cost";
-		public static string Electricity = "costrenew";
+		public static string Electricity = "costRenew";
 		public static string PopSize = "popsize";
 
 		public static string Power = "Power";
+		public static string Mixed_DPS = "mixed_dps";
+		public static string effective_mixed_dps = "effective_mixed_dps";
+		public static string scaling_size = "scaling_size";
+		public static string mobility = "mobility";
 
 		public static string Size = "size";
 		public static string SightRadius = "sight_radius1";
