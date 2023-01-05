@@ -12,30 +12,34 @@
 		<local:RangeSpecialConverter x:Key="rangeSpecialConverter"/>
 		<local:RangeTypeConverter x:Key="rangeTypeConverter"/>
 	</UserControl.Resources>
-	<DataGrid ItemsSource="{Binding CreaturesView}" 
+    <DataGrid ItemsSource="{Binding CreaturesView}" 
 					  SelectedItem="{Binding SelectedCreature, Mode=TwoWay}"
 					  Grid.Row="1"
 					  AlternatingRowBackground="#FFDBD8D8" 
 					  AlternationCount="2"
 					  AutoGenerateColumns="False" 
 					  VirtualizingStackPanel.VirtualizationMode="Standard"
-					  IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged">
-		<DataGrid.ContextMenu>
+					 IsReadOnly="True">
+        <DataGrid.ContextMenu>
 			<ContextMenu>
 				<MenuItem Header="Save Creature" Command="{Binding SaveCreatureCommand}"/>
 				<MenuItem Header="Unsave Creature" Command="{Binding UnsaveCreatureCommand}"/>
 			</ContextMenu>
 		</DataGrid.ContextMenu>
 		<DataGrid.Columns>
-			<DataGridTextColumn Header="Left" Binding="{Binding Left}"/>
-			<DataGridTextColumn Header="Right" Binding="{Binding Right}"/>
-			<DataGridTextColumn Header="Rank" Binding="{Binding Rank}"/>
+            <DataGridTextColumn Header="Left" Binding="{Binding Left}"/>
+            <DataGridTextColumn Header="Right" Binding="{Binding Right}"/>
+			<DataGridTextColumn Header="Level" Binding="{Binding Rank}"/>
 			<DataGridTextColumn Header="Coal" Binding="{Binding Coal, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Elec" Binding="{Binding Electricity, Converter={StaticResource doubleConverter}}"/>
-			<DataGridTextColumn Header="Power" Binding="{Binding Power}"/>
-            <DataGridTextColumn Header="NER" Binding="{Binding NandiddEfficiencyRating}"/>
+            <DataGridTextColumn Header="CER" Binding="{Binding CoalElecRatio, Converter={StaticResource doubleConverter}}"/>
+            <DataGridTextColumn Header="NERating" Binding="{Binding NERating, Converter={StaticResource doubleConverter}}"/>
+            <DataGridTextColumn Header="Power" Binding="{Binding Power}"/>
 			<DataGridTextColumn Header="E.HP" Binding="{Binding EffectiveHitpoints, Converter={StaticResource doubleConverter}}"/>
-			<DataGridTextColumn Header="Hitpoints" Binding="{Binding Hitpoints, Converter={StaticResource doubleConverter}}"/>
+            <DataGridTextColumn Header="SuiCo" Binding="{Binding SuicideCoefficient, Converter={StaticResource doubleConverter}}"/>
+            <DataGridTextColumn Header="PopSize" Binding="{Binding PopSize, Converter={StaticResource doubleConverter}}"/>
+            <DataGridTextColumn Header="Build Time" Binding="{Binding Ticks, Converter={StaticResource doubleConverter}}"/>
+            <DataGridTextColumn Header="HP" Binding="{Binding Hitpoints, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Armour" Binding="{Binding Armour, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Sight Radius" Binding="{Binding SightRadius, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Size" Binding="{Binding Size, Converter={StaticResource doubleConverter}}"/>
@@ -54,7 +58,7 @@
 			<DataGridTextColumn Header="Horns" Binding="{Binding HasHorns, Converter={StaticResource boolConverter}}"/>
 			<DataGridTextColumn Header="Barrier Destroy" Binding="{Binding HasBarrierDestroy, Converter={StaticResource boolConverter}}"/>
 			<DataGridTextColumn Header="Poison" Binding="{Binding HasPoison, Converter={StaticResource boolConverter}}"/>
-			<DataGridTextColumn Header="Abilties" Binding="{Binding Abilities, Converter={StaticResource abilityConverter}}"/>
+			<DataGridTextColumn Header="Abilities" Binding="{Binding Abilities, Converter={StaticResource abilityConverter}}"/>
 		</DataGrid.Columns>
 	</DataGrid>
 

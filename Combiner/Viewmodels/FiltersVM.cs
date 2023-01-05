@@ -56,6 +56,8 @@ namespace Combiner
 			ArmourFilter.IsActiveChanged += OnFilterIsActive;
 			CoalFilter.IsActiveChanged += OnFilterIsActive;
 			EffectiveHitpointsFilter.IsActiveChanged += OnFilterIsActive;
+			SuicideCoefficientFilter.IsActiveChanged += OnFilterIsActive;
+			PopSizeFilter.IsActiveChanged += OnFilterIsActive;
 			ElectricityFilter.IsActiveChanged += OnFilterIsActive;
 			HitpointsFilter.IsActiveChanged += OnFilterIsActive;
 			LandSpeedFilter.IsActiveChanged += OnFilterIsActive;
@@ -72,6 +74,14 @@ namespace Combiner
 			HornsFilter.IsActiveChanged += OnFilterIsActive;
 			PoisonFilter.IsActiveChanged += OnFilterIsActive;
 			BarrierDestroyFilter.IsActiveChanged += OnFilterIsActive;
+			LandOnlyFilter.IsActiveChanged += OnFilterIsActive;
+			WaterOnlyFilter.IsActiveChanged += OnFilterIsActive;
+			AmphibOnlyFilter.IsActiveChanged += OnFilterIsActive;
+			AirOnlyFilter.IsActiveChanged += OnFilterIsActive;
+			TicksFilter.IsActiveChanged += OnFilterIsActive;
+			CoalElecRatioFilter.IsActiveChanged += OnFilterIsActive;
+			NERatingFilter.IsActiveChanged += OnFilterIsActive;
+
 
 			// TODO: Can these be handled in a different way?
 			RangeOptionsFilter.MeleeOnlyFilter.IsActiveChanged += OnFilterIsActive;
@@ -133,6 +143,7 @@ namespace Combiner
 			ArmourFilter.ResetFilter();
 			CoalFilter.ResetFilter();
 			EffectiveHitpointsFilter.ResetFilter();
+			SuicideCoefficientFilter.ResetFilter();
 			ElectricityFilter.ResetFilter();
 			HitpointsFilter.ResetFilter();
 			LandSpeedFilter.ResetFilter();
@@ -151,6 +162,14 @@ namespace Combiner
 			RangeOptionsFilter.ResetFilter();
 			StockFilter.ResetFilter();
 			AbilityFilter.ResetFilter();
+			LandOnlyFilter.ResetFilter();
+			WaterOnlyFilter.ResetFilter();
+			AmphibOnlyFilter.ResetFilter();
+			AirOnlyFilter.ResetFilter();
+			PopSizeFilter.ResetFilter();
+			TicksFilter.ResetFilter();
+			CoalElecRatioFilter.ResetFilter();
+			NERatingFilter.ResetFilter();
 		}
 
 		private ICommand m_FilterCreaturesCommand;
@@ -656,6 +675,170 @@ namespace Combiner
 			}
 		}
 
+		private CreatureFilter m_LandOnlyFilter;
+		public CreatureFilter LandOnlyFilter
+		{
+			get
+			{
+				return m_LandOnlyFilter
+					?? (m_LandOnlyFilter = new LandOnlyFilter());
+			}
+			set
+			{
+				if (m_LandOnlyFilter != value)
+				{
+					m_LandOnlyFilter = value;
+					OnPropertyChanged(nameof(LandOnlyFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_AirOnlyFilter;
+		public CreatureFilter AirOnlyFilter
+		{
+			get
+			{
+				return m_AirOnlyFilter
+					?? (m_AirOnlyFilter = new AirOnlyFilter());
+			}
+			set
+			{
+				if (m_AirOnlyFilter != value)
+				{
+					m_AirOnlyFilter = value;
+					OnPropertyChanged(nameof(AirOnlyFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_WaterOnlyFilter;
+		public CreatureFilter WaterOnlyFilter
+		{
+			get
+			{
+				return m_WaterOnlyFilter
+					?? (m_WaterOnlyFilter = new WaterOnlyFilter());
+			}
+			set
+			{
+				if (m_WaterOnlyFilter != value)
+				{
+					m_WaterOnlyFilter = value;
+					OnPropertyChanged(nameof(WaterOnlyFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_AmphibOnlyFilter;
+		public CreatureFilter AmphibOnlyFilter
+		{
+			get
+			{
+				return m_AmphibOnlyFilter
+					?? (m_AmphibOnlyFilter = new AmphibOnlyFilter());
+			}
+			set
+			{
+				if (m_AmphibOnlyFilter != value)
+				{
+					m_AmphibOnlyFilter = value;
+					OnPropertyChanged(nameof(AmphibOnlyFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_SuicideCoefficientFilter;
+		public CreatureFilter SuicideCoefficientFilter
+		{
+			get
+			{
+				return m_SuicideCoefficientFilter
+					?? (m_SuicideCoefficientFilter = new SuicideCoefficientFilter());
+			}
+			set
+			{
+				if (m_SuicideCoefficientFilter != value)
+				{
+					m_SuicideCoefficientFilter = value;
+					OnPropertyChanged(nameof(SuicideCoefficientFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_PopSizeFilter;
+		public CreatureFilter PopSizeFilter
+		{
+			get
+			{
+				return m_PopSizeFilter
+					?? (m_PopSizeFilter = new PopSizeFilter());
+			}
+			set
+			{
+				if (m_PopSizeFilter != value)
+				{
+					m_PopSizeFilter = value;
+					OnPropertyChanged(nameof(PopSizeFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_CoalElecRatioFilter;
+		public CreatureFilter CoalElecRatioFilter
+		{
+			get
+			{
+				return m_CoalElecRatioFilter
+					?? (m_CoalElecRatioFilter = new CoalElecRatioFilter());
+			}
+			set
+			{
+				if (m_CoalElecRatioFilter != value)
+				{
+					m_CoalElecRatioFilter = value;
+					OnPropertyChanged(nameof(CoalElecRatioFilter));
+				}
+			}
+		}
+
+		private CreatureFilter m_NERatingFilter;
+		public CreatureFilter NERatingFilter
+		{
+			get
+			{
+				return m_NERatingFilter
+					?? (m_NERatingFilter = new NERatingFilter());
+			}
+			set
+			{
+				if (m_NERatingFilter != value)
+				{
+					m_NERatingFilter = value;
+					OnPropertyChanged(nameof(NERatingFilter));
+				}
+			}
+		}
+
+
+		private CreatureFilter m_TicksFilter;
+		public CreatureFilter TicksFilter
+		{
+			get
+			{
+				return m_TicksFilter
+					?? (m_TicksFilter = new TicksFilter());
+			}
+			set
+			{
+				if (m_TicksFilter != value)
+				{
+					m_TicksFilter = value;
+					OnPropertyChanged(nameof(TicksFilter));
+				}
+			}
+		}
+
 		#endregion
 	}
 }
+

@@ -6,27 +6,27 @@ using System.Text;
 
 namespace Combiner
 {
-	public class HitpointsFilter : StatFilter
+	public class PopSizeFilter : StatFilter
 	{
-		public HitpointsFilter()
-			: base("HP", 0, 3000) { }
+		public PopSizeFilter()
+			: base("PopSize", 0, 10000) { }
 
 		public override bool Filter(Creature creature)
 		{
-			return creature.Hitpoints >= MinValue
-				&& creature.Hitpoints < (MaxValue + 1);
+			return creature.PopSize >= MinValue
+				&& creature.PopSize < (MaxValue + 1);
 		}
 
 		public override Query BuildQuery()
 		{
 			return Query.And(
-				Query.GTE("Hitpoints", MinValue),
-				Query.LT("Hitpoints", MaxValue + 1));
+				Query.GTE("PopSize", MinValue),
+				Query.LT("PopSize", MaxValue + 1));
 		}
 
 		public override string ToString()
 		{
-			return nameof(HitpointsFilter);
+			return nameof(PopSizeFilter);
 		}
 	}
 }

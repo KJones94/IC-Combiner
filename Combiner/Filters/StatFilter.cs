@@ -102,5 +102,32 @@ namespace Combiner
 		{
 			IsActive = false;
 		}
+
+		private RelayCommand m_ResetOnlyCommand;
+		public RelayCommand ResetOnlyCommand
+		{
+			get
+			{
+				return m_ResetOnlyCommand ??
+					  (m_ResetOnlyCommand = new RelayCommand(ResetOnly));
+			}
+			set
+			{
+				if (m_ResetOnlyCommand != value)
+				{
+					m_ResetOnlyCommand = value;
+					OnPropertyChanged(nameof(ResetOnlyCommand));
+				}
+			}
+		}
+
+		private void ResetOnly(object o)
+		{
+			MinValue = m_MinDefaultValue;
+			MaxValue = m_MaxDefaultValue;
+		
+		}
+
 	}
+
 }

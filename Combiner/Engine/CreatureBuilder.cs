@@ -107,18 +107,17 @@ namespace Combiner
 			set { GameAttributes[Attributes.Electricity] = value; }
 		}
 
-		public double PopSize
-		{
-			get { return GameAttributes[Attributes.PopSize]; }
-			set { GameAttributes[Attributes.PopSize] = value; }
-		}
-
 		public double Power
 		{
 			get { return GameAttributes[Attributes.Power]; }
 			set { GameAttributes[Attributes.Power] = value; }
 		}
 
+		public double PopSize
+		{
+			get { return GameAttributes[Attributes.PopSize]; }
+			set { GameAttributes[Attributes.PopSize] = value; }
+		}
 
 		#endregion
 
@@ -169,9 +168,10 @@ namespace Combiner
 			GameAttributes.Add(Attributes.Rank, 0);
 			GameAttributes.Add(Attributes.Coal, 0);
 			GameAttributes.Add(Attributes.Electricity, 0);
-			GameAttributes.Add(Attributes.PopSize, 0);
+			
 
 			GameAttributes.Add(Attributes.Power, 0);
+			GameAttributes.Add(Attributes.PopSize, 0);
 			GameAttributes.Add(Attributes.effective_mixed_dps, 0);
 			GameAttributes.Add(Attributes.scaling_size, 0);
 			GameAttributes.Add(Attributes.Mixed_DPS, 0);
@@ -483,21 +483,19 @@ namespace Combiner
 				WaterSpeed = this.WaterSpeed,
 				AirSpeed = this.AirSpeed,
 				MeleeDamage = this.MeleeDamage,
+				PopSize = Math.Ceiling(this.PopSize),
+				Ticks = this.Ticks,
+		
 			};
 			AddRangeDamageToCreature(creature);
+			AddSuicideCoefficient(creature);
 			AddMeleeDamageTypes(creature);
 			AddAbiltiies(creature);
-			CalculateNER(creature);
+			AddCoalElecRatio(creature);
+			AddNERating(creature);
 
 			return creature;
 		}
-
-		private void CalculateNER(Creature creature)
-		{
-			var primaryDamage = creature.RangeDamage1 > 0 ? creature.RangeDamage1 : creature.MeleeDamage;
-			creature.NandiddEfficiencyRating = (EffectiveHealth * primaryDamage) / (creature.Coal + creature.Electricity);
-		}
-
 		private Dictionary<string, string> BuildBodyParts()
 		{
 			Dictionary<string, string> bodyParts = new Dictionary<string, string>();
@@ -561,6 +559,42 @@ namespace Combiner
 			}
 		}
 
+
+		private void AddSuicideCoefficient(Creature creature)
+        {
+			if (creature.RangeDamage1 > 0)
+			{ 
+				creature.SuicideCoefficient = creature.EffectiveHitpoints / creature.RangeDamage1; 
+			}
+			else
+			{ 
+				creature.SuicideCoefficient = creature.EffectiveHitpoints / creature.MeleeDamage; 
+			}
+        }
+
+		private void AddCoalElecRatio(Creature creature)
+		{
+			if (creature.Coal < 0.001 || Double.IsNegativeInfinity(creature.Coal)) creature.Coal = 0.0;
+			if (creature.Electricity < 0.001 || Double.IsNegativeInfinity(creature.Electricity)) creature.Electricity = 0.0;
+
+			if (Double.IsInfinity(creature.Coal) || Double.IsInfinity(creature.Electricity)) creature.CoalElecRatio = 0.0;
+			else if (creature.Electricity == 0.0) creature.CoalElecRatio = 0.0;
+			else creature.CoalElecRatio = creature.Coal / creature.Electricity;
+		}
+
+		private void AddNERating(Creature creature)
+		{
+
+			if (creature.RangeDamage1 > 0)
+			{ 
+				creature.NERating = (creature.EffectiveHitpoints * creature.RangeDamage1) / (creature.Coal + creature.Electricity);
+			}
+			else
+			{ 
+					creature.NERating = (creature.EffectiveHitpoints * creature.MeleeDamage) / (creature.Coal + creature.Electricity); 
+			}
+				
+		}
 		private void AddMeleeDamageTypes(Creature creature)
 		{
 			for (int i = 2; i < 9; i++)
