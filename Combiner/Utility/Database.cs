@@ -17,12 +17,15 @@ namespace Combiner
 
 		private readonly string m_ModTableName = "mod_table";
 
+		private static Dictionary<string, IEnumerable<Creature>> creatureCache;
+
 		public Database()
 		{
 			if (!Directory.Exists(DirectoryConstants.DatabaseDirectory))
 			{
 				Directory.CreateDirectory(DirectoryConstants.DatabaseDirectory);
 			}
+			creatureCache = new Dictionary<string, IEnumerable<Creature>>();
 		}
 
 		public bool CreateModTable()
@@ -254,8 +257,14 @@ namespace Combiner
 		/// Gets all creatures from the given creatures collection.
 		/// </summary>
 		/// <returns></returns>
+		
 		public IEnumerable<Creature> GetAllCreatures(ModCollection mod)
 		{
+			if (creatureCache.ContainsKey(mod.CollectionName))
+			{
+				return creatureCache[mod.CollectionName];
+			}
+
 			using (var db = new LiteDatabase(DirectoryConstants.DatabaseString))
 			{
 				if (!db.CollectionExists(mod.CollectionName))
@@ -265,7 +274,9 @@ namespace Combiner
 
 				var collection = db.GetCollection<Creature>(mod.CollectionName);
 				var creatures = collection.FindAll(); // Can use Skip/Take to do paging...
-				return creatures.ToList();
+				var creaturesList = creatures.ToList();
+				creatureCache.Add(mod.CollectionName, creaturesList);
+				return creaturesList;
 			}
 		}
 

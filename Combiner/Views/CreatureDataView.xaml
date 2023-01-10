@@ -19,7 +19,8 @@
 					  AlternationCount="2"
 					  AutoGenerateColumns="False" 
 					  VirtualizingStackPanel.VirtualizationMode="Standard"
-					 IsReadOnly="True">
+					  EnableRowVirtualization="True"                       
+					 IsReadOnly="True" EnableColumnVirtualization="True">
         <DataGrid.ContextMenu>
 			<ContextMenu>
 				<MenuItem Header="Save Creature" Command="{Binding SaveCreatureCommand}"/>

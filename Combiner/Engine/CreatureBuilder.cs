@@ -366,7 +366,7 @@ namespace Combiner
 			// If snake torso then land
 			// Except for eel
 			if (GetStockSide(Limb.Torso).Type == StockType.Snake
-				&& GetStockSide(Limb.Torso).Stock.Name != StockNames.ElectricEel)
+				&& GetStockSide(Limb.Torso).Stock.Name != StockNames.ElectricEel && GetStockSide(Limb.Torso).Stock.Name != StockNames.SeaSnake)
 			{
 				return true;
 			}

@@ -45,5 +45,10 @@ namespace Combiner
 		{
 			((MainVM)DataContext).WindowLoaded();
 		}
+
+		private void FiltersView_Loaded(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }
