@@ -95,6 +95,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BoolComplimentConverter.cs" />
+    <Compile Include="Converters\DoubleTo2DecimalStringConverter.cs" />
     <Compile Include="Converters\MainModConverter.cs" />
     <Compile Include="Engine\CreatureStatCalculator.cs" />
     <Compile Include="Engine\LuaCreatureProxy.cs" />

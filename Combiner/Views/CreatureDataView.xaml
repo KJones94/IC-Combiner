@@ -9,6 +9,7 @@
 		<local:BoolToStringConverter x:Key="boolConverter"/>
 		<local:ContainsAbilitiesConverter x:Key="abilityConverter"/>
 		<local:DoubleToStringConverter x:Key="doubleConverter"/>
+        <local:DoubleTo2DecimalStringConverter x:Key="doubleTwoPlaceConverter"/>
 		<local:RangeSpecialConverter x:Key="rangeSpecialConverter"/>
 		<local:RangeTypeConverter x:Key="rangeTypeConverter"/>
 	</UserControl.Resources>
@@ -33,9 +34,10 @@
 			<DataGridTextColumn Header="Level" Binding="{Binding Rank}"/>
 			<DataGridTextColumn Header="Coal" Binding="{Binding Coal, Converter={StaticResource doubleConverter}}"/>
 			<DataGridTextColumn Header="Elec" Binding="{Binding Electricity, Converter={StaticResource doubleConverter}}"/>
-            <DataGridTextColumn Header="CER" Binding="{Binding CoalElecRatio, Converter={StaticResource doubleConverter}}"/>
-            <DataGridTextColumn Header="NERating" Binding="{Binding NERating, Converter={StaticResource doubleConverter}}"/>
-            <DataGridTextColumn Header="Power" Binding="{Binding Power}"/>
+            <DataGridTextColumn Header="CER" Binding="{Binding CoalElecRatio, Converter={StaticResource doubleTwoPlaceConverter}}"/>
+            <DataGridTextColumn Header="NERating" Binding="{Binding NERating, Converter={StaticResource doubleTwoPlaceConverter}}"/>
+            <DataGridTextColumn Header="Power" Binding="{Binding Power, Converter={StaticResource doubleTwoPlaceConverter}}"/>
+            <DataGridTextColumn  Header="Adj. Power" Binding="{Binding AbilityAdjustedPower, Converter={StaticResource doubleTwoPlaceConverter}}"/>
 			<DataGridTextColumn Header="E.HP" Binding="{Binding EffectiveHitpoints, Converter={StaticResource doubleConverter}}"/>
             <DataGridTextColumn Header="SuiCo" Binding="{Binding SuicideCoefficient, Converter={StaticResource doubleConverter}}"/>
             <DataGridTextColumn Header="PopSize" Binding="{Binding PopSize, Converter={StaticResource doubleConverter}}"/>

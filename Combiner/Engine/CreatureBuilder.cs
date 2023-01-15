@@ -119,6 +119,50 @@ namespace Combiner
 			set { GameAttributes[Attributes.PopSize] = value; }
 		}
 
+		public double AbilityAdjustedPower {
+			get
+			{
+				// Check for passive abilities that affect HP, Armor, or damage
+				var hp = Hitpoints;
+				var armor = Armour;
+				var dps = GameAttributes[Attributes.Mixed_DPS];
+
+				// Handle pack, herding, regen, frenzy
+
+				if (HasPassiveAbility(AbilityNames.PackHunter))
+				{
+					dps *= 1.3; // Pack hunter bonus
+				}
+
+				if (HasPassiveAbility(AbilityNames.Frenzy))
+				{
+					dps *= 1.5;
+					hp /= 1.3; // Account for incoming damage increase
+				}
+
+				if (HasPassiveAbility(AbilityNames.Herding))
+				{
+					armor *= 1.3;
+					armor = Math.Min(armor, .6);
+				}
+
+				if (HasPassiveAbility(AbilityNames.Regeneration))
+				{
+					// I guess maybe this is good enough?
+					hp *= 1.1;
+				}
+
+				var ehp = hp / (1 - armor);
+
+				return Math.Pow(ehp, 0.608) * ((0.22 * dps) + 2.8);
+			}
+		}
+
+		private bool HasPassiveAbility(string abilityName)
+		{
+			return GameAttributes[abilityName] > 0;
+		}
+
 		#endregion
 
 		public CreatureBuilder(Stock left, Stock right, Dictionary<Limb, Side> chosenBodyParts)
@@ -474,6 +518,7 @@ namespace Combiner
 				Coal = this.Coal,
 				Electricity = this.Electricity,
 				Power = this.Power,
+				AbilityAdjustedPower = this.AbilityAdjustedPower,
 				EffectiveHitpoints = this.EffectiveHealth,
 				Hitpoints = this.Hitpoints,
 				Armour = this.Armour,

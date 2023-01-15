@@ -44,5 +44,6 @@ namespace Combiner
 		public double Ticks { get; set; }
 
 		public Dictionary<string, bool> Abilities { get; set; }
-	}
+        public double AbilityAdjustedPower { get; internal set; }
+    }
 }
