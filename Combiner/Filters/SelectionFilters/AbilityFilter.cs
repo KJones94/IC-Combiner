@@ -40,9 +40,9 @@ namespace Combiner
 			return hasAbilities;
 		}
 
-		protected override Query QueryAnySelected()
+		protected override BsonExpression QueryAnySelected()
 		{
-			List<Query> queries = BuildQueryList();
+			List<BsonExpression> queries = BuildQueryList();
 			if (queries.Count == 1)
 			{
 				return queries.First();
@@ -50,9 +50,9 @@ namespace Combiner
 			return Query.Or(queries.ToArray());
 		}
 
-		protected override Query QueryOnlySelected()
+		protected override BsonExpression QueryOnlySelected()
 		{
-			List<Query> queries = BuildQueryList();
+			List<BsonExpression> queries = BuildQueryList();
 			if (queries.Count == 1)
 			{
 				return queries.First();
@@ -60,9 +60,9 @@ namespace Combiner
 			return Query.And(queries.ToArray());
 		}
 
-		private List<Query> BuildQueryList()
+		private List<BsonExpression> BuildQueryList()
 		{
-			List<Query> queries = new List<Query>();
+			List<BsonExpression> queries = new List<BsonExpression>();
 			foreach (string ability in Selected)
 			{
 				queries.Add(Query.EQ("Abilities." + ability, true));

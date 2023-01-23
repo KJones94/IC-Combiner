@@ -17,7 +17,7 @@ namespace Combiner
 				&& creature.Rank <= MaxValue;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.And(
 				Query.GTE("Rank", MinValue),

@@ -16,7 +16,7 @@ namespace Combiner
 			return creature.RangeSpecial1 > 0 || creature.RangeSpecial2 > 0;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.Or(
 				Query.GT("RangeSpecial1", 0),

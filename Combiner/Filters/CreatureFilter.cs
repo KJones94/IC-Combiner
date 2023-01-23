@@ -15,9 +15,9 @@ namespace Combiner
 
 		public abstract void ResetFilter();
 
-		public virtual Query BuildQuery()
+		public virtual BsonExpression BuildQuery()
 		{
-			return Query.All();
+			return Query.All().Select;
 		}
 
 		public string Name { get; private set; }

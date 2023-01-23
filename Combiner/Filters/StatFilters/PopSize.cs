@@ -17,7 +17,7 @@ namespace Combiner
 				&& creature.PopSize < (MaxValue + 1);
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.And(
 				Query.GTE("PopSize", MinValue),

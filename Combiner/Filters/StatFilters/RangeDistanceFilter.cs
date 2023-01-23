@@ -22,7 +22,7 @@ namespace Combiner
 			return isBothUnderMax && isOneOverMin;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			var isBothUnderMaxQuery = Query.And(
 				Query.LT("RangeMax1", MaxValue + 1),

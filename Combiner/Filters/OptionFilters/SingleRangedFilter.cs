@@ -16,7 +16,7 @@ namespace Combiner
 			return !(creature.RangeDamage2 > 0);
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.And(
 				Query.GT("RangeDamage1", 0),

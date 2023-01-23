@@ -25,9 +25,9 @@ namespace Combiner
 				&& Selected.Contains(creature.Right);
 		}
 
-		protected override Query QueryAnySelected()
+		protected override BsonExpression QueryAnySelected()
 		{
-			List<Query> queries = new List<Query>();
+			List<BsonExpression> queries = new List<BsonExpression>();
 
 			foreach (string stock in Selected)
 			{
@@ -43,9 +43,9 @@ namespace Combiner
 			return Query.Or(queries.ToArray());
 		}
 
-		protected override Query QueryOnlySelected()
+		protected override BsonExpression QueryOnlySelected()
 		{
-			List<Query> queries = new List<Query>();
+			List<BsonExpression> queries = new List<BsonExpression>();
 
 			if (Selected.Count == 1)
 			{
@@ -75,7 +75,7 @@ namespace Combiner
 			return Query.Or(queries.ToArray());
 		}
 
-		//public override Query BuildQuery()
+		//public override BsonExpression BuildQuery()
 		//{
 		//	List<Query> queries = new List<Query>();
 			

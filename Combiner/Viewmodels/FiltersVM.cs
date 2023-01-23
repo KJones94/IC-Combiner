@@ -261,11 +261,11 @@ namespace Combiner
 			}
 		}
 
-		private Query BuildFilterQuery()
+		private BsonExpression BuildFilterQuery()
 		{
 			if (m_ActiveFilters.Count == 0)
 			{
-				return Query.All();
+				return Query.All().Select;
 			}
 
 			if (m_ActiveFilters.Count == 1)
@@ -273,7 +273,7 @@ namespace Combiner
 				return m_ActiveFilters.First().BuildQuery();
 			}
 
-			IEnumerable<Query> queries = m_ActiveFilters.Select(x => x.BuildQuery());
+			IEnumerable<BsonExpression> queries = m_ActiveFilters.Select(x => x.BuildQuery());
 			return Query.And(queries.ToArray());
 		}
 

@@ -18,7 +18,7 @@ namespace Combiner
 				&& creature.AirSpeed > 0;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.And(
 				Query.EQ("LandSpeed", 0),

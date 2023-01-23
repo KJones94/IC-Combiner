@@ -17,7 +17,7 @@ namespace Combiner
 				&& creature.NERating < (MaxValue + 1);
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.And(
 				Query.GTE("NERating", MinValue),

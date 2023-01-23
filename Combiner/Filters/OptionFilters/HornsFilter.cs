@@ -16,7 +16,7 @@ namespace Combiner
 			return creature.HasHorns;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.EQ("HasHorns", true);
 		}

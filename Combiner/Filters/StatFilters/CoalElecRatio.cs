@@ -17,7 +17,7 @@ namespace Combiner
 				&& creature.CoalElecRatio < (MaxValue + 1);
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.And(
 				Query.GTE("CoalElecRatio", MinValue),

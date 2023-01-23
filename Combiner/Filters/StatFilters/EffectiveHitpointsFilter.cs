@@ -17,7 +17,7 @@ namespace Combiner
 				&& creature.EffectiveHitpoints < (MaxValue + 1);
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.And(
 				Query.GTE("EffectiveHitpoints", MinValue),
