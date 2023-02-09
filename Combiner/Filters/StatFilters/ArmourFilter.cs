@@ -17,7 +17,7 @@ namespace Combiner
 				&& creature.Armour <= MaxValue;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.And(
 				Query.GTE("Armour", MinValue),

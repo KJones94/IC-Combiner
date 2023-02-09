@@ -16,14 +16,15 @@
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="4*"/>
-			<ColumnDefinition Width="4*"/>
-			<ColumnDefinition Width="6*"/>
-			<ColumnDefinition Width="2*"/>
-		</Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
 		<Grid Grid.Column="0">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition/>
 				<ColumnDefinition/>
+                <ColumnDefinition/>
 			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
 				<RowDefinition/>
@@ -38,19 +39,35 @@
 				<local:FilterButton DataContext="{Binding MeleeDamageFilter}"/>
 				<local:FilterButton DataContext="{Binding RangeDamageFilter}"/>
 				<local:FilterButton DataContext="{Binding RangeDistanceFilter}"/>
-			</StackPanel>
+                <local:FilterButton DataContext="{Binding PopSizeFilter}"/>
+                <local:FilterButton DataContext="{Binding CoalElecRatioFilter}"/>
+            </StackPanel>
 
-			<StackPanel Grid.Column="1" Grid.Row="0">
-				<local:FilterButton DataContext="{Binding HitpointsFilter}"/>
-				<local:FilterButton DataContext="{Binding ArmourFilter}"/>
-				<local:FilterButton DataContext="{Binding LandSpeedFilter}"/>
-				<local:FilterButton DataContext="{Binding WaterSpeedFilter}"/>
-				<local:FilterButton DataContext="{Binding AirSpeedFilter}"/>
-				<local:FilterButton DataContext="{Binding SightRadiusFilter}"/>
-				<local:FilterButton DataContext="{Binding SizeFilter}"/>
-			</StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="0">
+                <local:FilterButton DataContext="{Binding HitpointsFilter}"/>
+                <local:FilterButton DataContext="{Binding ArmourFilter}"/>
+                <local:FilterButton DataContext="{Binding LandSpeedFilter}"/>
+                <local:FilterButton DataContext="{Binding WaterSpeedFilter}"/>
+                <local:FilterButton DataContext="{Binding AirSpeedFilter}"/>
+                <local:FilterButton DataContext="{Binding SightRadiusFilter}"/>
+                <local:FilterButton DataContext="{Binding SizeFilter}"/>
+                <local:FilterButton DataContext="{Binding SuicideCoefficientFilter}"/>
+                <local:FilterButton DataContext="{Binding TicksFilter}"/>
+                <local:FilterButton DataContext="{Binding NERatingFilter}"/>
+            </StackPanel>
 
-		</Grid>
+            <!--<StackPanel Grid.Column="2" Grid.Row="0">
+                <local:FilterButton DataContext="{Binding BlankFilter}"/>
+                <local:FilterButton DataContext="{Binding BlankFilter}"/>
+                <local:FilterButton DataContext="{Binding BlankFilter}"/>
+                <local:FilterButton DataContext="{Binding BlankFilter}"/>
+                <local:FilterButton DataContext="{Binding BlankFilter}"/>
+                <local:FilterButton DataContext="{Binding BlankFilter}"/>
+                <local:FilterButton DataContext="{Binding BlankFilter}"/>
+                <local:FilterButton DataContext="{Binding BlankFilter}"/>
+            </StackPanel>-->
+
+        </Grid>
 
 		<StackPanel Grid.Column="2">
 			<local:SelectionFilterView DataContext="{Binding StockFilter}"/>
@@ -62,9 +79,15 @@
 				<local:OptionFilterView DataContext="{Binding PoisonFilter}"/>
 				<local:OptionFilterView DataContext="{Binding BarrierDestroyFilter}"/>
 			</StackPanel>
-		</StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <local:OptionFilterView DataContext="{Binding LandOnlyFilter}"/>
+                <local:OptionFilterView DataContext="{Binding AmphibOnlyFilter}"/>
+                <local:OptionFilterView DataContext="{Binding WaterOnlyFilter}"/>
+                <local:OptionFilterView DataContext="{Binding AirOnlyFilter}"/>
+            </StackPanel>
+        </StackPanel>
 
-		<ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
 			<StackPanel>
 				<ItemsControl ItemsSource="{Binding ChosenStatFilters}">
 					<ItemsControl.ItemsPanel>

@@ -37,7 +37,7 @@ namespace Combiner
 		}
 		public void ExportToCsv(object obj)
 		{
-			if (m_CreatureVM.Creatures.Count > 0)
+			if (m_CreatureVM.Creatures != null && m_CreatureVM.Creatures.Count > 0)
 			{
 				m_CreatureCsvWriter.WriteFile(m_CreatureVM.Creatures);
 			}

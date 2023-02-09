@@ -9,7 +9,7 @@ namespace Combiner
 	public class RankFilter : StatFilter
 	{
 		public RankFilter()
-			: base("Rank", 1, 5) { }
+			: base("Level", 1, 5) { }
 
 		public override bool Filter(Creature creature)
 		{
@@ -17,7 +17,7 @@ namespace Combiner
 				&& creature.Rank <= MaxValue;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.And(
 				Query.GTE("Rank", MinValue),

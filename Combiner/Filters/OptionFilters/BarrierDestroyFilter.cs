@@ -16,7 +16,7 @@ namespace Combiner
 			return creature.HasBarrierDestroy;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.EQ("HasBarrierDestroy", true);
 		}

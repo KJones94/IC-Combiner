@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Combiner", "Combiner\Combiner.csproj", "{8F70280D-DD6D-4C13-B4B9-2AC9E84381DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CombinerTests", "CombinerTests\CombinerTests.csproj", "{88D01C92-2BA4-4E34-B320-36165E8FC8EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{8F70280D-DD6D-4C13-B4B9-2AC9E84381DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F70280D-DD6D-4C13-B4B9-2AC9E84381DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F70280D-DD6D-4C13-B4B9-2AC9E84381DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88D01C92-2BA4-4E34-B320-36165E8FC8EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88D01C92-2BA4-4E34-B320-36165E8FC8EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88D01C92-2BA4-4E34-B320-36165E8FC8EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88D01C92-2BA4-4E34-B320-36165E8FC8EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9016A184-82A0-45C9-B234-9E4E6A4BEAF5}
 	EndGlobalSection
 EndGlobal

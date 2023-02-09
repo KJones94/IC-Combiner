@@ -22,8 +22,8 @@ namespace Combiner
 		protected abstract ObservableCollection<string> InitChoices();
 		protected abstract bool FilterOnlySelected(Creature creature);
 		protected abstract bool FilterAnySelected(Creature creature);
-		protected abstract Query QueryOnlySelected();
-		protected abstract Query QueryAnySelected();
+		protected abstract BsonExpression QueryOnlySelected();
+		protected abstract BsonExpression QueryAnySelected();
 
 		public override bool Filter(Creature creature)
 		{
@@ -46,7 +46,7 @@ namespace Combiner
 			IsActive = false;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			if (IsOnlySelectedFiltered)
 			{

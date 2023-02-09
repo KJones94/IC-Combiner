@@ -23,7 +23,7 @@ namespace Combiner
 			return range1HasDirect || range2HasDirect;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			var range1HasDirectQuery = Query.And(
 				Query.GT("RangeDamage1", 0),

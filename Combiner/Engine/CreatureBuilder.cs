@@ -107,16 +107,60 @@ namespace Combiner
 			set { GameAttributes[Attributes.Electricity] = value; }
 		}
 
+		public double Power
+		{
+			get { return GameAttributes[Attributes.Power]; }
+			set { GameAttributes[Attributes.Power] = value; }
+		}
+
 		public double PopSize
 		{
 			get { return GameAttributes[Attributes.PopSize]; }
 			set { GameAttributes[Attributes.PopSize] = value; }
 		}
 
-		public double Power
+		public double AbilityAdjustedPower {
+			get
+			{
+				// Check for passive abilities that affect HP, Armor, or damage
+				var hp = Hitpoints;
+				var armor = Armour;
+				var dps = GameAttributes[Attributes.Mixed_DPS];
+
+				// Handle pack, herding, regen, frenzy
+
+				if (HasPassiveAbility(AbilityNames.PackHunter))
+				{
+					dps *= 1.3; // Pack hunter bonus
+				}
+
+				if (HasPassiveAbility(AbilityNames.Frenzy))
+				{
+					dps *= 1.5;
+					hp /= 1.3; // Account for incoming damage increase
+				}
+
+				if (HasPassiveAbility(AbilityNames.Herding))
+				{
+					armor *= 1.3;
+					armor = Math.Min(armor, .6);
+				}
+
+				if (HasPassiveAbility(AbilityNames.Regeneration))
+				{
+					// I guess maybe this is good enough?
+					hp *= 1.1;
+				}
+
+				var ehp = hp / (1 - armor);
+
+				return Math.Pow(ehp, 0.608) * ((0.22 * dps) + 2.8);
+			}
+		}
+
+		private bool HasPassiveAbility(string abilityName)
 		{
-			get { return GameAttributes[Attributes.Power]; }
-			set { GameAttributes[Attributes.Power] = value; }
+			return GameAttributes[abilityName] > 0;
 		}
 
 		#endregion
@@ -168,9 +212,13 @@ namespace Combiner
 			GameAttributes.Add(Attributes.Rank, 0);
 			GameAttributes.Add(Attributes.Coal, 0);
 			GameAttributes.Add(Attributes.Electricity, 0);
-			GameAttributes.Add(Attributes.PopSize, 0);
+			
 
 			GameAttributes.Add(Attributes.Power, 0);
+			GameAttributes.Add(Attributes.PopSize, 0);
+			GameAttributes.Add(Attributes.effective_mixed_dps, 0);
+			GameAttributes.Add(Attributes.scaling_size, 0);
+			GameAttributes.Add(Attributes.Mixed_DPS, 0);
 
 			GameAttributes.Add(Attributes.Size, 0);
 			GameAttributes.Add(Attributes.SightRadius, 0);
@@ -362,7 +410,7 @@ namespace Combiner
 			// If snake torso then land
 			// Except for eel
 			if (GetStockSide(Limb.Torso).Type == StockType.Snake
-				&& GetStockSide(Limb.Torso).Stock.Name != StockNames.ElectricEel)
+				&& GetStockSide(Limb.Torso).Stock.Name != StockNames.ElectricEel && GetStockSide(Limb.Torso).Stock.Name != StockNames.SeaSnake)
 			{
 				return true;
 			}
@@ -470,6 +518,7 @@ namespace Combiner
 				Coal = this.Coal,
 				Electricity = this.Electricity,
 				Power = this.Power,
+				AbilityAdjustedPower = this.AbilityAdjustedPower,
 				EffectiveHitpoints = this.EffectiveHealth,
 				Hitpoints = this.Hitpoints,
 				Armour = this.Armour,
@@ -479,14 +528,19 @@ namespace Combiner
 				WaterSpeed = this.WaterSpeed,
 				AirSpeed = this.AirSpeed,
 				MeleeDamage = this.MeleeDamage,
+				PopSize = Math.Ceiling(this.PopSize),
+				Ticks = this.Ticks,
+		
 			};
 			AddRangeDamageToCreature(creature);
+			AddSuicideCoefficient(creature);
 			AddMeleeDamageTypes(creature);
 			AddAbiltiies(creature);
+			AddCoalElecRatio(creature);
+			AddNERating(creature);
 
 			return creature;
 		}
-
 		private Dictionary<string, string> BuildBodyParts()
 		{
 			Dictionary<string, string> bodyParts = new Dictionary<string, string>();
@@ -550,6 +604,42 @@ namespace Combiner
 			}
 		}
 
+
+		private void AddSuicideCoefficient(Creature creature)
+        {
+			if (creature.RangeDamage1 > 0)
+			{ 
+				creature.SuicideCoefficient = creature.EffectiveHitpoints / creature.RangeDamage1; 
+			}
+			else
+			{ 
+				creature.SuicideCoefficient = creature.EffectiveHitpoints / creature.MeleeDamage; 
+			}
+        }
+
+		private void AddCoalElecRatio(Creature creature)
+		{
+			if (creature.Coal < 0.001 || Double.IsNegativeInfinity(creature.Coal)) creature.Coal = 0.0;
+			if (creature.Electricity < 0.001 || Double.IsNegativeInfinity(creature.Electricity)) creature.Electricity = 0.0;
+
+			if (Double.IsInfinity(creature.Coal) || Double.IsInfinity(creature.Electricity)) creature.CoalElecRatio = 0.0;
+			else if (creature.Electricity == 0.0) creature.CoalElecRatio = 0.0;
+			else creature.CoalElecRatio = creature.Coal / creature.Electricity;
+		}
+
+		private void AddNERating(Creature creature)
+		{
+
+			if (creature.RangeDamage1 > 0)
+			{ 
+				creature.NERating = (creature.EffectiveHitpoints * creature.RangeDamage1) / (creature.Coal + creature.Electricity);
+			}
+			else
+			{ 
+					creature.NERating = (creature.EffectiveHitpoints * creature.MeleeDamage) / (creature.Coal + creature.Electricity); 
+			}
+				
+		}
 		private void AddMeleeDamageTypes(Creature creature)
 		{
 			for (int i = 2; i < 9; i++)

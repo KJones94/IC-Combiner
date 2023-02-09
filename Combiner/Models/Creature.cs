@@ -16,10 +16,11 @@ namespace Combiner
 		public int Rank { get; set; }
 		public double Coal { get; set; }
 		public double Electricity { get; set; }
-
+		public double CoalElecRatio { get; set; }
+		public double NERating { get; set; }
 		public double Power { get; set; }
 		public double EffectiveHitpoints { get; set; }
-
+		public double SuicideCoefficient { get; set; }
 		public double Hitpoints { get; set; }
 		public double Armour { get; set; }
 		public double SightRadius { get; set; }
@@ -39,7 +40,10 @@ namespace Combiner
 		public double RangeType2 { get; set; }
 		public double RangeMax1 { get; set; }
 		public double RangeMax2 { get; set; }
+		public double PopSize { get; set; }
+		public double Ticks { get; set; }
 
 		public Dictionary<string, bool> Abilities { get; set; }
-	}
+        public double AbilityAdjustedPower { get; internal set; }
+    }
 }

@@ -21,7 +21,7 @@ namespace Combiner
 			return range1HasSonic || range2HasSonic;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			var range1HasSonicQuery = Query.And(
 				Query.EQ("RangeSpecial1", 0),

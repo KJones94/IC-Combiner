@@ -9,7 +9,7 @@ namespace Combiner
 	public class HitpointsFilter : StatFilter
 	{
 		public HitpointsFilter()
-			: base("Hitpoints", 0, 3000) { }
+			: base("HP", 0, 3000) { }
 
 		public override bool Filter(Creature creature)
 		{
@@ -17,7 +17,7 @@ namespace Combiner
 				&& creature.Hitpoints < (MaxValue + 1);
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.And(
 				Query.GTE("Hitpoints", MinValue),

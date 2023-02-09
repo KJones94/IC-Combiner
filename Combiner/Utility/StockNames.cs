@@ -14,6 +14,7 @@ namespace Combiner
 		public static string Anaconda = "Anaconda";
 		public static string Anglerfish = "Anglerfish";
 		public static string Ant = "Ant";
+		public static string Arapaima = "Arapaima";
 		public static string Archerfish = "Archerfish";
 		public static string Armadillo = "Armadillo";
 		public static string Baboon = "Baboon";
@@ -91,7 +92,9 @@ namespace Combiner
 		public static string Rattlesnake = "Rattlesnake";
 		public static string Raven = "Raven";
 		public static string Rhinoceros = "Rhinoceros";
+		public static string Salamander = "Salamander";
 		public static string Scorpion = "Scorpion";
+		public static string SeaSnake = "Sea Snake";
 		public static string ShieldBug = "Shield Bug";
 		public static string SkipperCaterpillar = "Skipper Caterpillar";
 		public static string Skunk = "Skunk";
@@ -113,7 +116,9 @@ namespace Combiner
 		public static string Wasp = "Wasp";
 		public static string WhaleShark = "Whale Shark";
 		public static string Wolf = "Wolf";
+		public static string Wobbegong = "Wobbegong";
 		public static string Wolverine = "Wolverine";
+		public static string Wombat = "Wombat";
 		public static string WoollyMammoth = "Woolly Mammoth";
 		public static string Zebra = "Zebra";
 		public static string GiantPacificOctopus = "Giant Pacific Octopus";
@@ -125,6 +130,7 @@ namespace Combiner
 			{"anaconda", Anaconda },
 			{"anglerfish", Anglerfish },
 			{"ant", Ant },
+			{"arapaima", Arapaima },
 			{"archerfish", Archerfish },
 			{"armadillo", Armadillo },
 			{"baboon", Baboon },
@@ -203,7 +209,9 @@ namespace Combiner
 			{"rattlesnake", Rattlesnake },
 			{"raven", Raven },
 			{"rhinoceros", Rhinoceros },
+			{"salamander", Salamander },
 			{"scorpion", Scorpion },
+			{"sea_snake", SeaSnake },
 			{"stink_bug", ShieldBug },
 			{"skipper_caterpillar", SkipperCaterpillar },
 			{"skunk", Skunk },
@@ -222,8 +230,10 @@ namespace Combiner
 			{"stick_bug", WalkingStick },
 			{"walrus", Walrus },
 			{"warthog", Warthog },
+			{"wombat", Wombat },
 			{"spider_wasp", Wasp },
 			{"whale_shark", WhaleShark },
+			{"wobbegong", Wobbegong },
 			{"wolf", Wolf },
 			{"wolverine", Wolverine },
 			{"woolly_mammoth", WoollyMammoth },

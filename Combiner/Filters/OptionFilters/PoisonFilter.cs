@@ -16,7 +16,7 @@ namespace Combiner
 			return creature.HasPoison;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			return Query.EQ("HasPoison", true);
 		}

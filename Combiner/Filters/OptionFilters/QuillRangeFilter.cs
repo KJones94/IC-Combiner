@@ -21,7 +21,7 @@ namespace Combiner
 			return range1HasQuill || range2HasQuill;
 		}
 
-		public override Query BuildQuery()
+		public override BsonExpression BuildQuery()
 		{
 			var range1HasQuillQuery = Query.And(
 				Query.EQ("RangeSpecial1", 0),

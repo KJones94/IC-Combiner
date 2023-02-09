@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Combiner.Tests
 {
 	[TestFixture]
-	class CreatureTest
+	public class CreatureTest
 	{
 		
 	}
